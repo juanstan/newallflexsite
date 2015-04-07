@@ -10,23 +10,23 @@
                         <div class="jumbotron dashboard no-overflow text-center" >
                             <div class="vet-overlay collapse fade" id="vet-delete{{ $vet->id }}" >
                                 <div class="col-md-12" >
-                                    <h3>Are you sure you want to remove this vet?</h3>
+                                    <h3>{{ Lang::get('general.Are you sure you want to remove this vet?') }}</h3>
                                     <div class="col-md-10 float-none col-centered top-buffer" >
                                         <div class="col-md-6 small-padding" >
                                             <a href="#" data-toggle="collapse" data-target="#vet-delete{{ $vet->id }}" >
-                                                {{ Form::button('No, cancel', array('class' => 'btn-block btn btn-file btn-md')) }}
+                                                {{ Form::button(Lang::get('general.No, cancel'), array('class' => 'btn-block btn btn-file btn-md')) }}
                                             </a>
                                         </div>
                                         <div class="col-md-6 small-padding" >
                                             <a href="/pet/dashboard/remove-vet/{{ $vet->id }}" >
-                                                {{ Form::button('Yes, remove', array('class' => 'btn-block btn btn-danger btn-md')) }}
+                                                {{ Form::button(Lang::get('general.Yes, remove'), array('class' => 'btn-block btn btn-danger btn-md')) }}
                                             </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <a href="#" data-toggle="collapse" data-target="#vet-delete{{ $vet->id }}" >
-                                {{ Form::button('Remove', array('class' => 'btn btn-file top-right btn-md')) }}
+                                {{ Form::button(Lang::get('general.Remove'), array('class' => 'btn btn-file top-right btn-md')) }}
                             </a>
                             <div class="vet-bg-img" style="background-image: url('@if($vet->image_path != ''){{ $vet->image_path }}@else{{ '/images/vet-image.png' }}@endif');" >
                             </div>
@@ -38,13 +38,13 @@
                                     {{ $vet->city }}<br>
                                     {{ $vet->zip }}<br><br>
                                     {{ isset($vet->fax) ? 'Fax: ' . $vet->fax : '' }}
-                                    Email: <a href="" >{{ $vet->email_address }}</a>
+                                    {{ Lang::get('general.Email') }}: <a href="" >{{ $vet->email_address }}</a>
                                 </address>
                                 @if($vet->latitude != null)
                                     <iframe width="100%" height="150" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q={{ $vet->latitude }}%20{{ $vet->longitude }}&key=AIzaSyD6-_l8AQw9Hyc_Cpi-HX2uZm2MiQuKH3I"></iframe>
                                 @endif
                             <div class="col-md-12 float-none text-left" >
-                                <h3 class=""bottom-none" >Approved pets</h3>
+                                <h3 class="bottom-none" >{{ Lang::get('general.Approved pets') }}</h3>
                             </div>
                             @foreach ($requests as $petRequest)
                                 @foreach ($pets as $pet)
@@ -76,7 +76,7 @@
         @endforeach
         <div class="col-md-4" >
             <div class="tab-content ">
-                <div  class="tab-pane fade in" id="newPet">
+                <div  class="tab-pane active fade in" id="newPet">
                     <div class="jumbotron dashboard add-new-pet large-top-buffer" >
                         <div class="row" >
                             <div class="col-md-12 text-center" >
@@ -87,27 +87,27 @@
                                         <i class="fa fa-plus fa-stack-1x"></i>
                                     </span>
                                     </h2>
-                                    <h3 class="top-none" >Add vet</h3>
+                                    <h3 class="top-none" >{{ Lang::get('general.Add vet') }}</h3>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div  class="tab-pane active fade in" id="newPetDetails">
+                <div  class="tab-pane fade in" id="newPetDetails">
                     <div class="jumbotron dashboard large-top-buffer" >
                         <div class="top-buffer col-md-12 col-centered">
                             <a href="#newPet" data-toggle="pill" data-target="" >
                                 {{ Form::button('Cancel', array('class' => 'btn btn-file top-left btn-md')) }}
                             </a>
                             <div class="text-center" >
-                            <p class="top-buffer">To find your vet practice, search below...</p>
+                            <p class="top-buffer">{{ Lang::get('general.To find your vet practice, search below') }}</p>
                             {{ HTML::image('/images/arrow.png', '', array('class' => '')) }}
                             </div>
                             <div class="input-group top-buffer">
                                 <span class="input-group-addon">
                                     <i class="fa fa-search"></i>
                                 </span>
-                                {{ Form::text('vet-search', null, array('placeholder' => 'Search for vet', 'id' => 'vetsearch', 'class' => 'form-control text-left', 'autocomplete' => 'off')) }}
+                                {{ Form::text('vet-search', null, array('placeholder' => Lang::get('general.Search for vet'), 'id' => 'vetsearch', 'class' => 'form-control text-left', 'autocomplete' => 'off')) }}
                             </div>
                             <div class="top-buffer" ></div>
                             @foreach ($vets as $vet)
@@ -121,7 +121,7 @@
                                     </div>
                                     <div class="col-md-3 small-padding" >
                                         <a href="/pet/dashboard/add-vet/{{ $vet->id }}" >
-                                            {{ Form::button('Add', array('class' => 'btn-block btn btn-default btn-md')) }}
+                                            {{ Form::button(Lang::get('general.Add'), array('class' => 'btn-block btn btn-default btn-md')) }}
                                         </a>
                                     </div>
                                 </div>
@@ -132,5 +132,4 @@
             </div>
         </div>
     </div>
-
 @stop

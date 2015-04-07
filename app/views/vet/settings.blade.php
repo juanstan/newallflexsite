@@ -31,16 +31,16 @@
 
                     <div class="col-sm-8 text-left">
 
-                        {{ Form::button('Browse...', array('class' => 'btn btn-file pull-left', 'onclick' => '$("#ufile").click()' )) }}
+                        {{ Form::button(Lang::get('general.Browse'), array('class' => 'btn btn-file pull-left', 'onclick' => '$("#ufile").click()' )) }}
 
                         {{ Form::file('image_path', array('class' => 'hide', 'id'=>'ufile')) }}
 
-                        <small class="small-left-buffer">JPEG or PNG 4mb file limit</small>
+                        <small class="small-left-buffer">{{ Lang::get('general.JPEG or PNG 4mb file limit') }}</small>
                     </div>
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('company_name', 'Company name', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('company_name', Lang::get('general.Company name'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('contact_name', 'Contact name', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('contact_name', Lang::get('general.Contact name'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -60,7 +60,7 @@
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('email_address', 'Email address', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('email_address', Lang::get('general.Email address'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -70,7 +70,7 @@
                 </div>
                 <div class="form-group">
 
-                    {{ Form::label('fax', 'Fax number', array('class' => 'col-sm-4 control-label')) }}
+                    {{ Form::label('fax', Lang::get('general.Fax number'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -80,7 +80,7 @@
                 </div>
                 <div class="form-group">
 
-                    {{ Form::label('telephone', 'Telephone number', array('class' => 'col-sm-4 control-label')) }}
+                    {{ Form::label('telephone', Lang::get('general.Telephone number'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -90,7 +90,7 @@
                 </div>
                 <div class="form-group">
 
-                    {{ Form::label('zip', 'Zip/ postal code', array('class' => 'col-sm-4 control-label')) }}
+                    {{ Form::label('zip', Lang::get('general.Zip/ postal code'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -100,7 +100,7 @@
                 </div>
                 <div class="form-group">
 
-                    {{ Form::label('address_1', 'Address line 1', array('class' => 'col-sm-4 control-label')) }}
+                    {{ Form::label('address_1', Lang::get('general.Address line 1'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -110,7 +110,7 @@
                 </div>
                 <div class="form-group">
 
-                    {{ Form::label('address_2', 'Address line 2', array('class' => 'col-sm-4 control-label')) }}
+                    {{ Form::label('address_2', Lang::get('general.Address line 2'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -120,7 +120,7 @@
                 </div>
                 <div class="form-group">
 
-                    {{ Form::label('city', 'City', array('class' => 'col-sm-4 control-label')) }}
+                    {{ Form::label('city', Lang::get('general.City'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -130,7 +130,7 @@
                 </div>
                 <div class="form-group">
 
-                    {{ Form::label('county', 'County', array('class' => 'col-sm-4 control-label')) }}
+                    {{ Form::label('county', Lang::get('general.County'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -141,31 +141,31 @@
 
                 <div class="form-group">
 
-                    {{ Form::label('location', 'Location', array('class' => 'col-sm-4 control-label')) }}
+                    {{ Form::label('location', Lang::get('general.Location'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
-                        <div id="gmap_canvas" @if(Auth::vet()->get()->latitude != null) style="width:100%; height:15em;" @endif >Loading map...</div>
-                        <div id='map-label'>Map shows approximate location.</div>
+                        <div id="gmap_canvas" @if(Auth::vet()->get()->latitude != null) style="width:100%; height:15em;" @endif >{{ Lang::get('general.Loading map') }}...</div>
+                        <div id='map-label'>{{ Lang::get('general.Map shows approximate location') }}.</div>
 
                     </div>
                 </div>
                 <div class="form-group">
 
-                    {{ Form::label('units', 'Units', array('class' => 'col-sm-4 control-label')) }}
+                    {{ Form::label('units', Lang::get('general.Units'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
                         <div class="radio-pill-buttons">
-                            <label><input type="radio" @if(Auth::vet()->get()->units == 'C') checked @endif name="units" value="C"><span class="pointer" >Celcius</span></label>
-                            <label><input type="radio" @if(Auth::vet()->get()->units == 'F') checked @endif name="units" value="F"><span class="pointer" >Fahrenheit</span></label>
+                            <label><input type="radio" @if(Auth::vet()->get()->units == 'C') checked @endif name="units" value="C"><span class="pointer" >{{ Lang::get('general.Celcius') }}</span></label>
+                            <label><input type="radio" @if(Auth::vet()->get()->units == 'F') checked @endif name="units" value="F"><span class="pointer" >{{ Lang::get('general.Fahrenheit') }}</span></label>
                         </div>
 
                     </div>
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('old_password', 'Password', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('old_password', Lang::get('general.Password'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -176,7 +176,7 @@
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('password', 'New password', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('password', Lang::get('general.New password'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -187,7 +187,7 @@
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('password_confirmation', 'Retype password', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('password_confirmation', Lang::get('general.Retype password'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -201,10 +201,10 @@
                     <div class="form-group top-buffer">
                         <div class="col-sm-12">
                             <a href="/vet/delete" >
-                                {{ Form::button('Delete account', array('class' => 'btn btn-file btn-lg pull-left border-none')) }}
+                                {{ Form::button(Lang::get('general.Delete account'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}
                             </a>
 
-                            {{ Form::submit('Save changes', array('class' => 'btn btn-default btn-lg pull-right')) }}
+                            {{ Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-default btn-lg pull-right')) }}
 
                             {{ Form::close() }}
 
@@ -219,21 +219,20 @@
         <div class="col-md-8 col-centered float-none" >
             <div class="jumbotron text-center" >
                 <div class="col-md-12 text-left" >
-                    <h2 class="top-none">We can't find your customer in our database?</h2>
-                    <p>Fill out your customer's email below and we will send them an invitation</p>
+                    <h2 class="top-none">{{ Lang::get('general.Can&#39;t find your customer in our database?') }}</h2>
+                    <p>{{ Lang::get('general.Fill out your customer&#39;s email below and we will send them an invitation') }}</p>
                 </div>
                 <div class="form-horizontal">
                     {{ Form::open(array('url' => '/vet/dashboard/invite', 'method' => 'post' )) }}
                     <div class="form-group">
-                        {{ Form::label('email_address', 'Email address', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('email_address', Lang::get('general.Email address'), array('class' => 'col-sm-4 control-label')) }}
                         <div class="col-sm-5">
                             {{ Form::email('email_address', '', array('class' => 'form-control text-left')) }}
                         </div>
                         <div class="col-sm-3">
-                            {{ Form::submit('Submit', array('class' => 'btn btn-default btn-lg pull-right')) }}
+                            {{ Form::submit(Lang::get('general.Submit'), array('class' => 'btn btn-default btn-lg pull-right')) }}
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@
 
                 <div class="form-group">
 
-                        {{ Form::label('zip', 'Zip', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('zip', Lang::get('general.Zip'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8 text-left">
 
@@ -20,7 +20,7 @@
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('address_1', 'Address line 1', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('address_1', Lang::get('general.Address line 1'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -30,7 +30,7 @@
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('address_2', 'Address line 2', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('address_2', Lang::get('general.Address line 2'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('city', 'Town/City', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('city', Lang::get('general.Town/City'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -50,7 +50,7 @@
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('county', 'county', array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('county', Lang::get('general.county'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
@@ -65,10 +65,10 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     <a href="/vet/register/about" >
-                    {{ Form::button('Back', array('class' => 'btn btn-file btn-lg pull-left border-none')) }}
+                    {{ Form::button(Lang::get('general.Back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}
                     </a>
                     
-                    {{ Form::submit('Next', array('class' => 'btn btn-default btn-lg pull-right')) }}
+                    {{ Form::submit(Lang::get('general.Next'), array('class' => 'btn btn-default btn-lg pull-right')) }}
 
                     {{ Form::close() }}
 

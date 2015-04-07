@@ -18,7 +18,7 @@
             <div class="jumbotron vet-dashboard top-buffer" >
                 <div class="row" >
                     <div class="col-md-11 col-centered float-none" >
-                        <h3>My readings</h3>
+                        <h3>{{ Lang::get('general.My readings') }}</h3>
                     </div>
                 </div>
                 @foreach($user->readings->slice(0, 1) as $reading)
@@ -41,9 +41,9 @@
                             <div class="col-md-9 left-none" >
                                 <h3 class="small-top-buffer bottom-none">{{ $reading->microchip_id }}</h3>
                                 <p class="blue" >@if(date("d/m/y",strtotime($reading->created_at)) == date("d/m/y"))
-                                        today at {{ date("h.ia",strtotime($reading->created_at)) }}
+                                        {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                     @else
-                                        {{ date("d/m/y",strtotime($reading->created_at)) }} at {{ date("h.ia",strtotime($reading->created_at)) }}
+                                        {{ date("d/m/y",strtotime($reading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                     @endif</p>
                             </div>
 
@@ -52,7 +52,7 @@
                 @endforeach
                 <div class="row" >
                     <div class="col-md-11 col-centered float-none" >
-                        <h3>Past Readings</h3>
+                        <h3>{{ Lang::get('general.Past Readings') }}</h3>
                     </div>
                 </div>
                 <div class="slider-content past-slider" >
@@ -67,9 +67,9 @@
                                 <div class="col-md-6 left-none ellipsis" >
                                     <h4 class="small-top-buffer bottom-none">{{ $reading->microchip_id }}</h4>
                                     <p class="blue" >@if(date("d/m/y",strtotime($reading->created_at)) == date("d/m/y"))
-                                            today at {{ date("h.ia",strtotime($reading->created_at)) }}
+                                            {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                         @else
-                                            {{ date("d/m/y",strtotime($reading->created_at)) }} at {{ date("h.ia",strtotime($reading->created_at)) }}
+                                            {{ date("d/m/y",strtotime($reading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                         @endif</p>
                                 </div>
                                 <div class="col-md-3 small-top-buffer" >
@@ -92,8 +92,8 @@
             @else
                 <div class="jumbotron top-buffer" >
                     <div class="row" >
-                        <h3>There are no pet readings associated with your account</h3>
-                        <h4>Click the 'upload' button above to get started</h4>
+                        <h3>{{ Lang::get('general.There are no pet readings associated with your account') }}</h3>
+                        <h4>{{ Lang::get('general.Click the "upload" button above to get started') }}</h4>
                     </div>
                 </div>
             @endif
@@ -103,14 +103,14 @@
             <div class="jumbotron vet-dashboard top-buffer" >
                 <div class="row" >
                     <div class="col-md-5" >
-                        <h3>Customer activity</h3>
+                        <h3>{{ Lang::get('general.Customer activity') }}</h3>
                     </div>
                     <div class="col-md-7" >
                         <ul class="nav nav-pills top-buffer text-right">
-                            <li class="active"><a href="#recent" data-toggle="pill" data-target="" >Recent</a></li>
+                            <li class="active"><a href="#recent" data-toggle="pill" data-target="" >{{ Lang::get('general.Recent') }}</a></li>
                             {{--<li class="" ><a href="#customer" data-toggle="pill" data-target="">Customer</a></li>--}}
-                            <li class="" ><a href="#pets" data-toggle="pill" data-target="">Pets</a></li>
-                            <li class="" ><a href="#recent" data-toggle="pill" data-target=""><i class="fa fa-search"></i> Search</a></li>
+                            <li class="" ><a href="#pets" data-toggle="pill" data-target="">{{ Lang::get('general.Pets') }}</a></li>
+                            <li class="" ><a href="#recent" data-toggle="pill" data-target=""><i class="fa fa-search"></i> {{ Lang::get('general.Search') }}</a></li>
                         </ul>
                     </div>
                 </div>
@@ -128,14 +128,14 @@
                                                 </div>
                                                 <div class="col-md-6 left-none" >
                                                     <h3 class="small-top-buffer bottom-none">{{ $pet->name }}</h3><p class="blue" >@if(date("d/m/y",strtotime($reading->created_at)) == date("d/m/y"))
-                                        today at {{ date("h.ia",strtotime($reading->created_at)) }}
+                                        {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                     @else
-                                        {{ date("d/m/y",strtotime($reading->created_at)) }} at {{ date("h.ia",strtotime($reading->created_at)) }}
+                                        {{ date("d/m/y",strtotime($reading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                     @endif</p>
-                                                    <p>Read @if($reading->created_at == new DateTime())
-                                                            today at {{ date("h.ia",strtotime($reading->created_at)) }}
+                                                    <p>{{ Lang::get('general.Read') }} @if($reading->created_at == new DateTime())
+                                                            {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                                         @else
-                                                            {{ date("d/m/y",strtotime($reading->created_at)) }} at {{ date("h.ia",strtotime($reading->created_at)) }}
+                                                            {{ date("d/m/y",strtotime($reading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                                         @endif</p>
                                                 </div>
                                                 <div class="col-md-4 small-top-buffer" >
@@ -206,8 +206,8 @@
             </div>
             @else
             <div class="jumbotron top-buffer" >
-            <h3>There is no customer data associated with your account</h3>
-            <h4>Click the 'settings' button above to invite your customers</h4>
+            <h3>{{ Lang::get('general.There is no customer data associated with your account') }}</h3>
+            <h4>{{ Lang::get('general.Click the "settings"" button above to invite your customers') }}</h4>
             </div>
             @endif
         </div>

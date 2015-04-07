@@ -27,28 +27,28 @@
                 @if(Session::has('success'))
                     <div class="alert alert-info alert-dismissible" role="alert">
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <strong>Success!</strong> {{ Session::get('success') }}
+                      <strong>{{ Lang::get('general.Success') }}</strong> {{ Session::get('success') }}
                     </div>
                 @endif
                 @if(Session::has('message'))
                     <div class="alert alert-warning alert-dismissible" role="alert">
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <strong>Success!</strong> {{ Session::get('message') }}
+                      <strong>{{ Lang::get('general.Message') }}</strong> {{ Session::get('message') }}
                     </div>
                 @endif
                 @if(Session::has('not-verified'))
                     <div class="alert alert-warning alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <strong class="inline-block ">Email not yet verified</strong> please verify
+                        <strong class="inline-block ">{{ Lang::get('general.Email not yet verified') }}</strong> {{ Lang::get('general.please verify') }}
 
-                        <a href="resend-confirmation" ><button style="margin-top: -5px;" class="btn btn-warning btn-sm pull-right border-none" type="button">Resend confirmation email</button></a>
+                        <a href="resend-confirmation" ><button style="margin-top: -5px;" class="btn btn-warning btn-sm pull-right border-none" type="button">{{ Lang::get('general.Resend confirmation email') }}</button></a>
                     </div>
                 @endif
                 @if($errors->has())
                    @foreach ($errors->all() as $error)
                         <div class="alert alert-danger alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>Error!</strong> {{ $error }}
+                          <strong>{{ Lang::get('general.Error') }}</strong> {{ $error }}
                         </div>
                   @endforeach
                 @endif
@@ -69,14 +69,14 @@
                 <div class="collapse navbar-collapse" id="navbar-collapse-1">
                  
                   <ul class="nav navbar-nav navbar-left">
-                    <li>{{ HTML::link('pet/dashboard', 'My Pets') }}</li>
-                    <li><a href="#upload" id="upload-toggle" data-toggle="collapse" data-target="#file-upload"><i class="fa fa-cloud-upload"></i> Upload</a></li>
+                    <li>{{ HTML::link('pet/dashboard', Lang::get('general.My Pets')) }}</li>
+                    <li><a href="#upload" id="upload-toggle" data-toggle="collapse" data-target="#file-upload"><i class="fa fa-cloud-upload"></i> {{ Lang::get('general.Upload') }}</a></li>
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
-                    <li>{{ HTML::link('pet/dashboard/help', 'Help') }}</li>
-                    <li>{{ HTML::link('pet/dashboard/vet', 'My Vet') }}</li>
-                    <li>{{ HTML::link('pet/dashboard/settings', 'Settings') }}</li>
-                    <li>{{ HTML::link('pet/logout','Logout') }}</li>
+                    <li>{{ HTML::link('pet/dashboard/help', Lang::get('general.Help')) }}</li>
+                    <li>{{ HTML::link('pet/dashboard/vet', Lang::get('general.My Vet')) }}</li>
+                    <li>{{ HTML::link('pet/dashboard/settings', Lang::get('general.Settings')) }}</li>
+                    <li>{{ HTML::link('pet/logout',Lang::get('general.Logout')) }}</li>
                   </ul>
                 </div><!-- /.navbar-collapse -->
             </nav>

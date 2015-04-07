@@ -18,9 +18,9 @@
             <div class="row col-md-11 float-none col-centered" >
                 <div class="alert alert-grey alert-dismissible" role="alert">
                     <button type="button" class="close small-top-buffer" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="inline-block small-top-buffer">1 unknown microchip found, would you like to create a new pet for this microchip?</h4>
+                    <h4 class="inline-block small-top-buffer">{{ Lang::get('general.1 unknown microchip found, would you like to create a new pet for this microchip?') }}</h4>
 
-                    <a href="#edit{{ $value->id }}" data-toggle="pill" ><button data-toggle="collapse" data-target="#pet-photo{{ $value->id }}" class="btn btn-file btn-md pull-right border-none" type="button">Create new pet</button></a>
+                    <a href="#edit{{ $value->id }}" data-toggle="pill" ><button data-toggle="collapse" data-target="#pet-photo{{ $value->id }}" class="btn btn-file btn-md pull-right border-none" type="button">{{ Lang::get('general.Create new pet') }}</button></a>
                 </div>
             </div>
         @endif
@@ -44,7 +44,7 @@
                             </div>
                             <div class="col-md-9 tab-pane fade in small-padding top-buffer" id="pet-photo{{ $value->id }}" >
                                 {{ Form::open(array('files'=> 'true', 'url' => array('/pet/dashboard/update-pet-photo', $value->id), 'method' => 'post')) }}
-                                <p class="pointer" onclick="$('#ufile{{ $value->id }}').click()" ><i class="fa fa-camera"></i> Change photo</p>
+                                <p class="pointer" onclick="$('#ufile{{ $value->id }}').click()" ><i class="fa fa-camera"></i> {{ Lang::get('general.Change photo') }}</p>
 
                                     <input class="hide" id="ufile{{ $value->id }}" onchange="this.form.submit()"  name="pet-photo" type="file">
                                 {{ Form::close() }}
@@ -55,16 +55,16 @@
                 <div class="jumbotron dashboard top-buffer" >
                     <div class="vet-overlay collapse fade" id="pet-delete{{ $value->id }}" >
                         <div class="col-md-12 text-center" >
-                        <h3>Are you sure you want to remove this pet?</h3>
+                        <h3>{{ Lang::get('general.Are you sure you want to remove this pet?') }}</h3>
                             <div class="col-md-10 float-none col-centered top-buffer" >
                                 <div class="col-md-6 small-padding" >
                                     <a href="#" data-toggle="collapse" data-target="#pet-delete{{ $value->id }}" >
-                                        {{ Form::button('No, cancel', array('class' => 'btn-block btn btn-file btn-md')) }}
+                                        {{ Form::button(Lang::get('general.No, cancel'), array('class' => 'btn-block btn btn-file btn-md')) }}
                                     </a>
                                 </div>
                                 <div class="col-md-6 small-padding" >
                                     <a href="/pet/dashboard/remove-pet/{{ $value->id }}" >
-                                        {{ Form::button('Yes, remove', array('class' => 'btn-block btn btn-danger btn-md')) }}
+                                        {{ Form::button(Lang::get('general.Yes, remove'), array('class' => 'btn-block btn btn-danger btn-md')) }}
                                     </a>
                                 </div>
                             </div>
@@ -75,12 +75,12 @@
                         {{ Form::open(array('files'=> 'true', 'url' => array('/pet/dashboard/add-symptoms', $readings->id), 'method' => 'post')) }}
                         <div class="col-md-12 top-buffer" >
                             <div class="col-md-8" >
-                                <h3 class="top-none">Add symptoms</h3>
-                                <p>Select all that apply</p>
+                                <h3 class="top-none">{{ Lang::get('general.Add symptoms') }}</h3>
+                                <p>{{ Lang::get('general.Select all that apply') }}</p>
                             </div>
             
                             <div class="col-md-4 text-right" >
-                                {{ Form::submit('Done', array('class' => 'submit-text')) }}
+                                {{ Form::submit(Lang::get('general.Done'), array('class' => 'submit-text')) }}
                             </div>
                         </div>
                         <div class="col-md-12" >
@@ -111,12 +111,12 @@
                             {{ Form::open(array('files'=> 'true', 'url' => array('/pet/dashboard/add-symptoms', $readings->id), 'method' => 'post')) }}
                             <div class="col-md-12 top-buffer" >
                                 <div class="col-md-8" >
-                                    <h3 class="top-none">Add symptoms</h3>
-                                    <p>Select all that apply</p>
+                                    <h3 class="top-none">{{ Lang::get('general.Add symptoms') }}</h3>
+                                    <p>{{ Lang::get('general.Select all that apply') }}</p>
                                 </div>
 
                                 <div class="col-md-4 text-right" >
-                                    {{ Form::submit('Done', array('class' => 'submit-text')) }}
+                                    {{ Form::submit(Lang::get('general.Done'), array('class' => 'submit-text')) }}
                                 </div>
                             </div>
                             <div class="col-md-12" >
@@ -145,9 +145,9 @@
                     <div class="row" >
                         <div class="col-md-12" >
                             <ul class="nav nav-pills text-left">
-                                <li class="active"><a href="#latest{{ $value->id }}" data-toggle="pill" data-target="#pet-name{{ $value->id }}, #latest{{ $value->id }}, #pet-photo-hide{{ $value->id }}" >Latest</a></li>
-                                <li class="report-toggle" ><a href="#reports{{ $value->id }}" data-toggle="pill" data-target="#pet-name{{ $value->id }}, #reports{{ $value->id }}, #pet-photo-hide{{ $value->id }}">Reports</a></li>
-                                <li class="pull-right" ><a href="#edit{{ $value->id }}" data-toggle="pill" data-target="#pet-photo{{ $value->id }}, #edit{{ $value->id }}"  >{{ ($value->name == NULL ? '<i class="fa fa-plus"></i> Create pet' : '<i class="fa fa-cog"></i> Edit' ); }}</a></li>
+                                <li class="active"><a href="#latest{{ $value->id }}" data-toggle="pill" data-target="#pet-name{{ $value->id }}, #latest{{ $value->id }}, #pet-photo-hide{{ $value->id }}" >{{ Lang::get('general.Latest') }}</a></li>
+                                <li class="report-toggle" ><a href="#reports{{ $value->id }}" data-toggle="pill" data-target="#pet-name{{ $value->id }}, #reports{{ $value->id }}, #pet-photo-hide{{ $value->id }}">{{ Lang::get('general.Reports') }}</a></li>
+                                <li class="pull-right" ><a href="#edit{{ $value->id }}" data-toggle="pill" data-target="#pet-photo{{ $value->id }}, #edit{{ $value->id }}"  >{{ ($value->name == NULL ? Lang::get('general.<i class="fa fa-plus"></i> Create pet') : Lang::get('general.<i class="fa fa-cog"></i> Edit') ); }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -173,7 +173,7 @@
                                             <div class="small-circle circle-solid" style="background-color: {{ getTemperatureColor($readings->temperature, $temperaturePref)['tempcol'] }}" >
                                                 <div class="circle-inner">
                                                     <div class="small-score-text">
-                                                        <p>Avg.</p>
+                                                        <p>{{ Lang::get('general.Avg') }}.</p>
                                                         @if(!empty($allReadingTemps))
                                                             {{ getTemperatureColor($readingAverage, $temperaturePref)['temp'] }}<span>&#176;</span>
                                                         @else
@@ -186,9 +186,9 @@
                                                  <div class="score-text" style="color: {{ getTemperatureColor($readings->temperature, $temperaturePref)['tempcol'] }}" >
                                                         {{ getTemperatureColor($readings->temperature, $temperaturePref)['temp'] }}<span>&#176;</span>
                                                      <p>@if(date("d/m/y",strtotime($readings->created_at)) == date("d/m/y"))
-                                                     today at {{ date("h.ia",strtotime($readings->created_at)) }}
+                                                         {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($readings->created_at)) }}
                                                      @else
-                                                     {{ date("d/m/y",strtotime($readings->created_at)) }} at {{ date("h.ia",strtotime($readings->created_at)) }}
+                                                     {{ date("d/m/y",strtotime($readings->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($readings->created_at)) }}
                                                      @endif</p>
                                                  </div>
                                             </div>
@@ -207,31 +207,31 @@
                                     <div class="circle-inner">
                                         <div class="score-text" >
                                                 --.-<span>&#176;</span>
-                                                <p>No readings available</p>
+                                                <p>{{ Lang::get('general.No readings available') }}</p>
                                         </div>
                                     </div>
                                 </div>
                                 @endif
                                 <div class="row text-center" >
                                     <div class="col-md-11 col-centered float-none" >
-                                        <h3>Symptoms</h3>
+                                        <h3>{{ Lang::get('general.Symptoms' ) }}</h3>
                                         @if( $value->readings->count() )
                                             @foreach ($value->readings->slice(0, 1) as $readings)
                                                 <ul class="nav nav-pills text-center symptom-pills">
                                                     @foreach ($readings->symptom as $readingSymptom)
                                                     <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="dashboard/symptom-remove/{{ $readingSymptom->reading_id }}/{{ $readingSymptom->symptom_names->id }}"><span>{{ $readingSymptom->symptom_names->name }}</span></a></li>
                                                     @endforeach
-                                                    <li role="presentation" class="symptom-pill small-top-buffer active" ><a href="#" data-toggle="collapse" data-target="#symptom-list{{ $value->id }}" >+ Add</a></li>
+                                                    <li role="presentation" class="symptom-pill small-top-buffer active" ><a href="#" data-toggle="collapse" data-target="#symptom-list{{ $value->id }}" >{{ Lang::get('general.+ Add') }}</a></li>
                                                 </ul>
                                             @endforeach
                                         @else
-                                            <h4>No Symptoms Available</h4>
+                                            <h4>{{ Lang::get('general.No Symptoms Available' ) }}</h4>
                                         @endif
                                     </div>
                                 </div>
                                 <div class="row text-center top-buffer col-md-12" >
                                     <div class="col-md-4" >
-                                        <h4>Previous Readings</h4>
+                                        <h4>{{ Lang::get('general.Previous Readings') }}</h4>
                                     </div>
                                     @if( $value->readings->count() )
                                         @foreach ($value->readings->slice(0, 4) as $readings)
@@ -248,7 +248,7 @@
                                         @endforeach
                                     @else
                                         <div class="col-md-8 small-padding" >
-                                            <h4>No Previous Readings Available</h4>
+                                            <h4>{{ Lang::get('general.No Previous Readings Available') }}</h4>
                                         </div>
                                     @endif
                                 </div>
@@ -262,9 +262,9 @@
                                 <div class="row hero-banner" >
                                     <div class="col-md-9 " >
                                         @if(!empty($allReadingTemps))
-                                            <h4 class="top-buffer" style="color: white;">{{ isset($value->name) ? $value->name : 'Unknown'; }}'s temperature is usually around {{ getTemperatureColor($readingAverage, $temperaturePref)['temp'] }}&#176;</h4>
+                                            <h4 class="top-buffer" style="color: white;">{{ isset($value->name) ? $value->name : 'Unknown'; }}{{ Lang::get('general.&#39; temperature is usually around') }} {{ getTemperatureColor($readingAverage, $temperaturePref)['temp'] }}&#176;</h4>
                                         @else
-                                            <h4 class="top-buffer" style="color: white;">There is not average temperature for {{ isset($value->name) ? $value->name : 'Unknown'; }} yet</h4>
+                                            <h4 class="top-buffer" style="color: white;">{{ Lang::get('general.There is not average temperature for') }} {{ isset($value->name) ? $value->name : 'Unknown'; }} {{ Lang::get('general.yet') }}</h4>
                                         @endif
                                     </div>
                                     <div class="col-md-3 small-padding" >
@@ -291,7 +291,7 @@
                                 @else
                                     <div class="row hero-banner" >
                                         <div class="col-md-9" >
-                                            <h4 class="top-buffer" style="color: white;">No readings have been uploaded for {{ isset($value->name) ? $value->name : 'Unknown'; }} Yet.</h4>
+                                            <h4 class="top-buffer" style="color: white;">{{ Lang::get('general.No readings have been uploaded for') }} {{ isset($value->name) ? $value->name : 'Unknown'; }} {{ Lang::get('general.yet') }}.</h4>
                                         </div>
                                         <div class="col-md-3 small-padding" >
                                             <div class="circle small-top-buffer circle-small-border" style="border-color: white;">
@@ -334,7 +334,7 @@
                                                         @endforeach
                                                     </ul>
                                             @else
-                                                <small>No symptoms available</small>
+                                                <small>{{ Lang::get('general.No symptoms available') }}</small>
                                             @endif
                                             <small>{{ date("h.ia",strtotime($readings->reading_time)) }}</small>
                                         </div>
@@ -349,7 +349,7 @@
                                     @endforeach
                                 @else
                                     <div class="col-md-8 small-padding" >
-                                        <h4>No Previous Readings Available</h4>
+                                        <h4>{{ Lang::get('general.No Previous Readings Available') }}</h4>
                                     </div>
                                 @endif
                                 </div>
@@ -361,7 +361,7 @@
 
                                 <div class="form-group">
 
-                                        {{ Form::label('name', 'Name', array('class' => 'col-sm-2 control-label')) }}
+                                        {{ Form::label('name', Lang::get('general.Name'), array('class' => 'col-sm-2 control-label')) }}
 
                                     <div class="col-sm-10">
 
@@ -371,7 +371,7 @@
                                 </div>
                                 <div class="form-group">
 
-                                        {{ Form::label('breed', 'Breed', array('class' => 'col-sm-2 control-label')) }}
+                                        {{ Form::label('breed', Lang::get('general.Breed'), array('class' => 'col-sm-2 control-label')) }}
 
                                     <div class="col-sm-10">
 
@@ -382,7 +382,7 @@
                                 <div class="col-md-6 small-padding" >
                                     <div class="form-group">
                                     
-                                        {{ Form::label('size', 'Size', array('class' => 'col-sm-4 control-label')) }}
+                                        {{ Form::label('size', Lang::get('general.Size'), array('class' => 'col-sm-4 control-label')) }}
 
                                         <div class="col-sm-7">
                                         
@@ -394,7 +394,7 @@
                                 <div class="col-md-6 small-padding" >
                                     <div class="form-group">
 
-                                        {{ Form::label('weight', 'Weight', array('class' => 'col-sm-4 control-label')) }}
+                                        {{ Form::label('weight', Lang::get('general.Weight'), array('class' => 'col-sm-4 control-label')) }}
 
                                         <div class="col-sm-8">
 
@@ -402,7 +402,7 @@
 
                                                 {{ Form::text('weight', $value->weight, array('class' => 'form-control text-left')) }}
 
-                                                <div class="input-group-addon">kg</div>
+                                                <div class="input-group-addon">{{ Lang::get('general.kg') }}</div>
 
                                             </div>
 
@@ -411,7 +411,7 @@
                                 </div>
                                 <div class="form-group">
                                 
-                                        {{ Form::label('age', 'Date of birth', array('class' => 'col-sm-5 control-label')) }}
+                                        {{ Form::label('age', Lang::get('general.Date of birth'), array('class' => 'col-sm-5 control-label')) }}
                                         
                                     <div class="col-sm-7">
                                         
@@ -421,22 +421,22 @@
                                 </div>
                                 <div class="form-group">
 
-                                        {{ Form::label('gender', 'Gender', array('class' => 'col-sm-3 control-label')) }}
+                                        {{ Form::label('gender', Lang::get('general.Gender'), array('class' => 'col-sm-3 control-label')) }}
 
                                     <div class="col-sm-9">
                                         <div class="radio-pill-buttons">
-                                            <label><input type="radio" @if($value->gender == 'Male') checked @endif name="gender" value="Male"><span class="pointer" >Male</span></label>
-                                            <label><input type="radio" @if($value->gender == 'Female') checked @endif name="gender" value="Female"><span class="pointer" >Female</span></label> 
+                                            <label><input type="radio" @if($value->gender == 'Male') checked @endif name="gender" value="Male"><span class="pointer" >{{ Lang::get('general.Male') }}</span></label>
+                                            <label><input type="radio" @if($value->gender == 'Female') checked @endif name="gender" value="Female"><span class="pointer" >{{ Lang::get('general.Female') }}</span></label>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
 
-                                        {{ Form::label('Known conditions', 'Known conditions', array('class' => 'col-sm-7 control-label')) }}
+                                        {{ Form::label('Known conditions', Lang::get('general.Known conditions'), array('class' => 'col-sm-7 control-label')) }}
 
                                     <div class="col-sm-5">
                                         <a href="#" data-toggle="collapse" data-target="#condition-list{{ $value->id }}" >
-                                            {{ Form::button('Manage <i class="fa fa-angle-right small-left-buffer"></i>', array('class' => 'btn btn-file btn-block btn-md')) }}
+                                            {{ Form::button(Lang::get('general.Manage <i class="fa fa-angle-right small-left-buffer"></i>'), array('class' => 'btn btn-file btn-block btn-md')) }}
                                         </a>
                                     </div>
                                 </div>
@@ -447,11 +447,11 @@
 
                                 <div class="form-group">
 
-                                        {{ Form::label('Average temperature', 'Average temperature', array('class' => 'col-sm-7 control-label')) }}
+                                        {{ Form::label('Average temperature', Lang::get('general.Average temperature'), array('class' => 'col-sm-7 control-label')) }}
 
                                     <div class="col-sm-5">
 
-                                        {{ Form::button('<i class="fa fa-refresh"></i> Reset', array('class' => 'btn btn-file btn-block btn-md', 'type' => 'submit')) }}
+                                        {{ Form::button(Lang::get('general.<i class="fa fa-refresh"></i> Reset'), array('class' => 'btn btn-file btn-block btn-md', 'type' => 'submit')) }}
 
                                     </div>
                                 </div>
@@ -459,10 +459,10 @@
 
                                 <div class="form-group">
                                     <div class="col-md-5" >
-                                        <a href="#" data-toggle="collapse" data-target="#pet-delete{{ $value->id }}" >{{ Form::button('Remove', array('class' => 'btn btn-file btn-block btn-md border-none')) }}</a>
+                                        <a href="#" data-toggle="collapse" data-target="#pet-delete{{ $value->id }}" >{{ Form::button(Lang::get('general.Remove'), array('class' => 'btn btn-file btn-block btn-md border-none')) }}</a>
                                     </div>
                                     <div class="col-md-7" >
-                                        {{ Form::submit('Save changes', array('class' => 'btn btn-block btn-default btn-md', 'form' => 'petSettingsForm')) }}
+                                        {{ Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-block btn-default btn-md', 'form' => 'petSettingsForm')) }}
                                     </div>
                                         
 
@@ -487,7 +487,7 @@
                                             <i class="fa fa-plus fa-stack-1x"></i>
                                         </span>
                                     </h2>
-                                    <h3 class="top-none" >New pet</h3>
+                                    <h3 class="top-none" >{{ Lang::get('general.New pet') }}</h3>
                                 </a>
                             </div>
                         </div>
@@ -498,9 +498,9 @@
                         <div class="row" >
                             <div class="col-md-12" >
                                 <ul class="nav nav-pills text-left">
-                                    <li class="disabled"><a href="#latest" data-toggle="pill" data-target="" >Latest</a></li>
-                                    <li class="disabled" ><a href="#reports" data-toggle="pill" data-target="">Reports</a></li>
-                                    <li class="pull-right active" ><a href="#edit" data-toggle="pill" data-target=""><i class="fa fa-plus"></i> Create pet</a></li>
+                                    <li class="disabled"><a href="#latest" data-toggle="pill" data-target="" >{{ Lang::get('general.Latest') }}</a></li>
+                                    <li class="disabled" ><a href="#reports" data-toggle="pill" data-target="">{{ Lang::get('general.Reports') }}</a></li>
+                                    <li class="pull-right active" ><a href="#edit" data-toggle="pill" data-target=""><i class="fa fa-plus"></i> {{ Lang::get('general.Create pet') }}</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -509,11 +509,11 @@
                             
                             <div class="form-group">
                 
-                                    {{ Form::label('pet-photo', 'Add photo', array('class' => 'col-sm-3 right-none control-label')) }}
+                                    {{ Form::label('pet-photo', Lang::get('general.Add photo'), array('class' => 'col-sm-3 right-none control-label')) }}
 
                                 <div class="col-sm-9 text-left">
 
-                                    {{ Form::button('Browse...', array('class' => 'btn btn-file pull-left', 'onclick' => '$("#ufile").click()' )) }}
+                                    {{ Form::button(Lang::get('general.Browse'), array('class' => 'btn btn-file pull-left', 'onclick' => '$("#ufile").click()' )) }}
 
                                     {{ Form::file('pet-photo', array('class' => 'hide', 'id'=>'ufile')) }}
                                    
@@ -521,7 +521,7 @@
                             </div>
                             <div class="form-group">
 
-                                    {{ Form::label('name', 'Name', array('class' => 'col-sm-3 control-label')) }}
+                                    {{ Form::label('name', Lang::get('general.Name'), array('class' => 'col-sm-3 control-label')) }}
 
                                 <div class="col-sm-9">
 
@@ -531,7 +531,7 @@
                             </div>
                             <div class="form-group">
 
-                                    {{ Form::label('breed', 'Breed', array('class' => 'col-sm-3 control-label')) }}
+                                    {{ Form::label('breed', Lang::get('general.Breed'), array('class' => 'col-sm-3 control-label')) }}
 
                                 <div class="col-sm-9">
 
@@ -542,7 +542,7 @@
                             <div class="col-md-6 small-padding" >
                                 <div class="form-group">
                                 
-                                    {{ Form::label('size', 'Size', array('class' => 'col-sm-4 control-label')) }}
+                                    {{ Form::label('size', Lang::get('general.Size'), array('class' => 'col-sm-4 control-label')) }}
 
                                     <div class="col-sm-7">
                                     
@@ -554,7 +554,7 @@
                             <div class="col-md-6 small-padding" >
                                 <div class="form-group">
 
-                                    {{ Form::label('weight', 'Weight', array('class' => 'col-sm-4 control-label')) }}
+                                    {{ Form::label('weight', Lang::get('general.Weight'), array('class' => 'col-sm-4 control-label')) }}
 
                                     <div class="col-sm-8">
 
@@ -562,14 +562,15 @@
 
                                             {{ Form::text('weight', '', array('class' => 'form-control text-left')) }}
 
-                                            <div class="input-group-addon">kg</div>
+
+                                            <div class="input-group-addon">{{ Lang::get('general.kg') }}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                             
-                                    {{ Form::label('age', 'Date of birth', array('class' => 'col-sm-5 control-label')) }}
+                                    {{ Form::label('age', Lang::get('general.Date of birth'), array('class' => 'col-sm-5 control-label')) }}
                                     
                                 <div class="col-sm-7">
                                     
@@ -579,29 +580,29 @@
                             </div>
                             <div class="form-group">
 
-                                    {{ Form::label('gender', 'Gender', array('class' => 'col-sm-3 control-label')) }}
+                                    {{ Form::label('gender', Lang::get('general.Gender'), array('class' => 'col-sm-3 control-label')) }}
 
                                 <div class="col-sm-9">
                                     <div class="radio-pill-buttons">
-                                        <label><input type="radio" name="gender" value="Male"><span class="pointer" >Male</span></label>
-                                        <label><input type="radio" name="gender" value="Female"><span class="pointer" >Female</span></label> 
+                                        <label><input type="radio" name="gender" value="Male"><span class="pointer" >{{ Lang::get('general.Male') }}</span></label>
+                                        <label><input type="radio" name="gender" value="Female"><span class="pointer" >{{ Lang::get('general.Female') }}</span></label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
 
-                                    {{ Form::label('Known conditions', 'Known conditions', array('class' => 'col-sm-7 control-label')) }}
+                                    {{ Form::label('Known conditions', Lang::get('general.Known conditions'), array('class' => 'col-sm-7 control-label')) }}
 
                                 <div class="col-sm-5">
 
-                                    {{ Form::button('Manage <i class="fa fa-angle-right small-left-buffer"></i>', array('class' => 'btn btn-file btn-block btn-md')) }}
+                                    {{ Form::button(Lang::get('general.Manage <i class="fa fa-angle-right small-left-buffer"></i>'), array('class' => 'btn btn-file btn-block btn-md')) }}
 
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-12" >
 
-                                    {{ Form::submit('Save changes', array('class' => 'btn btn-block btn-default btn-md')) }}
+                                    {{ Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-block btn-default btn-md')) }}
 
                                 </div>
                                     

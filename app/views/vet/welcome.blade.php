@@ -6,11 +6,11 @@
             <div class="jumbotron text-center" >
 
                 {{ HTML::image('images/logo-vet.png', 'a Logo', array('class' => 'signup-logo')) }}
-                <h2>{{ trans('vetconnect.signinto') }}</h2>
+                <h2>{{ Lang::get('general.Sign in to Vet Connect') }}</h2>
 
                 <ul class="nav nav-pills top-buffer">
-                    <li>{{ HTML::link('pet/', 'Pet owner') }}</li>
-                    <li class="active" >{{ HTML::link('vet/', 'Vet practice') }}</li>
+                    <li>{{ HTML::link('pet/', Lang::get('general.Pet owner')) }}</li>
+                    <li class="active" >{{ HTML::link('vet/', Lang::get('general.Vet practice')) }}</li>
                 </ul>
 
                         {{ Form::open(array('url' => 'vet/login', 'method' => 'post', 'class' => 'top-buffer')) }}
@@ -19,11 +19,11 @@
 
                         {{ Form::password('password', array('class' => 'small-top-buffer form-control', 'placeholder' => 'Password')) }}
 
-                        {{ Form::submit('Sign in', array('class' => 'btn btn-lg btn-default btn-block small-top-buffer')) }}
+                        {{ Form::submit(Lang::get('general.Sign in'), array('class' => 'btn btn-lg btn-default btn-block small-top-buffer')) }}
 
                         {{ Form::close() }}
 
-                    <p class="top-buffer">Don't have an account? <strong>{{ HTML::link('vet/register', 'Sign up') }}</strong>
+                    <p class="top-buffer">{{ Lang::get('general.Don&#39;t have an account?') }} <strong>{{ HTML::link('vet/register', Lang::get('general.Sign up')) }}</strong>
             </div>
         </div>
     </div>

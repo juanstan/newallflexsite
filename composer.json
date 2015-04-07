@@ -42,7 +42,8 @@
         "sebklaus/profiler": "1.7.6",
         "barryvdh/laravel-debugbar": "dev-master",
         "league/csv": "7.0.*@dev",
-        "ollieread/multiauth": "dev-master"
+        "ollieread/multiauth": "dev-master",
+        "potsky/laravel-localization-helpers" : "~1.1"
     },
 	"scripts": {
 		"post-install-cmd": [

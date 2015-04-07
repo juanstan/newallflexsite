@@ -29,7 +29,7 @@
                    @foreach ($errors->all() as $error)
                         <div class="alert alert-warning alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>{{ Lang::get('general.error'); }}!</strong> {{ $error }}
+                          <strong>Error!</strong> {{ $error }}
                         </div>
                   @endforeach
                 @endif
@@ -39,10 +39,10 @@
                     <div class="jumbotron text-center" >
                                 {{ HTML::image('images/logo-pet.png', 'a Logo', array('class' => 'signup-logo')) }}
                         <ul class="nav nav-tabs nav-justified">
-                            <li class="h2"><a href="/pet/signup/1" data-toggle="pill"><span>{{ Lang::get('general.aboutYou'); }}</span></a></li>
-                            <li class="h2"><a href="/pet/signup/2" data-toggle="pill"><span>{{ Lang::get('general.yourPets'); }}</span></a></li>
-                            <li class="h2"><a href="/pet/signup/5" data-toggle="pill"><span>{{ Lang::get('general.yourVets'); }}</span></a></li>
-                            <li class="h2"><a href="/pet/signup/6" data-toggle="pill"><span>{{ Lang::get('general.yourReadings'); }}</span></a></li>
+                            <li class="h2"><a href="/pet/signup/1" data-toggle="pill"><span>About you</span></a></li>
+                            <li class="h2"><a href="/pet/signup/2" data-toggle="pill"><span>Your pets</span></a></li>
+                            <li class="h2"><a href="/pet/signup/5" data-toggle="pill"><span>Your vets</span></a></li>
+                            <li class="h2"><a href="/pet/signup/6" data-toggle="pill"><span>Your readings</span></a></li>
                         </ul>
             @yield('content')
                     </div>

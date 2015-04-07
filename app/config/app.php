@@ -136,6 +136,7 @@ return array(
         'Services\AnimalReadingSymptomServiceProvider',
         'Services\AnimalConditionServiceProvider',
         'Services\DeviceServiceProvider',
+        'Potsky\LaravelLocalizationHelpers\LaravelLocalizationHelpersServiceProvider',
 	),
 
 	/*

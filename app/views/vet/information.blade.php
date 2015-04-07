@@ -20,8 +20,8 @@
                             {{ HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
                         </div>
                         <div class="col-md-8" >
-                            <h3 class="bottom-none">{{ isset($pet->name) ? $pet->name : 'Unknown'; }}</h3>
-                            <p>{{ isset($pet->microchip_number) ? $pet->microchip_number : 'Unknown microchip'; }}</p>
+                            <h3 class="bottom-none">{{ isset($pet->name) ? $pet->name : Lang::get('general.Unknown'); }}</h3>
+                            <p>{{ isset($pet->microchip_number) ? $pet->microchip_number : Lang::get('general.Unknown microchip'); }}</p>
                         </div>
                     </div>
                 </div>
@@ -70,9 +70,9 @@
                             <div class="col-md-12 col-centered float-none" >
                                 <div class="col-md-10" >
                                     @if(!empty($allReadingTemps))
-                                        <h3 style="color: white;" class="small-top-buffer">{{ isset($pet->name) ? $pet->name : 'Unknown'; }}'s temperature is usually around {{ getTemperatureColor($readingAverage, $temperaturePref)['temp'] }}&#176;</h3>
+                                        <h3 style="color: white;" class="small-top-buffer">{{ isset($pet->name) ? $pet->name : 'Unknown'; }}{{ Lang::get('general.&#39;s temperature is usually around') }} {{ getTemperatureColor($readingAverage, $temperaturePref)['temp'] }}&#176;</h3>
                                     @else
-                                        <h3 style="color: white;" class="small-top-buffer">There is not average temperature for {{ isset($pet->name) ? $pet->name : 'Unknown'; }} yet</h3>
+                                        <h3 style="color: white;" class="small-top-buffer">{{ Lang::get('general.There is not average temperature for') }} {{ isset($pet->name) ? $pet->name : 'Unknown'; }} {{ Lang::get('general.yet') }}</h3>
                                     @endif
                                 </div>
                                 <div class="col-md-2">
@@ -93,7 +93,7 @@
                     @else
                         <div class="col-md-12 col-centered float-none" >
                             <div class="col-md-10" >
-                                    <h3 style="color: white;" class="small-top-buffer">There is not average temperature for {{ isset($pet->name) ? $pet->name : 'Unknown'; }} yet</h3>
+                                    <h3 style="color: white;" class="small-top-buffer">{{ Lang::get('general.There is not average temperature for') }} {{ isset($pet->name) ? $pet->name : Lang::get('general.Unknown'); }} {{ Lang::get('general.yet') }}</h3>
                             </div>
                             <div class="col-md-2">
                                 <div class="circle circle-small-border" style="border-color: white">
@@ -110,7 +110,7 @@
                 @if( $pet->readings->count() )
                 <div class="row top-buffer" >
                     <div class="col-md-11 col-centered float-none" >
-                        <h3>Readings over time</h3>
+                        <h3>{{ Lang::get('general.Readings over time') }}</h3>
                         <div class="vet-graph-container col-centered" style="width:95%; height:150px;" data-data='{{ $pet->readings }}' ></div>
                     </div>
                 </div>
@@ -132,13 +132,13 @@
                                         <h4 style="color: #71787f;">{{ $readingSymptom->symptom_names->name }}</h4>
                                     @endforeach
                             @else
-                                <h4>No symptoms available</h4>
+                                <h4>{{ Lang::get('general.No symptoms available') }}</h4>
                                 <br>
                             @endif
                             <p>@if($reading->created_at == new DateTime())
-                                    today at {{ date("h.ia",strtotime($reading->created_at)) }}
+                                    {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                 @else
-                                    {{ date("d/m/y",strtotime($reading->created_at)) }} at {{ date("h.ia",strtotime($reading->created_at)) }}
+                                    {{ date("d/m/y",strtotime($reading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                 @endif</p>
                         </div>
                         <div class="col-md-1" >
@@ -150,7 +150,7 @@
                 @else
                     <div class="row top-buffer" >
                         <div class="col-md-11 col-centered float-none" >
-                            <h3>There is no reading data submitted for {{ $pet->name }} yet</h3>
+                            <h3>{{ Lang::get('general.There is no reading data submitted for') }} {{ $pet->name }}</h3>
                         </div>
                     </div>
                 @endif

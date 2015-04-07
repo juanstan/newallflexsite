@@ -28,9 +28,9 @@
                     <div class="jumbotron text-center" >
                                 {{ HTML::image('images/logo-vet.png', 'a Logo', array('class' => 'signup-logo')) }}
                         <ul class="nav nav-tabs nav-justified">
-                            <li class="h2"><a href="/vet/signup/1" data-toggle="pill"><span>Your practice</span></a></li>
-                            <li class="h2"><a href="/vet/signup/2" data-toggle="pill"><span>Address</span></a></li>
-                            <li class="h2"><a href="/vet/signup/5" data-toggle="pill"><span>First upload</span></a></li>
+                            <li class="h2"><a href="/vet/signup/1" data-toggle="pill"><span>{{ Lang::get('general.Your practice') }}</span></a></li>
+                            <li class="h2"><a href="/vet/signup/2" data-toggle="pill"><span>{{ Lang::get('general.Address') }}</span></a></li>
+                            <li class="h2"><a href="/vet/signup/5" data-toggle="pill"><span>{{ Lang::get('general.First upload') }}</span></a></li>
                         </ul>
                         @yield('content')
                     </div>

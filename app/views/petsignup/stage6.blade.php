@@ -3,14 +3,14 @@
 @section('content')
     <div class="row" >
         <div class="col-md-10 col-centered float-none top-buffer" >
-            <h3>We need to learn your pet's microchip number...</h3>
-            <h4>Scan your pets with the [device name] then follow one of the below methods</h4>
+            <h3>{{ Lang::get('general.We need to learn your pet&#39;s microchip number') }}</h3>
+            <h4>{{ Lang::get('general.Scan your pets with the [device name] then follow one of the below methods') }}</h4>
         </div>
     </div>
     <div class="row" >
         <div class="col-sm-6 text-left">
-            <h3 class="blue" >Sync via Bluetooth</h3>
-            <p>Easily pair the reader via Bluetooth on<br> your mobile</p>
+            <h3 class="blue" >{{ Lang::get('general.Sync via Bluetooth') }}</h3>
+            <p>{{ Lang::get('general.Easily pair the reader via Bluetooth on your mobile') }}</p>
             <div class="col-md-10 text-center vcenterwrap" >
                 <div class="col-sm-6 vcenter">
 
@@ -26,20 +26,18 @@
             </div>
         </div>
         <div class="col-sm-6">
-            <h3 class="blue" >Upload readings via USB</h3>
+            <h3 class="blue" >{{ Lang::get('general.Upload readings via USB') }}</h3>
 
             {{ Form::open(array('files'=> 'true', 'url' => '/pet/register/reading/reading-upload', 'class'=>'dropzone', 'method' => 'post')) }}
             {{ Form::close() }}
 
-            {{ Form::open(array('files'=> 'true', 'url' => '/pet/register/reading/reading-upload', 'method' => 'post')) }}
-
             <div class="row text-center top-buffer" >
-                <p>Upload instructions</p> 
+                <p>{{ Lang::get('general.Upload instructions') }}</p>
                 <div class="col-sm-6 text-right">
-                    <p><i class="fa fa-windows"></i> Windows</p>
+                    <p><i class="fa fa-windows"></i> {{ Lang::get('general.Windows') }}</p>
                 </div>
                 <div class="col-sm-6 text-left">
-                    <p><i class="fa fa-apple"></i> Mac</p>
+                    <p><i class="fa fa-apple"></i> {{ Lang::get('general.Mac') }}</p>
                 </div>
             </div> 
         </div>
@@ -49,8 +47,8 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     
-                    <a href="/pet/register/vet" >{{ Form::button('Back', array('class' => 'btn btn-file btn-lg pull-left border-none')) }}</a>
-                    <a href="/pet/register/reading/assign" >{{ Form::button('Next', array('class' => 'btn btn-default btn-lg pull-right')) }}</a>
+                    <a href="/pet/register/vet" >{{ Form::button(Lang::get('general.Back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}</a>
+                    <a href="/pet/register/reading/assign" >{{ Form::button(Lang::get('general.Next'), array('class' => 'btn btn-default btn-lg pull-right')) }}</a>
 
                 </div>
             </div>

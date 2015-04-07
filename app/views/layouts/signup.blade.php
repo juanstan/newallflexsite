@@ -25,26 +25,26 @@
                 @if(Session::has('success'))
                     <div class="alert alert-info alert-dismissible" role="alert">
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <strong>Success!</strong> {{ Session::get('success') }}
+                      <strong>{{ Lang::get('general.Success') }}</strong> {{ Session::get('success') }}
                     </div>
                 @endif
                 @if(Session::has('message'))
                     <div class="alert alert-warning alert-dismissible" role="alert">
                       <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <strong>Success!</strong> {{ Session::get('message') }}
+                      <strong>{{ Lang::get('general.Message') }}</strong> {{ Session::get('message') }}
                     </div>
                 @endif
                 @if(Session::has('error'))
                     <div class="alert alert-warning alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <strong>Error</strong> {{ Session::get('error') }}
+                        <strong>{{ Lang::get('general.Error') }}</strong> {{ Session::get('error') }}
                     </div>
                 @endif
                 @if($errors->has())
                    @foreach ($errors->all() as $error)
                         <div class="alert alert-danger alert-dismissible" role="alert">
                           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>Error!</strong> {{ $error }}
+                          <strong>{{ Lang::get('general.Error') }}</strong> {{ $error }}
                         </div>
                   @endforeach
                 @endif

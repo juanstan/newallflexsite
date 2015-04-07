@@ -10,7 +10,7 @@
                     <?php $i++; ?>
                 @endif
             @endforeach
-                    <h4>We found {{ $i }} new microchip numbers</h4>
+                    <h4>{{ Lang::get('general.We found') }} {{ $i }} {{ Lang::get('general.new microchip numbers') }}</h4>
         </div>
     </div>
     @foreach ($pets as $value)
@@ -45,7 +45,7 @@
                 <div class="col-sm-3">
                     <div class="btn-group btn-input clearfix">
                         <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown">
-                            <span data-bind="label">Choose pet</span> <span class="caret"></span>
+                            <span data-bind="label">{{ Lang::get('general.Choose pet') }}</span> <span class="caret"></span>
                             <input type="text" class="hidden" name="pet-id" value="" />
                         </button>
                         <ul class="dropdown-menu" role="menu">
@@ -77,10 +77,10 @@
                             {{ HTML::image('images/scan-icon.png', 'a Logo', array('class' => '')) }}
                         </div>
                         <div class="col-sm-10 text-left" >
-                            <p>Scan your pets to see their Microchip numbers on the device to match up above</p>
+                            <p>{{ Lang::get('general.Scan your pets to see their Microchip numbers on the device to match up above') }}</p>
                         </div>
                     </div>
-                    <a href="/pet/register/reading/finish" >{{ Form::button('Finish setup', array('class' => 'btn btn-default btn-lg pull-right')) }}</a>
+                    <a href="/pet/register/reading/finish" >{{ Form::button(Lang::get('general.Finish setup'), array('class' => 'btn btn-default btn-lg pull-right')) }}</a>
                 </div>
             </div>
         </div>
