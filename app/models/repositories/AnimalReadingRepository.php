@@ -21,11 +21,12 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
     {             
         if($this->animal)
         {
-            return $this->animal->readings()->get();
+            return $this->animal->readings()->orderBy('reading_time')->get();
         }
 
         return parent::all();
     }
+    
     
     public function get($id)
     {
@@ -42,6 +43,9 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
             /**
             * @var \Entities\Device
             */
+            
+            
+            
             $reading = parent::create($input);
             
             $reading->animal()->associate($this->animal); 

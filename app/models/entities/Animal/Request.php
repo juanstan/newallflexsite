@@ -49,9 +49,16 @@ class Request extends \Eloquent implements UserInterface, RemindableInterface {
         return $this->belongsTo('Entities\Vet', 'vet_id');
     }
     
+    public function animal()
+    {
+        return $this->belongsTo('Entities\Animal', 'animal_id');
+    }
+    
      public function request()
     {
         return $this->belongsToMany('Entities\Animal', 'Entities\Vet', 'animal_id', 'vet_id');
     }
+    
+    
  
 }    

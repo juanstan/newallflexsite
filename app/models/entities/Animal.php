@@ -44,6 +44,11 @@ class Animal extends \Eloquent implements UserInterface, RemindableInterface {
         return $this->belongsTo('Entities\User', 'user_id');
     }
     
+    public function vet()
+    {
+        return $this->belongsToMany('Entities\Vet', 'animal_requests');
+    }
+    
     public function readings()
     {
         return $this->hasMany('Entities\Reading', 'animal_id');

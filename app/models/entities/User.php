@@ -16,7 +16,8 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
         'deleted_at',
         'devices',
         'access',
-        'tokens'
+        'tokens',
+        'confirmation_code'
     ];
 
     protected $fillable = [
@@ -26,7 +27,10 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
         'first_name',
         'last_name',
         'telephone',
-        'password'
+        'image_path',
+        'units',
+        'password',
+        'confirmation_code'
     ];
     
     public function setPasswordAttribute($value)
@@ -60,6 +64,16 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
     public function animals()
     {
         return $this->hasMany('Entities\Animal');
+    }
+    
+    public function profiles()
+    {
+        return $this->hasMany('Entities\Profile');
+    }
+    
+    public function device()
+    {
+        return $this->belongsToMany('Entities\Devive', 'device_users')->withTimestamps();
     }
 
 }

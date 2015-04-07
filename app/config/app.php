@@ -96,7 +96,8 @@ return array(
 	'providers' => array(
 
 		'Illuminate\Foundation\Providers\ArtisanServiceProvider',
-		'Illuminate\Auth\AuthServiceProvider',
+		//'Illuminate\Auth\AuthServiceProvider',
+        'Ollieread\Multiauth\MultiauthServiceProvider',
 		'Illuminate\Cache\CacheServiceProvider',
 		'Illuminate\Session\CommandsServiceProvider',
 		'Illuminate\Foundation\Providers\ConsoleSupportServiceProvider',
@@ -123,6 +124,9 @@ return array(
 		'Illuminate\Workbench\WorkbenchServiceProvider',
         'Way\Generators\GeneratorsServiceProvider',
         'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
+        'Artdarek\OAuth\OAuthServiceProvider',
+        'Intervention\Image\ImageServiceProvider',
+        //'Sebklaus\Profiler\Providers\ProfilerServiceProvider',
         'Services\UserServiceProvider',
         'Services\AnimalRequestServiceProvider',
         'Services\VetServiceProvider',
@@ -131,6 +135,7 @@ return array(
         'Services\AnimalReadingServiceProvider',
         'Services\AnimalReadingSymptomServiceProvider',
         'Services\AnimalConditionServiceProvider',
+        'Services\DeviceServiceProvider',
 	),
 
 	/*
@@ -176,6 +181,7 @@ return array(
 		'Form'            => 'Illuminate\Support\Facades\Form',
 		'Hash'            => 'Illuminate\Support\Facades\Hash',
 		'HTML'            => 'Illuminate\Support\Facades\HTML',
+        'Image' => 'Intervention\Image\Facades\Image',
 		'Input'           => 'Illuminate\Support\Facades\Input',
 		'Lang'            => 'Illuminate\Support\Facades\Lang',
 		'Log'             => 'Illuminate\Support\Facades\Log',
@@ -197,6 +203,7 @@ return array(
 		'URL'             => 'Illuminate\Support\Facades\URL',
 		'Validator'       => 'Illuminate\Support\Facades\Validator',
 		'View'            => 'Illuminate\Support\Facades\View',
+        'OAuth'           => 'Artdarek\OAuth\Facade\OAuth',
 
 	),
 

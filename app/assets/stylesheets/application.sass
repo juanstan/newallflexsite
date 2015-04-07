@@ -1,0 +1,735 @@
+@import 'variables'
+@import 'bower_components/bootstrap-sass-official/assets/stylesheets/bootstrap'
+
+@font-face
+    font-family: 'HelveticaNeueLT-Light'
+    src: url('/assets/fonts/2D72DE_0_0.eot')
+    src: url('/assets/fonts/2D72DE_0_0.eot?#iefix') format('embedded-opentype'),url('/assets/fonts/2D72DE_0_0.woff2') format('woff2'),url('/assets/fonts/2D72DE_0_0.woff') format('woff'),url('/assets/fonts/2D72DE_0_0.ttf') format('truetype')
+
+@font-face 
+    font-family: 'HelveticaNeueLT-Roman'
+    src: url('/assets/fonts/2D72DE_1_0.eot')
+    src: url('/assets/fonts/2D72DE_1_0.eot?#iefix') format('embedded-opentype'),url('/assets/fonts/2D72DE_1_0.woff2') format('woff2'),url('/assets/fonts/2D72DE_1_0.woff') format('woff'),url('/assets/fonts/2D72DE_1_0.ttf') format('truetype')
+
+::-moz-selection 
+    color: #FFFFFF
+    background: $primary-brand-color
+
+::selection 
+    color: #FFFFFF
+    background: $primary-brand-color
+
+
+body
+    font-family: $font-stack
+
+.inline-block
+    display: inline-block !important
+
+.dash-scrollable
+    max-height: 430px
+    overflow-y: auto
+    overflow-x: hidden
+
+.pointer
+    cursor: pointer
+
+.small-top-buffer
+    margin-top: 10px !important
+
+.small-left-buffer
+    margin-left: 10px
+
+.left-buffer-none
+    padding-left: 0px
+
+.small-right-buffer
+    margin-right: 10px
+
+.right-buffer
+    margin-right: 20px
+
+.small-right-buffer
+    margin-right: 20px
+
+.top-buffer
+    margin-top: 20px !important
+
+.large-top-buffer
+    margin-top: 80px
+
+.left-none
+    padding-left: 0px
+
+.right-none 
+    padding-right: 0px
+
+.top-none
+    margin-top: 0px !important
+
+.bottom-none
+    margin-bottom: 0px
+
+.border-bottom
+    border-bottom: 1px solid $primary-color
+
+.alert-grey
+    background-color: #F8F9FA
+    borde: none
+
+.container .jumbotron
+    background-color: #fff
+    border-radius: 20px
+
+    .orange
+        color: #ea884c
+
+    .red
+        color: #ff2828
+
+    .h3, h2, h3
+        color: $secondary-color
+        font-family: $font-stack
+        font-weight: 100
+
+.blue
+    color: $primary-brand-color !important
+
+.row-blue
+    background-color: $primary-brand-color
+
+    h4
+        color: #fff
+        font-size: 1.3em
+
+    .circle-small-border
+        border-color: #fff
+
+        .circle-inner > .small-score-text
+            color: #fff
+
+h1, p
+    color: $primary-color
+    font-family: $font-stack
+    font-weight: 100
+
+.jumbotron 
+    p
+        font-size: 16px
+        color: #71787f
+
+    li
+        font-size: 20px
+        color: #71787f
+
+h4, small, .h4 a 
+    color: $primary-color
+a
+    color: $primary-brand-color
+
+    &:active, &:focus
+        border: none
+        outline: none
+
+    &:hover
+        text-decoration: none
+        color: $primary-brand-color
+
+.deactive
+    position: absolute
+    width: 92%
+    background: rgba(255,255,255,0.5)
+
+.request-pet:hover img:first-child
+    display: block !important
+    visibility: visible !important
+
+.vcenterwrap
+    display: table !important
+
+.hero-banner
+    margin-top: -11px
+    background-color: $primary-brand-color
+    padding: 3% 0%
+
+.vcenter
+    display: inline-block
+    vertical-align: middle
+    float: none
+
+.hide
+    display: none
+
+.input-group-addon
+    background-color: transparent
+    color: $primary-color
+
+.col-centered
+    margin: 0 auto
+
+.border-none
+    border: none !important
+
+// Signup styles
+
+.vet-search
+    .btn-default.active
+        background-color: $primary-brand-color
+        border-color: $primary-brand-color
+        color: #fff
+        -webkit-box-shadow: transparent
+        box-shadow: transparent
+
+    .btn-default
+        background-color: transparent
+        color: $primary-brand-color
+
+.form-group
+    .nav-pills > li
+        float: left
+
+.no-overflow
+    overflow: hidden
+
+.vet-bg-img
+    width: 110%
+    height: 150px
+    background-position: center top
+    margin: 0px -5%
+    margin-top: -5%
+
+.nav-pills.text-left
+    text-align: left
+
+.nav-pills
+    text-align: center
+
+    > li.active
+
+        > a, > a:focus, > a:hover
+            background-color: #eaebec
+            color: $secondary-color
+
+    li
+        float: none
+        display: inline-block
+        font-size: 15px
+        zoom: 1
+
+        a
+            color: $secondary-color
+            font-family: Helvetica
+            border-radius: 20px
+
+.signup-logo
+    margin-top: -120px
+    background-color: #fff
+    border: 10px solid #fff
+    border-radius: 50%
+
+.btn-default
+    background-color: $primary-brand-color
+    border-color: $primary-brand-color
+    color: #fff
+
+    &:hover
+        background-color: #68d3d2
+        border-color: #68d3d2
+        color: #fff
+
+.form-control
+    text-align: center
+    height: 45px
+    font-family: Helvetica
+    border-radius: 6px
+
+
+.form-control.text-left
+    text-align: left
+
+// Pet signup styles
+
+.nav-tabs.nav-justified 
+
+    > li > a
+        border-bottom: none
+
+    > li
+
+        > a, > a:focus, > a:hover
+            background-color: transparent
+            color: $secondary-color
+            border: none
+
+    > .active
+
+        > a
+        border: none
+        color: $primary-brand-color
+        background-color: transparent
+
+        span
+            border-bottom: 1px solid $primary-brand-color
+            padding-bottom: 10px
+
+        > a, > a:focus, > a:hover
+            background-color: transparent
+            color: $primary-brand-color
+            border: none
+
+.form-horizontal 
+
+    .control-label
+        font-family: Helvetica
+        color: $secondary-color
+        text-align: left
+
+label
+    font-weight: 100
+
+.btn-file
+    font-family: Helvetica
+    background-color: #eaebec
+    border: 1px solid $primary-color
+    color: $secondary-color
+    margin-right: 10px
+
+.dropzone
+    border: 2px dashed $primary-color
+    border-radius: 30px
+    padding: 10px 10px
+    background-color: transparent
+
+    h3
+        color: $secondary-color
+
+.dropzone.dashdropzone
+    h3
+        color: $primary-brand-color
+    p
+        color:  $secondary-color
+        font-size: 1.3em
+        font-weight: 600
+
+
+.navbar-brand
+    padding: 10px 15px
+    position: absolute
+    width: 100%
+    left: 0
+    top: 0
+    text-align: center
+    margin: auto
+
+    > img
+        display: initial
+
+.nav-pills > li > a
+    padding: 3px 15px
+
+.navbar
+    min-height: 80px
+    background-color: #fff
+
+.navbar-collapse
+    padding: 10px 40px
+
+.navbar-default 
+    .navbar-nav
+        > li
+            > a
+                font-size: 18px
+
+.navbar-right
+    margin-right: 0px
+
+.text-right
+    text-align: right !important
+
+.jumbotron.dashboard
+    overflow: hidden
+    padding: 10px
+    position: relative
+    min-height: 500px
+
+.ellipsis
+    overflow: hidden
+    text-overflow-multiline: ellipsis
+
+.jumbotron.vet-dashboard
+    overflow: hidden
+    padding: 10px
+    position: relative
+    min-height: 720px
+
+.jumbotron.pet-dashboard
+    min-height: 200px
+    padding: 10px
+    position: relative
+
+.jumbotron.help
+    min-height: 300px
+
+.nav-tabs
+    border-bottom: 0px
+
+    .dropdown-menu
+        border-radius: 4px !important
+        margin-top: 5px
+        right: 0 !important
+        left: inherit
+
+.dropdown-toggle
+    color: $secondary-color
+    font-size: 1em
+    border-color: $primary-color !important
+    padding: 7px 12px !important
+    background-color: #fff
+    border-radius: 4px 4px 4px 4px !important
+
+    &:hover, &:focus
+        color: $secondary-color
+        background-color: #fff !important
+
+.btn.top-right
+    position: absolute
+    top: 10px
+    right: 0
+
+.full-width
+    width: 100%
+
+.dashboard > .vet-overlay
+    position: absolute
+    top: 0
+    right: 0
+    bottom: 0
+    left: 0
+    width: 100%
+    height: 100%
+    background-color: rgba(255, 255, 255, 0.9)
+    z-index: 999999
+    border-radius: 20px
+
+    h3
+        margin-top: 50%
+
+.jumbotron.add-new-pet 
+    background-color: transparent
+    border: 2px solid $primary-color
+    min-height: 500px
+    background-color: transparent
+
+    .col-md-12
+        margin-top: 40%
+
+.jumbotron.add-new-vet 
+    border: 2px solid $primary-color
+    min-height: 620px
+
+    .col-md-12
+        margin-top: 40%
+
+.nav.symptom-pills > li.active > a
+    border: 1px solid $primary-color
+    background-color: transparent !important
+
+.circle 
+    margin-left: auto
+    margin-right: auto
+    border-radius: 50%
+    width: 70%
+    position: relative
+
+.small-circle 
+    margin-left: auto
+    margin-right: auto
+    border-radius: 50%
+    width: 70%
+    position: relative
+    position: absolute
+    top: -10%
+    right: -10%
+    width: 28%
+
+.small-padding
+    padding-left: 3px
+    padding-right: 3px
+
+.circle-border 
+    border: 10px solid $primary-brand-color
+
+.circle-small-border 
+    border: 3px solid $primary-brand-color
+    width: 100%
+
+    .circle-inner > .small-score-text
+        color: $primary-brand-color
+        font-size: 2em
+
+
+.circle-solid
+    background-color: $primary-brand-color
+
+.circle:before 
+    content: ""
+    display: block
+    padding-top: 100%
+
+.small-circle:before 
+    content: ""
+    display: block
+    padding-top: 100%
+
+.circle-inner 
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    text-align: center
+
+.score-text 
+    color: $primary-brand-color
+    margin: auto
+    font-family: $font-stack
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    height: 1em
+    line-height: 1em
+    font-size: 6.5em
+    letter-spacing: -0.1em
+
+    p
+        letter-spacing: normal
+        margin-top: -18%
+
+    span
+        font-size: 0.6em
+        vertical-align: top
+        margin-left: 0.1em
+
+.small-score-text 
+    margin: auto
+    color: #fff
+    position: absolute
+    top: 0
+    left: 0
+    bottom: 0
+    right: 0
+    height: 1em
+    line-height: 1em
+    font-size: 1.4em
+    letter-spacing: -0.1em
+
+    p
+        letter-spacing: normal
+        margin-top: -18%
+        color: #fff
+        margin-bottom: 0px
+
+    span
+        font-size: 0.6em
+        vertical-align: top
+        margin-left: 0.1em
+
+.prev-reading
+    font-size: 1.4em !important
+
+.float-none
+    float: none !important
+
+tspan
+    color: red
+
+.navbar-default .navbar-nav > .active > a
+    background-color: transparent
+    color: $primary-brand-color
+
+    &:after
+        font-family: "FontAwesome"
+        white-space: pre
+        content: "\A\f0d8"
+        font-size: 2.5em
+        vertical-align: bottom
+        line-height: 0.3em
+        position: absolute
+        color: #e7eaed
+        bottom: -18px
+        left: 50%
+        margin-left: -0.3em
+
+
+    &:hover
+        background-color: transparent
+        color: $primary-brand-color
+
+.faq-tile
+    transition: all 0.5s ease
+    cursor: pointer
+
+    &:hover
+        -webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75)
+        -moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75)
+        box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75)
+        background-color: #f3f5f5
+
+.faq-result-tile
+    h3
+        text-align: center
+
+.symptom-list
+    width: 100%
+    height: 100%
+    position: absolute
+    top: 0
+    z-index: 999999
+    right: 0
+    left: 0
+    bottom: 0
+    background-color: #fff
+    border-radius: 20px
+
+.symptom-list-wrap input[type="checkbox"]
+    position: absolute
+    clip: rect(0, 0, 0, 0)
+    pointer-events: none
+
+.submit-text
+    background: none
+    border: none
+    color: #40c8c6
+    font-size: 16px
+
+.symptom-list-wrap
+    max-height: 390px
+    overflow-y: auto
+    overflow-x: hidden
+
+    .btn-primary
+        color: $secondary-color
+        border: 1px solid transparent
+        background-color: transparent
+        overflow: hidden
+        text-align: center
+
+    .btn-primary.active, .btn-primary:active
+        border: 1px solid $secondary-color
+        box-shadow: none
+        border-radius: 20px
+
+.latest-list-wrap
+    max-height: 440px
+    overflow-y: auto
+    overflow-x: hidden
+    position: relative
+
+.how-to-tabs
+
+    li
+        display: block !important
+        text-align: left
+
+        > a:focus, > a:hover
+            background-color: transparent
+
+    li.active
+        > a, > a:focus, > a:hover
+            background-color: transparent
+            color: $primary-brand-color
+
+ol
+    line-height: 30px
+
+.score-text.small-text
+    font-size: 5.5em !important
+
+.recent-slider
+    height: 570px
+
+.past-slider
+    height: 280px
+
+.pets-slider
+    height: 610px
+
+.slider-content
+    width: 100%
+    overflow-y: scroll
+    overflow-x: hidden
+
+    ul
+        list-style: none
+        padding-left: 0px
+
+        li
+            width: 100%
+
+            > ul
+
+                > li:last-child
+                    border-bottom: none
+
+                > li
+                    padding: 15px 0px
+                    border-bottom: 1px solid $body-bg
+                    width: 95%
+                    margin: 0 auto
+
+                    a
+                        color: $secondary-color
+                        font-size: 1.2em
+                        font-weight: 600
+                        text-transform: capitalize
+
+                        span
+                            font-weight: 100
+                            color: $primary-color
+
+        .title
+            background-color: $body-bg
+            color: $secondary-color
+            display: block
+            text-transform: uppercase
+            padding: 10px 20px
+
+.radio-pills
+    li
+        a
+            color: $secondary-color
+            font-size: 14px
+
+input[type="radio"]
+    display: none
+
+.symptom-pill
+    width: calc(50% - 8px)
+
+.pill-remove
+    &:hover a:before
+        content: 'Remove'
+
+    &:hover a > span
+        display: none
+
+.radio-pill-buttons
+    float: left
+    margin-right: 20px
+
+    input:checked + span
+        background-color: $primary-brand-color
+        color: #fff
+
+    label span
+        color: $secondary-color
+        text-align: center
+        background-color: transparent
+        font-size: 14px
+        border-radius: 20px
+        padding: 5px 18px
+        display: block
+
+

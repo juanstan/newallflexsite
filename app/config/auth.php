@@ -15,7 +15,7 @@ return array(
 	|
 	*/
 
-	'driver' => 'eloquent',
+	//'driver' => 'eloquent',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -28,7 +28,7 @@ return array(
 	|
 	*/
 
-	'model' => 'Entities\User',
+	//'model' => 'Entities\User',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -41,7 +41,20 @@ return array(
 	|
 	*/
 
-	'table' => 'users',
+	//'table' => 'users',
+
+    'multi' => array(
+        'vet' => array(
+            'driver' => 'eloquent',
+            'table' => 'vets',
+            'model' => 'Entities\Vet'
+        ),
+        'user' => array(
+            'driver' => 'eloquent',
+            'table' => 'users',
+            'model' => 'Entities\User'
+        )
+    ),
 
 	/*
 	|--------------------------------------------------------------------------

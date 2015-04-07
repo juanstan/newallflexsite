@@ -36,4 +36,9 @@ class Symptom extends \Eloquent implements UserInterface, RemindableInterface {
     {
         return $this->belongsTo('Entities\Reading', 'reading_id');
     }
+    
+    public function symptomNames()
+    {
+        return $this->belongsTo('Entities\SymptomNames', 'symptom_id');
+    }
 }

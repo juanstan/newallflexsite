@@ -37,6 +37,21 @@ class Reading extends \Eloquent implements UserInterface, RemindableInterface {
     {
         return $this->belongsTo('Entities\Animal', 'animal_id');
     }
+
+    public function vet()
+    {
+        return $this->belongsTo('Entities\vet', 'animal_id');
+    }
+
+    public function vets()
+    {
+        return $this->belongsToMany('Entities\Vet', 'vet_readings', 'reading_id', 'vet_id');
+    }
+    
+    public function device()
+    {
+        return $this->belongsTo('Entities\Device', 'device_id');
+    }
     
     public function symptom()
     {

@@ -7,10 +7,10 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 {
 	protected $classname = 'Entities\User';
 
-	public function getByEmailForLogin($email)
+	public function getByEmailForLogin($email_address)
 	{
 		return User::with('tokens')
-			->where('email_address', '=', $email)
+			->where('email_address', '=', $email_address)
 			->firstOrFail();
 	}
 
@@ -23,11 +23,12 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 	{
 		return \Validator::make($input,
 		[
-			'first_name'    => ['required'],
-			'last_name'     => ['required'],
+			'first_name'    => [],
+			'last_name'     => [],
 			'email_address' => ['required','email','unique:users'],
             'telephone' => [],
-            'password'      => ['required','min:6'],
+            'password'      => ['required','min:6','confirmed'],
+            'password_confirmation' => ['required','min:6'],
             'access' => [],
 		]);
 	}
@@ -41,14 +42,17 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 		]);
 	}
 
-	public function getUpdateValidator($input)
+	public function getUpdateValidator($input, $id = null)
 	{
 		return \Validator::make($input,
 		[
-			'email_address' => ['sometimes','required','email','unique:users'],
+			'email_address' => ['sometimes','required','email','unique:users,email_address,'.$id],
 			'first_name'    => ['sometimes','required'],
 			'last_name'     => ['sometimes','required'],
-			'password'      => ['sometimes','required','min:6']
+            'image_path'     => ['sometimes','max:20000','mimes:jpeg,png'],
+            'old_password'      => ['min:6'],
+            'password'      => ['min:6','confirmed','different:old_password'],
+            'password_confirmation' => ['min:6'],
 		]);
 	}
 }

@@ -14,7 +14,8 @@ class Vet extends \Eloquent implements UserInterface, RemindableInterface {
         'deleted_at',
         'devices',
         'access',
-        'tokens'
+        'tokens',
+        'confirmation_code'
     ];
 
     protected $fillable = [
@@ -22,16 +23,18 @@ class Vet extends \Eloquent implements UserInterface, RemindableInterface {
         'contact_name',
         'email_address',
         'telephone',
+        'fax',
         'address_1',
         'address_2',
         'city',
-        'state',
         'county',
         'zip',
+        'units',
         'latitude',
         'longitude',
         'image_path',
-        'password'
+        'password',
+        'confirmation_code'
     ];
     
     public function setPasswordAttribute($value)
@@ -62,9 +65,29 @@ class Vet extends \Eloquent implements UserInterface, RemindableInterface {
         return $this->hasMany('Entities\Animal\Request', 'vet_id');
     }
     
+    public function requestedAnimals()
+    {
+        return $this->belongsToMany('Entities\Animal', 'animal_requests')->withTimestamps();
+    }
+
+//    public function animals()
+//    {
+//        return $this->hasMany('Entities\Animal', 'vet_id');
+//    }
+
     public function animals()
     {
-        return $this->hasManyThrough('Entities\Animal', 'Entities\Animal\Request', 'vet_id', 'id');
+        return $this->requestedAnimals()->wherePivot('approved', '=', '1');
+    }
+
+    public function readings()
+    {
+        return $this->belongsToMany('Entities\Reading', 'vet_readings', 'vet_id', 'reading_id');
+    }
+    
+    public function device()
+    {
+        return $this->belongsToMany('Entities\Device', 'device_vets')->withTimestamps();
     }
     
 }

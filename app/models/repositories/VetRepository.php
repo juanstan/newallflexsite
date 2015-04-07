@@ -23,10 +23,9 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 	{
 		return \Validator::make($input,
 		[
-			'company_name'    => ['required'],
-			'contact_name'     => ['required'],
-			'email_address' => ['required','email','unique:vets'],
-            'password'      => ['required','min:6'],
+			'email_address'    => ['required'],
+            'password'      => ['required','min:6','confirmed'],
+            'password_confirmation' => ['required','min:6']
 		]);
 	}
 
@@ -39,14 +38,16 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 		]);
 	}
 
-	public function getUpdateValidator($input)
+	public function getUpdateValidator($input, $id = null)
 	{
 		return \Validator::make($input,
 		[
-			'email_address' => ['sometimes','required','email','unique:vets'],
+            'email_address' => ['sometimes','required','email','unique:vets,email_address,'.$id],
 			'first_name'    => ['sometimes','required'],
 			'last_name'     => ['sometimes','required'],
-			'password'      => ['sometimes','required','min:6']
+            'old_password'      => ['min:6'],
+            'password'      => ['min:6','confirmed','different:old_password'],
+            'password_confirmation' => ['min:6'],
 		]);
 	}
 }
