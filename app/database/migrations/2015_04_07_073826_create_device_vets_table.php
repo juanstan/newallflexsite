@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateDeviceUsersTable extends Migration {
+class CreateDeviceVetsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,13 @@ class CreateDeviceUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('device_users', function(Blueprint $table)
+		Schema::create('device_vets', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('user_type')->nullable();
-			$table->integer('user_id')->nullable();
+			$table->integer('vet_id')->nullable();
+			$table->integer('device_id')->nullable();
+			$table->dateTime('created_at')->nullable();
+			$table->time('updated_at')->nullable();
 		});
 	}
 
@@ -28,7 +30,7 @@ class CreateDeviceUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('device_users');
+		Schema::drop('device_vets');
 	}
 
 }

@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateDevicesTable extends Migration {
+class CreateSensorReadingSymptomsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,11 @@ class CreateDevicesTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('devices', function(Blueprint $table)
+		Schema::create('sensor_reading_symptoms', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->string('serial_id')->nullable();
-			$table->string('device')->nullable();
-			$table->string('name')->nullable();
-			$table->string('version')->nullable();
+			$table->integer('reading_id')->nullable();
+			$table->integer('symptom_id')->nullable();
 			$table->timestamps();
 		});
 	}
@@ -31,7 +29,7 @@ class CreateDevicesTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('devices');
+		Schema::drop('sensor_reading_symptoms');
 	}
 
 }

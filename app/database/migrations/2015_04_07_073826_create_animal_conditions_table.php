@@ -17,6 +17,7 @@ class CreateAnimalConditionsTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('animal_id')->nullable();
 			$table->integer('condition_id')->nullable();
+			$table->timestamps();
 		});
 	}
 

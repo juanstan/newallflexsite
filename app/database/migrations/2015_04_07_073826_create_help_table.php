@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateSensorReadingSymptonsTable extends Migration {
+class CreateHelpTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,12 @@ class CreateSensorReadingSymptonsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('sensor_reading_symptons', function(Blueprint $table)
+		Schema::create('help', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('reading_id')->nullable();
-			$table->integer('symptom_id')->nullable();
+			$table->string('title')->nullable();
+			$table->text('cover', 16777215)->nullable();
+			$table->text('content')->nullable();
 		});
 	}
 
@@ -28,7 +29,7 @@ class CreateSensorReadingSymptonsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('sensor_reading_symptons');
+		Schema::drop('help');
 	}
 
 }

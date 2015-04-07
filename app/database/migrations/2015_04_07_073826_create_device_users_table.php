@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateSensorReadingsTable extends Migration {
+class CreateDeviceUsersTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,11 +12,11 @@ class CreateSensorReadingsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('sensor_readings', function(Blueprint $table)
+		Schema::create('device_users', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('animal_id')->nullable();
-			$table->float('temperature', 10, 0)->nullable();
+			$table->integer('user_id')->nullable();
+			$table->integer('device_id')->nullable();
 			$table->timestamps();
 		});
 	}
@@ -29,7 +29,7 @@ class CreateSensorReadingsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('sensor_readings');
+		Schema::drop('device_users');
 	}
 
 }

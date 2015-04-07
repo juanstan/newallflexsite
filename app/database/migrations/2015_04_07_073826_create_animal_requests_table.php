@@ -14,9 +14,11 @@ class CreateAnimalRequestsTable extends Migration {
 	{
 		Schema::create('animal_requests', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->integer('animal_request_id', true);
 			$table->integer('vet_id')->nullable();
-			$table->integer('approved')->nullable();
+			$table->integer('user_id')->nullable();
+			$table->integer('animal_id')->nullable();
+			$table->integer('approved')->nullable()->default(0);
 			$table->integer('request_type')->nullable();
 			$table->text('request_reason')->nullable();
 			$table->text('response_reason')->nullable();
