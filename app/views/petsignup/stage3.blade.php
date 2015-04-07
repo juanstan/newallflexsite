@@ -17,18 +17,18 @@
                     @empty
                         <div class="row" >
                             <div class="col-md-12 top-buffer text-center" >
-                                <h4>Click the button below to add a pet.</h4>
+                                <h4>{{ Lang::get('general.addPetText') }}</h4>
                             </div>
                         </div>
                     @endforelse
                     <div class="col-md-12 col-centered top-buffer" >
                         @if($pets->isEmpty())
                         <a href="/pet/register/pet/create" >
-                            {{ Form::button('+ Add a pet', array('class' => 'btn btn-default btn-lg pull-left border-none btn-block')) }}
+                            {{ Form::button(Lang::get('general.addPet'), array('class' => 'btn btn-default btn-lg pull-left border-none btn-block')) }}
                         </a>
                         @else
                         <a href="/pet/register/pet/create" >
-                            {{ Form::button('+ Add another pet', array('class' => 'btn btn-default btn-lg pull-left border-none btn-block')) }}
+                            {{ Form::button(Lang::get('general.addAnotherPet'), array('class' => 'btn btn-default btn-lg pull-left border-none btn-block')) }}
                         </a>
                         @endif
                     </div>
@@ -40,12 +40,12 @@
             <div class="form-group">
                     <div class="col-sm-12">
                         
-                        <a href="/pet/register/about" >{{ Form::button('Back', array('class' => 'btn btn-file btn-lg pull-left border-none')) }}</a>
+                        <a href="/pet/register/about" >{{ Form::button(Lang::get('general.back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}</a>
                         
                         @if($pets->isEmpty())
-                            <a href="/pet/register/vet" >{{ Form::button('Skip', array('class' => 'btn btn-file border-none btn-lg pull-right')) }}</a>
+                            <a href="/pet/register/vet" >{{ Form::button(Lang::get('general.skip'), array('class' => 'btn btn-file border-none btn-lg pull-right')) }}</a>
                         @else
-                            <a href="/pet/register/vet" >{{ Form::button('Next', array('class' => 'btn btn-default border-none btn-lg pull-right')) }}</a>
+                            <a href="/pet/register/vet" >{{ Form::button(Lang::get('general.next'), array('class' => 'btn btn-default border-none btn-lg pull-right')) }}</a>
                         @endif
                         
                         

@@ -2,34 +2,63 @@
 
 return array(
 
-	'alreadyhaveaccount' => 'Already have an account?',
+    /* General */
+	'error' => 'error',
 
-	'signin' => 'Sign in',
-
-	'donthaveaccount' => 'Don&#39;t have an account?',
-
-	'signup' => 'Sign up',
-
-	'emailaddress' => 'Email address',
-
-	'createpassword' => 'Create Password',
-
-	'confirmpassword' => 'Confirm password',
-
-	'password' => 'Password',
-
-	'signupwithfacebook' => 'Sign up with Facebook',
-
-	'signinwithfacebook' => 'Sign in with Facebook',
-
-	'signupwithtwitter' => 'Sign up with Twitter',
-
-	'signinwithtwitter' => 'Sign in with Twitter',
-
-	'createaccount' => 'Create account',
-
-	'or' => 'or',
-
-	
+    /* Pet */
+    'aboutYou' => 'About you',
+    'yourPets' => 'Your pets',
+    'yourVets' => 'Your vets',
+    'yourReadings' => 'Your readings',
+    'imageFileText' => 'JPEG or PNG 4mb file limit',
+    'profilePhoto' => 'Profile photo',
+    'browse' => 'Browse',
+    'emailAddress' => 'Email address',
+    'firstName' => 'First name',
+    'lastName' => 'Last name',
+    'telephoneNumber' => 'Telephone number',
+    'next' => 'Next',
+    'back' => 'Back',
+    'skip' => 'Skip',
+    'addPetText' => 'Click the button below to add a pet.',
+    'addPet' => 'Add a pet',
+    'addAnotherPet' => 'Add another pet',
+    'petsPhoto' => 'Pet&#39;s photo',
+    'petsName' => 'Pet&#39;s name',
+    'breed' => 'Breed',
+    'dateOfBirth' => 'Date of birth',
+    'weight' => 'Weight',
+    'gender' => 'Gender',
+    'male' => 'Male',
+    'female' => 'Female',
+    'size' => 'Size',
+    'small' => 'Small',
+    'medium' => 'Medium',
+    'large' => 'Large',
+    'xLarge' => 'X-Large',
+    'kg' => 'KG',
+    'connectWithVetText' => 'Connect with your vet',
+    'connectWithVetText1' => 'Easily share your readings with your vet',
+    'connectWithVetText2' => 'Store important vet details for emergencies',
+    'searchIcon' => '<i class="fa fa-search"></i>'
+    'findMyVet' => 'searchIcon, Find my vet',
+    'searchVetText' => 'To find your vet practice, search below',
+    'location' => 'Location',
+    'vetPractice' => 'Vet Practice',
+    'searchByLocation' => 'Search by location',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
+    '' => '',
 
 );

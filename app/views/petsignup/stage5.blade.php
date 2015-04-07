@@ -3,14 +3,14 @@
 @section('content')
     <div class="row" >
         <div class="col-md-6 col-centered float-none top-buffer" >
-            <h3>To find your vet practice, search below...</h3>
+            <h3>{{ Lang::get('general.searchVetText') }}</h3>
             {{ HTML::image('images/arrow.png', 'a Logo') }}
             <div class="btn-group btn-group-justified top-buffer vet-search" role="group" aria-label="...">
               <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default active">Location</button>
+                <button type="button" class="btn btn-default active">{{ Lang::get('general.location') }}</button>
               </div>
               <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default">Vet Practice</button>
+                <button type="button" class="btn btn-default">{{ Lang::get('general.vetPractice') }}</button>
               </div>
             </div>
             <div class="row top-buffer" >
@@ -18,7 +18,7 @@
                     <div class="input-group">
 
                         <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                        {{ Form::text('search', '', array('class' => ' form-control text-left', 'placeholder' => 'Search by location')) }}
+                        {{ Form::text('search', '', array('class' => ' form-control text-left', 'placeholder' => Lang::get('general.searchByLocation'))) }}
 
                     </div>
                 </div>
@@ -48,9 +48,9 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     
-                     <a href="/pet/register/vet" >{{ Form::button('Back', array('class' => 'btn btn-file btn-lg pull-left border-none')) }}</a>
+                     <a href="/pet/register/vet" >{{ Form::button(Lang::get('general.back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}</a>
 
-                    <a href="/pet/register/reading" >{{ Form::button('Next', array('class' => 'btn btn-default btn-lg pull-right border-none')) }}</a>
+                    <a href="/pet/register/reading" >{{ Form::button(Lang::get('general.next'), array('class' => 'btn btn-default btn-lg pull-right border-none')) }}</a>
 
                     {{ Form::close() }}
 
