@@ -5635,6 +5635,9 @@ button.close {
   color: #FFFFFF;
   background: #40c8c6; }
 
+.mobile {
+  display: none; }
+
 body {
   font-family: "HelveticaNeueLT-Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 
@@ -6266,5 +6269,8 @@ input[type="radio"] {
     border-radius: 20px;
     padding: 5px 18px;
     display: block; }
+
+.nav {
+  display: block; }
 
 /*# sourceMappingURL=application.css.map */

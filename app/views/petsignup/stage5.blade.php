@@ -2,6 +2,9 @@
 
 @section('content')
     <div class="row" >
+        <div class="col-md-12 mobile" >
+            <h3>Your vets</h3>
+        </div>
         <div class="col-md-6 col-centered float-none top-buffer" >
             <h3>{{ Lang::get('general.To find your vet practice, search below') }}</h3>
             {{ HTML::image('images/arrow.png', 'a Logo') }}
@@ -58,4 +61,5 @@
             </div>
         </div>
     </div>
+    <div class="top-buffer mobile" ></div>
 @stop

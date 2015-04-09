@@ -13,7 +13,7 @@ return array(
 	|
 	*/
 
-	'debug' => false,
+	'debug' => true,
 
 	/*
 	|--------------------------------------------------------------------------
@@ -26,7 +26,7 @@ return array(
 	|
 	*/
 
-	'url' => 'http://localhost',
+	'url' => 'http://allflex:8888',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -137,6 +137,7 @@ return array(
         'Services\AnimalConditionServiceProvider',
         'Services\DeviceServiceProvider',
         'Potsky\LaravelLocalizationHelpers\LaravelLocalizationHelpersServiceProvider',
+        'Jenssegers\Agent\AgentServiceProvider',
 	),
 
 	/*
@@ -166,6 +167,7 @@ return array(
 	'aliases' => array(
 
 		'App'             => 'Illuminate\Support\Facades\App',
+        'Agent' => 'Jenssegers\Agent\Facades\Agent',
 		'Artisan'         => 'Illuminate\Support\Facades\Artisan',
 		'Auth'            => 'Illuminate\Support\Facades\Auth',
 		'Blade'           => 'Illuminate\Support\Facades\Blade',

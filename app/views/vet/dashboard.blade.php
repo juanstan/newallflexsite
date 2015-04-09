@@ -12,15 +12,13 @@
 
         </div>
     </div>
-    <div class="row col-md-12 col-centered float-none" >
+    <div class="row col-centered float-none" >
         <div class="col-md-4" >
             @if($user->readings->count())
             <div class="jumbotron vet-dashboard top-buffer" >
-                <div class="row" >
                     <div class="col-md-11 col-centered float-none" >
                         <h3>{{ Lang::get('general.My readings') }}</h3>
                     </div>
-                </div>
                 @foreach($user->readings->slice(0, 1) as $reading)
                     <div class="row" >
                         <div class="col-md-7 col-centered float-none" >
@@ -91,10 +89,8 @@
             </div>
             @else
                 <div class="jumbotron top-buffer" >
-                    <div class="row" >
-                        <h3>{{ Lang::get('general.There are no pet readings associated with your account') }}</h3>
-                        <h4>{{ Lang::get('general.Click the "upload" button above to get started') }}</h4>
-                    </div>
+                    <h3>{{ Lang::get('general.There are no pet readings associated with your account') }}</h3>
+                    <h4>{{ Lang::get('general.Click the "upload" button above to get started') }}</h4>
                 </div>
             @endif
         </div>

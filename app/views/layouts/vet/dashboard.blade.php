@@ -6,13 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
 
-    <!-- Bootstrap -->
-      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-      <link rel="stylesheet" href="{{ url('assets/stylesheets/dropzone.css') }}" />
-      <link rel="stylesheet" href="{{ url('assets/stylesheets/application.css') }}" />
-      <link rel="stylesheet" href="{{ url('assets/stylesheets/pace.css') }}" />
-      <link rel="stylesheet" href="{{ url('vendor/selectize/css/selectize.bootstrap3.css') }}" />
-    
+      <!-- Stylesheets -->
+      @include('layouts/core/stylesheets')
+
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -70,11 +66,11 @@
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-collapse-1">
                  
-                  <ul class="nav navbar-nav navbar-left">
+                  <ul class="nav desktop mobile navbar-nav navbar-left">
                     <li><a href="/vet/dashboard">{{ Lang::get('general.Overview') }}</a></li>
-                    <li><a href="#upload" id="upload-toggle" data-toggle="collapse" data-target="#file-upload"><i class="fa fa-cloud-upload"></i> {{ Lang::get('general.Upload') }}</a></li>
+                    <li class="desktop" ><a href="#upload" id="upload-toggle" data-toggle="collapse" data-target="#file-upload"><i class="fa fa-cloud-upload"></i> {{ Lang::get('general.Upload') }}</a></li>
                   </ul>
-                  <ul class="nav navbar-nav navbar-right">
+                  <ul class="nav desktop mobile navbar-nav navbar-right">
                       <li>{{ HTML::link('vet/dashboard/help', Lang::get('general.Help')) }}</li>
                       <li>{{ HTML::link('vet/dashboard/settings', Lang::get('general.Settings')) }}</li>
                       <li>{{ HTML::link('vet/logout', Lang::get('general.Logout')) }}</li>

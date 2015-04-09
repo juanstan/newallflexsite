@@ -55,9 +55,10 @@ return array(
 		'mysql' => array(
 			'driver'    => 'mysql',
 			'host'      => 'localhost',
-			'database'  => 'flex',
+            'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
+			'database'  => 'allflex',
 			'username'  => 'root',
-			'password'  => '',
+			'password'  => 'delta1234',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',

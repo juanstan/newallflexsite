@@ -12,3 +12,5 @@ Thumbs.db
 node_modules/*
 public/images/uploads/*
 public/uploads/csv/*
+local/app.php
+local/datab

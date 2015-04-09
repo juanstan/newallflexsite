@@ -2,7 +2,27 @@
 
 @section('content')
     <div class="row" >
-        <div class="col-md-11 col-centered float-none" >
+        <div class="col-md-12 mobile" >
+            <h3>Readings</h3>
+        </div>
+        <div class="col-sm-6 text-left">
+            <h3 class="blue" >{{ Lang::get('general.Sync via Bluetooth') }}</h3>
+            <p>{{ Lang::get('general.Easily pair the reader via Bluetooth on your mobile') }}</p>
+            <div class="col-md-12 text-center vcenterwrap" >
+                <div class="col-md-6 vcenter">
+
+                    {{ HTML::image('images/phones.png', 'a Logo', array('width' => '100%')) }}
+
+                </div>
+                <div class="col-md-6 vcenter">
+
+                    {{ HTML::image('images/app-store.svg', 'a Logo', array('width' => '100%', 'class' => 'col-xs-6 col-md-12 small-padding')) }}
+                    {{ HTML::image('images/play-store.png', 'a Logo', array('width' => '100%', 'class' => 'col-xs-6 col-md-12 small-padding')) }}
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-11 desktop col-centered float-none" >
             <div class="col-md-3" >
                 <ul class="nav nav-pills how-to-tabs top-buffer">
                     <li class="active"><a href="#windows-instructions" data-toggle="pill"  ><i class="small-right-buffer fa fa-windows"></i> {{ Lang::get('general.Windows') }}</a></li>
@@ -31,7 +51,8 @@
             </div>
         </div>
     </div>
-    <div class="row" >
+
+    <div class="row desktop" >
         <div class="col-md-11 col-centered float-none" >
             {{ Form::open(array('files'=> 'true', 'url' => '/vet/dashboard/reading-upload', 'class'=>'dropzone', 'method' => 'post')) }}
             {{ Form::close() }}
@@ -46,4 +67,5 @@
             </div>
         </div>
     </div>
+    <div class="top-buffer mobile" ></div>
 @stop

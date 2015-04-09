@@ -6,13 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="{{ url('assets/stylesheets/dropzone.css') }}" />
-    <link rel="stylesheet" href="{{ url('assets/stylesheets/application.css') }}" />
-    <link rel="stylesheet" href="{{ url('assets/stylesheets/pace.css') }}" />
-    <link rel="stylesheet" href="{{ url('vendor/selectize/css/selectize.bootstrap3.css') }}" />
-    
+      <!-- Stylesheets -->
+      @include('layouts/core/stylesheets')
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -55,24 +50,24 @@
             </div>
             <nav class="navbar navbar-default" role="navigation">
                 <!-- Brand and toggle get grouped for better mobile display -->
-                <div class="navbar-header">
-                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-1">
+                <div class="navbar-header" >
+                  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                   </button>
-                  
+
                 </div>
-                <a class="navbar-brand" href="/pet/dashboard">{{ HTML::image('images/logo-pet.png', 'Logo', array('width' => '60px')) }}</a>
+                <div class="navbar-brand">{{ HTML::image('images/logo-pet.png', 'Logo', array('width' => '60px')) }}</div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="navbar-collapse-1">
+                <div class="collapse navbar-collapse" id="navigationbar">
                  
-                  <ul class="nav navbar-nav navbar-left">
+                  <ul class="nav desktop mobile navbar-nav navbar-left">
                     <li>{{ HTML::link('pet/dashboard', Lang::get('general.My Pets')) }}</li>
-                    <li><a href="#upload" id="upload-toggle" data-toggle="collapse" data-target="#file-upload"><i class="fa fa-cloud-upload"></i> {{ Lang::get('general.Upload') }}</a></li>
+                    <li class="desktop"><a href="#upload" id="upload-toggle" data-toggle="collapse" data-target="#file-upload"><i class="fa fa-cloud-upload"></i> {{ Lang::get('general.Upload') }}</a></li>
                   </ul>
-                  <ul class="nav navbar-nav navbar-right">
+                  <ul class="nav navbar-nav desktop mobile navbar-right">
                     <li>{{ HTML::link('pet/dashboard/help', Lang::get('general.Help')) }}</li>
                     <li>{{ HTML::link('pet/dashboard/vet', Lang::get('general.My Vet')) }}</li>
                     <li>{{ HTML::link('pet/dashboard/settings', Lang::get('general.Settings')) }}</li>

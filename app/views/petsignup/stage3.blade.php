@@ -2,14 +2,17 @@
 
 @section('content')
     <div class="row" >
-        <div class="col-md-6 col-centered float-none" >
+        <div class="col-md-12 mobile" >
+            <h3>Your pets</h3>
+        </div>
+        <div class="col-md-6 col-centered float-none hidden-desktop" >
             <div class="form-horizontal top-buffer">
                     @forelse ($pets as $value) 
                         <div class="row" >
-                            <div class="col-md-4 top-buffer" >
+                            <div class="col-xs-4 top-buffer" >
                                 {{ HTML::image(isset($value->image_path) ? $value->image_path : '/images/pet-image.png', $value->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
                             </div>
-                            <div class="col-md-8 top-buffer" >
+                            <div class="col-xs-8 top-buffer" >
                                 <h3 class="bottom-none text-left">{{ $value->name }}</h3>
                                 <h4 class="top-none text-left">{{ $value->breed }}</h4>
                             </div>
@@ -37,7 +40,7 @@
     </div>
     <div class="row top-buffer" >
         <div class="col-md-12 col-centered" >
-            <div class="form-group">
+            <div class="form-group" >
                     <div class="col-sm-12">
                         
                         <a href="/pet/register/about" >{{ Form::button(Lang::get('general.Back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}</a>
@@ -56,4 +59,5 @@
                 </div>
         </div>
     </div>
+    <div class="top-buffer mobile" ></div>
 @stop

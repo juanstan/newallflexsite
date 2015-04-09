@@ -7,7 +7,7 @@
                 {{ HTML::image('images/logo-pet.png', 'a Logo', array('class' => 'signup-logo')) }}
                 <h2>{{ Lang::get('general.Sign up to PetConnect') }}</h2>
 
-                <ul class="nav nav-pills top-buffer">
+                <ul class="nav mobile desktop nav-pills top-buffer">
                     <li class="active">{{ HTML::link('pet/', Lang::get('general.Pet owner')) }}</li>
                     <li><a href="#vetdetails" >{{ HTML::link('vet/', Lang::get('general.Vet practice')) }}</a></li>
                 </ul>

@@ -121,7 +121,7 @@ class DashboardController extends \BaseController {
         }
 
         if (\Input::hasFile('image_path')){
-            $destinationPath = 'images/uploads/'.$id;
+            $destinationPath = 'images/uploads/vets/'.$id;
             if(!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }
@@ -139,7 +139,7 @@ class DashboardController extends \BaseController {
                 \Image::make(\Input::file('image_path'))->crop($width, $width)->save($destinationPath.'/'.$fileName);
             }
 
-            $image_path = '/images/uploads/'.$id.'/'.$fileName;
+            $image_path = '/images/uploads/vets/'.$id.'/'.$fileName;
 
         }
         else {

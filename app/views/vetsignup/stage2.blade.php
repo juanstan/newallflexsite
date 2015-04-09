@@ -2,8 +2,11 @@
 
 @section('content')
     <div class="row" >
+        <div class="col-md-12 mobile" >
+            <h3>Address</h3>
+        </div>
         <div class="col-md-8 col-centered float-none" >
-            <div class="form-horizontal large-top-buffer">
+            <div class="form-horizontal top-buffer">
 
                 {{ Form::open(array('url' => 'vet/register/address', 'method' => 'post' )) }}
 
@@ -76,4 +79,5 @@
             </div>
         </div>
     </div>
+        <div class="top-buffer mobile" ></div>
 @stop

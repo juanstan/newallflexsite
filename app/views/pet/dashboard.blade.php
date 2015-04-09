@@ -15,7 +15,7 @@
     
     @foreach ($pets as $value) 
         @if ($value->name == null)
-            <div class="row col-md-11 float-none col-centered" >
+            <div class="row col-md-11 float-none col-centered desktop" >
                 <div class="alert alert-grey alert-dismissible" role="alert">
                     <button type="button" class="close small-top-buffer" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="inline-block small-top-buffer">{{ Lang::get('general.1 unknown microchip found, would you like to create a new pet for this microchip?') }}</h4>
@@ -27,22 +27,23 @@
     @endforeach
     <div class="row col-md-12 col-centered float-none top-buffer" >
        
-        @foreach ($pets as $value) 
-        
+        @foreach ($pets as $value)
+
             <div class="col-md-4" >
+                <div class="top-buffer mobile" ></div>
                 <div class="row" >
                     <div class="col-md-12" >
-                        <div class="col-md-3" >
+                        <div class="col-xs-3" >
                                                     
                             {{ HTML::image(isset($value->image_path) ? $value->image_path : '/images/pet-image.png', $value->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
                             
                         </div>
                         <div class="tab-content ">
-                            <div class="col-md-9 active tab-pane fade in small-padding" id="pet-name{{ $value->id }}" >
+                            <div class="col-xs-9 active tab-pane fade in small-padding" id="pet-name{{ $value->id }}" >
                                 <h3 class="top-none bottom-none text-left">{{ isset($value->name) ? $value->name : 'Unknown'; }}</h3>
                                 <h4 class="top-none text-left">{{ isset($value->microchip_number) ? $value->microchip_number : Null; }}</h4>
                             </div>
-                            <div class="col-md-9 tab-pane fade in small-padding top-buffer" id="pet-photo{{ $value->id }}" >
+                            <div class="col-xs-9 tab-pane fade in small-padding top-buffer" id="pet-photo{{ $value->id }}" >
                                 {{ Form::open(array('files'=> 'true', 'url' => array('/pet/dashboard/update-pet-photo', $value->id), 'method' => 'post')) }}
                                 <p class="pointer" onclick="$('#ufile{{ $value->id }}').click()" ><i class="fa fa-camera"></i> {{ Lang::get('general.Change photo') }}</p>
 
@@ -62,6 +63,7 @@
                                         {{ Form::button(Lang::get('general.No, cancel'), array('class' => 'btn-block btn btn-file btn-md')) }}
                                     </a>
                                 </div>
+                                <div class="top-buffer mobile" ></div>
                                 <div class="col-md-6 small-padding" >
                                     <a href="/pet/dashboard/remove-pet/{{ $value->id }}" >
                                         {{ Form::button(Lang::get('general.Yes, remove'), array('class' => 'btn-block btn btn-danger btn-md')) }}
@@ -144,16 +146,16 @@
 
                     <div class="row" >
                         <div class="col-md-12" >
-                            <ul class="nav nav-pills text-left">
+                            <ul class="nav mobile-nav nav-pills text-left">
                                 <li class="active"><a href="#latest{{ $value->id }}" data-toggle="pill" data-target="#pet-name{{ $value->id }}, #latest{{ $value->id }}, #pet-photo-hide{{ $value->id }}" >{{ Lang::get('general.Latest') }}</a></li>
                                 <li class="report-toggle" ><a href="#reports{{ $value->id }}" data-toggle="pill" data-target="#pet-name{{ $value->id }}, #reports{{ $value->id }}, #pet-photo-hide{{ $value->id }}">{{ Lang::get('general.Reports') }}</a></li>
-                                <li class="pull-right" ><a href="#edit{{ $value->id }}" data-toggle="pill" data-target="#pet-photo{{ $value->id }}, #edit{{ $value->id }}"  >{{ ($value->name == NULL ? Lang::get('general.<i class="fa fa-plus"></i> Create pet') : Lang::get('general.<i class="fa fa-cog"></i> Edit') ); }}</a></li>
+                                <li class="pull-right" ><a href="#edit{{ $value->id }}" data-toggle="pill" data-target="#pet-photo{{ $value->id }}, #edit{{ $value->id }}"  >{{ ($value->name == NULL ? Lang::get('general.<i class="fa fa-cog"></i> Edit') : Lang::get('general.<i class="fa fa-cog"></i> Edit') ); }}</a></li>
                             </ul>
                         </div>
                     </div>
                     
                     <div class="tab-content ">
-                        <div class="tab-pane  latest-list-wrap active fade in" id="latest{{ $value->id }}">
+                        <div class="tab-pane latest-list-wrap active fade in" id="latest{{ $value->id }}">
                             <div class="row top-buffer" >
                                     @foreach ($value->readings as $readings)
                                         @if ($readings->average == 1)
@@ -229,13 +231,14 @@
                                         @endif
                                     </div>
                                 </div>
-                                <div class="row text-center top-buffer col-md-12" >
+                                <div class="row text-center top-buffer " >
+                                    <div class="col-md-12 col-xs-10 col-centered float-none">
                                     <div class="col-md-4" >
                                         <h4>{{ Lang::get('general.Previous Readings') }}</h4>
                                     </div>
                                     @if( $value->readings->count() )
                                         @foreach ($value->readings->slice(0, 4) as $readings)
-                                        <div class="col-md-2 small-padding" >
+                                        <div class="col-md-2 col-xs-3 small-padding" >
                                             <div class="circle circle-small-border" style="border-color: {{ getTemperatureColor($readings->temperature, $temperaturePref)['tempcol'] }}" >
                                                  <div class="circle-inner">
                                                      <div class="small-score-text prev-reading" style="color: {{ getTemperatureColor($readings->temperature, $temperaturePref)['tempcol'] }}">
@@ -251,6 +254,7 @@
                                             <h4>{{ Lang::get('general.No Previous Readings Available') }}</h4>
                                         </div>
                                     @endif
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -260,14 +264,14 @@
                                 @if( $value->readings->count() )
                                     @foreach ($value->readings->slice(0, 1) as $readings)
                                 <div class="row hero-banner" >
-                                    <div class="col-md-9 " >
+                                    <div class="col-xs-9 " >
                                         @if(!empty($allReadingTemps))
                                             <h4 class="top-buffer" style="color: white;">{{ isset($value->name) ? $value->name : 'Unknown'; }}{{ Lang::get('general.&#39; temperature is usually around') }} {{ getTemperatureColor($readingAverage, $temperaturePref)['temp'] }}&#176;</h4>
                                         @else
                                             <h4 class="top-buffer" style="color: white;">{{ Lang::get('general.There is not average temperature for') }} {{ isset($value->name) ? $value->name : 'Unknown'; }} {{ Lang::get('general.yet') }}</h4>
                                         @endif
                                     </div>
-                                    <div class="col-md-3 small-padding" >
+                                    <div class="col-xs-3 small-padding" >
                                         @if(!empty($allReadingTemps))
                                             <div class="circle small-top-buffer circle-small-border" style="border-color: white;">
                                                 <div class="circle-inner">
@@ -290,10 +294,10 @@
                                     @endforeach
                                 @else
                                     <div class="row hero-banner" >
-                                        <div class="col-md-9" >
+                                        <div class="col-xs-9" >
                                             <h4 class="top-buffer" style="color: white;">{{ Lang::get('general.No readings have been uploaded for') }} {{ isset($value->name) ? $value->name : 'Unknown'; }} {{ Lang::get('general.yet') }}.</h4>
                                         </div>
-                                        <div class="col-md-3 small-padding" >
+                                        <div class="col-xs-3 small-padding" >
                                             <div class="circle small-top-buffer circle-small-border" style="border-color: white;">
                                                 <div class="circle-inner">
                                                     <div class="small-score-text" style="color: white;">
@@ -304,9 +308,11 @@
                                         </div>
                                     </div>
                                 @endif
+                                @if(count($value->readings))
                                 <div class="row top-buffer" >
                                     <div class="graph-container col-centered" style="width:95%; height:150px;" data-data='{{ $value->readings }}' ></div>
                                 </div>
+                                @endif
                                 <div class="row" >
                                 @if( $value->readings->count() )
                                     <?php $previousTemp = 0; ?>
@@ -317,7 +323,7 @@
                                         </div>
                                     </div>
                                     <div class="row text-left col-md-12" >
-                                        <div class="col-md-3 small-padding" >
+                                        <div class="col-xs-3 small-padding" >
                                             <div class="circle circle-small-border" style="border-color: {{ getTemperatureColor($readings->temperature, $temperaturePref)['tempcol'] }}">
                                                  <div class="circle-inner">
                                                      <div class="small-score-text prev-reading" style="color: {{ getTemperatureColor($readings->temperature, $temperaturePref)['tempcol'] }}">
@@ -326,7 +332,7 @@
                                                  </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-7 text-left" >
+                                        <div class="col-xs-7 text-left" >
                                             @if( $readings->symptom->count() )
                                                     <ul class="nav nav-pills text-center symptom-pills">
                                                         @foreach ($readings->symptom as $readingSymptom)
@@ -338,7 +344,7 @@
                                             @endif
                                             <small>{{ date("h.ia",strtotime($readings->reading_time)) }}</small>
                                         </div>
-                                        <div class="col-md-1" >
+                                        <div class="col-xs-1" >
                                             <p>{{ round($readings->temperature,1) - $previousTemp }}<span>&#176;</span></p>
                                         </div>
                                     </div>
@@ -461,6 +467,7 @@
                                     <div class="col-md-5" >
                                         <a href="#" data-toggle="collapse" data-target="#pet-delete{{ $value->id }}" >{{ Form::button(Lang::get('general.Remove'), array('class' => 'btn btn-file btn-block btn-md border-none')) }}</a>
                                     </div>
+                                    <div class="top-buffer mobile" ></div>
                                     <div class="col-md-7" >
                                         {{ Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-block btn-default btn-md', 'form' => 'petSettingsForm')) }}
                                     </div>
@@ -500,7 +507,7 @@
                                 <ul class="nav nav-pills text-left">
                                     <li class="disabled"><a href="#latest" data-toggle="pill" data-target="" >{{ Lang::get('general.Latest') }}</a></li>
                                     <li class="disabled" ><a href="#reports" data-toggle="pill" data-target="">{{ Lang::get('general.Reports') }}</a></li>
-                                    <li class="pull-right active" ><a href="#edit" data-toggle="pill" data-target=""><i class="fa fa-plus"></i> {{ Lang::get('general.Create pet') }}</a></li>
+                                    <li class="pull-right active" ><a href="#edit" data-toggle="pill" data-target=""><i class="fa fa-plus"></i> {{ Lang::get('general.<i class="fa fa-cog"></i> Edit') }}</a></li>
                                 </ul>
                             </div>
                         </div>

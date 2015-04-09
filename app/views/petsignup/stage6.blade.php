@@ -1,7 +1,10 @@
 @extends('layouts.pet.signup')
 
 @section('content')
-    <div class="row" >
+    <div class="col-md-12 mobile" >
+        <h3>Your readings</h3>
+    </div>
+    <div class="row desktop" >
         <div class="col-md-10 col-centered float-none top-buffer" >
             <h3>{{ Lang::get('general.We need to learn your pet&#39;s microchip number') }}</h3>
             <h4>{{ Lang::get('general.Scan your pets with the [device name] then follow one of the below methods') }}</h4>
@@ -11,21 +14,21 @@
         <div class="col-sm-6 text-left">
             <h3 class="blue" >{{ Lang::get('general.Sync via Bluetooth') }}</h3>
             <p>{{ Lang::get('general.Easily pair the reader via Bluetooth on your mobile') }}</p>
-            <div class="col-md-10 text-center vcenterwrap" >
-                <div class="col-sm-6 vcenter">
+            <div class="col-md-12 text-center vcenterwrap" >
+                <div class="col-md-6 vcenter">
 
                     {{ HTML::image('images/phones.png', 'a Logo', array('width' => '100%')) }}
                 
                 </div>
-                <div class="col-sm-6 vcenter">   
+                <div class="col-md-6 vcenter">
 
-                    {{ HTML::image('images/app-store.svg', 'a Logo', array('width' => '128px')) }}
-                    {{ HTML::image('images/play-store.png', 'a Logo') }} 
+                    {{ HTML::image('images/app-store.svg', 'a Logo', array('width' => '100%', 'class' => 'col-xs-6 col-md-12 small-padding')) }}
+                    {{ HTML::image('images/play-store.png', 'a Logo', array('width' => '100%', 'class' => 'col-xs-6 col-md-12 small-padding')) }}
                 
                 </div>    
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-6 desktop">
             <h3 class="blue" >{{ Lang::get('general.Upload readings via USB') }}</h3>
 
             {{ Form::open(array('files'=> 'true', 'url' => '/pet/register/reading/reading-upload', 'class'=>'dropzone', 'method' => 'post')) }}
@@ -54,4 +57,5 @@
             </div>
         </div>
     </div>
+    <div class="top-buffer mobile" ></div>
 @stop

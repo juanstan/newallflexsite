@@ -25,7 +25,8 @@ module.exports = function(grunt) {
     sass: {
       development: {
         files: {
-          "./public/assets/stylesheets/application.css":"./app/assets/stylesheets/application.sass"
+          "./public/assets/stylesheets/application.css":"./app/assets/stylesheets/application.sass",
+            "./public/assets/stylesheets/mobile.css":"./app/assets/stylesheets/mobile.sass"
         }
       }
     },

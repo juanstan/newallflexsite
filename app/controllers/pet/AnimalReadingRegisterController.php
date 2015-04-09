@@ -125,6 +125,10 @@ class AnimalReadingRegisterController extends \BaseController {
     
     public function getAssign()
     {
+        if(\Agent::isMobile())
+        {
+            return \Redirect::to('pet/dashboard');
+        }
         $this->arepository->setUser($this->authUser);
         $pets = $this->arepository->all();
         return \View::make('petsignup.stage7')->with(array('pets' => $pets));

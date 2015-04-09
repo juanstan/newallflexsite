@@ -2,22 +2,27 @@
 
 @section('content')
     <div class="row" >
+        <div class="col-md-12 hidden-desktop" >
+            <h3>About you</h3>
+        </div>
         <div class="col-md-8 col-centered float-none" >
             <div class="form-horizontal top-buffer" >
 
             {{ Form::open(array('files'=> 'true', 'url' => '/pet/register/about', 'method' => 'post' )) }}
-                 
+
+                @if (Auth::user()->get()->image_path != NULL)
                 <div class="form-group">
                 
                     <div class="col-sm-4 text-left">
                     </div>
                     
                     <div class="col-sm-8 text-left">
-                    @if (Auth::user()->get()->image_path != NULL)
+
                         {{ HTML::image(Auth::user()->get()->image_path, '', array('class' => 'img-responsive img-circle', 'width' => '30%', 'height' => '80px')) }}
-                    @endif
+
                     </div>
                 </div>
+                @endif
                 
                 <div class="form-group">
                 
@@ -88,4 +93,5 @@
                 </div>
         </div>
     </div>
+    <div class="top-buffer mobile" ></div>
 @stop

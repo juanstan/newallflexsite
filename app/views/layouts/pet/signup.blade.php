@@ -3,17 +3,11 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title></title>
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-    <link href="/assets/stylesheets/dropzone.css" rel="stylesheet">
-    <link href="/assets/stylesheets/application.css" rel="stylesheet">
-    <link href="/assets/stylesheets/pace-theme-barber-shop.css" rel="stylesheet" />
-    
-  
-
+      <!-- Stylesheets -->
+      @include('layouts/core/stylesheets')
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->

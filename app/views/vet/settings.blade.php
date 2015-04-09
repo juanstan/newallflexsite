@@ -215,9 +215,9 @@
 
         </div>
     </div>
-    <div class="row" >
         <div class="col-md-8 col-centered float-none" >
             <div class="jumbotron text-center" >
+                <div class="top-buffer mobile" ></div>
                 <div class="col-md-12 text-left" >
                     <h2 class="top-none">{{ Lang::get('general.Can&#39;t find your customer in our database?') }}</h2>
                     <p>{{ Lang::get('general.Fill out your customer&#39;s email below and we will send them an invitation') }}</p>
@@ -229,12 +229,12 @@
                         <div class="col-sm-5">
                             {{ Form::email('email_address', '', array('class' => 'form-control text-left')) }}
                         </div>
+                        <div class="top-buffer mobile" ></div>
                         <div class="col-sm-3">
                             {{ Form::submit(Lang::get('general.Submit'), array('class' => 'btn btn-default btn-lg pull-right')) }}
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 @stop

@@ -1,0 +1,100 @@
+.mobile, .mobile-nav {
+  display: inherit !important; }
+
+.nav, .desktop {
+  display: none; }
+
+.text-center-xs {
+  text-align: center; }
+
+.signup-logo {
+  width: 30%;
+  margin-top: -15%;
+  border-width: 5px; }
+
+h2, .h2 {
+  font-size: 1.5em; }
+
+h3, .h3 {
+  font-size: 1.4em; }
+
+h4, .h4 {
+  font-size: 1.1em; }
+
+.nav-pills li {
+  font-size: 0.8em; }
+
+.form-control {
+  height: auto;
+  font-size: 1.1em; }
+
+.small-top-buffer {
+  margin-top: 5% !important; }
+
+.top-buffer {
+  margin-top: 5% !important; }
+
+.large-top-buffer {
+  margin-top: 20% !important; }
+
+.btn-lg {
+  padding: 2% 3%;
+  font-size: 1.1em; }
+
+.jumbotron {
+  padding: 2% 5%;
+  margin-bottom: 5%; }
+
+.jumbotron p {
+  font-size: 1em; }
+
+.small-score-text {
+  font-size: 0.9em;
+  height: 0.5em; }
+
+.score-text {
+  font-size: 5em; }
+
+.score-text p {
+  font-size: 0.13em;
+  margin-top: -20%; }
+
+.jumbotron.dashboard {
+  min-height: inherit;
+  padding-bottom: 20%; }
+
+.circle-small-border .circle-inner > .small-score-text {
+  font-size: 1.3em;
+  height: 0.8em; }
+
+.jumbotron.add-new-pet {
+  padding-bottom: 40%; }
+
+.hero-banner {
+  padding-top: 10%; }
+
+.prev-reading {
+  font-size: 1.1em !important;
+  height: 1em !important; }
+
+small {
+  font-size: 70%; }
+
+.navbar-toggle {
+  z-index: 9999999; }
+
+div.navbar-brand {
+  width: 40% !important;
+  left: 30%; }
+
+.navbar-collapse {
+  margin-top: 10%; }
+
+.nav > li.desktop {
+  display: none; }
+
+.navbar-nav {
+  margin-bottom: 0px;
+  margin-top: 0px; }
+
+/*# sourceMappingURL=mobile.css.map */
