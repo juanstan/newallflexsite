@@ -5635,8 +5635,11 @@ button.close {
   color: #FFFFFF;
   background: #40c8c6; }
 
-.mobile {
+.mobile, .tablet {
   display: none; }
+
+.desktop {
+  display: inherit; }
 
 body {
   font-family: "HelveticaNeueLT-Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
@@ -5726,7 +5729,7 @@ h1, p {
   font-weight: 100; }
 
 .jumbotron p {
-  font-size: 16px;
+  font-size: 14px;
   color: #71787f; }
 .jumbotron li {
   font-size: 20px;

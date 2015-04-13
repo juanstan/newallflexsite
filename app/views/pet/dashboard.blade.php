@@ -156,7 +156,7 @@
                     
                     <div class="tab-content ">
                         <div class="tab-pane latest-list-wrap active fade in" id="latest{{ $value->id }}">
-                            <div class="row top-buffer" >
+                            <div class="row col-sm-8 col-md-12 col-centered float-none top-buffer" >
                                     @foreach ($value->readings as $readings)
                                         @if ($readings->average == 1)
                                             <?php $allReadingTemps[] = $readings->temperature; ?>
@@ -271,7 +271,7 @@
                                             <h4 class="top-buffer" style="color: white;">{{ Lang::get('general.There is not average temperature for') }} {{ isset($value->name) ? $value->name : 'Unknown'; }} {{ Lang::get('general.yet') }}</h4>
                                         @endif
                                     </div>
-                                    <div class="col-xs-3 small-padding" >
+                                    <div class="col-xs-3 col-sm-2 col-md-3 small-padding" >
                                         @if(!empty($allReadingTemps))
                                             <div class="circle small-top-buffer circle-small-border" style="border-color: white;">
                                                 <div class="circle-inner">
@@ -297,7 +297,7 @@
                                         <div class="col-xs-9" >
                                             <h4 class="top-buffer" style="color: white;">{{ Lang::get('general.No readings have been uploaded for') }} {{ isset($value->name) ? $value->name : 'Unknown'; }} {{ Lang::get('general.yet') }}.</h4>
                                         </div>
-                                        <div class="col-xs-3 small-padding" >
+                                        <div class="col-xs-3 col-sm-2 col-md-3 small-padding" >
                                             <div class="circle small-top-buffer circle-small-border" style="border-color: white;">
                                                 <div class="circle-inner">
                                                     <div class="small-score-text" style="color: white;">
@@ -323,7 +323,7 @@
                                         </div>
                                     </div>
                                     <div class="row text-left col-md-12" >
-                                        <div class="col-xs-3 small-padding" >
+                                        <div class="col-xs-3 col-sm-2 small-padding" >
                                             <div class="circle circle-small-border" style="border-color: {{ getTemperatureColor($readings->temperature, $temperaturePref)['tempcol'] }}">
                                                  <div class="circle-inner">
                                                      <div class="small-score-text prev-reading" style="color: {{ getTemperatureColor($readings->temperature, $temperaturePref)['tempcol'] }}">

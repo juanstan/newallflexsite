@@ -67,7 +67,6 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
         return \Validator::make($input,
         [
             'name' => ['sometimes','required'],
-            'microchip_number'    => ['sometimes','required'],
             'breed'     => ['sometimes','required'],
         ]);
     }

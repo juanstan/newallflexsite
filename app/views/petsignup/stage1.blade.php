@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row" >
-        <div class="col-md-12 hidden-desktop" >
+        <div class="col-md-12 mobile" >
             <h3>About you</h3>
         </div>
         <div class="col-md-8 col-centered float-none" >

@@ -50,7 +50,7 @@
                                 @foreach ($pets as $pet)
                                     @if($petRequest->animal_id == $pet->id && $petRequest->vet_id == $vet->id && $petRequest->approved == 1)
                                     <a href="/pet/dashboard/deactivatepet/{{ $petRequest->animal_request_id }}" >
-                                        <div class="col-md-3 text-center small-padding request-pet" >
+                                        <div class="col-sm-3 text-center small-padding request-pet" >
                                             {{ HTML::image('/images/deleted.png', '', array('class' => 'deactive hidden img-responsive img-circle', 'width' => '100%')) }}
                                             {{ HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
                                             <h4>{{ $pet->name }}</h4>
@@ -58,7 +58,7 @@
                                     </a>
                                     @elseif($petRequest->animal_id == $pet->id && $petRequest->vet_id == $vet->id && $petRequest->approved == 0)
                                     <a href="/pet/dashboard/activatepet/{{ $petRequest->animal_request_id }}" >
-                                        <div class="col-md-3 text-center small-padding relative" >
+                                        <div class="col-sm-3 text-center small-padding relative" >
                                             {{ HTML::image('/images/deleted.png', '', array('class' => 'deactive img-responsive img-circle', 'width' => '100%')) }}
                                             {{ HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
                                             <h4>{{ $pet->name }}</h4>
@@ -112,14 +112,14 @@
                             <div class="top-buffer" ></div>
                             @foreach ($vets as $vet)
                                 <div class="row vetname small-top-buffer" data-text="{{ $vet->company_name }}">
-                                    <div class="col-md-3 small-padding" >
+                                    <div class="col-xs-3 small-padding" >
                                         {{ HTML::image(isset($vet->image_path) ? $vet->image_path : '/images/vet-image.png', $vet->company_name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
                                     </div>
-                                    <div class="col-md-6" >
+                                    <div class="col-xs-6" >
                                         <h4 class="top-none bottom-none">{{ $vet->company_name }}</h4>
                                         <small class="top-none">{{ $vet->city }}</small>
                                     </div>
-                                    <div class="col-md-3 small-padding" >
+                                    <div class="col-xs-3 small-padding" >
                                         <a href="/pet/dashboard/add-vet/{{ $vet->id }}" >
                                             {{ Form::button(Lang::get('general.Add'), array('class' => 'btn-block btn btn-default btn-md')) }}
                                         </a>

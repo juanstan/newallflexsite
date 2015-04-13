@@ -16,7 +16,7 @@
             <div class="jumbotron pet-dashboard top-buffer" >
                 <div class="row top-buffer" >
                     <div class="col-md-12 col-centered float-none" >
-                        <div class="col-md-4" >
+                        <div class="col-xs-4" >
                             {{ HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
                         </div>
                         <div class="col-md-8" >
@@ -33,13 +33,13 @@
                         $to   = new DateTime('today');
                         $age = $from->diff($to)->y;
                         ?>
-                        <div class="col-md-4" >
+                        <div class="col-xs-4" >
                             <h4><i class="fa fa-birthday-cake"></i> {{ $age }}</h4>
                         </div>
-                        <div class="col-md-4" >
+                        <div class="col-xs-4" >
                             <h4><i class="fa fa fa-heartbeat"></i> {{ $pet->weight }}</h4>
                         </div>
-                        <div class="col-md-4" >
+                        <div class="col-xs-4" >
                             @if($pet->gender == 'Male')
                                 <h4><i class="fa fa-mars"></i> {{ $pet->gender }}</h4>
                             @else
@@ -68,14 +68,14 @@
                     @if( $pet->readings->count() )
                         @foreach ($pet->readings->slice(0, 1) as $reading)
                             <div class="col-md-12 col-centered float-none" >
-                                <div class="col-md-10" >
+                                <div class="col-xs-10" >
                                     @if(!empty($allReadingTemps))
                                         <h3 style="color: white;" class="small-top-buffer">{{ isset($pet->name) ? $pet->name : 'Unknown'; }}{{ Lang::get('general.&#39;s temperature is usually around') }} {{ getTemperatureColor($readingAverage, $temperaturePref)['temp'] }}&#176;</h3>
                                     @else
                                         <h3 style="color: white;" class="small-top-buffer">{{ Lang::get('general.There is not average temperature for') }} {{ isset($pet->name) ? $pet->name : 'Unknown'; }} {{ Lang::get('general.yet') }}</h3>
                                     @endif
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-xs-2">
                                     <div class="circle circle-small-border" style="border-color: white">
                                         <div class="circle-inner">
                                             <div class="small-score-text" style="color: white;" >
@@ -92,10 +92,10 @@
                         @endforeach
                     @else
                         <div class="col-md-12 col-centered float-none" >
-                            <div class="col-md-10" >
-                                    <h3 style="color: white;" class="small-top-buffer">{{ Lang::get('general.There is not average temperature for') }} {{ isset($pet->name) ? $pet->name : Lang::get('general.Unknown'); }} {{ Lang::get('general.yet') }}</h3>
+                            <div class="col-md-10 col-xs-8" >
+                                    <h3 style="color: white;" class="small-top-buffer">{{ Lang::get('general.There is no average temperature for') }} {{ isset($pet->name) ? $pet->name : Lang::get('general.Unknown'); }} {{ Lang::get('general.yet') }}</h3>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-2 col-xs-4">
                                 <div class="circle circle-small-border" style="border-color: white">
                                     <div class="circle-inner">
                                         <div class="small-score-text" style="color: white;" >

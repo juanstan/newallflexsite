@@ -1,7 +1,10 @@
 .mobile, .mobile-nav {
+  display: inherit; }
+
+.nav.mobile {
   display: inherit !important; }
 
-.nav, .desktop {
+.nav, .desktop, .tablet {
   display: none; }
 
 .text-center-xs {
@@ -96,5 +99,10 @@ div.navbar-brand {
 .navbar-nav {
   margin-bottom: 0px;
   margin-top: 0px; }
+
+.btn-mobile {
+  float: none !important;
+  width: 100% !important;
+  margin-top: 2% !important; }
 
 /*# sourceMappingURL=mobile.css.map */

@@ -45,13 +45,7 @@
         </div>
     </body>
     <!-- Javascript -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-  <script src="/assets/javascripts/dropzone.js"></script>
-  <script src="http://code.highcharts.com/highcharts.js"></script>
-  <script src="http://code.highcharts.com/modules/exporting.js"></script>
-  <script src="/assets/javascripts/pace.min.js"></script>
-  <script src="/assets/javascripts/application.js"></script>
+  @include('layouts/core/javascript')
   <script>
     $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
 

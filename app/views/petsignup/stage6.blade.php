@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="row" >
-        <div class="col-sm-6 text-left">
+        <div class="col-xs-12 col-md-6 text-left">
             <h3 class="blue" >{{ Lang::get('general.Sync via Bluetooth') }}</h3>
             <p>{{ Lang::get('general.Easily pair the reader via Bluetooth on your mobile') }}</p>
             <div class="col-md-12 text-center vcenterwrap" >

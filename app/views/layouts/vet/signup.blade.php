@@ -36,8 +36,6 @@
         </div>
     </body>
     <!-- Javascript -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-    <script src="/assets/javascripts/application.js"></script>
-    <script src="/assets/javascripts/dropzone.js"></script>
+  @include('layouts/core/javascript')
+
 </html>

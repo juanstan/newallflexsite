@@ -39,7 +39,7 @@
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <strong class="inline-block ">{{ Lang::get('general.Email not yet verified') }}</strong> {{ Lang::get('general.please verify') }}
 
-                        <a href="resend-confirmation" ><button style="margin-top: -5px;" class="btn btn-warning btn-sm pull-right border-none" type="button">{{ Lang::get('general.Resend confirmation email') }}</button></a>
+                        <a href="resend-confirmation" ><button style="margin-top: -5px;" class="btn-mobile btn btn-warning btn-sm pull-right border-none" type="button">{{ Lang::get('general.Resend confirmation email') }}</button></a>
                     </div>
                 @endif
                 @if($errors->has())
@@ -82,14 +82,8 @@
         </div>
     </body>
     <!-- Javascript -->
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="{{ url('assets/javascripts/dropzone.js') }}" ></script>
-        <script type="text/javascript" src="{{ url('vendor/highcharts/highcharts.js') }}" ></script>
-        <script type="text/javascript" src="{{ url('assets/javascripts/pace.min.js') }}" ></script>
-        <script type="text/javascript" src="{{ url('assets/javascripts/application.js') }}" ></script>
-        <script type="text/javascript" src="{{ url('vendor/selectize/js/standalone/selectize.min.js') }}" ></script>
-        <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+  @include('layouts/core/javascript')
+
         <script type="text/javascript">
           function init_map() {
               var myOptions = {

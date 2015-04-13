@@ -30,14 +30,14 @@
 
                 {{ Form::open(array('url' => array('/pet/register/vet/add', $vet->id), 'method' => 'post')) }}
             <div class="row top-buffer col-md-12 col-centered" >
-                <div class="col-md-3 small-padding" >
+                <div class="col-xs-3 small-padding" >
                     {{ HTML::image(isset($vet->image_path) ? $vet->image_path : '/images/vet-image.png', $vet->company_name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
                 </div>
-                <div class="col-md-6" >
+                <div class="col-xs-6" >
                     <h4 class="top-none bottom-none">{{ $vet->company_name }}</h4>
                     <small class="top-none">{{ $vet->city }}</small>
                 </div>
-                <div class="col-md-3 small-padding" >
+                <div class="col-xs-3 small-padding" >
                         {{ Form::submit(Lang::get('general.Add'), array('class' => 'btn-block btn btn-default btn-md')) }}
                 </div>
             </div>

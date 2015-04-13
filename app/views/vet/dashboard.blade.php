@@ -101,8 +101,8 @@
                     <div class="col-md-5" >
                         <h3>{{ Lang::get('general.Customer activity') }}</h3>
                     </div>
-                    <div class="col-md-7" >
-                        <ul class="nav nav-pills top-buffer text-right">
+                    <div class="col-md-7 col-xs-12" >
+                        <ul class="nav nav-pills mobile desktop top-buffer text-right">
                             <li class="active"><a href="#recent" data-toggle="pill" data-target="" >{{ Lang::get('general.Recent') }}</a></li>
                             {{--<li class="" ><a href="#customer" data-toggle="pill" data-target="">Customer</a></li>--}}
                             <li class="" ><a href="#pets" data-toggle="pill" data-target="">{{ Lang::get('general.Pets') }}</a></li>
@@ -119,10 +119,10 @@
                                         @foreach ($pet->readings as $reading)
                                         <div class="row small-top-buffer" >
                                             <div class="col-md-12 " >
-                                                <div class="col-md-2" >
+                                                <div class="col-md-2 col-xs-4" >
                                                     {{ HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '80%')) }}
                                                 </div>
-                                                <div class="col-md-6 left-none" >
+                                                <div class="col-md-5 left-none" >
                                                     <h3 class="small-top-buffer bottom-none">{{ $pet->name }}</h3><p class="blue" >@if(date("d/m/y",strtotime($reading->created_at)) == date("d/m/y"))
                                         {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                     @else
@@ -134,8 +134,7 @@
                                                             {{ date("d/m/y",strtotime($reading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
                                                         @endif</p>
                                                 </div>
-                                                <div class="col-md-4 small-top-buffer" >
-                                                    <div class="col-md-5" >
+                                                    <div class="col-md-2 col-xs-4 vcenter" >
                                                         <div class="circle circle-small-border" style="border-color: {{ getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] }}">
                                                             <div class="circle-inner">
                                                                 <div class="small-score-text prev-reading" style="color: {{ getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] }}">
@@ -144,10 +143,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-7" >
+                                                    <div class="col-md-2 vcenter" >
                                                         <h4 class="top-buffer">+1.4<span>&#176;</span> <span><i class="fa fa-chevron-right"></i></span></h4>
                                                     </div>
-                                                </div>
                                             </div>
                                         </div>
                                         <div class="row small-top-buffer" >
