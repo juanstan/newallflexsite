@@ -12,3 +12,4 @@ Thumbs.db
 node_modules/*
 local/app.php
 local/database.php
+

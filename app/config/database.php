@@ -54,11 +54,10 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'allflextempsensor.c6wlmmno3n5p.eu-west-1.rds.amazonaws.com',
-            //'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
+			'host'      => 'centos.sureflap.com',
 			'database'  => 'Allflex',
-			'username'  => 'dfi4389Ufui3sdh23',
-			'password'  => 'Allflexdb',
+			'username'  => 'root',
+			'password'  => '(>KPD}SHAuXM6-O',
 			'charset'   => 'utf8',
 			'collation' => 'utf8_unicode_ci',
 			'prefix'    => '',
