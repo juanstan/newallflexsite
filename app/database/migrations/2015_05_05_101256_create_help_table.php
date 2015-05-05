@@ -16,8 +16,8 @@ class CreateHelpTable extends Migration {
 		{
 			$table->integer('id', true);
 			$table->string('title')->nullable();
-			$table->text('cover', 16777215)->nullable();
-			$table->text('content')->nullable();
+			$table->text('cover', 65535)->nullable();
+			$table->text('content', 65535)->nullable();
 		});
 	}
 

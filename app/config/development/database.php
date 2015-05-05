@@ -23,7 +23,6 @@ return array(
         'mysql' => array(
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'unix_socket'   => '/Applications/MAMP/tmp/mysql/mysql.sock',
             'database'  => 'allflex_db',
             'username'  => 'allflex',
             'password'  => 'Xn1#f@j#73/qCrJ',
