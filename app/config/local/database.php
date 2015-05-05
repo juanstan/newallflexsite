@@ -22,8 +22,7 @@ return array(
 
 		'mysql' => array(
 			'driver'    => 'mysql',
-			'host'      => 'localhost',
-            'unix_socket'   => '/tmp/mysql.sock',
+            'host'      => 'localhost',
 			'database'  => 'allflex',
 			'username'  => 'root',
 			'password'  => 'delta1234',

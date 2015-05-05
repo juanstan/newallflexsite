@@ -23,10 +23,10 @@ class AuthController extends \BaseController {
 			return \Response::json(['error' => true, 'errors' => $validator->messages()]);
 		}
 
-		if(\Auth::validate($input) == false)
-		{
-			return \Response::json(['error' => true, 'errors' => ['password' => ['The password is incorrect']]]);
-		}
+//		if(\Auth::validate($input) == false)
+//		{
+//			return \Response::json(['error' => true, 'errors' => ['password' => ['The password is incorrect']]]);
+//		}
 
 		$user = $this->user->getByEmailForLogin($input['email_address']);
 

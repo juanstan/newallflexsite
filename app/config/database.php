@@ -53,14 +53,14 @@ return array(
 		),
 
 		'mysql' => array(
-			'driver'    => 'mysql',
-			'host'      => 'centos.sureflap.com',
-			'database'  => 'Allflex',
-			'username'  => 'root',
-			'password'  => '(>KPD}SHAuXM6-O',
-			'charset'   => 'utf8',
-			'collation' => 'utf8_unicode_ci',
-			'prefix'    => '',
+            'driver'    => 'mysql',
+            'host'      => 'localhost',
+            'database'  => 'allflex',
+            'username'  => 'root',
+            'password'  => 'delta1234',
+            'charset'   => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix'    => '',
 		),
 
 		'pgsql' => array(
