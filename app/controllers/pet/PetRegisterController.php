@@ -59,7 +59,7 @@ class PetRegisterController extends \BaseController {
                 ->withErrors($validator);
         }
         else {
-            if (\Input::file('pet-photo')->isValid()) {
+            if (\Input::hasFile('pet-photo')) {
                 $destinationPath = 'images/uploads/'.$id;
                 if(!\File::exists($destinationPath)) {
                     \File::makeDirectory($destinationPath);
