@@ -79,22 +79,22 @@ class PetRegisterController extends \BaseController {
                 }
                                 
                 $input['image_path'] = '/images/uploads/'.$id.'/'.$fileName;
-                $animal = $this->repository->create($input);
-                return \Redirect::to('/pet/register/pet');
-                
+
             }
             else {
-              \Session::flash('error', 'uploaded file is not valid');
-              return \Redirect::to('/pet/register/pet/create');
+              return \Redirect::to('/pet/register/pet/create')->with('error', 'uploaded file is not valid');
             }
+
+            $animal = $this->repository->create($input);
+
+            if($animal == null)
+            {
+                \App::abort(500);
+            }
+
+            return \Redirect::to('pet/register/pet');
         }
 
-        if($animal == null)
-        {
-            \App::abort(500);
-        }
-
-        return \Redirect::to('pet/register/pet');
     }
 
 
