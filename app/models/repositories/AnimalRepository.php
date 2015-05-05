@@ -57,7 +57,7 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
         return \Validator::make($input,
         [
             'name' => ['required'],
-            'breed' => ['required'],
+            //'breed' => ['required'],
         ]);
     }
 
