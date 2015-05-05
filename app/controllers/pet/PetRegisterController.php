@@ -52,7 +52,7 @@ class PetRegisterController extends \BaseController {
         $id = \Auth::user()->get()->id;
         
         $file = array('image' => \Input::file('pet-photo'));
-        $rules = array('image' => 'required|max:4000|mimes:jpeg,png');
+        $rules = array('image' => 'max:4000|mimes:jpeg,png');
         $validator = \Validator::make($file, $rules);
         if ($validator->fails()) {
             return \Redirect::to('/pet/register/pet/create')->withInput()
