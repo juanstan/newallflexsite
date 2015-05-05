@@ -41,13 +41,13 @@ class PetRegisterController extends \BaseController {
         $this->repository->setUser($this->authUser);
         
         $input = \Input::all();
-        $validator = $this->repository->getCreateValidator($input);
-
-        if($validator->fails())
-        {
-            return \Redirect::to('pet/register/pet/create')
-                ->withErrors($validator);
-        }
+//        $validator = $this->repository->getCreateValidator($input);
+//
+//        if($validator->fails())
+//        {
+//            return \Redirect::to('pet/register/pet/create')
+//                ->withErrors($validator);
+//        }
         
         $id = \Auth::user()->get()->id;
         
