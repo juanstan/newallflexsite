@@ -18,7 +18,7 @@ class CreateSensorReadingsTable extends Migration {
 			$table->integer('reading_id')->nullable();
 			$table->integer('average')->nullable();
 			$table->string('microchip_id')->nullable();
-			$table->double('column', 15, 8)->nullable();
+			$table->double('temperature', 15, 8)->nullable();
 			$table->dateTime('reading_time')->nullable();
 			$table->integer('device_id')->nullable();
 			$table->integer('animal_id')->nullable();
