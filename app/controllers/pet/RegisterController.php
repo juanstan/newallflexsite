@@ -35,7 +35,11 @@ class RegisterController extends \BaseController {
                 ->withInput(\Input::except('password'));
         }
         
-        if (\Input::hasFile('image_path')){   
+        if (\Input::hasFile('image_path')){
+            $basePath = 'images/uploads/users';
+            if(!\File::exists($basePath)) {
+                \File::makeDirectory($basePath);
+            }
             $destinationPath = 'images/uploads/users/'.$id;
             if(!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
