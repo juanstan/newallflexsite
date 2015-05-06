@@ -161,6 +161,8 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
         Route::resource('user', 'UserController', ['only' => ['show', 'update', 'destroy']]); // to do
         Route::resource('animal', 'AnimalController'); // Done
         Route::resource('device', 'DeviceController'); // Done
+        Route::resource('breeds', 'BreedController'); // Done
+        Route::resource('symptoms', 'SymptomController'); // Done
         Route::resource('animal/{animal_id}/condition', 'AnimalConditionController');  // Done
         Route::resource('animal/{animal_id}/reading', 'AnimalReadingController'); //  Done
         Route::resource('animal/{animal_id}/reading/{reading_id}/symptom', 'AnimalReadingSymptomController'); // Done
