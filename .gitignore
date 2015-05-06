@@ -12,5 +12,3 @@ Thumbs.db
 node_modules/*
 local/app.php
 local/database.php
-/public/uploads/csv
-
