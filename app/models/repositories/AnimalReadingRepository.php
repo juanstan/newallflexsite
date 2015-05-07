@@ -1,6 +1,6 @@
 <?php namespace Repositories;
 
-use Entities\Reading;
+use Entities\sensorReading;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -32,7 +32,7 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
     {
         if($id)
         {
-            return $this->animal ? $this->animal->readings()->findOrFail($id) : parent::get($id);
+            return $this->animal ? $this->animal->sensorReadings()->findOrFail($id) : parent::get($id);
         }
 
     }
@@ -40,12 +40,6 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
     public function create($input)
     {
 
-            /**
-            * @var \Entities\Device
-            */
-            
-            
-            
             $reading = parent::create($input);
             
             $reading->animal()->associate($this->animal); 
