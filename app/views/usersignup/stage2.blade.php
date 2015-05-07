@@ -3,7 +3,7 @@
 @section('content')
     <div class="row" >
         <div class="col-md-12 mobile" >
-            <h3>Your pets</h3>
+            <h3>{{ Lang::get('Your pets') }}</h3>
         </div>
         <div class="col-md-9 col-centered float-none" >
 
@@ -38,11 +38,11 @@
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('breed', Lang::get('general.Breed'), array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('breed_id', Lang::get('general.Breed'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
-                        {{ Form::select('breed', $breed, '', array('class' => 'form-control text-left')) }}
+                        {{ Form::select('breed_id', $breed, '', array('class' => 'form-control text-left')) }}
 
                     </div>
                 </div>
