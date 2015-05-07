@@ -342,7 +342,7 @@ class DashboardController extends \BaseController
                 $csv->setOffset(1);
                 $data = $csv->query();
                 foreach ($data as $lineIndex => $row) {
-                    $profile = Reading::where(['reading_id' => $row[0], 'microchip_id' => decoded_microchip_id($row[1])])->first();
+                    $profile = SensorReading::where(['reading_id' => $row[0], 'microchip_id' => decoded_microchip_id($row[1])])->first();
                     $animal = Animal::where(['microchip_number' => decoded_microchip_id($row[1])])->first();
                     if (empty($animal)) {
                         $animal = new animal();
@@ -355,7 +355,7 @@ class DashboardController extends \BaseController
                         $animal->save();
                     }
                     if (empty($profile)) {
-                        $reading = new Reading();
+                        $reading = new SensorReading();
                         $reading->reading_id = $row[0];
                         $reading->microchip_id = decoded_microchip_id($row[1]);
                         $reading->temperature = reading_temperature_c($row[2]);
