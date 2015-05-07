@@ -17,27 +17,14 @@ class Animal extends \Eloquent implements UserInterface, RemindableInterface {
     protected $fillable = [
         'name',
         'microchip_number',
-        'breed',
+        'breed_id',
         'date_of_birth',
-        'weight',
         'size',
         'gender',
         'image_path',
         'user_id'        
     ];
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'animals';
-
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
     
     public function user()
     {
@@ -49,12 +36,12 @@ class Animal extends \Eloquent implements UserInterface, RemindableInterface {
         return $this->belongsToMany('Entities\Vet', 'animal_requests');
     }
     
-    public function readings()
+    public function sensorReadings()
     {
-        return $this->hasMany('Entities\Reading', 'animal_id');
+        return $this->hasMany('Entities\SensorReading', 'animal_id');
     }
 
-    public function breeds()
+    public function breed()
     {
         return $this->belongsTo('Entities\Breed', 'breed_id');
     }

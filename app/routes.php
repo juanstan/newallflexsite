@@ -11,186 +11,145 @@
 |
 */
 
-Route::get('/', function()
-{
-    return Redirect::to('pet');
-});
-                                                                
-Route::group(['prefix' => 'pet', 'namespace' => 'pet'], function()
-{
-    Route::get('login/fb', 'FacebookController@index');
-    Route::get('login/fb/callback', 'FacebookController@callback');
-    Route::get('login/twitter', 'TwitterController@index');
-    Route::controller('register/pet', 'PetRegisterController');
-    Route::controller('register/vet', 'VetRegisterController');
-    Route::controller('register/reading', 'AnimalReadingRegisterController');
-    Route::controller('register', 'RegisterController');
-    Route::controller('dashboard', 'DashboardController');
-    Route::controller('/', 'AuthController');
+Route::get('/', function () {
+    return Redirect::route('user');
 });
 
-Route::group(['prefix' => 'vet', 'namespace' => 'vet'], function()
-{
-    Route::controller('register/reading', 'AnimalReadingRegisterController');
-    Route::controller('register', 'RegisterController');
-    Route::controller('dashboard', 'DashboardController');
-    Route::controller('/', 'AuthController');
+Route::group(['prefix' => 'user', 'namespace' => 'user'], function () {
+    Route::get('login/fb', array('uses'=>'FacebookController@index', 'as'=>'user.login.fb'));
+    Route::get('login/fb/callback', array('uses'=>'FacebookController@callback', 'as'=>'user.login.fb.callback'));
+    Route::get('login/twitter', array('uses'=>'TwitterController@index', 'as'=>'user.login.twitter'));
+    Route::controller('register/pet', 'petRegisterController',
+        array(
+            'getIndex'=>'user.register.pet',
+            'getCreate'=>'user.register.pet.create',
+            'postCreate'=>'user.register.pet.create',
+        ));
+    Route::controller('register/vet', 'VetRegisterController',
+        array(
+            'getIndex'=>'user.register.vet',
+            'getAdd'=>'user.register.vet.add',
+            'postAdd'=>'user.register.vet.add',
+        ));
+    Route::controller('register/reading', 'AnimalReadingRegisterController',
+        array(
+            'getIndex'=>'user.register.reading',
+            'postReadingUpload'=>'user.register.reading.readingUpload',
+            'getAssign'=>'user.register.reading.assign',
+            'postAssign'=>'user.register.reading.assign',
+            'getFinish'=>'user.register.reading.finish',
+        ));
+    Route::controller('register', 'RegisterController',
+        array(
+            'getAbout'=>'user.register.about',
+            'postAbout'=>'user.register.about',
+        ));
+    Route::controller('dashboard', 'DashboardController',
+        array(
+            'getIndex' => 'user.dashboard',
+            'getHelp' => 'user.dashboard.help',
+            'getResult' => 'user.dashboard.result',
+            'postInvite' => 'user.dashboard.invite',
+            'postResetAverageTemperature' => 'user.dashboard.resetAverageTemperature',
+            'getSettings' => 'user.dashboard.settings',
+            'postSettings' => 'user.dashboard.settings',
+            'postUpdatePet' => 'user.dashboard.updatePet',
+            'postAddSymptoms' => 'user.dashboard.addSymptoms',
+            'getSymptomRemove' => 'user.dashboard.symptomRemove',
+            'postUpdatePetPhoto' => 'user.dashboard.updatePetPhoto',
+            'postCreatePet' => 'user.dashboard.createPet',
+            'getRemovePet' => 'user.dashboard.removePet',
+            'postReadingUpload' => 'user.dashboard.readingUpload',
+            'getVet' => 'user.dashboard.vet',
+            'postVet' => 'user.dashboard.vet',
+            'getAddVet' => 'user.dashboard.addVet',
+            'getRemoveVet' => 'user.dashboard.removeVet',
+            'getActivatepet' => 'user.dashboard.activatePet',
+            'getDeactivatepet' => 'user.dashboard.deactivatePet',
+        ));
+    Route::controller('/', 'AuthController',
+        array(
+            'getIndex' => 'user',
+            'getRegister' => 'user.register',
+            'postCreate' => 'user.create',
+            'getResendConfirmation' => 'user.resendConfirmation',
+            'getVerify' => 'user.verify',
+            'postLogin' => 'user.login',
+            'getDelete' => 'user.delete',
+            'getLogout' => 'user.logout',
+        ));
 });
 
-//Route::group(['prefix' => 'pet'], function()
-//{
-//    Route::get('/dashboard', function()
-//    {
-//            return View::make('pet.dashboard');
-//    });
-//
-//    Route::get('/help', function()
-//    {
-//            return View::make('pet.help');
-//    });
-//
-//    Route::get('help/result', function()
-//    {
-//            return View::make('pet.result');
-//    });
-//
-//    Route::get('/settings', function()
-//    {
-//            return View::make('pet.settings');
-//    });
-//
-//    Route::get('/vet', function()
-//    {
-//            return View::make('pet.vet');
-//    });
-//
-//    Route::group(['prefix' => 'signup'], function()
-//    {
-//
-//        Route::get('/1', function()
-//        {
-//            return View::make('petsignup.stage1');
-//        });
-//        Route::get('/2', function()
-//        {
-//            return View::make('petsignup.stage2');
-//        });
-//        Route::get('/3', function()
-//        {
-//            return View::make('petsignup.stage3');
-//        });
-//        Route::get('/4', function()
-//        {
-//            return View::make('petsignup.stage4');
-//        });
-//        Route::get('/5', function()
-//        {
-//            return View::make('petsignup.stage5');
-//        });
-//        Route::get('/6', function()
-//        {
-//            return View::make('petsignup.stage6');
-//        });
-//        Route::get('/7', function()
-//        {
-//            return View::make('petsignup.stage7');
-//        });
-//
-//    });
-//});
-//
-//Route::group(['prefix' => 'vet'], function()
-//{
-//    Route::get('/dashboard', function()
-//    {
-//            return View::make('vet.dashboard');
-//    });
-//
-//    Route::get('/information', function()
-//    {
-//            return View::make('vet.information');
-//    });
-//
-//    Route::get('/help', function()
-//    {
-//            return View::make('vet.help');
-//    });
-//
-//    Route::get('help/result', function()
-//    {
-//            return View::make('vet.result');
-//    });
-//
-//    Route::get('/settings', function()
-//    {
-//            return View::make('vet.settings');
-//    });
-//
-//    Route::group(['prefix' => 'signup'], function()
-//    {
-//
-//        Route::get('/1', function()
-//        {
-//            return View::make('vetsignup.stage1');
-//        });
-//        Route::get('/2', function()
-//        {
-//            return View::make('vetsignup.stage2');
-//        });
-//        Route::get('/3', function()
-//        {
-//            return View::make('vetsignup.stage3');
-//        });
-//       
-//    });
-//});
+Route::group(['prefix' => 'vet', 'namespace' => 'vet'], function () {
+    Route::controller('register/reading', 'AnimalReadingRegisterController',
+        array(
+            'getIndex'=>'vet.register.reading'
+        ));
+    Route::controller('register', 'RegisterController',
+        array(
+            'getAbout'=>'vet.register.about',
+            'postAbout'=>'vet.register.about',
+            'getAddress'=>'vet.register.address',
+            'postAddress'=>'vet.register.address',
+        ));
+    Route::controller('dashboard', 'DashboardController',
+        array(
+            'getIndex'=>'vet.dashboard',
+            'getHelp'=>'vet.dashboard.help',
+            'getResult'=>'vet.dashboard.result',
+            'postInvite'=>'vet.dashboard.invite',
+            'getPet'=>'vet.dashboard.pet',
+            'postResetAverageTemperature'=>'vet.dashboard.resetAverageTemperature',
+            'getSettings'=>'vet.dashboard.settings',
+            'postSettings'=>'vet.dashboard.settings',
+            'postReadingUpload'=>'vet.dashboard.readingUpload',
+        ));
+    Route::controller('/', 'AuthController',
+        array(
+            'getIndex'=>'vet',
+            'getRegister'=>'vet.register',
+            'postCreate'=>'vet.create',
+            'getResendConfirmation'=>'vet.resendConfirmation',
+            'getVerify'=>'vet.verify',
+            'postLogin'=>'vet.login',
+            'getDelete'=>'vet.delete',
+            'getLogout'=>'vet.logout',
+        ));
+});
 
-Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api'], function()
-{
-    Route::post('user/login', ['as' => 'api.user.login','uses' => 'AuthController@postLogin']); // Done
+
+Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api'], function () {
+    Route::post('user/login', ['as' => 'api.user.login', 'uses' => 'AuthController@postLogin']); // Done
     Route::resource('user', 'UserController', ['only' => ['store']]); // Done
-    
-    Route::post('vet/login', ['as' => 'api.vet.login','uses' => 'VetAuthController@postLogin']); // Done
+    Route::post('vet/login', ['as' => 'api.vet.login', 'uses' => 'VetAuthController@postLogin']); // Done
     Route::resource('vet', 'VetController', ['only' => ['store', 'index', 'show']]); // Done
-
-    Route::group(['before' => 'auth.api'], function()
-    {
-        
-        Route::post('user/logout', ['as' => 'api.user.logout','uses' => 'AuthController@postLogout']); // Done
+    Route::group(['before' => 'auth.api'], function () {
+        Route::post('user/logout', ['as' => 'api.user.logout', 'uses' => 'AuthController@postLogout']); // Done
         Route::resource('user', 'UserController', ['only' => ['show', 'update', 'destroy']]); // Done
         Route::resource('user', 'UserController', ['only' => ['show', 'update', 'destroy']]); // to do
         Route::resource('animal', 'AnimalController'); // Done
         Route::resource('device', 'DeviceController'); // Done
         Route::resource('breeds', 'BreedController'); // Done
+        Route::resource('conditions', 'ConditionController'); // Done
         Route::resource('symptoms', 'SymptomController'); // Done
         Route::resource('animal/{animal_id}/condition', 'AnimalConditionController');  // Done
         Route::resource('animal/{animal_id}/reading', 'AnimalReadingController'); //  Done
         Route::resource('animal/{animal_id}/reading/{reading_id}/symptom', 'AnimalReadingSymptomController'); // Done
-        Route::resource('user/request', 'VetRequestController'); // Needs not allow muliple requests for same animal  
-
+        Route::resource('user/request', 'VetRequestController'); // Needs not allow muliple requests for same animal
     });
-    
-    
-    
-    Route::group(['before' => 'vet.auth.api'], function()
-    {    
-        
-        Route::post('vet/logout', ['as' => 'api.vet.logout','uses' => 'VetAuthController@postLogout']); // 
-        // Route::resource('request/{id}/approve', 'AnimalRequestController@approveRequest'); // Only show if in date. On approval start the count down for expiry
+
+
+    Route::group(['before' => 'vet.auth.api'], function () {
+        Route::post('vet/logout', ['as' => 'api.vet.logout', 'uses' => 'VetAuthController@postLogout']); //
         Route::resource('vet/request', 'AnimalRequestController'); // veiw all requests and singular requests
         Route::resource('vet/animal', 'AnimalController', ['only' => ['show', 'index']]); // View all vet animals
-        Route::resource('vet/animal.reading', 'AnimalReadingController', ['only' => ['show', 'update', 'index']]);  
+        Route::resource('vet/animal.reading', 'AnimalReadingController', ['only' => ['show', 'update', 'index']]);
         Route::resource('vet/animal.reading.symptom', 'AnimalReadingSymptomController'); //  done
-        Route::resource('vet', 'VetController', ['only' => ['update', 'destroy']]); // 
-        
+        Route::resource('vet', 'VetController', ['only' => ['update', 'destroy']]); //
     });
-        
-    
-    
-    
-    Route::any('{url?}', function()
-        {                                                                     
-            throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-        })
+
+    Route::any('{url?}', function () {
+        throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+    })
         ->where('url', '.*');
 });

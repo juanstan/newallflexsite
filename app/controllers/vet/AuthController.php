@@ -34,7 +34,7 @@ class AuthController extends \BaseController {
     public function getIndex() {
         if (\Auth::vet()->check())
         {
-            return \Redirect::to('vet/dashboard');
+            return \Redirect::route('vet.dashboard');
         }
             return \View::make('vet.welcome');
     }
@@ -54,7 +54,7 @@ class AuthController extends \BaseController {
         if($validator->fails())
         {
             
-            return \Redirect::to('vet/register')
+            return \Redirect::route('vet.register')
                 ->withErrors($validator)
                 ->withInput(\Input::except('password'));
             
@@ -74,7 +74,7 @@ class AuthController extends \BaseController {
         
         \Auth::vet()->login($user);
         
-        return \Redirect::to('vet/register/about');
+        return \Redirect::route('vet.register.about');
          
     }
 
@@ -85,7 +85,7 @@ class AuthController extends \BaseController {
                 ->subject('Verify your email address');
         });
         \Session::flash('message', 'Verification email sent');
-        return \Redirect::to('/vet/dashboard');
+        return \Redirect::route('vet.dashboard');
     }
 
     public function getVerify($confirmation_code) {
@@ -93,7 +93,7 @@ class AuthController extends \BaseController {
         if(!$confirmation_code)
         {
             \Session::flash('warning', 'Confirmation not provided');
-            return \Redirect::to('vet');
+            return \Redirect::route('vet');
         }
 
         $user = Vet::where('confirmation_code', '=', $confirmation_code)->first();
@@ -101,7 +101,7 @@ class AuthController extends \BaseController {
         if(!$user)
         {
             \Session::flash('warning', 'Confirmation code invalid');
-            return \Redirect::to('vet');
+            return \Redirect::route('vet');
         }
 
         $user->confirmed = 1;
@@ -111,9 +111,9 @@ class AuthController extends \BaseController {
         \Session::flash('success', 'You have successfully verified your account.');
         if (\Auth::vet()->check())
         {
-            return \Redirect::to('vet/dashboard');
+            return \Redirect::route('vet.dashboard');
         }
-        return \Redirect::to('vet/');
+        return \Redirect::route('vet');
     }
 
 	public function postLogin()
@@ -124,7 +124,7 @@ class AuthController extends \BaseController {
 
 		if($validator->fails())
 		{
-			return \Redirect::to('/vet')
+			return \Redirect::route('vet')
                 ->withErrors($validator)
                 ->withInput(\Input::except('password'));
 		}else {
@@ -136,7 +136,7 @@ class AuthController extends \BaseController {
 
             if (\Auth::vet()->attempt($userdata)) {
   
-                return \Redirect::to('vet/dashboard');
+                return \Redirect::route('vet.dashboard');
 
             }
 
@@ -148,12 +148,12 @@ class AuthController extends \BaseController {
         \DB::table('animal_requests')->where('vet_id', '=', $id)->delete();
         \DB::table('vet_readings')->where('vet_id', '=', $id)->delete();
         \Auth::vet()->get()->delete();
-        return \Redirect::to('/vet')->with('success', 'Your account was successfully deleted');
+        return \Redirect::route('vet')->with('success', 'Your account was successfully deleted');
     }
 
     public function getLogout() {
         \Auth::vet()->logout();
-        return \Redirect::to('/vet')->with('success', 'Your are now logged out!');
+        return \Redirect::route('vet')->with('success', 'Your are now logged out!');
     }
     
 }

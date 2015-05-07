@@ -24,19 +24,6 @@ class Device extends \Eloquent implements UserInterface, RemindableInterface {
         'field_3',
         'field_4'        
     ];
-
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
-	protected $table = 'devices';
-
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
     
     public function user()
     {
@@ -48,9 +35,9 @@ class Device extends \Eloquent implements UserInterface, RemindableInterface {
         return $this->belongsToMany('Entities\Vet', 'device_vets')->withTimestamps();
     }
     
-    public function reading()
+    public function sensorReading()
     {
-        return $this->hasMany('Entities\Reading', 'device_id');
+        return $this->hasMany('Entities\SensorReading', 'device_id');
     }
 
 }

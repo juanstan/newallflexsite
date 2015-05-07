@@ -7,7 +7,7 @@
                 {{ HTML::image('images/logo-vet.png', 'a Logo', array('class' => 'signup-logo')) }}
                 <h2>{{ Lang::get('general.Sign up to Vet Connect') }}</h2>
                 <ul class="nav mobile desktop nav-pills top-buffer">
-                    <li>{{ HTML::link('pet/', Lang::get('general.Pet owner')) }}</li>
+                    <li>{{ HTML::link('user', Lang::get('general.Pet owner')) }}</li>
                     <li class="active" >{{ HTML::link('vet/', Lang::get('general.Vet practice')) }}</li>
                 </ul>
                     {{ Form::open(array('url' => 'vet/create', 'method' => 'post', 'class' => 'top-buffer')) }}

@@ -1,9 +1,10 @@
-<?php  namespace Api;
+<?php namespace Api;
 
 use Entities\Breed;
 
-class BreedController extends \BaseController {
-    
+class BreedController extends \BaseController
+{
+
     public function index()
     {
         $breed = Breed::all();
@@ -16,5 +17,5 @@ class BreedController extends \BaseController {
 
     }
 
-    
+
 }

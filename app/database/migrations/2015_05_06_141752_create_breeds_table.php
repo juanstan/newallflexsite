@@ -16,6 +16,7 @@ class CreateBreedsTable extends Migration {
         {
             $table->integer('id', true);
             $table->string('name')->nullable();
+			$table->string('weight')->nullable();
         });
 	}
 

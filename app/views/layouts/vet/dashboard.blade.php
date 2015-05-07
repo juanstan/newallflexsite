@@ -38,8 +38,7 @@
                     <div class="alert alert-warning alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <strong class="inline-block ">{{ Lang::get('general.Email not yet verified') }}</strong> {{ Lang::get('general.please verify') }}
-
-                        <a href="resend-confirmation" ><button style="margin-top: -5px;" class="btn-mobile btn btn-warning btn-sm pull-right border-none" type="button">{{ Lang::get('general.Resend confirmation email') }}</button></a>
+                        {{ HTML::linkroute('vet.resendConfirmation', '<button style="margin-top: -5px;" class="btn-mobile btn btn-warning btn-sm pull-right border-none" type="button">'.Lang::get('general.Resend confirmation email').'</button>') }}
                     </div>
                 @endif
                 @if($errors->has())
@@ -62,18 +61,19 @@
                   </button>
                   
                 </div>
-                <a class="navbar-brand" href="/vet/dashboard">{{ HTML::image('images/logo-vet.png', 'Logo', array('width' => '60px')) }}</a>
+                <div class="navbar-brand">{{ HTML::image('images/logo-vet.png', 'Logo', array('width' => '60px')) }}</div>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse" id="navbar-collapse-1">
                  
                   <ul class="nav desktop mobile navbar-nav navbar-left">
-                    <li><a href="/vet/dashboard">{{ Lang::get('general.Overview') }}</a></li>
+                    <li>{{ HTML::linkroute('vet.dashboard', Lang::get('general.Overview')) }}</li>
+
                     <li class="desktop" ><a href="#upload" id="upload-toggle" data-toggle="collapse" data-target="#file-upload"><i class="fa fa-cloud-upload"></i> {{ Lang::get('general.Upload') }}</a></li>
                   </ul>
                   <ul class="nav desktop mobile navbar-nav navbar-right">
-                      <li>{{ HTML::link('vet/dashboard/help', Lang::get('general.Help')) }}</li>
-                      <li>{{ HTML::link('vet/dashboard/settings', Lang::get('general.Settings')) }}</li>
-                      <li>{{ HTML::link('vet/logout', Lang::get('general.Logout')) }}</li>
+                      <li>{{ HTML::linkroute('vet.dashboard.help', Lang::get('general.Help')) }}</li>
+                      <li>{{ HTML::linkroute('vet.dashboard.settings', Lang::get('general.Settings')) }}</li>
+                      <li>{{ HTML::linkroute('vet.logout', Lang::get('general.Logout')) }}</li>
                   </ul>
                 </div><!-- /.navbar-collapse -->
             </nav>

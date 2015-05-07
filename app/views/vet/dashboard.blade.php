@@ -34,7 +34,7 @@
                     <div class="row" >
                         <div class="col-md-12 col-centered float-none top-buffer" >
                             <div class="col-md-3 small-top-buffer" >
-                            {{ HTML::image('images/pet-image.png', 'Logo', array('width' => '100%')) }}
+                            {{ HTML::image('user', 'Logo', array('width' => '100%')) }}
                             </div>
                             <div class="col-md-9 left-none" >
                                 <h3 class="small-top-buffer bottom-none">{{ $reading->microchip_id }}</h3>

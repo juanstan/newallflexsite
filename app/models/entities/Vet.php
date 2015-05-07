@@ -41,19 +41,6 @@ class Vet extends \Eloquent implements UserInterface, RemindableInterface {
     {
         $this->attributes['password'] = \Hash::make($value);
     }
-
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
-    protected $table = 'vets';
-
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
     
     public function tokens()
     {
@@ -70,19 +57,14 @@ class Vet extends \Eloquent implements UserInterface, RemindableInterface {
         return $this->belongsToMany('Entities\Animal', 'animal_requests')->withTimestamps();
     }
 
-//    public function animals()
-//    {
-//        return $this->hasMany('Entities\Animal', 'vet_id');
-//    }
-
     public function animals()
     {
         return $this->requestedAnimals()->wherePivot('approved', '=', '1');
     }
 
-    public function readings()
+    public function sensorReadings()
     {
-        return $this->belongsToMany('Entities\Reading', 'vet_readings', 'vet_id', 'reading_id');
+        return $this->belongsToMany('Entities\SensorReading', 'vet_readings', 'vet_id', 'reading_id');
     }
     
     public function device()

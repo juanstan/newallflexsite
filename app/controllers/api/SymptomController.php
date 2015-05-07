@@ -1,12 +1,13 @@
-<?php  namespace Api;
+<?php namespace Api;
 
-use Entities\SymptomNames;
+use Entities\Symptom;
 
-class SymptomController extends \BaseController {
+class SymptomController extends \BaseController
+{
 
     public function index()
     {
-        $symptoms = SymptomNames::all();
+        $symptoms = Symptom::all();
 
         return \Response::json(array(
             'error' => false,

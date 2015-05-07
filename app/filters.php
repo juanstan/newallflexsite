@@ -43,7 +43,7 @@ Route::filter('auth', function()
         }
         else
         {
-            return Redirect::guest('/pet');
+            return Redirect::guest('/user');
         }
     }
 });

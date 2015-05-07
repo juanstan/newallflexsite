@@ -50,14 +50,14 @@ class DashboardController extends \BaseController {
     public function getHelp() {
 
         $help = \DB::table('help')->get();
-        return \View::make('pet.help')->with(array('help' => $help));
+        return \View::make('user.help')->with(array('help' => $help));
 
     }
 
     public function getResult($id) {
 
         $help = \DB::table('help')->where('id', '=', $id)->get();
-        return \View::make('pet.result')->with(array('help' => $help));
+        return \View::make('user.result')->with(array('help' => $help));
 
     }
 
@@ -90,22 +90,20 @@ class DashboardController extends \BaseController {
         //return \View::make('vet.information')->with(array('pets' => $pets, 'symptoms' => $symptoms));
     }
 
-    public function getSettings()
-    {
-        return \View::make('vet.settings');
-    }
-
     public function postResetAverageTemperature($id)
     {
         if(\DB::table('sensor_readings')->where('animal_id', '=', $id)->update(array('average' => 0)))
         {
-            return \Redirect::to('pet/dashboard')->with('success', 'Average temperature reset');
+            return \Redirect::to('user/dashboard')->with('success', 'Average temperature reset');
         }
 
-        return \Redirect::to('pet/dashboard')->with('error', 'There was a problem with your request');
+        return \Redirect::to('user/dashboard')->with('error', 'There was a problem with your request');
     }
 
-
+    public function getSettings()
+    {
+        return \View::make('vet.settings');
+    }
 
     public function postSettings()
     {

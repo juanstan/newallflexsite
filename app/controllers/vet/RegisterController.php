@@ -45,7 +45,7 @@ class RegisterController extends \BaseController {
 
         if($validator->fails())
         {
-            return \Redirect::to('vet/register/about')
+            return \Redirect::route('vet.register.about')
                 ->withErrors($validator)
                 ->withInput(\Input::except('password'));
         }
@@ -80,7 +80,7 @@ class RegisterController extends \BaseController {
             \App::abort(500);
         }
 
-        return \Redirect::to('vet/register/address');
+        return \Redirect::route('vet.register.address');
     }
 
     public function getAddress()
@@ -97,7 +97,7 @@ class RegisterController extends \BaseController {
 
         if($validator->fails())
         {
-            return \Redirect::to('vet/register/about')
+            return \Redirect::route('vet.register.about')
                 ->withErrors($validator)
                 ->withInput(\Input::except('password'));
         }
@@ -117,7 +117,7 @@ class RegisterController extends \BaseController {
             \App::abort(500);
         }
 
-        return \Redirect::to('vet/register/reading');
+        return \Redirect::route('vet.register.reading');
     }
     
     

@@ -20,13 +20,13 @@ class VetRegisterController extends \BaseController {
 
     public function getIndex()
     { 
-        return \View::make('petsignup.stage4');
+        return \View::make('usersignup.stage4');
     }
     
     public function getAdd()
     { 
         $vets = $this->repository->all();
-        return \View::make('petsignup.stage5')->with('vets', $vets);
+        return \View::make('usersignup.stage5')->with('vets', $vets);
     }
     
 	/**

@@ -47,7 +47,7 @@ class signUpController extends \BaseController {
 		}
 
 		return \Response::json(['error' => false, 'result' => $user], 201)
-			->header('Location', \URL::route('pet/signup/1', [$user->id]));
+			->header('Location', \URL::route('user/signup/1', [$user->id]));
 	}
 
 	/**
