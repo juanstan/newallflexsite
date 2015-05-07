@@ -21,7 +21,7 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
     {             
         if($this->animal)
         {
-            return $this->animal->readings()->orderBy('reading_time')->get();
+            return $this->animal->sensorReadings()->orderBy('reading_time')->get();
         }
 
         return parent::all();
