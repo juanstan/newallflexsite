@@ -2,10 +2,10 @@
 
 use Entities\Animal;
 use Entities\User;
-use Entities\Reading;
-use Entities\Symptom;
+use Entities\SensorReading;
+use Entities\SensorReadingSymptom;
 use Entities\Help;
-use Entities\SymptomNames;
+use Entities\Symptom;
 use Repositories\AnimalRepositoryInterface;
 use Repositories\AnimalReadingRepositoryInterface;
 use Repositories\AnimalReadingSymptomRepositoryInterface;

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AnimalReadingRepository extends AbstractRepository implements AnimalReadingRepositoryInterface
 {
-    protected $classname = 'Entities\Reading';
+    protected $classname = 'Entities\SensorReading';
     
     protected $repository;
     

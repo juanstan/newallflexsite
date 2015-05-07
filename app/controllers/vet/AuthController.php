@@ -3,9 +3,9 @@
 use Entities\Animal;
 use Entities\User;
 use Entities\Vet;
-use Entities\Reading;
+use Entities\SensorReading;
+use Entities\SensorReadingSymptom;
 use Entities\Symptom;
-use Entities\SymptomNames;
 use Repositories\AnimalRepositoryInterface;
 use Repositories\AnimalReadingRepositoryInterface;
 use Repositories\AnimalReadingSymptomRepositoryInterface;

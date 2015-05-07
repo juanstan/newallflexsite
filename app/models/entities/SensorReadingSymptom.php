@@ -20,11 +20,11 @@ class SensorReadingsSymptom extends \Eloquent implements UserInterface, Remindab
     
     public function reading()
     {
-        return $this->belongsTo('Entities\Reading', 'reading_id');
+        return $this->belongsTo('Entities\SensorReading', 'reading_id');
     }
     
     public function symptom()
     {
-        return $this->belongsTo('Entities\Symptom', 'symptom_id');
+        return $this->belongsTo('Entities\SensorReadingSymptom', 'symptom_id');
     }
 }

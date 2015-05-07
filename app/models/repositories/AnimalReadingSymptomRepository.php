@@ -1,12 +1,12 @@
 <?php namespace Repositories;
 
-use Entities\Reading;
+use Entities\SensorReading;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AnimalReadingSymptomRepository extends AbstractRepository implements AnimalReadingSymptomRepositoryInterface
 {
-    protected $classname = 'Entities\Symptom';
+    protected $classname = 'Entities\SensorReadingSymptom';
     
     protected $repository;
         

@@ -1,6 +1,6 @@
 <?php namespace Api;
 
-use Entities\Reading;
+use Entities\SensorReading;
 use Repositories\AnimalReadingSymptomRepositoryInterface;
 use Repositories\AnimalRepositoryInterface;
 use Repositories\AnimalReadingRepositoryInterface;
