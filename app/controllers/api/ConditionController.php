@@ -2,7 +2,7 @@
 
 use Entities\Condition;
 
-class BreedController extends \BaseController
+class ConditionController extends \BaseController
 {
 
     public function index()
