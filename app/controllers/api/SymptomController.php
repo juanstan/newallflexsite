@@ -1,6 +1,6 @@
 <?php namespace Api;
 
-use Entities\SensorReadingSymptom;
+use Entities\Symptom;
 
 class SymptomController extends \BaseController
 {

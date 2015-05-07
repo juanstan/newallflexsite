@@ -173,9 +173,9 @@ class DashboardController extends \BaseController
         $input = \Input::get('symptoms');
         if (is_array($input)) {
             foreach ($input as $input) {
-                $readingSymptom = Symptom::where(['reading_id' => $id, 'symptom_id' => $input])->first();
+                $readingSymptom = SensorReadingSymptom::where(['reading_id' => $id, 'symptom_id' => $input])->first();
                 if (empty($readingSymptom)) {
-                    $readingSymptom = new Symptom;
+                    $readingSymptom = new SensorReadingSymptom;
                     $readingSymptom->symptom_id = $input;
                     $readingSymptom->reading_id = $id;
                     $readingSymptom->save();
