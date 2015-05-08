@@ -11,7 +11,7 @@ class Symptom extends \Eloquent implements UserInterface, RemindableInterface {
     
     protected $hidden = [
         
-        ];
+    ];
 
     protected $fillable = [
         'name',

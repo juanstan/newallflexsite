@@ -3,7 +3,7 @@
 @section('content')
     <div class="row" >
         <div class="col-md-12 mobile" >
-            <h3>Your vets</h3>
+            <h3>{{ Lang::get('general.Your vets') }}</h3>
         </div>
         <div class="col-md-6 col-centered float-none top-buffer" >
             <h3>{{ Lang::get('general.To find your vet practice, search below') }}</h3>
@@ -28,7 +28,7 @@
             </div>
             @foreach ($vets as $vet)
 
-                {{ Form::open(array('url' => array('/user/register/vet/add', $vet->id), 'method' => 'post')) }}
+                {{ Form::open(array('route' => array('user.register.vet.add', $vet->id), 'method' => 'post')) }}
             <div class="row top-buffer col-md-12 col-centered" >
                 <div class="col-xs-3 small-padding" >
                     {{ HTML::image(isset($vet->image_path) ? $vet->image_path : '/images/vet-image.png', $vet->company_name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
@@ -51,11 +51,9 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     
-                     <a href="/user/register/vet" >{{ Form::button(Lang::get('general.Back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}</a>
+                     <a href="{{ URL::route('user.register.vet') }}" >{{ Form::button(Lang::get('general.Back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}</a>
 
-                    <a href="/user/register/reading" >{{ Form::button(Lang::get('general.Next'), array('class' => 'btn btn-default btn-lg pull-right border-none')) }}</a>
-
-                    {{ Form::close() }}
+                    <a href="{{ URL::route('user.register.reading') }}" >{{ Form::button(Lang::get('general.Next'), array('class' => 'btn btn-default btn-lg pull-right border-none')) }}</a>
 
                 </div>
             </div>

@@ -18,7 +18,7 @@ class SensorReadingsSymptom extends \Eloquent implements UserInterface, Remindab
         'symptom_id',
     ];
     
-    public function reading()
+    public function sensorReading()
     {
         return $this->belongsTo('Entities\SensorReading', 'reading_id');
     }
