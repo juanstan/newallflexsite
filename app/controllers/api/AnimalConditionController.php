@@ -15,7 +15,7 @@ class AnimalConditionController extends \BaseController
 
     public function __construct(AnimalConditionRepositoryInterface $repository, AnimalRepositoryInterface $arepository)
     {
-        $this->authUser = \Auth::getUser();
+        $this->authUser = \Auth::user()->get();
         $this->repository = $repository;
         $this->arepository = $arepository;
     }

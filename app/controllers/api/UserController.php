@@ -13,7 +13,7 @@ class UserController extends \BaseController
     public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
-        $this->authUser = \Auth::getUser();
+        $this->authUser = \Auth::user()->get();
     }
 
     /**

@@ -15,7 +15,7 @@ class AnimalReadingController extends \BaseController
 
     public function __construct(AnimalReadingRepositoryInterface $repository, AnimalRepositoryInterface $arepository)
     {
-        $this->authUser = \Auth::getUser();
+        $this->authUser = \Auth::user()->get();
         $this->repository = $repository;
         $this->arepository = $arepository;
     }

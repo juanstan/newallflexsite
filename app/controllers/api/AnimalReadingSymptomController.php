@@ -18,7 +18,7 @@ class AnimalReadingSymptomController extends \BaseController
 
     public function __construct(AnimalReadingRepositoryInterface $rrepository, AnimalRepositoryInterface $arepository, AnimalReadingSymptomRepositoryInterface $repository)
     {
-        $this->authUser = \Auth::getUser();
+        $this->authUser = \Auth::user()->get();
         $this->repository = $repository;
         $this->arepository = $arepository;
         $this->rrepository = $rrepository;

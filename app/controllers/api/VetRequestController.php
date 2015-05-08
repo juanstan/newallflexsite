@@ -13,7 +13,7 @@ class VetRequestController extends \BaseController
 
     public function __construct(VetRequestRepositoryInterface $repository)
     {
-        $this->authUser = \Auth::getUser();
+        $this->authUser = \Auth::user()->get();
         $this->repository = $repository;
     }
 

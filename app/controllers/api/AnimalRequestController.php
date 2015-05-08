@@ -13,7 +13,7 @@ class AnimalRequestController extends \BaseController
 
     public function __construct(AnimalRequestRepositoryInterface $repository, AnimalRepositoryInterface $arepository)
     {
-        $this->authUser = \Auth::getUser();
+        $this->authUser = \Auth::user()->get();
         $this->repository = $repository;
     }
 
