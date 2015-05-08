@@ -32,7 +32,7 @@
     @endforeach
     @foreach ($pets as $value)
         @if ($value->name == null)
-            {{ Form::open(array('url' => array('/user/register/reading/assign', $value->id), 'method' => 'post')) }}
+            {{ Form::open(array('route' => array('user.register.reading.assign', $value->id), 'method' => 'post')) }}
             <div class="row top-buffer" >
                 <div class="col-sm-9 text-left">
                     <div class="col-sm-2" >
@@ -80,7 +80,7 @@
                             <p>{{ Lang::get('general.Scan your pets to see their Microchip numbers on the device to match up above') }}</p>
                         </div>
                     </div>
-                    <a href="/user/register/reading/finish" >{{ Form::button(Lang::get('general.Finish setup'), array('class' => 'btn btn-default btn-lg pull-right')) }}</a>
+                    <a href="{{ URL::route('user.register.reading.finish') }}" >{{ Form::button(Lang::get('general.Finish setup'), array('class' => 'btn btn-default btn-lg pull-right')) }}</a>
                 </div>
             </div>
         </div>

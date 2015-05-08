@@ -20,7 +20,7 @@
                     <button type="button" class="close small-top-buffer" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="inline-block small-top-buffer">{{ Lang::get('general.1 unknown microchip found, would you like to create a new pet for this microchip?') }}</h4>
 
-                    <a href="#edit{{ $value->id }}" data-toggle="pill" ><button data-toggle="collapse" data-target="#pet-photo{{ $value->id }}" class="btn btn-file btn-md pull-right border-none" type="button">{{ Lang::get('user') }}</button></a>
+                    <a href="#edit{{ $value->id }}" data-toggle="pill" ><button data-toggle="collapse" data-target="#pet-photo{{ $value->id }}" class="btn btn-file btn-md pull-right border-none" type="button">{{ Lang::get('Create') }}</button></a>
                 </div>
             </div>
         @endif
@@ -35,7 +35,7 @@
                     <div class="col-md-12" >
                         <div class="col-xs-3" >
                                                     
-                            {{ HTML::image(isset($value->image_path) ? $value->image_path : 'user', $value->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
+                            {{ HTML::image(isset($value->image_path) ? $value->image_path : '/images/pet-image.png', $value->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
                             
                         </div>
                         <div class="tab-content ">
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="collapse vet-overlay fade" id="symptom-list{{ $value->id }}" >
-                    @foreach ($value->readings->slice(0, 1) as $readings)
+                    @foreach ($value->sensorReadings->slice(0, 1) as $readings)
                         {{ Form::open(array('files'=> 'true', 'url' => array('/user/dashboard/add-symptoms', $readings->id), 'method' => 'post')) }}
                         <div class="col-md-12 top-buffer" >
                             <div class="col-md-8" >
@@ -87,8 +87,8 @@
                         </div>
                         <div class="col-md-12" >
                             <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
-                                @if( $value->readings->count() )
-                                    @foreach ($value->readings->slice(0, 1) as $readings)
+                                @if( $value->sensorReadings->count() )
+                                    @foreach ($value->sensorReadings->slice(0, 1) as $readings)
                                             @foreach ($readings->symptom as $readingSymptom)
                                                 <?php $symptomItems[] = $readingSymptom->symptom_names->name; ?>
                                             @endforeach
@@ -109,7 +109,7 @@
                     </div>
 
                     <div class="collapse vet-overlay fade" id="condition-list{{ $value->id }}" >
-                        @foreach ($value->readings->slice(0, 1) as $readings)
+                        @foreach ($value->sensorReadings->slice(0, 1) as $readings)
                             {{ Form::open(array('files'=> 'true', 'url' => array('/user/dashboard/add-symptoms', $readings->id), 'method' => 'post')) }}
                             <div class="col-md-12 top-buffer" >
                                 <div class="col-md-8" >
@@ -123,8 +123,8 @@
                             </div>
                             <div class="col-md-12" >
                                 <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
-                                    @if( $value->readings->count() )
-                                        @foreach ($value->readings->slice(0, 1) as $readings)
+                                    @if( $value->sensorReadings->count() )
+                                        @foreach ($value->sensorReadings->slice(0, 1) as $readings)
                                             @foreach ($readings->symptom as $readingSymptom)
                                                 <?php $symptomItems[] = $readingSymptom->symptom_names->name; ?>
                                             @endforeach
@@ -157,7 +157,7 @@
                     <div class="tab-content ">
                         <div class="tab-pane latest-list-wrap active fade in" id="latest{{ $value->id }}">
                             <div class="row col-sm-8 col-md-12 col-centered float-none top-buffer" >
-                                    @foreach ($value->readings as $readings)
+                                    @foreach ($value->sensorReadings as $readings)
                                         @if ($readings->average == 1)
                                             <?php $allReadingTemps[] = $readings->temperature; ?>
                                         @endif
@@ -169,8 +169,8 @@
                                         $readingAverage = $readingSum/$readingCount;
                                     ?>
                                     @endif
-                                @if( $value->readings->count() )
-                                    @foreach ($value->readings->slice(0, 1) as $readings)
+                                @if( $value->sensorReadings->count() )
+                                    @foreach ($value->sensorReadings->slice(0, 1) as $readings)
                                         <div class="circle circle-border"  style="border-color: {{ getTemperatureColor($readings->temperature, $temperaturePref)['tempcol'] }}">
                                             <div class="small-circle circle-solid" style="background-color: {{ getTemperatureColor($readings->temperature, $temperaturePref)['tempcol'] }}" >
                                                 <div class="circle-inner">
@@ -217,8 +217,8 @@
                                 <div class="row text-center" >
                                     <div class="col-md-11 col-centered float-none" >
                                         <h3>{{ Lang::get('general.Symptoms' ) }}</h3>
-                                        @if( $value->readings->count() )
-                                            @foreach ($value->readings->slice(0, 1) as $readings)
+                                        @if( $value->sensorReadings->count() )
+                                            @foreach ($value->sensorReadings->slice(0, 1) as $readings)
                                                 <ul class="nav nav-pills text-center symptom-pills">
                                                     @foreach ($readings->symptom as $readingSymptom)
                                                     <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="dashboard/symptom-remove/{{ $readingSymptom->reading_id }}/{{ $readingSymptom->symptom_names->id }}"><span>{{ $readingSymptom->symptom_names->name }}</span></a></li>
@@ -236,8 +236,8 @@
                                     <div class="col-md-4" >
                                         <h4>{{ Lang::get('general.Previous Readings') }}</h4>
                                     </div>
-                                    @if( $value->readings->count() )
-                                        @foreach ($value->readings->slice(0, 4) as $readings)
+                                    @if( $value->sensorReadings->count() )
+                                        @foreach ($value->sensorReadings->slice(0, 4) as $readings)
                                         <div class="col-md-2 col-xs-3 small-padding" >
                                             <div class="circle circle-small-border" style="border-color: {{ getTemperatureColor($readings->temperature, $temperaturePref)['tempcol'] }}" >
                                                  <div class="circle-inner">
@@ -261,8 +261,8 @@
 
                         <div class="tab-pane fade in" id="reports{{ $value->id }}">
                             <div class="row top-buffer dash-scrollable col-md-12 col-centered" >
-                                @if( $value->readings->count() )
-                                    @foreach ($value->readings->slice(0, 1) as $readings)
+                                @if( $value->sensorReadings->count() )
+                                    @foreach ($value->sensorReadings->slice(0, 1) as $readings)
                                 <div class="row hero-banner" >
                                     <div class="col-xs-9 " >
                                         @if(!empty($allReadingTemps))
@@ -308,15 +308,15 @@
                                         </div>
                                     </div>
                                 @endif
-                                @if(count($value->readings))
+                                @if(count($value->sensorReadings))
                                 <div class="row top-buffer" >
-                                    <div class="graph-container col-centered" style="width:95%; height:150px;" data-data='{{ $value->readings }}' ></div>
+                                    <div class="graph-container col-centered" style="width:95%; height:150px;" data-data='{{ $value->sensorReadings }}' ></div>
                                 </div>
                                 @endif
                                 <div class="row" >
-                                @if( $value->readings->count() )
+                                @if( $value->sensorReadings->count() )
                                     <?php $previousTemp = 0; ?>
-                                    @foreach ($value->readings->slice(0, 4) as $readings)
+                                    @foreach ($value->sensorReadings->slice(0, 4) as $readings)
                                     <div class="row text-left col-md-12" >
                                         <div class="col-md-12" >
                                             <h4>{{ date("d/m/y",strtotime($readings->reading_time)) }}</h4>

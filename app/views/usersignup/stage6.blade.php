@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="col-md-12 mobile" >
-        <h3>Your readings</h3>
+        <h3>{{ Lang::get('general.Your readings') }}</h3>
     </div>
     <div class="row desktop" >
         <div class="col-md-10 col-centered float-none top-buffer" >
@@ -31,7 +31,7 @@
         <div class="col-sm-6 desktop">
             <h3 class="blue" >{{ Lang::get('general.Upload readings via USB') }}</h3>
 
-            {{ Form::open(array('files'=> 'true', 'url' => '/user/register/reading/reading-upload', 'class'=>'dropzone', 'method' => 'post')) }}
+            {{ Form::open(array('files'=> 'true', 'route' => 'user.register.reading.readingUpload', 'class'=>'dropzone', 'method' => 'post')) }}
             {{ Form::close() }}
 
             <div class="row text-center top-buffer" >
@@ -50,8 +50,8 @@
             <div class="form-group">
                 <div class="col-sm-12">
                     
-                    <a href="/user/register/vet" >{{ Form::button(Lang::get('general.Back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}</a>
-                    <a href="/user/register/reading/assign" >{{ Form::button(Lang::get('general.Next'), array('class' => 'btn btn-default btn-lg pull-right')) }}</a>
+                    <a href="{{ URL::route('user.register.vet') }}" >{{ Form::button(Lang::get('general.Back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}</a>
+                    <a href="{{ URL::route('user.register.reading.assign') }}" >{{ Form::button(Lang::get('general.Next'), array('class' => 'btn btn-default btn-lg pull-right')) }}</a>
 
                 </div>
             </div>
