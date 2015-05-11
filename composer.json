@@ -41,7 +41,6 @@
         "intervention/image": "dev-master",
         "orangehill/iseed": "dev-master",
         "sebklaus/profiler": "1.7.6",
-        "barryvdh/laravel-debugbar": "dev-master",
         "league/csv": "7.0.*@dev",
         "ollieread/multiauth": "dev-master",
         "potsky/laravel-localization-helpers" : "~1.1",

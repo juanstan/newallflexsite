@@ -221,7 +221,7 @@
                                             @foreach ($value->sensorReadings->slice(0, 1) as $readings)
                                                 <ul class="nav nav-pills text-center symptom-pills">
                                                     @foreach ($readings->sensorReadingSymptoms as $readingSymptom)
-                                                    <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="dashboard/symptom-remove/{{ $readingSymptom->reading_id }}/{{ $readingSymptom->symptom_names->id }}"><span>{{ $readingSymptom->symptom_names->name }}</span></a></li>
+                                                    <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="dashboard/symptom-remove/{{ $readingSymptom->reading_id }}/{{ $readingSymptom->symptoms->id }}"><span>{{ $readingSymptom->symptoms->name }}</span></a></li>
                                                     @endforeach
                                                     <li role="presentation" class="symptom-pill small-top-buffer active" ><a href="#" data-toggle="collapse" data-target="#symptom-list{{ $value->id }}" >{{ Lang::get('general.+ Add') }}</a></li>
                                                 </ul>
@@ -363,7 +363,7 @@
                         </div>
                         <div  class="tab-pane fade in" id="edit{{ $value->id }}">
                             <div class="form-horizontal float-none top-buffer col-md-12 col-centered">
-                                {{ Form::open(array('url' => array('user', $value->id), 'method' => 'post', 'id' => 'petSettingsForm')) }}
+                                {{ Form::open(array('route' => array('user.dashboard.updatePet', $value->id), 'method' => 'post', 'id' => 'petSettingsForm')) }}
 
                                 <div class="form-group">
 
@@ -381,20 +381,8 @@
 
                                     <div class="col-sm-10">
 
-                                        {{ Form::text('breed', $value->breed, array('class' => 'form-control text-left')) }}
+                                        {{ Form::select('breed_id', $breed, $value->breed->id, array('class' => 'form-control text-left')) }}
 
-                                    </div>
-                                </div>
-                                <div class="col-md-6 small-padding" >
-                                    <div class="form-group">
-                                    
-                                        {{ Form::label('size', Lang::get('general.Size'), array('class' => 'col-sm-4 control-label')) }}
-
-                                        <div class="col-sm-7">
-                                        
-                                            {{ Form::select('size', array('S' => 'S', 'M' => 'M', 'L' => 'L', 'XL' => 'XL'), $value->size, array('class' => 'form-control')) }}
-
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 small-padding" >

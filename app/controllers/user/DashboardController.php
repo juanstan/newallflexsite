@@ -4,6 +4,7 @@ use Entities\Animal;
 use Entities\User;
 use Entities\SensorReading;
 use Entities\SensorReadingSymptom;
+use Entities\Breed;
 use Entities\Help;
 use Entities\Symptom;
 use Repositories\AnimalRepositoryInterface;
@@ -54,11 +55,12 @@ class DashboardController extends \BaseController
         $this->repository->setUser($this->authUser);
         $symptoms = \DB::table('symptoms')->get();
         $pets = $this->repository->all();
+        $breed = Breed::all()->lists('name', 'id');
         if (\Auth::user()->get()->confirmed != null) {
-            return \View::make('user.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms));
+            return \View::make('user.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'breed' => $breed));
         } else {
             \Session::flash('not-verified', '');
-            return \View::make('user.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms));
+            return \View::make('user.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'breed' => $breed));
         }
     }
 

@@ -19,7 +19,7 @@ class CreateAnimalsTable extends Migration {
 			$table->string('microchip_number')->nullable();
 			$table->integer('breed_id')->nullable();
 			$table->date('date_of_birth')->nullable();
-			$table->text('size', 65535)->nullable();
+			$table->text('weight', 65535)->nullable();
 			$table->string('gender')->nullable();
 			$table->string('image_path')->nullable();
 			$table->integer('vet_id')->nullable();
