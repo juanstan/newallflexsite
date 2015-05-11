@@ -336,7 +336,7 @@
                                             @if( $sensorReading->sensorReadingSymptoms->count() )
                                                     <ul class="nav nav-pills text-center symptom-pills">
                                                         @foreach ($sensorReading->sensorReadingSymptoms as $sensorReadingSymptom)
-                                                            <li role="presentation" class="full-width small-top-buffer active"><a class="" href="#"><small>{{ $sensorReadingSymptom->name }}</small></a></li>
+                                                            <li role="presentation" class="full-width small-top-buffer active"><a class="" href="#"><small>{{ $sensorReadingSymptom->symptom->name }}</small></a></li>
                                                         @endforeach
                                                     </ul>
                                             @else
