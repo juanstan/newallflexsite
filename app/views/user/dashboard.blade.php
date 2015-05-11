@@ -89,8 +89,8 @@
                             <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
                                 @if( $value->sensorReadings->count() )
                                     @foreach ($value->sensorReadings->slice(0, 1) as $readings)
-                                            @foreach ($readings->symptom as $readingSymptom)
-                                                <?php $symptomItems[] = $readingSymptom->symptom_names->name; ?>
+                                            @foreach ($readings->sensorReadingSymptoms as $readingSymptom)
+                                                <?php $symptomItems[] = $readingSymptom->name; ?>
                                             @endforeach
                                     @endforeach
                                 @endif
@@ -125,8 +125,8 @@
                                 <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
                                     @if( $value->sensorReadings->count() )
                                         @foreach ($value->sensorReadings->slice(0, 1) as $readings)
-                                            @foreach ($readings->symptom as $readingSymptom)
-                                                <?php $symptomItems[] = $readingSymptom->symptom_names->name; ?>
+                                            @foreach ($readings->sensorReadingSymptoms as $readingSymptom)
+                                                <?php $symptomItems[] = $readingSymptom->name; ?>
                                             @endforeach
                                         @endforeach
                                     @endif
@@ -220,7 +220,7 @@
                                         @if( $value->sensorReadings->count() )
                                             @foreach ($value->sensorReadings->slice(0, 1) as $readings)
                                                 <ul class="nav nav-pills text-center symptom-pills">
-                                                    @foreach ($readings->symptom as $readingSymptom)
+                                                    @foreach ($readings->sensorReadingSymptoms as $readingSymptom)
                                                     <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="dashboard/symptom-remove/{{ $readingSymptom->reading_id }}/{{ $readingSymptom->symptom_names->id }}"><span>{{ $readingSymptom->symptom_names->name }}</span></a></li>
                                                     @endforeach
                                                     <li role="presentation" class="symptom-pill small-top-buffer active" ><a href="#" data-toggle="collapse" data-target="#symptom-list{{ $value->id }}" >{{ Lang::get('general.+ Add') }}</a></li>
@@ -333,9 +333,9 @@
                                             </div>
                                         </div>
                                         <div class="col-xs-7 text-left" >
-                                            @if( $readings->symptom->count() )
+                                            @if( $readings->sensorReadingSymptoms->count() )
                                                     <ul class="nav nav-pills text-center symptom-pills">
-                                                        @foreach ($readings->symptom as $readingSymptom)
+                                                        @foreach ($readings->sensorReadings as $readingSymptom)
                                                             <li role="presentation" class="full-width small-top-buffer active"><a class="" href="#"><small>{{ $readingSymptom->symptom_names->name }}</small></a></li>
                                                         @endforeach
                                                     </ul>

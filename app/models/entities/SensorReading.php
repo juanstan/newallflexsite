@@ -40,7 +40,7 @@ class SensorReading extends \Eloquent implements UserInterface, RemindableInterf
         return $this->belongsTo('Entities\Device', 'device_id');
     }
     
-    public function sensorReadingSymptom()
+    public function sensorReadingSymptoms()
     {
         return $this->hasMany('Entities\SensorReadingSymptom', 'reading_id');
     }
