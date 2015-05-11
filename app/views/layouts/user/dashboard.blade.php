@@ -34,7 +34,9 @@
                 @if(Session::has('not-verified'))
                     <div class="alert alert-warning alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <a href="{{ URL::route('user.resendConfirmation') }}" >
                         <strong class="inline-block ">{{ Lang::get('general.Email not yet verified') }}</strong> {{ Lang::get('general.please verify') }}
+                        </a>
                         {{ HTML::linkroute('user.resendConfirmation', '<button style="margin-top: -5px;" class="btn-mobile btn btn-warning btn-sm pull-right border-none" type="button">'.Lang::get('general.Resend confirmation email').'</button>') }}
                     </div>
                 @endif
