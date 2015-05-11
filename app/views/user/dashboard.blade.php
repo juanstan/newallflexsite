@@ -88,14 +88,14 @@
                         <div class="col-md-12" >
                             <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
                                 @if( $animal->sensorReadings->count() )
-                                    @foreach ($animal->sensorReadings->slice(0, 1) as $sensorReading)
+                                    @foreach ($animal->sensorReadings as $sensorReading)
                                             @foreach ($sensorReading->sensorReadingSymptoms as $sensorReadingSymptom)
-                                                <?php $symptomItems[] = $sensorReadingSymptom->name; ?>
+                                                <?php $symptomItems[] = $sensorReadingSymptom->symptom->name; ?>
                                             @endforeach
                                     @endforeach
                                 @endif
                                 @foreach ($symptoms as $symptom)
-                                <div class="col-md-6 top-buffer" >
+                                <div class="col-md-6 top-buffer small-padding" >
                                     <label class="btn btn-primary btn-block @if( !empty($symptomItems) && in_array($symptom->name, $symptomItems)) active  @endif">
                                     <input type="checkbox" name="symptoms[]" @if( !empty($symptomItems) && in_array($symptom->name, $symptomItems)) checked @endif value="{{ $symptom->id }}" autocomplete="off"> {{ $symptom->name }}
                                     </label>

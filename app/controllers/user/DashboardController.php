@@ -197,6 +197,7 @@ class DashboardController extends \BaseController
         $this->repository->setUser($this->authUser);
         $input = \Input::get('symptoms');
         if (is_array($input)) {
+            SensorReadingSymptom::where('reading_id', '=', $id)->delete();
             foreach ($input as $input) {
                 $readingSymptom = SensorReadingSymptom::where(['reading_id' => $id, 'symptom_id' => $input])->first();
                 if (empty($readingSymptom)) {
