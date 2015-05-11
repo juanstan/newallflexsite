@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AnimalConditionRepository extends AbstractRepository implements AnimalConditionRepositoryInterface
 {
-    protected $classname = 'Entities\Condition';
+    protected $classname = 'Entities\AnimalCondition';
     
     protected $repository;
     
