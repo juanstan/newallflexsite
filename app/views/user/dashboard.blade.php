@@ -221,7 +221,7 @@
                                             @foreach ($animal->sensorReadings->slice(0, 1) as $sensorReading)
                                                 <ul class="nav nav-pills text-center symptom-pills">
                                                     @foreach ($sensorReading->sensorReadingSymptoms as $sensorReadingSymptom)
-                                                    <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="{{ URL::route('user.dashboard.symptomRemove', $sensorReadingSymptom->reading_id . '/' . $sensorReadingSymptom->symptom_id) }}"><span>{{ $sensorReadingSymptom->name }}</span></a></li>
+                                                    <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="{{ URL::route('user.dashboard.symptomRemove', $sensorReadingSymptom->reading_id . '/' . $sensorReadingSymptom->symptom_id) }}"><span>{{ $sensorReadingSymptom->symptom->name }}</span></a></li>
                                                     @endforeach
                                                     <li role="presentation" class="symptom-pill small-top-buffer active" ><a href="#" data-toggle="collapse" data-target="#symptom-list{{ $animal->id }}" >{{ Lang::get('general.+ Add') }}</a></li>
                                                 </ul>

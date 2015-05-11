@@ -25,6 +25,6 @@ class SensorReadingSymptom extends \Eloquent implements UserInterface, Remindabl
     
     public function symptom()
     {
-        return $this->belongsTo('Entities\SensorReadingSymptom', 'symptom_id');
+        return $this->belongsTo('Entities\Symptom');
     }
 }
