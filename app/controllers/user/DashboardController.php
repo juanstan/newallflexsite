@@ -1,6 +1,7 @@
 <?php namespace User;
 
 use Entities\Animal;
+use Entities\AnimalCondition;
 use Entities\User;
 use Entities\SensorReading;
 use Entities\SensorReadingSymptom;
@@ -53,14 +54,15 @@ class DashboardController extends \BaseController
     public function getIndex()
     {
         $this->repository->setUser($this->authUser);
-        $symptoms = \DB::table('symptoms')->get();
+        $symptoms = \Entities\Symptom::all();
+        $conditions = \Entities\Condition::all();
         $animals = $this->repository->all();
         $breed = Breed::all()->lists('name', 'id');
         if (\Auth::user()->get()->confirmed != null) {
-            return \View::make('user.dashboard')->with(array('animals' => $animals, 'symptoms' => $symptoms, 'breed' => $breed));
+            return \View::make('user.dashboard')->with(array('animals' => $animals, 'conditions' => $conditions, 'symptoms' => $symptoms, 'breed' => $breed));
         } else {
             \Session::flash('not-verified', '');
-            return \View::make('user.dashboard')->with(array('animals' => $animals, 'symptoms' => $symptoms, 'breed' => $breed));
+            return \View::make('user.dashboard')->with(array('animals' => $animals, 'conditions' => $conditions, 'symptoms' => $symptoms, 'breed' => $breed));
         }
     }
 
@@ -167,6 +169,27 @@ class DashboardController extends \BaseController
             );
         }
         return \Redirect::route('user.dashboard')->with('success', 'Pet updated');
+    }
+
+    public function postAddConditions($id)
+    {
+        $this->repository->setUser($this->authUser);
+        $input = \Input::get('conditions');
+        if (is_array($input)) {
+            AnimalCondition::where('animal_id', '=', $id)->delete();
+            foreach ($input as $input) {
+
+                $animalCondition = AnimalCondition::where(['animal_id' => $id, 'condition_id' => $input])->first();
+                if (empty($animalCondition)) {
+                    $animalCondition = new AnimalCondition;
+                    $animalCondition->condition_id = $input;
+                    $animalCondition->animal_id = $id;
+                    $animalCondition->save();
+                }
+            }
+            return \Redirect::route('user.dashboard')->with('message', 'Conditions updated');
+        }
+        return \Redirect::route('user.dashboard');
     }
 
     public function postAddSymptoms($id)

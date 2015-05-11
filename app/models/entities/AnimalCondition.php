@@ -39,6 +39,7 @@ class AnimalCondition extends \Eloquent implements UserInterface, RemindableInte
 
     public function condition()
     {
-        return $this->belongsTo('Entities\Condition', 'condition_id');
+        return $this->belongsTo('Entities\Condition');
     }
+
 }

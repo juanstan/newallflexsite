@@ -54,6 +54,7 @@ Route::group(['prefix' => 'user', 'namespace' => 'user'], function () {
             'getSettings' => 'user.dashboard.settings',
             'postSettings' => 'user.dashboard.settings',
             'postUpdatePet' => 'user.dashboard.updatePet',
+            'postAddConditions' => 'user.dashboard.addConditions',
             'postAddSymptoms' => 'user.dashboard.addSymptoms',
             'getSymptomRemove' => 'user.dashboard.symptomRemove',
             'postUpdatePetPhoto' => 'user.dashboard.updatePetPhoto',

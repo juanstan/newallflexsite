@@ -1,12 +1,20 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/05/11 14:02:00 
+ Generated via "php artisan localization:missing" at 2015/05/07 13:50:13 
 *************************************************************************/
 
 return array (
   //============================== New strings to translate ==============================//
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/dashboard.blade.php
-  'Add conditions' => 'Add conditions',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/layouts/user/signup.blade.php
+  'About you' => 'About you',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/vet/information.blade.php
+  'There is no average temperature for' => 'There is no average temperature for',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/layouts/user/signup.blade.php
+  'Your pets' => 'Your pets',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/layouts/user/signup.blade.php
+  'Your readings' => 'Your readings',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/layouts/user/signup.blade.php
+  'Your vets' => 'Your vets',
   //==================================== Translations ====================================//
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
@@ -17,7 +25,6 @@ return array (
   '<i class="fa fa-cog"></i> Edit' => '<i class="fa fa-cog"></i> Edit',
   '<i class="fa fa-refresh"></i> Reset' => '<i class="fa fa-refresh"></i> Reset',
   '<i class="fa fa-search"></i> Find my vet' => '<i class="fa fa-search"></i> Find my vet',
-  'About you' => 'About you',
   'Add' => 'Add',
   'Add photo' => 'Add photo',
   'Add symptoms' => 'Add symptoms',
@@ -74,6 +81,7 @@ return array (
   'How to upload readings via USB' => 'How to upload readings via USB',
   'JPEG or PNG 4mb file limit' => 'JPEG or PNG 4mb file limit',
   'Known conditions' => 'Known conditions',
+  'Large' => 'Large',
   'Last name' => 'Last name',
   'Latest' => 'Latest',
   'Loading map' => 'Loading map',
@@ -83,6 +91,7 @@ return array (
   'Male' => 'Male',
   'Manage <i class="fa fa-angle-right small-left-buffer"></i>' => 'Manage <i class="fa fa-angle-right small-left-buffer"></i>',
   'Map shows approximate location' => 'Map shows approximate location',
+  'Medium' => 'Medium',
   'Message' => 'Message',
   'My Pets' => 'My Pets',
   'My Vet' => 'My Vet',
@@ -134,7 +143,9 @@ return array (
   'Sign up to Vet Connect' => 'Sign up to Vet Connect',
   'Sign up with Facebook' => 'Sign up with Facebook',
   'Sign up with Twitter' => 'Sign up with Twitter',
+  'Size' => 'Size',
   'Skip' => 'Skip',
+  'Small' => 'Small',
   'Store important vet details for emergencies' => 'Store important vet details for emergencies',
   'Submit' => 'Submit',
   'Success' => 'Success',
@@ -143,7 +154,6 @@ return array (
   'Telephone Number' => 'Telephone Number',
   'Telephone number' => 'Telephone number',
   'There are no pet readings associated with your account' => 'There are no pet readings associated with your account',
-  'There is no average temperature for' => 'There is no average temperature for',
   'There is no customer data associated with your account' => 'There is no customer data associated with your account',
   'There is no reading data submitted for' => 'There is no reading data submitted for',
   'There is not average temperature for' => 'There is not average temperature for',
@@ -162,11 +172,9 @@ return array (
   'We need to learn your pet&#39;s microchip number' => 'We need to learn your pet&#39;s microchip number',
   'Weight' => 'Weight',
   'Windows' => 'Windows',
+  'X-Large' => 'X-Large',
   'Yes, remove' => 'Yes, remove',
-  'Your pets' => 'Your pets',
   'Your practice' => 'Your practice',
-  'Your readings' => 'Your readings',
-  'Your vets' => 'Your vets',
   'Zip' => 'Zip',
   'Zip/ postal code' => 'Zip/ postal code',
   'at' => 'at',
@@ -180,9 +188,4 @@ return array (
   '<i class="fa fa-plus"></i> Create pet' => '<i class="fa fa-plus"></i> Create pet',
   'Create new pet' => 'Create new pet',
   'Create pet' => 'Create pet',
-  'Large' => 'Large',
-  'Medium' => 'Medium',
-  'Size' => 'Size',
-  'Small' => 'Small',
-  'X-Large' => 'X-Large',
 );

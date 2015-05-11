@@ -109,11 +109,10 @@
                     </div>
 
                     <div class="collapse vet-overlay fade" id="condition-list{{ $animal->id }}" >
-                        @foreach ($animal->sensorReadings->slice(0, 1) as $sensorReading)
-                            {{ Form::open(array('files'=> 'true', 'route' => array('user.dashboard.addSymptoms', $sensorReading->id), 'method' => 'post')) }}
+                            {{ Form::open(array('files'=> 'true', 'route' => array('user.dashboard.addConditions', $animal->id), 'method' => 'post')) }}
                             <div class="col-md-12 top-buffer" >
                                 <div class="col-md-8" >
-                                    <h3 class="top-none">{{ Lang::get('general.Add symptoms') }}</h3>
+                                    <h3 class="top-none">{{ Lang::get('general.Add conditions') }}</h3>
                                     <p>{{ Lang::get('general.Select all that apply') }}</p>
                                 </div>
 
@@ -123,25 +122,21 @@
                             </div>
                             <div class="col-md-12" >
                                 <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
-                                    @if( $animal->sensorReadings->count() )
-                                        @foreach ($animal->sensorReadings->slice(0, 1) as $sensorReading)
-                                            @foreach ($sensorReading->sensorReadingSymptoms as $sensorReadingSymptom)
-                                                <?php $symptomItems[] = $sensorReadingSymptom->name; ?>
-                                            @endforeach
+                                    @if( $animal->animalConditions->count() )
+                                        @foreach ($animal->animalConditions as $animalCondition)
+                                                <?php $conditionItems[] = $animalCondition->condition->name; ?>
                                         @endforeach
                                     @endif
-                                    @foreach ($symptoms as $symptom)
-                                        <div class="col-md-6 top-buffer" >
-                                            <label class="btn btn-primary btn-block @if( !empty($symptomItems) && in_array($symptom->name, $symptomItems)) active  @endif">
-                                                <input type="checkbox" name="symptoms[]" @if( !empty($symptomItems) && in_array($symptom->name, $symptomItems)) checked @endif value="{{ $symptom->id }}" autocomplete="off"> {{ $symptom->name }}
+                                    @foreach ($conditions as $condition)
+                                        <div class="col-md-6 top-buffer small-padding" >
+                                            <label class="btn btn-primary btn-block @if( !empty($conditionItems) && in_array($condition->name, $conditionItems)) active  @endif">
+                                                <input type="checkbox" name="conditions[]" @if( !empty($conditionItems) && in_array($condition->name, $conditionItems)) checked @endif value="{{ $condition->id }}" autocomplete="off"> {{ $condition->name }}
                                             </label>
                                         </div>
                                     @endforeach
                                 </div>
                             </div>
-
                             {{ Form::close() }}
-                        @endforeach
                     </div>
 
                     <div class="row" >
