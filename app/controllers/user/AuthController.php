@@ -64,10 +64,7 @@ class AuthController extends \BaseController
                 ->withErrors($validator)
                 ->withInput(\Input::except('password'));
         }
-        \Mail::send('emails.user-verify', array('confirmation_code' => $confirmation_code), function ($message) {
-            $message->to(\Input::get('email_address'), 'New user')
-                ->subject('Verify your email address');
-        });
+
         $user = $this->user->create($input);
         if ($user == null) {
             \App::abort(500);
