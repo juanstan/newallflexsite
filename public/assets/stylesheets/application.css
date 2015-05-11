@@ -6031,10 +6031,10 @@ label {
   padding-right: 3px; }
 
 .circle-border {
-  border: 10px solid #40c8c6; }
+  border: 6px solid #40c8c6; }
 
 .circle-small-border {
-  border: 3px solid #40c8c6;
+  border: 2px solid #40c8c6;
   width: 100%; }
   .circle-small-border .circle-inner > .small-score-text {
     color: #40c8c6;
@@ -6055,7 +6055,7 @@ label {
 
 .circle-inner {
   position: absolute;
-  top: 0;
+  top: 3px;
   left: 0;
   bottom: 0;
   right: 0;
@@ -6105,7 +6105,7 @@ label {
     margin-left: 0.1em; }
 
 .prev-reading {
-  font-size: 1.4em !important; }
+  font-size: 1.2em !important; }
 
 .float-none {
   float: none !important; }

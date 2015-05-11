@@ -530,7 +530,7 @@
 
                                 <div class="col-sm-9">
 
-                                    {{ Form::select('breed_id', $breed, $animal->breed->id, array('class' => 'form-control text-left')) }}
+                                    {{ Form::select('breed_id', $breed, '', array('class' => 'form-control text-left')) }}
 
                                 </div>
                             </div>
