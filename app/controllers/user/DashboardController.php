@@ -54,13 +54,13 @@ class DashboardController extends \BaseController
     {
         $this->repository->setUser($this->authUser);
         $symptoms = \DB::table('symptoms')->get();
-        $pets = $this->repository->all();
+        $animals = $this->repository->all();
         $breed = Breed::all()->lists('name', 'id');
         if (\Auth::user()->get()->confirmed != null) {
-            return \View::make('user.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'breed' => $breed));
+            return \View::make('user.dashboard')->with(array('animals' => $animals, 'symptoms' => $symptoms, 'breed' => $breed));
         } else {
             \Session::flash('not-verified', '');
-            return \View::make('user.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'breed' => $breed));
+            return \View::make('user.dashboard')->with(array('animals' => $animals, 'symptoms' => $symptoms, 'breed' => $breed));
         }
     }
 
@@ -159,11 +159,11 @@ class DashboardController extends \BaseController
         if ($this->repository->update($id, $input) == false) {
             \App::abort(500);
         }
-        $pet = $this->repository->get($id);
+        $animal = $this->repository->get($id);
         $id = \Auth::user()->get()->id;
-        if ($pet->vet_id != null) {
+        if ($animal->vet_id != null) {
             \DB::table('animal_requests')->insert(
-                ['vet_id' => $pet->vet_id, 'user_id' => $id, 'animal_id' => $pet->id, 'approved' => 1]
+                ['vet_id' => $animal->vet_id, 'user_id' => $id, 'animal_id' => $animal->id, 'approved' => 1]
             );
         }
         return \Redirect::route('user.dashboard')->with('success', 'Pet updated');
@@ -381,9 +381,9 @@ class DashboardController extends \BaseController
         $id = \Auth::user()->get()->id;
         $this->repository->setUser($this->authUser);
         $requests = \DB::table('animal_requests')->where('user_id', '=', $id)->get();
-        $pets = $this->repository->all();
+        $animals = $this->repository->all();
         $vets = \DB::table('vets')->get();
-        return \View::make('user.vet')->with(array('pets' => $pets, 'vets' => $vets, 'requests' => $requests));
+        return \View::make('user.vet')->with(array('pets' => $animals, 'vets' => $vets, 'requests' => $requests));
     }
 
     public function postVet()
@@ -400,10 +400,10 @@ class DashboardController extends \BaseController
     {
         $userid = \Auth::user()->get()->id;
         $this->repository->setUser($this->authUser);
-        $pets = $this->repository->all();
-        foreach ($pets as $pet) {
+        $animals = $this->repository->all();
+        foreach ($animals as $animal) {
             \DB::table('animal_requests')->insert(
-                ['vet_id' => $id, 'user_id' => $userid, 'animal_id' => $pet->id, 'approved' => 1]
+                ['vet_id' => $id, 'user_id' => $userid, 'animal_id' => $animal->id, 'approved' => 1]
             );
         }
         return \Redirect::route('user.dashboard.vet')->with('success', 'Vet added');
