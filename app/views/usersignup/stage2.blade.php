@@ -66,7 +66,7 @@
 
                             {{ Form::text('weight', '', array('class' => 'form-control text-left')) }}
 
-                            <div class="input-group-addon">{{ Lang::get('general.kg') }}</div>
+                            <div class="input-group-addon">@if(Auth::user()->get()->weight_units == 'KG') Lang::get('general.kg') @else {{ Lang::get('general.lbs') }} @endif</div>
 
                         </div>
 

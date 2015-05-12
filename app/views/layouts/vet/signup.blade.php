@@ -24,7 +24,7 @@
                 <div class="col-md-9 col-centered float-none" >
                     <div class="jumbotron text-center" >
                                 {{ HTML::image('images/logo-vet.png', 'a Logo', array('class' => 'signup-logo')) }}
-                        <ul class="nav nav-tabs nav-justified">
+                        <ul id="menu" class="nav nav-tabs nav-justified">
                             <li class="h2"><a href="{{ URL::route('vet.signup.1') }}" data-toggle="pill"><span>{{ Lang::get('general.Your practice') }}</span></a></li>
                             <li class="h2"><a href="{{ URL::route('vet.signup.2') }}" data-toggle="pill"><span>{{ Lang::get('general.Address') }}</span></a></li>
                             <li class="h2"><a href="{{ URL::route('vet.signup.5') }}" data-toggle="pill"><span>{{ Lang::get('general.First upload') }}</span></a></li>
@@ -35,6 +35,14 @@
             </div>
         </div>
     </body>
+  <script>
+      $(function() {
+          var url = window.location.pathname;
+          var page = url.substr(url.lastIndexOf('/') + 1);
+          target = $('#menu a[href*="' + page + '"]');
+          $(target).parent('li').addClass('active');
+      });
+  </script>
     <!-- Javascript -->
   @include('layouts/core/javascript')
 

@@ -38,6 +38,13 @@ class PetRegisterController extends \BaseController
     {
         $this->repository->setUser($this->authUser);
 
+        if(\Auth::user()->get()->weight_units == "LBS") {
+
+            $weight = \Input::get('weight') * 0.453;
+            \Input::merge(array('weight' => $weight));
+
+        }
+
         $input = \Input::all();
 //        $validator = $this->repository->getCreateValidator($input);
 //

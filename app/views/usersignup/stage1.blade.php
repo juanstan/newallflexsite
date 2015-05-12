@@ -77,6 +77,32 @@
 
                     </div>
                 </div>
+                <div class="form-group">
+
+                    {{ Form::label('units', Lang::get('general.Temperature unit type'), array('class' => 'col-sm-4 control-label')) }}
+
+                    <div class="col-sm-8">
+
+                        <div class="radio-pill-buttons">
+                            <label><input type="radio" @if(Auth::user()->get()->units == 'C') checked @endif name="units" value="C"><span class="pointer" >{{ Lang::get('general.Celcius') }}</span></label>
+                            <label><input type="radio" @if(Auth::user()->get()->units == 'F') checked @endif name="units" value="F"><span class="pointer" >{{ Lang::get('general.Fahrenheit') }}</span></label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    {{ Form::label('weight_units', Lang::get('general.Weight unit type'), array('class' => 'col-sm-4 control-label')) }}
+
+                    <div class="col-sm-8">
+
+                        <div class="radio-pill-buttons">
+                            <label><input type="radio" @if(Auth::user()->get()->weight_units == 'KG') checked @endif name="weight_units" value="KG"><span class="pointer" >{{ Lang::get('general.Kilograms') }}</span></label>
+                            <label><input type="radio" @if(Auth::user()->get()->weight_units == 'LBS') checked @endif name="weight_units" value="LBS"><span class="pointer" >{{ Lang::get('general.Pounds') }}</span></label>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

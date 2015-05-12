@@ -32,7 +32,7 @@
                 <div class="col-md-9 col-centered float-none" >
                     <div class="jumbotron text-center" >
                                 {{ HTML::image('images/logo-pet.png', 'a Logo', array('class' => 'signup-logo')) }}
-                        <ul class="nav nav-tabs nav-justified">
+                        <ul id="menu" class="nav nav-tabs nav-justified">
                             <li class="h2">{{ HTML::linkroute('user.register.about', Lang::get('general.About you')) }}</li>
                             <li class="h2">{{ HTML::linkroute('user.register.pet', Lang::get('general.Your pets')) }}</li>
                             <li class="h2">{{ HTML::linkroute('user.register.vet', Lang::get('general.Your vets')) }}</li>
@@ -47,7 +47,15 @@
     <!-- Javascript -->
   @include('layouts/core/javascript')
   <script>
-    $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
+      $(function() {
+          var url = window.location.pathname;
+          var page = url.substr(url.lastIndexOf('/') + 1);
+          target = $('#menu a[href*="' + page + '"]');
+          $(target).parent('li').addClass('active');
+      });
+
+
+      $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
 
         var $target = $(this);
 

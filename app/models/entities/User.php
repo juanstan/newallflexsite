@@ -29,6 +29,7 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
         'telephone',
         'image_path',
         'units',
+        'weight_units',
         'password',
         'confirmation_code'
     ];

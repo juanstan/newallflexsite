@@ -56,7 +56,7 @@ class AuthController extends \BaseController
     public function postCreate()
     {
         $confirmation_code = str_random(30);
-        \Input::merge(array('confirmation_code' => $confirmation_code, 'units' => 'F'));
+        \Input::merge(array('confirmation_code' => $confirmation_code, 'units' => 'F', 'weight_units' => 'KG'));
         $input = \Input::all();
         $validator = $this->user->getCreateValidator($input);
         if ($validator->fails()) {

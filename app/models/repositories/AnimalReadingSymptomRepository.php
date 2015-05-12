@@ -44,7 +44,7 @@ class AnimalReadingSymptomRepository extends AbstractRepository implements Anima
             */
             $symptom = parent::create($input);
             
-            $symptom->reading()->associate($this->reading); 
+            $symptom->reading()->associate($this->sensorReading);
             
             $symptom->save();
                  

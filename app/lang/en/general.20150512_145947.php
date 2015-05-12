@@ -1,9 +1,12 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/05/12 14:59:46 
+ Generated via "php artisan localization:missing" at 2015/05/12 13:49:20 
 *************************************************************************/
 
 return array (
+  //============================== New strings to translate ==============================//
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/usersignup/stage2.blade.php
+  'lbs' => 'lbs',
   //==================================== Translations ====================================//
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
@@ -176,7 +179,6 @@ return array (
   'at' => 'at',
   'county' => 'county',
   'kg' => 'kg',
-  'lbs' => 'lbs',
   'new microchip numbers' => 'new microchip numbers',
   'please verify' => 'please verify',
   'today at' => 'today at',

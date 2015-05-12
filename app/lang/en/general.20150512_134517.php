@@ -1,9 +1,16 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/05/12 14:59:46 
+ Generated via "php artisan localization:missing" at 2015/05/12 13:39:32 
 *************************************************************************/
 
 return array (
+  //============================== New strings to translate ==============================//
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/vet/dashboard.blade.php
+  'Click the "settings" button above to invite your customers' => 'Click the "settings" button above to invite your customers',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/dashboard.blade.php
+  'No symptoms added' => 'No symptoms added',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/vetsignup/stage3.blade.php
+  'Readings' => 'Readings',
   //==================================== Translations ====================================//
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
@@ -38,7 +45,6 @@ return array (
   'Change photo' => 'Change photo',
   'Choose pet' => 'Choose pet',
   'City' => 'City',
-  'Click the "settings" button above to invite your customers' => 'Click the "settings" button above to invite your customers',
   'Click the "upload" button above to get started' => 'Click the "upload" button above to get started',
   'Click the button below to add a pet' => 'Click the button below to add a pet',
   'Company name' => 'Company name',
@@ -71,7 +77,6 @@ return array (
   'Help' => 'Help',
   'How to upload readings via USB' => 'How to upload readings via USB',
   'JPEG or PNG 4mb file limit' => 'JPEG or PNG 4mb file limit',
-  'Kilograms' => 'Kilograms',
   'Known conditions' => 'Known conditions',
   'Last name' => 'Last name',
   'Latest' => 'Latest',
@@ -94,7 +99,6 @@ return array (
   'No Symptoms Available' => 'No Symptoms Available',
   'No readings available' => 'No readings available',
   'No readings have been uploaded for' => 'No readings have been uploaded for',
-  'No symptoms added' => 'No symptoms added',
   'No symptoms available' => 'No symptoms available',
   'No thanks, skip' => 'No thanks, skip',
   'No, cancel' => 'No, cancel',
@@ -106,12 +110,10 @@ return array (
   'Pet&#39;s name' => 'Pet&#39;s name',
   'Pet&#39;s photo' => 'Pet&#39;s photo',
   'Pets' => 'Pets',
-  'Pounds' => 'Pounds',
   'Practice name' => 'Practice name',
   'Previous Readings' => 'Previous Readings',
   'Profile photo' => 'Profile photo',
   'Read' => 'Read',
-  'Readings' => 'Readings',
   'Readings over time' => 'Readings over time',
   'Recent' => 'Recent',
   'Remove' => 'Remove',
@@ -144,7 +146,6 @@ return array (
   'Sync via Bluetooth' => 'Sync via Bluetooth',
   'Telephone Number' => 'Telephone Number',
   'Telephone number' => 'Telephone number',
-  'Temperature unit type' => 'Temperature unit type',
   'There are no pet readings associated with your account' => 'There are no pet readings associated with your account',
   'There is no average temperature for' => 'There is no average temperature for',
   'There is no customer data associated with your account' => 'There is no customer data associated with your account',
@@ -164,7 +165,6 @@ return array (
   'We found' => 'We found',
   'We need to learn your pet&#39;s microchip number' => 'We need to learn your pet&#39;s microchip number',
   'Weight' => 'Weight',
-  'Weight unit type' => 'Weight unit type',
   'Windows' => 'Windows',
   'Yes, remove' => 'Yes, remove',
   'Your pets' => 'Your pets',
@@ -176,7 +176,6 @@ return array (
   'at' => 'at',
   'county' => 'county',
   'kg' => 'kg',
-  'lbs' => 'lbs',
   'new microchip numbers' => 'new microchip numbers',
   'please verify' => 'please verify',
   'today at' => 'today at',

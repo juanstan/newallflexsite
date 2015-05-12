@@ -1,9 +1,18 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/05/12 14:59:46 
+ Generated via "php artisan localization:missing" at 2015/05/12 13:45:16 
 *************************************************************************/
 
 return array (
+  //============================== New strings to translate ==============================//
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/usersignup/stage1.blade.php
+  'Kilograms' => 'Kilograms',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/usersignup/stage1.blade.php
+  'Pounds' => 'Pounds',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/usersignup/stage1.blade.php
+  'Temperature unit type' => 'Temperature unit type',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/usersignup/stage1.blade.php
+  'Weight unit type' => 'Weight unit type',
   //==================================== Translations ====================================//
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
@@ -71,7 +80,6 @@ return array (
   'Help' => 'Help',
   'How to upload readings via USB' => 'How to upload readings via USB',
   'JPEG or PNG 4mb file limit' => 'JPEG or PNG 4mb file limit',
-  'Kilograms' => 'Kilograms',
   'Known conditions' => 'Known conditions',
   'Last name' => 'Last name',
   'Latest' => 'Latest',
@@ -106,7 +114,6 @@ return array (
   'Pet&#39;s name' => 'Pet&#39;s name',
   'Pet&#39;s photo' => 'Pet&#39;s photo',
   'Pets' => 'Pets',
-  'Pounds' => 'Pounds',
   'Practice name' => 'Practice name',
   'Previous Readings' => 'Previous Readings',
   'Profile photo' => 'Profile photo',
@@ -144,7 +151,6 @@ return array (
   'Sync via Bluetooth' => 'Sync via Bluetooth',
   'Telephone Number' => 'Telephone Number',
   'Telephone number' => 'Telephone number',
-  'Temperature unit type' => 'Temperature unit type',
   'There are no pet readings associated with your account' => 'There are no pet readings associated with your account',
   'There is no average temperature for' => 'There is no average temperature for',
   'There is no customer data associated with your account' => 'There is no customer data associated with your account',
@@ -164,7 +170,6 @@ return array (
   'We found' => 'We found',
   'We need to learn your pet&#39;s microchip number' => 'We need to learn your pet&#39;s microchip number',
   'Weight' => 'Weight',
-  'Weight unit type' => 'Weight unit type',
   'Windows' => 'Windows',
   'Yes, remove' => 'Yes, remove',
   'Your pets' => 'Your pets',
@@ -176,7 +181,6 @@ return array (
   'at' => 'at',
   'county' => 'county',
   'kg' => 'kg',
-  'lbs' => 'lbs',
   'new microchip numbers' => 'new microchip numbers',
   'please verify' => 'please verify',
   'today at' => 'today at',
