@@ -18,7 +18,7 @@
                                             </a>
                                         </div>
                                         <div class="col-md-6 small-padding" >
-                                            <a href="/user/dashboard/remove-vet/{{ $vet->id }}" >
+                                            <a href="{{ URL::route('user.dashboard.removeVet', $vet->id) }}" >
                                                 {{ Form::button(Lang::get('general.Yes, remove'), array('class' => 'btn-block btn btn-danger btn-md')) }}
                                             </a>
                                         </div>
@@ -49,7 +49,7 @@
                             @foreach ($requests as $petRequest)
                                 @foreach ($pets as $pet)
                                     @if($petRequest->animal_id == $pet->id && $petRequest->vet_id == $vet->id && $petRequest->approved == 1)
-                                    <a href="/user/dashboard/deactivatepet/{{ $petRequest->animal_request_id }}" >
+                                    <a href="{{ URL::route('user.dashboard.deactivatePet', $petRequest->animal_request_id) }}" >
                                         <div class="col-sm-3 text-center small-padding request-pet" >
                                             {{ HTML::image('/images/deleted.png', '', array('class' => 'deactive hidden img-responsive img-circle', 'width' => '100%')) }}
                                             {{ HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
@@ -57,7 +57,7 @@
                                         </div>
                                     </a>
                                     @elseif($petRequest->animal_id == $pet->id && $petRequest->vet_id == $vet->id && $petRequest->approved == 0)
-                                    <a href="/user/dashboard/activatepet/{{ $petRequest->animal_request_id }}" >
+                                    <a href="{{ URL::route('user.dashboard.activatePet', $petRequest->animal_request_id) }}" >
                                         <div class="col-sm-3 text-center small-padding relative" >
                                             {{ HTML::image('/images/deleted.png', '', array('class' => 'deactive img-responsive img-circle', 'width' => '100%')) }}
                                             {{ HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
@@ -120,7 +120,7 @@
                                         <small class="top-none">{{ $vet->city }}</small>
                                     </div>
                                     <div class="col-xs-3 small-padding" >
-                                        <a href="/user/dashboard/add-vet/{{ $vet->id }}" >
+                                        <a href="{{ URL::route('user.dashboard.addVet', $vet->id) }}" >
                                             {{ Form::button(Lang::get('general.Add'), array('class' => 'btn-block btn btn-default btn-md')) }}
                                         </a>
                                     </div>

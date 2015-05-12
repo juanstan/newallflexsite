@@ -7,10 +7,10 @@
                 {{ HTML::image('images/logo-vet.png', 'a Logo', array('class' => 'signup-logo')) }}
                 <h2>{{ Lang::get('general.Sign up to Vet Connect') }}</h2>
                 <ul class="nav mobile desktop nav-pills top-buffer">
-                    <li>{{ HTML::link('user', Lang::get('general.Pet owner')) }}</li>
-                    <li class="active" >{{ HTML::link('vet/', Lang::get('general.Vet practice')) }}</li>
+                    <li>{{ HTML::linkRoute('user', Lang::get('general.Pet owner')) }}</li>
+                    <li class="active" >{{ HTML::linkRoute('vet', Lang::get('general.Vet practice')) }}</li>
                 </ul>
-                    {{ Form::open(array('url' => 'vet/create', 'method' => 'post', 'class' => 'top-buffer')) }}
+                    {{ Form::open(array('route' => 'vet.create', 'method' => 'post', 'class' => 'top-buffer')) }}
 
                     {{  Form::text('email_address', '', array('class' => 'form-control', 'placeholder' => 'Email address')) }}
 
@@ -21,7 +21,7 @@
                     {{ Form::submit(Lang::get('general.Create account'), array('class' => 'btn btn-lg btn-default btn-block small-top-buffer')) }}
 
                     {{ Form::close() }}
-                <p class="top-buffer">{{ Lang::get('general.Already have an account?') }} <strong>{{ HTML::link('vet/', Lang::get('general.Sign in')) }}</strong>
+                <p class="top-buffer">{{ Lang::get('general.Already have an account?') }} <strong>{{ HTML::linkRoute('vet', Lang::get('general.Sign in')) }}</strong>
             </div>
         </div>
     </div>

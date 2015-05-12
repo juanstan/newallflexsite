@@ -3,12 +3,12 @@
 @section('content')
     <div class="row" >
         <div class="col-md-12 mobile" >
-            <h3>Address</h3>
+            <h3>{{ Lang::get('general.Address') }}</h3>
         </div>
         <div class="col-md-8 col-centered float-none" >
             <div class="form-horizontal top-buffer">
 
-                {{ Form::open(array('url' => 'vet/register/address', 'method' => 'post' )) }}
+                {{ Form::open(array('route' => 'vet.register.address', 'method' => 'post' )) }}
 
                 <div class="form-group">
 
@@ -67,7 +67,7 @@
         <div class="col-md-12 col-centered top-buffer" >
             <div class="form-group">
                 <div class="col-sm-12">
-                    <a href="/vet/register/about" >
+                    <a href="{{ URL::route('vet.register.about') }}" >
                     {{ Form::button(Lang::get('general.Back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}
                     </a>
                     

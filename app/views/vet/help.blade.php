@@ -3,7 +3,7 @@
 @section('content')
     <div class="row col-md-12 col-centered">
         <div class="col-md-4">
-            <a href="/vet/help/result">
+            <a href="{{ URL::route('vet.help.result') }}">
                 <div class="jumbotron dashboard help faq-tile">
                     <div class="col-md-11 float-none">
                         <h3>This is a title for a FAQ</h3>

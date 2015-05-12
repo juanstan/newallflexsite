@@ -6,9 +6,10 @@
     ?>
     <div class="row col-md-11 float-none col-centered collapse-group" >
         <div class="collapse" id="file-upload">
-            <form action="/file-upload"
-            class="dropzone dashdropzone top-buffer"
-            id="my-awesome-dropzone"></form>
+
+            {{ Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) }}
+            {{ Form::close() }}
+
         </div>
     </div>
     <div class="row col-md-12 col-centered float-none top-buffer" >

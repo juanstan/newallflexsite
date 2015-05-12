@@ -3,7 +3,7 @@
 @section('content')
     <div class="row" >
         <div class="col-md-12 mobile" >
-            <h3>Readings</h3>
+            <h3>{{ Lang::get('general.Readings') }}</h3>
         </div>
         <div class="col-sm-6 text-left">
             <h3 class="blue" >{{ Lang::get('general.Sync via Bluetooth') }}</h3>
@@ -54,7 +54,7 @@
 
     <div class="row desktop" >
         <div class="col-md-11 col-centered float-none" >
-            {{ Form::open(array('files'=> 'true', 'url' => '/vet/dashboard/reading-upload', 'class'=>'dropzone', 'method' => 'post')) }}
+            {{ Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) }}
             {{ Form::close() }}
         </div>
     </div>
@@ -62,7 +62,7 @@
         <div class="col-md-12 col-centered" >
             <div class="form-group">
                 <div class="col-sm-12">
-                    <a href="/vet/dashboard" >{{ Form::button(Lang::get('general.Next'), array('class' => 'btn btn-default btn-lg pull-right border-none')) }}</a>
+                    <a href="{{ URL::route('vet.dashboard') }}" >{{ Form::button(Lang::get('general.Next'), array('class' => 'btn btn-default btn-lg pull-right border-none')) }}</a>
                 </div>
             </div>
         </div>

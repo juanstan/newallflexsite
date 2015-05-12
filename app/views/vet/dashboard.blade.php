@@ -7,7 +7,7 @@
     <div class="row col-md-11 float-none col-centered collapse-group" >
         <div class="collapse" id="file-upload">
 
-            {{ Form::open(array('files'=> 'true', 'url' => '/vet/dashboard/reading-upload', 'class'=>'dropzone', 'method' => 'post')) }}
+            {{ Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) }}
             {{ Form::close() }}
 
         </div>
@@ -186,7 +186,7 @@
                                     <li id="{{ $letter }}"><a name="{{ $letter }}" class="title">{{ strtoupper($letter) }}</a>
                                         <ul>
                                             @foreach($petsByLetter as $pet)
-                                                <li><a href="/vet/dashboard/pet/{{ $pet->id }}">{{ $pet->name }}<span class="pull-right" >{{ $pet->breed }} <i class="small-left-buffer fa fa-chevron-right"></i></span></a></li>
+                                                <li><a href="{{ URL::route('vet.dashboard.pet', $pet->id) }}">{{ $pet->name }}<span class="pull-right" >{{ $pet->breed }} <i class="small-left-buffer fa fa-chevron-right"></i></span></a></li>
                                             @endforeach
                                         </ul>
                                     </li>
@@ -201,7 +201,7 @@
             @else
             <div class="jumbotron top-buffer" >
             <h3>{{ Lang::get('general.There is no customer data associated with your account') }}</h3>
-            <h4>{{ Lang::get('general.Click the "settings"" button above to invite your customers') }}</h4>
+            <h4>{{ Lang::get('general.Click the "settings" button above to invite your customers') }}</h4>
             </div>
             @endif
         </div>

@@ -9,7 +9,7 @@
 
                     <div class="form-horizontal ">
 
-                        {{ Form::open(array('files'=> 'true', 'url' => '/user/dashboard/settings', 'method' => 'post' )) }}
+                        {{ Form::open(array('files'=> 'true', 'route' => 'user.dashboard.settings', 'method' => 'post' )) }}
                         
                         <div class="form-group">
                 
@@ -117,8 +117,8 @@
                         
                             <div class="form-group top-buffer">
                                 <div class="col-sm-12">
-                                    <a href="/user/delete" >
-                                    {{ Form::button(Lang::get('general.Delete account'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}
+                                    <a href="{{ URL::route('user.delete) }}" >
+                                        {{ Form::button(Lang::get('general.Delete account'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}
                                     </a>
                                     {{ Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-default btn-lg pull-right')) }}
 
@@ -139,7 +139,7 @@
                         <p>{{ Lang::get('general.Fill out your vet&#39;s email below and we will send them an invitation') }}</p>
                     </div>
                     <div class="form-horizontal">
-                        {{ Form::open(array('url' => '/user/dashboard/invite', 'method' => 'post' )) }}
+                        {{ Form::open(array('route' => 'user.dashboard.invite', 'method' => 'post' )) }}
                         <div class="form-group">
                             {{ Form::label('email_address', Lang::get('general.Email address'), array('class' => 'col-sm-4 control-label')) }}
                             <div class="col-sm-5">

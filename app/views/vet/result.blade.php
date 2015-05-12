@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="row col-md-8 float-none col-centered" >
-         <h4><i class="blue fa fa-angle-left"></i> <a href="/vet/help" >Back</a></h4>
+         <h4><i class="blue fa fa-angle-left"></i> <a href="{{ URL::route('vet.help') }}" >Back</a></h4>
         <div class="jumbotron dashboard faq-result-tile" >
             <div class="col-md-11 float-none" >
             <h3>This is a title for a FAQ</h3>

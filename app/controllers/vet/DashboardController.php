@@ -68,22 +68,22 @@ class DashboardController extends \BaseController {
                 ->subject(\Auth::vet()->get()->name, 'has invited you to use All Flex');
         });
         \Session::flash('message', 'Verification email sent');
-        return \Redirect::to('/vet/dashboard');
+        return \Redirect::route('vet.dashboard');
     }
 
     public function getPet($id) {
         $this->repository->setUser($this->authUser);
         $Vetid = \Auth::vet()->get()->id;
         $symptoms = \DB::table('symptoms')->get();
+        $pet = $this->repository->get($id);
         if(\DB::table('animal_requests')->where('animal_id', '=', $id)->where('vet_id', '=', $Vetid)->where('approved', '=', 1)->get())
         {
-            $pet = $this->repository->get($id);
             return \View::make('vet.information')->with(array('pet' => $pet, 'symptoms' => $symptoms));
         }
         else
         {
             \Session::flash('not-verified', '');
-            return \View::make('vet.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests));
+            return \View::make('vet.dashboard')->with(array('pet' => $pet, 'symptoms' => $symptoms, 'requests' => $requests));
         }
 
 
@@ -94,10 +94,10 @@ class DashboardController extends \BaseController {
     {
         if(\DB::table('sensor_readings')->where('animal_id', '=', $id)->update(array('average' => 0)))
         {
-            return \Redirect::to('user/dashboard')->with('success', 'Average temperature reset');
+            return \Redirect::route('user.dashboard')->with('success', 'Average temperature reset');
         }
 
-        return \Redirect::to('user/dashboard')->with('error', 'There was a problem with your request');
+        return \Redirect::route('user.dashboard')->with('error', 'There was a problem with your request');
     }
 
     public function getSettings()
@@ -113,7 +113,7 @@ class DashboardController extends \BaseController {
 
         if($validator->fails())
         {
-            return \Redirect::to('vet/dashboard/settings')
+            return \Redirect::route('vet.dashboard.settings')
                 ->withErrors($validator)
                 ->withInput(\Input::except('password'));
         }
@@ -169,7 +169,7 @@ class DashboardController extends \BaseController {
             {
 
                 \Session::flash('error', 'Password incorrect');
-                return \Redirect::to('vet/dashboard/settings');
+                return \Redirect::route('vet.dashboard.settings');
 
             }
         }
@@ -179,7 +179,7 @@ class DashboardController extends \BaseController {
             \App::abort(500);
         }
 
-        return \Redirect::to('vet/dashboard')->with('success', 'Settings updated');
+        return \Redirect::route('vet.dashboard')->with('success', 'Settings updated');
     }
 
     public function postReadingUpload()
@@ -190,7 +190,7 @@ class DashboardController extends \BaseController {
         $rules = array('file' => 'required|max:4000');
         $validator = \Validator::make($file, $rules);
         if ($validator->fails()) {
-            return \Redirect::to('vet/register/reading')->withInput()
+            return \Redirect::route('vet.register.reading')->withInput()
                 ->withErrors($validator);
         }
         else {
@@ -266,11 +266,11 @@ class DashboardController extends \BaseController {
                         $reading->vets()->attach($this->authUser);
                     }
                 }
-                return \Redirect::to('vet/register/reading');
+                return \Redirect::route('vet.register.reading');
             }
             else {
                 \Session::flash('error', 'uploaded file is not valid');
-                return \Redirect::to('vet/register/reading');
+                return \Redirect::route('vet.register.reading');
             }
         }
     }

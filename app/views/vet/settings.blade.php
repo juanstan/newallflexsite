@@ -9,7 +9,7 @@
 
             <div class="form-horizontal ">
 
-                {{ Form::open(array('files'=> 'true', 'url' => '/vet/dashboard/settings', 'method' => 'post' )) }}
+                {{ Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.settings', 'method' => 'post' )) }}
 
                 <div class="form-group">
 
@@ -200,7 +200,7 @@
 
                     <div class="form-group top-buffer">
                         <div class="col-sm-12">
-                            <a href="/vet/delete" >
+                            <a href="{{ URL::route('vet.delete') }}" >
                                 {{ Form::button(Lang::get('general.Delete account'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}
                             </a>
 
@@ -223,7 +223,7 @@
                     <p>{{ Lang::get('general.Fill out your customer&#39;s email below and we will send them an invitation') }}</p>
                 </div>
                 <div class="form-horizontal">
-                    {{ Form::open(array('url' => '/vet/dashboard/invite', 'method' => 'post' )) }}
+                    {{ Form::open(array('route' => 'vet.dashboard.invite', 'method' => 'post' )) }}
                     <div class="form-group">
                         {{ Form::label('email_address', Lang::get('general.Email address'), array('class' => 'col-sm-4 control-label')) }}
                         <div class="col-sm-5">
