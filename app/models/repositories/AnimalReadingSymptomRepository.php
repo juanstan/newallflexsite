@@ -21,7 +21,7 @@ class AnimalReadingSymptomRepository extends AbstractRepository implements Anima
     {             
         if($this->sensorReadings)
         {
-            return $this->sensorReadings->symptom()->get();
+            return $this->sensorReadings->symptoms()->get();
         }
 
         return parent::all();
