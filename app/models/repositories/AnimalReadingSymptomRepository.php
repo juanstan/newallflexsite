@@ -78,7 +78,7 @@ class AnimalReadingSymptomRepository extends AbstractRepository implements Anima
 
     public function delete($id)
     {
-        $object = $this->sensorReadings->sensorReadingSymptoms->symptom_id->get($id);
+        $object = $this->sensorReadings->sensorReadingSymptoms->where('symptom_id', '=', $id)->get();
         $object->delete();
     }
    
