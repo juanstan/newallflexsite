@@ -158,8 +158,7 @@ class AnimalReadingSymptomController extends \BaseController
         $this->repository->setReading($reading);
 
         $this->repository->delete($id);
-        return \Response::json(['error' => false,
-            'result' => 'Symptom deleted']);
+        return \Response::json(['error' => false]);
     }
 
 
