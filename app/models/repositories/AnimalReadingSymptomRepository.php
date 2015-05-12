@@ -10,7 +10,7 @@ class AnimalReadingSymptomRepository extends AbstractRepository implements Anima
     
     protected $repository;
         
-    protected $reading;
+    protected $sensorReadings;
     
     public function __construct(UserRepositoryInterface $repository)
     {
@@ -19,9 +19,9 @@ class AnimalReadingSymptomRepository extends AbstractRepository implements Anima
     
     public function all()
     {             
-        if($this->sensorReading)
+        if($this->sensorReadings)
         {
-            return $this->sensorReading->symptom()->get();
+            return $this->sensorReadings->symptom()->get();
         }
 
         return parent::all();
@@ -31,7 +31,7 @@ class AnimalReadingSymptomRepository extends AbstractRepository implements Anima
     {
         if($id)
         {
-            return $this->sensorReading->symptom ? $this->sensorReading->symptom()->findOrFail($id) : parent::get($id);
+            return $this->sensorReadings->symptom ? $this->sensorReadings->symptom()->findOrFail($id) : parent::get($id);
         }
 
     }
@@ -44,7 +44,7 @@ class AnimalReadingSymptomRepository extends AbstractRepository implements Anima
             */
             $symptom = parent::create($input);
             
-            $symptom->reading()->associate($this->sensorReading);
+            $symptom->reading()->associate($this->sensorReadings);
             
             $symptom->save();
                  
@@ -71,7 +71,7 @@ class AnimalReadingSymptomRepository extends AbstractRepository implements Anima
     
     public function setReading($reading)
     {
-        $this->sensorReading = $reading;
+        $this->sensorReadings = $reading;
 
         return $this;
     }

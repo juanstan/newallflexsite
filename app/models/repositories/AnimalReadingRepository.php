@@ -77,7 +77,7 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
     public function update($id, $input)
     {
         
-        $object = $this->animal->readings()->where('created_at', '>=', \Carbon\Carbon::now()->subSeconds(30))->findOrFail($id);
+        $object = $this->animal->sensorReadings()->where('created_at', '>=', \Carbon\Carbon::now()->subSeconds(30))->findOrFail($id);
         
         $object->fill($input);
         $object->save();
