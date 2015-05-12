@@ -31,7 +31,7 @@ class AnimalReadingSymptomRepository extends AbstractRepository implements Anima
     {
         if($id)
         {
-            return $this->sensorReadings->symptom ? $this->sensorReadings->symptom()->findOrFail($id) : parent::get($id);
+            return $this->sensorReadings->sensorReadingSymptoms ? $this->sensorReadings->sensorReadingSymptoms()->findOrFail($id) : parent::get($id);
         }
 
     }
