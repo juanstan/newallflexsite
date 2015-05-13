@@ -1,5 +1,6 @@
 <?php namespace Api;
 
+use Entities\User;
 use Entities\Animal;
 use Repositories\AnimalRepositoryInterface;
 use Repositories\UserRepositoryInterface;
@@ -51,7 +52,6 @@ class AnimalController extends \BaseController
         return \Response::json(['error' => false, 'result' => $animal], 201)
             ->header('Location', \URL::route('api.animal.show', [$animal->id]));
     }
-
 
     /**
      * Display the specified resource.

@@ -378,7 +378,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-6 small-padding" >
+                                <div class="col-md-12 small-padding" >
                                     <div class="form-group">
 
                                         {{ Form::label('weight', Lang::get('general.Weight'), array('class' => 'col-sm-4 control-label')) }}

@@ -33,24 +33,6 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
         }
 
     }
-    
-    public function create($input)
-    {
-
-            /**
-            * @var \Entities\Device
-            */
-            $animal = parent::create($input);
-
-            if($this->user)
-            {
-                // set access
-                $animal->user()->associate($this->user);
-                $animal->save();
-            }        
-
-        return $animal;
-    }
 
     public function getCreateValidator($input)
     {
@@ -76,6 +58,21 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
         $this->user = is_numeric($user) ? $this->repository->get($user) : $user;
 
         return $this;
+    }
+
+    public function create($input)
+    {
+
+        $animal = parent::create($input);
+
+        if($this->user)
+        {
+            // set access
+            $animal->user()->associate($this->user);
+            $animal->save();
+        }
+
+        return $animal;
     }
 }
 
