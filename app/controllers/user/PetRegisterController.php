@@ -28,6 +28,19 @@ class PetRegisterController extends \BaseController
 
     }
 
+    public function getBreeds()
+    {
+        $breeds = Breed::all()->lists('name', 'id');
+        $term = \Input::get('term');
+        $result = [];
+        foreach($breeds as $breed) {
+            if(strpos(\Str::lower($breed),$term) !== false) {
+                $result[] = ['value' => $breed];
+            }
+        }
+        return \Response::json($result);
+    }
+
     public function getCreate()
     {
         $breed = Breed::all()->lists('name', 'id');
@@ -40,53 +53,52 @@ class PetRegisterController extends \BaseController
 
         if(\Auth::user()->get()->weight_units == "LBS") {
 
-            $weight = \Input::get('weight') * 0.453;
+            $weight = round(\Input::get('weight') * 0.453592, 1);
             \Input::merge(array('weight' => $weight));
 
         }
+        $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+        \Input::merge(array('breed_id' => $breed_id->id));
 
         $input = \Input::all();
-//        $validator = $this->repository->getCreateValidator($input);
-//
-//        if($validator->fails())
-//        {
-//            return \Redirect::to('pet/register/pet/create')
-//                ->withErrors($validator);
-//        }
+        $validator = $this->repository->getCreateValidator($input);
+
+        if($validator->fails())
+        {
+            return \Redirect::to('pet/register/pet/create')
+                ->withErrors($validator);
+        }
 
         $id = \Auth::user()->get()->id;
 
-        $file = array('image' => \Input::file('pet-photo'));
-        $rules = array('image' => 'max:4000|mimes:jpeg,png');
-        $validator = \Validator::make($file, $rules);
-        if ($validator->fails()) {
-            return \Redirect::route('user.register.pet.create')->withInput()
-                ->withErrors($validator);
-        } else {
-            if (\Input::hasFile('pet-photo')) {
-                $destinationPath = 'images/uploads/' . $id;
-                if (!\File::exists($destinationPath)) {
-                    \File::makeDirectory($destinationPath);
-                }
-
-                $extension = \Input::file('pet-photo')->getClientOriginalExtension();
-                $fileName = rand(11111, 99999) . '.' . $extension;
-
-                $height = \Image::make(\Input::file('pet-photo'))->height();
-                $width = \Image::make(\Input::file('pet-photo'))->width();
-
-                if ($width > $height) {
-                    \Image::make(\Input::file('pet-photo'))->crop($height, $height)->save($destinationPath . '/' . $fileName);
-                } else {
-                    \Image::make(\Input::file('pet-photo'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
-                }
-
-                $input['image_path'] = '/images/uploads/' . $id . '/' . $fileName;
-
-            } else {
-                return \Redirect::route('user.register.pet.create')->with('error', 'uploaded file is not valid');
+        if (\Input::hasFile('pet-photo')) {
+//            $file = array('image' => \Input::file('pet-photo'));
+//            $rules = array('image' => 'mimes:jpeg,png');
+//            $validator = \Validator::make($file, $rules);
+//            if ($validator->fails()) {
+//                return \Redirect::route('user.register.pet.create')->withInput()
+//                    ->withErrors($validator);
+//            }
+            $destinationPath = 'images/uploads/' . $id;
+            if (!\File::exists($destinationPath)) {
+                \File::makeDirectory($destinationPath);
             }
 
+            $extension = \Input::file('pet-photo')->getClientOriginalExtension();
+            $fileName = rand(11111, 99999) . '.' . $extension;
+
+            $height = \Image::make(\Input::file('pet-photo'))->height();
+            $width = \Image::make(\Input::file('pet-photo'))->width();
+
+            if ($width > $height) {
+                \Image::make(\Input::file('pet-photo'))->crop($height, $height)->save($destinationPath . '/' . $fileName);
+            } else {
+                \Image::make(\Input::file('pet-photo'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
+            }
+
+            $input['image_path'] = '/images/uploads/' . $id . '/' . $fileName;
+
+        } else {
             $animal = $this->repository->create($input);
 
             if ($animal == null) {
@@ -95,6 +107,8 @@ class PetRegisterController extends \BaseController
 
             return \Redirect::route('user.register.pet');
         }
+
+
 
     }
 

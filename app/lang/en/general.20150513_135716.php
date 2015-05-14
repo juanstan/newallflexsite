@@ -1,6 +1,6 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/05/14 09:54:07 
+ Generated via "php artisan localization:missing" at 2015/05/12 14:59:46 
 *************************************************************************/
 
 return array (
@@ -84,8 +84,8 @@ return array (
   'Map shows approximate location' => 'Map shows approximate location',
   'Message' => 'Message',
   'My Pets' => 'My Pets',
-  'My Readings' => 'My Readings',
   'My Vet' => 'My Vet',
+  'My readings' => 'My readings',
   'Name' => 'Name',
   'New password' => 'New password',
   'New pet' => 'New pet',
@@ -145,7 +145,6 @@ return array (
   'Telephone Number' => 'Telephone Number',
   'Telephone number' => 'Telephone number',
   'Temperature unit type' => 'Temperature unit type',
-  'Temperature units' => 'Temperature units',
   'There are no pet readings associated with your account' => 'There are no pet readings associated with your account',
   'There is no average temperature for' => 'There is no average temperature for',
   'There is no customer data associated with your account' => 'There is no customer data associated with your account',
@@ -166,7 +165,6 @@ return array (
   'We need to learn your pet&#39;s microchip number' => 'We need to learn your pet&#39;s microchip number',
   'Weight' => 'Weight',
   'Weight unit type' => 'Weight unit type',
-  'Weight units' => 'Weight units',
   'Windows' => 'Windows',
   'Yes, remove' => 'Yes, remove',
   'Your pets' => 'Your pets',
@@ -190,8 +188,6 @@ return array (
   'Create pet' => 'Create pet',
   'Large' => 'Large',
   'Medium' => 'Medium',
-  'My readings' => 'My readings',
-  'My sensorReadings' => 'My sensorReadings',
   'Size' => 'Size',
   'Small' => 'Small',
   'X-Large' => 'X-Large',

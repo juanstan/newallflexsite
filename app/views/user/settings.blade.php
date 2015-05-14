@@ -102,7 +102,7 @@
                                                 
                         <div class="form-group">
 
-                                {{ Form::label('units', Lang::get('general.Units'), array('class' => 'col-sm-4 control-label')) }}
+                                {{ Form::label('units', Lang::get('general.Temperature units'), array('class' => 'col-sm-4 control-label')) }}
 
                             <div class="col-sm-8">
 
@@ -113,11 +113,24 @@
 
                             </div>
                         </div>
+                        <div class="form-group">
+
+                            {{ Form::label('weight_units', Lang::get('general.Weight units'), array('class' => 'col-sm-4 control-label')) }}
+
+                            <div class="col-sm-8">
+
+                                <div class="radio-pill-buttons">
+                                    <label><input type="radio" @if(Auth::user()->get()->weight_units == 'KG') checked @endif name="weight_units" value="KG"><span class="pointer" >{{ Lang::get('general.Kilograms') }}</span></label>
+                                    <label><input type="radio" @if(Auth::user()->get()->weight_units == 'LBS') checked @endif name="weight_units" value="LBS"><span class="pointer" >{{ Lang::get('general.Pounds') }}</span></label>
+                                </div>
+
+                            </div>
+                        </div>
 
                         
                             <div class="form-group top-buffer">
                                 <div class="col-sm-12">
-                                    <a href="{{ URL::route('user.delete) }}" >
+                                    <a href="{{ URL::route('user.delete') }}" >
                                         {{ Form::button(Lang::get('general.Delete account'), array('class' => 'btn btn-file btn-lg pull-left border-none')) }}
                                     </a>
                                     {{ Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-default btn-lg pull-right')) }}

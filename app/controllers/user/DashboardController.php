@@ -152,6 +152,14 @@ class DashboardController extends \BaseController
     public function postUpdatePet($id)
     {
         $this->repository->setUser($this->authUser);
+        $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+        \Input::merge(array('breed_id' => $breed_id->id));
+        if(\Auth::user()->get()->weight_units == "LBS") {
+
+            $weight = round(\Input::get('weight') * 0.453592, 1);
+            \Input::merge(array('weight' => $weight));
+
+        }
         $input = \Input::all();
         $validator = $this->repository->getUpdateValidator($input);
         if ($validator->fails()) {
@@ -261,6 +269,8 @@ class DashboardController extends \BaseController
     public function postCreatePet()
     {
         $this->repository->setUser($this->authUser);
+        $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+        \Input::merge(array('breed_id' => $breed_id->id));
         $input = \Input::all();
         $validator = $this->repository->getCreateValidator($input);
         if ($validator->fails()) {

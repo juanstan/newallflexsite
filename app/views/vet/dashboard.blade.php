@@ -14,18 +14,18 @@
     </div>
     <div class="row col-centered float-none" >
         <div class="col-md-4" >
-            @if($user->readings->count())
+            @if($user->sensorReadings->count())
             <div class="jumbotron vet-dashboard top-buffer" >
                     <div class="col-md-11 col-centered float-none" >
-                        <h3>{{ Lang::get('general.My readings') }}</h3>
+                        <h3>{{ Lang::get('general.My Readings') }}</h3>
                     </div>
-                @foreach($user->readings->slice(0, 1) as $reading)
+                @foreach($user->sensorReadings->slice(0, 1) as $sensorReading)
                     <div class="row" >
                         <div class="col-md-7 col-centered float-none" >
-                            <div class="circle top-buffer circle-small-border" style="border-color: {{ getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] }}">
+                            <div class="circle top-buffer circle-small-border" style="border-color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}">
                                  <div class="circle-inner">
-                                     <div class="score-text small-text" style="color: {{ getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] }}" >
-                                         {{ getTemperatureColor($reading->temperature, $temperaturePref)['temp'] }}<span>&#176;</span>
+                                     <div class="score-text small-text" style="color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}" >
+                                         {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] }}<span>&#176;</span>
                                       </div>
                                  </div>
                             </div>
@@ -34,14 +34,14 @@
                     <div class="row" >
                         <div class="col-md-12 col-centered float-none top-buffer" >
                             <div class="col-md-3 small-top-buffer" >
-                            {{ HTML::image('user', 'Logo', array('width' => '100%')) }}
+                            {{ HTML::image('images/pet-image.png', '', array('width' => '100%')) }}
                             </div>
                             <div class="col-md-9 left-none" >
-                                <h3 class="small-top-buffer bottom-none">{{ $reading->microchip_id }}</h3>
-                                <p class="blue" >@if(date("d/m/y",strtotime($reading->created_at)) == date("d/m/y"))
-                                        {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
+                                <h3 class="small-top-buffer bottom-none">{{ $sensorReading->microchip_id }}</h3>
+                                <p class="blue" >@if(date("d/m/y",strtotime($sensorReading->created_at)) == date("d/m/y"))
+                                        {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
                                     @else
-                                        {{ date("d/m/y",strtotime($reading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
+                                        {{ date("d/m/y",strtotime($sensorReading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
                                     @endif</p>
                             </div>
 
@@ -55,26 +55,26 @@
                 </div>
                 <div class="slider-content past-slider" >
                     <?php $counter = 0; ?>
-                    @foreach($user->readings as $reading)
+                    @foreach($user->sensorReadings as $sensorReading)
                         <?php if ($counter++ == 1) continue; ?>
                         <div class="row" >
                             <div class="col-md-12 " >
                                 <div class="col-md-3 small-top-buffer" >
-                                {{ HTML::image('images/pet-image.png', 'Logo', array('width' => '100%')) }}
+                                {{ HTML::image('images/pet-image.png', '', array('width' => '100%')) }}
                                 </div>
                                 <div class="col-md-6 left-none ellipsis" >
-                                    <h4 class="small-top-buffer bottom-none">{{ $reading->microchip_id }}</h4>
-                                    <p class="blue" >@if(date("d/m/y",strtotime($reading->created_at)) == date("d/m/y"))
-                                            {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
+                                    <h4 class="small-top-buffer bottom-none">{{ $sensorReading->microchip_id }}</h4>
+                                    <p class="blue" >@if(date("d/m/y",strtotime($sensorReading->created_at)) == date("d/m/y"))
+                                            {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
                                         @else
-                                            {{ date("d/m/y",strtotime($reading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
+                                            {{ date("d/m/y",strtotime($sensorReading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
                                         @endif</p>
                                 </div>
                                 <div class="col-md-3 small-top-buffer" >
-                                    <div class="circle circle-small-border" style="border-color: {{ getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] }}">
+                                    <div class="circle circle-small-border" style="border-color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}">
                                         <div class="circle-inner">
-                                            <div class="small-score-text prev-reading" style="color: {{ getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] }}">
-                                                {{ getTemperatureColor($reading->temperature, $temperaturePref)['temp'] }}<span>&#176;</span>
+                                            <div class="small-score-text prev-reading" style="color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}">
+                                                {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] }}<span>&#176;</span>
                                             </div>
                                         </div>
                                     </div>
@@ -116,29 +116,29 @@
                             @foreach($requests as $request)
                                 @foreach ($pets as $pet)
                                     @if($request->pet_id = $pet->id && $request->approved == 1)
-                                        @foreach ($pet->readings as $reading)
+                                        @foreach ($pet->sensorReadings as $sensorReading)
                                         <div class="row small-top-buffer" >
                                             <div class="col-md-12 " >
                                                 <div class="col-md-2 col-xs-4" >
                                                     {{ HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '80%')) }}
                                                 </div>
                                                 <div class="col-md-5 left-none" >
-                                                    <h3 class="small-top-buffer bottom-none">{{ $pet->name }}</h3><p class="blue" >@if(date("d/m/y",strtotime($reading->created_at)) == date("d/m/y"))
-                                        {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
+                                                    <h3 class="small-top-buffer bottom-none">{{ $pet->name }}</h3><p class="blue" >@if(date("d/m/y",strtotime($sensorReading->created_at)) == date("d/m/y"))
+                                        {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
                                     @else
-                                        {{ date("d/m/y",strtotime($reading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
+                                        {{ date("d/m/y",strtotime($sensorReading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
                                     @endif</p>
-                                                    <p>{{ Lang::get('general.Read') }} @if($reading->created_at == new DateTime())
-                                                            {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
+                                                    <p>{{ Lang::get('general.Read') }} @if($sensorReading->created_at == new DateTime())
+                                                            {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
                                                         @else
-                                                            {{ date("d/m/y",strtotime($reading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($reading->created_at)) }}
+                                                            {{ date("d/m/y",strtotime($sensorReading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
                                                         @endif</p>
                                                 </div>
                                                     <div class="col-md-2 col-xs-4 vcenter" >
-                                                        <div class="circle circle-small-border" style="border-color: {{ getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] }}">
+                                                        <div class="circle circle-small-border" style="border-color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}">
                                                             <div class="circle-inner">
-                                                                <div class="small-score-text prev-reading" style="color: {{ getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] }}">
-                                                                    {{ getTemperatureColor($reading->temperature, $temperaturePref)['temp'] }}<span>&#176;</span>
+                                                                <div class="small-score-text prev-reading" style="color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}">
+                                                                    {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] }}<span>&#176;</span>
                                                                 </div>
                                                             </div>
                                                         </div>

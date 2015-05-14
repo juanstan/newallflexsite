@@ -1,9 +1,12 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/05/14 09:54:07 
+ Generated via "php artisan localization:missing" at 2015/05/13 16:22:00 
 *************************************************************************/
 
 return array (
+  //============================== New strings to translate ==============================//
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/vet/dashboard.blade.php
+  'My sensorReadings' => 'My sensorReadings',
   //==================================== Translations ====================================//
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
@@ -84,7 +87,6 @@ return array (
   'Map shows approximate location' => 'Map shows approximate location',
   'Message' => 'Message',
   'My Pets' => 'My Pets',
-  'My Readings' => 'My Readings',
   'My Vet' => 'My Vet',
   'Name' => 'Name',
   'New password' => 'New password',
@@ -191,7 +193,6 @@ return array (
   'Large' => 'Large',
   'Medium' => 'Medium',
   'My readings' => 'My readings',
-  'My sensorReadings' => 'My sensorReadings',
   'Size' => 'Size',
   'Small' => 'Small',
   'X-Large' => 'X-Large',

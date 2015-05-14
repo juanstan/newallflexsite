@@ -356,7 +356,7 @@
                         </div>
                         <div  class="tab-pane fade in" id="edit{{ $animal->id }}">
                             <div class="form-horizontal float-none top-buffer col-md-12 col-centered">
-                                {{ Form::open(array('route' => array('user.dashboard.updatePet', $animal->id), 'method' => 'post', 'id' => 'petSettingsForm')) }}
+                                {{ Form::open(array('route' => array('user.dashboard.updatePet', $animal->id), 'method' => 'post', 'id' => 'petSettingsForm' . $animal->id )) }}
 
                                 <div class="form-group">
 
@@ -373,9 +373,11 @@
                                         {{ Form::label('breed', Lang::get('general.Breed'), array('class' => 'col-sm-2 control-label')) }}
 
                                     <div class="col-sm-10">
-
-                                        {{ Form::select('breed_id', $breed, $animal->breed->id, array('class' => 'form-control text-left')) }}
-
+                                        @if(isset($animal->breed_id))
+                                            {{ Form::text('breed_id', $animal->breed->name, array('class' => 'form-control text-left', 'id' => 'breedList')) }}
+                                        @else
+                                            {{ Form::text('breed_id', '', array('class' => 'form-control text-left', 'id' => 'breedList')) }}
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="col-md-12 small-padding" >
@@ -386,10 +388,12 @@
                                         <div class="col-sm-8">
 
                                             <div class="input-group">
-
-                                                {{ Form::text('weight', $animal->weight, array('class' => 'form-control text-left')) }}
-
-                                                <div class="input-group-addon">@if(Auth::user()->get()->weight_units == 'KG') Lang::get('general.kg') @else {{ Lang::get('general.lbs') }} @endif</div>
+                                                @if(Auth::user()->get()->weight_units == 'KG')
+                                                    {{ Form::text('weight', $animal->weight, array('class' => 'form-control text-left')) }}
+                                                @else
+                                                    {{ Form::text('weight', round($animal->weight * 2.20462, 1), array('class' => 'form-control text-left')) }}
+                                                @endif
+                                                <div class="input-group-addon">@if(Auth::user()->get()->weight_units == 'KG') {{ Lang::get('general.kg') }} @else {{ Lang::get('general.lbs') }} @endif</div>
 
                                             </div>
 
@@ -450,7 +454,7 @@
                                     </div>
                                     <div class="top-buffer mobile" ></div>
                                     <div class="col-md-7" >
-                                        {{ Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-block btn-default btn-md', 'form' => 'petSettingsForm')) }}
+                                        {{ Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-block btn-default btn-md', 'form' => 'petSettingsForm' . $animal->id)) }}
                                     </div>
                                         
 
@@ -523,12 +527,12 @@
 
                                 <div class="col-sm-9">
 
-                                    {{ Form::select('breed_id', $breed, '', array('class' => 'form-control text-left')) }}
+                                    {{ Form::text('breed_id', '', array('class' => 'form-control text-left', 'id' => 'createBreedList')) }}
 
                                 </div>
                             </div>
 
-                            <div class="col-md-6 small-padding" >
+                            <div class="col-md-12 small-padding" >
                                 <div class="form-group">
 
                                     {{ Form::label('weight', Lang::get('general.Weight'), array('class' => 'col-sm-4 control-label')) }}
@@ -566,16 +570,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            {{--<div class="form-group">--}}
 
-                                    {{ Form::label('Known conditions', Lang::get('general.Known conditions'), array('class' => 'col-sm-7 control-label')) }}
+                                    {{--{{ Form::label('Known conditions', Lang::get('general.Known conditions'), array('class' => 'col-sm-7 control-label')) }}--}}
 
-                                <div class="col-sm-5">
+                                {{--<div class="col-sm-5">--}}
 
-                                    {{ Form::button(Lang::get('general.Manage <i class="fa fa-angle-right small-left-buffer"></i>'), array('class' => 'btn btn-file btn-block btn-md')) }}
+                                    {{--{{ Form::button(Lang::get('general.Manage <i class="fa fa-angle-right small-left-buffer"></i>'), array('class' => 'btn btn-file btn-block btn-md')) }}--}}
 
-                                </div>
-                            </div>
+                                {{--</div>--}}
+                            {{--</div>--}}
                             <div class="form-group">
                                 <div class="col-md-12" >
 

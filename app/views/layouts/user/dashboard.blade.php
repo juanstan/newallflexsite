@@ -84,8 +84,16 @@
     </body>
     <!-- Javascript -->
   @include('layouts/core/javascript')
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script>
+        $( "#breedList" ).autocomplete({
+            source: '/user/register/pet/breeds',
+            minLength:1,
+        });
+        $( "#createBreedList" ).autocomplete({
+            source: '/user/register/pet/breeds',
+            minLength:1,
+        });
         $(function(){ // this will be called when the DOM is ready
             $('#vetsearch').keyup(function() {
                 $('.vetname').show();

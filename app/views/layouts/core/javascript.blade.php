@@ -5,3 +5,4 @@
 <script type="text/javascript" src="{{ url('assets/javascripts/pace.min.js') }}" ></script>
 <script type="text/javascript" src="{{ url('assets/javascripts/application.js') }}" ></script>
 <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+

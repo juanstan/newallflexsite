@@ -1,6 +1,7 @@
 <?php namespace User;
 
 use Entities\User;
+use Entities\Breeds;
 use Repositories\UserRepositoryInterface;
 
 class RegisterController extends \BaseController

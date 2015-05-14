@@ -42,7 +42,9 @@
 
                     <div class="col-sm-8">
 
-                        {{ Form::select('breed_id', $breed, '', array('class' => 'form-control text-left')) }}
+                        {{--{{ Form::select('breed_id', $breed, '', array('class' => 'form-control text-left')) }}--}}
+
+                        {{ Form::input('name', 'breed_id', '', array('class' => 'form-control text-left', 'id' => 'breedList'))}}
 
                     </div>
                 </div>
@@ -66,7 +68,7 @@
 
                             {{ Form::text('weight', '', array('class' => 'form-control text-left')) }}
 
-                            <div class="input-group-addon">@if(Auth::user()->get()->weight_units == 'KG') Lang::get('general.kg') @else {{ Lang::get('general.lbs') }} @endif</div>
+                            <div class="input-group-addon">@if(Auth::user()->get()->weight_units == 'KG') {{ Lang::get('general.kg') }} @else {{ Lang::get('general.lbs') }} @endif</div>
 
                         </div>
 

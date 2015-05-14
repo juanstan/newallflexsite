@@ -7,14 +7,14 @@
         </div>
         <div class="col-md-6 col-centered float-none hidden-desktop" >
             <div class="form-horizontal top-buffer">
-                    @forelse ($pets as $value) 
+                    @forelse ($pets as $pet)
                         <div class="row" >
                             <div class="col-xs-4 top-buffer" >
-                                {{ HTML::image(isset($value->image_path) ? $value->image_path : '/images/pet-image.png', $value->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
+                                {{ HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
                             </div>
                             <div class="col-xs-8 top-buffer" >
-                                <h3 class="bottom-none text-left">{{ $value->name }}</h3>
-                                <h4 class="top-none text-left">{{ $value->breed->name }}</h4>
+                                <h3 class="bottom-none text-left">{{ $pet->name }}</h3>
+                                <h4 class="top-none text-left">{{ $pet->breed->name }}</h4>
                             </div>
                         </div>
                     @empty

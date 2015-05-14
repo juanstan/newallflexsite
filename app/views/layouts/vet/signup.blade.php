@@ -25,9 +25,9 @@
                     <div class="jumbotron text-center" >
                                 {{ HTML::image('images/logo-vet.png', 'a Logo', array('class' => 'signup-logo')) }}
                         <ul id="menu" class="nav nav-tabs nav-justified">
-                            <li class="h2"><a href="{{ URL::route('vet.signup.1') }}" data-toggle="pill"><span>{{ Lang::get('general.Your practice') }}</span></a></li>
-                            <li class="h2"><a href="{{ URL::route('vet.signup.2') }}" data-toggle="pill"><span>{{ Lang::get('general.Address') }}</span></a></li>
-                            <li class="h2"><a href="{{ URL::route('vet.signup.5') }}" data-toggle="pill"><span>{{ Lang::get('general.First upload') }}</span></a></li>
+                            <li class="h2"><a href="{{ URL::route('vet.register.about') }}" data-toggle="pill"><span>{{ Lang::get('general.Your practice') }}</span></a></li>
+                            <li class="h2"><a href="{{ URL::route('vet.register.address') }}" data-toggle="pill"><span>{{ Lang::get('general.Address') }}</span></a></li>
+                            <li class="h2"><a href="{{ URL::route('vet.register.reading') }}" data-toggle="pill"><span>{{ Lang::get('general.First upload') }}</span></a></li>
                         </ul>
                         @yield('content')
                     </div>

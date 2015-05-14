@@ -38,7 +38,9 @@
                     <div class="alert alert-warning alert-dismissible" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                         <strong class="inline-block ">{{ Lang::get('general.Email not yet verified') }}</strong> {{ Lang::get('general.please verify') }}
-                        {{ HTML::linkroute('vet.resendConfirmation', '<button style="margin-top: -5px;" class="btn-mobile btn btn-warning btn-sm pull-right border-none" type="button">'.Lang::get('general.Resend confirmation email').'</button>') }}
+                        <a href="{{ URL::route('vet.resendConfirmation') }}">
+                            {{ Form::button(Lang::get('general.Resend confirmation email'), array('style' => 'margin-top: -5px;', 'class' => 'btn-mobile btn btn-warning btn-sm pull-right border-none'))}}
+                        </a>
                     </div>
                 @endif
                 @if($errors->has())
