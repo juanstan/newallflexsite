@@ -51,7 +51,7 @@ class RegisterController extends \BaseController {
         }
 
         if (\Input::hasFile('image_path')){
-            $destinationPath = 'images/uploads/vets/'.$id;
+            $destinationPath = '/uploads/vets/'.$id;
             if(!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }
@@ -69,7 +69,7 @@ class RegisterController extends \BaseController {
                 \Image::make(\Input::file('image_path'))->crop($width, $width)->save($destinationPath.'/'.$fileName);
             }
 
-            $image_path = '/images/uploads/vets/'.$id.'/'.$fileName;
+            $image_path = '/uploads/vets/'.$id.'/'.$fileName;
 
             $input = array_merge($input, array('image_path' => $image_path));
 

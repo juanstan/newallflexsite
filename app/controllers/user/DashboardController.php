@@ -116,7 +116,7 @@ class DashboardController extends \BaseController
                 ->withInput(\Input::except('password'));
         }
         if (\Input::hasFile('image_path')) {
-            $destinationPath = 'images/uploads/users/' . $id;
+            $destinationPath = '/uploads/users/' . $id;
             if (!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }
@@ -129,7 +129,7 @@ class DashboardController extends \BaseController
             } else {
                 \Image::make(\Input::file('image_path'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
             }
-            $image_path = '/images/uploads/users/' . $id . '/' . $fileName;
+            $image_path = '/uploads/users/' . $id . '/' . $fileName;
         } else {
             $image_path = $this->authUser->image_path;
         }
@@ -245,7 +245,7 @@ class DashboardController extends \BaseController
         else
         {
 
-            $destinationPath = 'images/uploads/' . $userid;
+            $destinationPath = '/uploads/pets/' . $userid;
             if (!\File::exists($destinationPath))
             {
                 \File::makeDirectory($destinationPath);
@@ -263,9 +263,9 @@ class DashboardController extends \BaseController
                 \Image::make(\Input::file('pet-photo'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
             }
 
-            $input['image_path'] = '/images/uploads/' . $id . '/' . $fileName;
+            $input['image_path'] = '/uploads/pets/' . $id . '/' . $fileName;
 
-            $input['image_path'] = '/images/uploads/' . $userid . '/' . $fileName;
+            $input['image_path'] = '/uploads/pets/' . $userid . '/' . $fileName;
             $animal = $this->repository->update($id, $input);
             return \Redirect::route('user.dashboard')->with('success', 'Pet updated');
 
@@ -297,7 +297,7 @@ class DashboardController extends \BaseController
                 ->withErrors($validator);
         } else {
             if (\Input::file('pet-photo')->isValid()) {
-                $destinationPath = 'images/uploads/' . $id;
+                $destinationPath = '/uploads/pets/' . $id;
                 if (!\File::exists($destinationPath)) {
                     \File::makeDirectory($destinationPath);
                 }
@@ -310,7 +310,7 @@ class DashboardController extends \BaseController
                 } else {
                     \Image::make(\Input::file('pet-photo'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
                 }
-                $input['image_path'] = '/images/uploads/' . $id . '/' . $fileName;
+                $input['image_path'] = '/uploads/pets/' . $id . '/' . $fileName;
                 $animal = $this->repository->create($input);
                 return \Redirect::route('user.dashboard');
             } else {
@@ -345,7 +345,7 @@ class DashboardController extends \BaseController
                 ->withErrors($validator);
         } else {
             if (\Input::file('file')->isValid()) {
-                $destinationPath = 'uploads/csv/' . \Crypt::encrypt($id);
+                $destinationPath = '/uploads/csv/' . \Crypt::encrypt($id);
                 if (!\File::exists($destinationPath)) {
                     \File::makeDirectory($destinationPath);
                 }

@@ -41,7 +41,7 @@ class AnimalReadingRegisterController extends \BaseController
                 ->withErrors($validator);
         } else {
             if (\Input::file('file')->isValid()) {
-                $destinationPath = 'uploads/csv/' . \Crypt::encrypt($id);
+                $destinationPath = '/uploads/csv/' . \Crypt::encrypt($id);
                 if (!\File::exists($destinationPath)) {
                     \File::makeDirectory($destinationPath);
                 }

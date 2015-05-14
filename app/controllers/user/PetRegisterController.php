@@ -82,7 +82,7 @@ class PetRegisterController extends \BaseController
 //                return \Redirect::route('user.register.pet.create')->withInput()
 //                    ->withErrors($validator);
 //            }
-            $destinationPath = 'images/uploads/' . $id;
+            $destinationPath = '/uploads/pets/' . $id;
             if (!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }
@@ -100,7 +100,7 @@ class PetRegisterController extends \BaseController
                 \Image::make(\Input::file('pet-photo'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
             }
 
-            $input['image_path'] = '/images/uploads/' . $id . '/' . $fileName;
+            $input['image_path'] = '/uploads/pets/' . $id . '/' . $fileName;
 
         }
 
