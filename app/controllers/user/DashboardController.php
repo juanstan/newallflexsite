@@ -230,40 +230,51 @@ class DashboardController extends \BaseController
 
     public function postUpdatePetPhoto($id)
     {
+
         $this->repository->setUser($this->authUser);
         $userid = \Auth::user()->get()->id;
         $file = array('image' => \Input::file('pet-photo'));
         $rules = array('image' => '');
         $validator = \Validator::make($file, $rules);
-        if ($validator->fails()) {
+
+        if ($validator->fails())
+        {
             return \Redirect::route('user.dashboard')->withInput()
                 ->withErrors($validator);
-        } else {
-            if (\Input::file('pet-photo')->isValid()) {
-                $destinationPath = 'images/uploads/' . $userid;
-                if (!\File::exists($destinationPath)) {
-                    \File::makeDirectory($destinationPath);
-                }
-                $extension = \Input::file('pet-photo')->getClientOriginalExtension();
-                $fileName = rand(11111, 99999) . '.' . $extension;
-                $height = \Image::make(\Input::file('pet-photo'))->height();
-                $width = \Image::make(\Input::file('pet-photo'))->width();
-                if ($width > $height) {
-                    \Image::make(\Input::file('pet-photo'))->crop($height, $height)->save($destinationPath . '/' . $fileName);
-                } else {
-                    \Image::make(\Input::file('pet-photo'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
-                }
-                $input['image_path'] = '/images/uploads/' . $userid . '/' . $fileName;
-                $animal = $this->repository->update($id, $input);
-                return \Redirect::route('user.dashboard')->with('success', 'Pet updated');
-            } else {
-                \Session::flash('error', 'uploaded file is not valid');
-                return \Redirect::route('user.dashboard');
-            }
         }
+        else
+        {
+
+            $destinationPath = 'images/uploads/' . $userid;
+            if (!\File::exists($destinationPath))
+            {
+                \File::makeDirectory($destinationPath);
+            }
+
+            $extension = \Input::file('pet-photo')->getClientOriginalExtension();
+            $fileName = rand(11111, 99999) . '.' . $extension;
+
+            $height = \Image::make(\Input::file('pet-photo'))->height();
+            $width = \Image::make(\Input::file('pet-photo'))->width();
+
+            if ($width > $height) {
+                \Image::make(\Input::file('pet-photo'))->crop($height, $height)->save($destinationPath . '/' . $fileName);
+            } else {
+                \Image::make(\Input::file('pet-photo'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
+            }
+
+            $input['image_path'] = '/images/uploads/' . $id . '/' . $fileName;
+
+            $input['image_path'] = '/images/uploads/' . $userid . '/' . $fileName;
+            $animal = $this->repository->update($id, $input);
+            return \Redirect::route('user.dashboard')->with('success', 'Pet updated');
+
+        }
+
         if ($this->repository->update($id, $input) == false) {
             \App::abort(500);
         }
+
     }
 
     public function postCreatePet()

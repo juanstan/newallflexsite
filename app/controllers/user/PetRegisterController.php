@@ -49,6 +49,7 @@ class PetRegisterController extends \BaseController
 
     public function postCreate() // POST
     {
+
         $this->repository->setUser($this->authUser);
 
         if(\Auth::user()->get()->weight_units == "LBS") {
@@ -57,6 +58,7 @@ class PetRegisterController extends \BaseController
             \Input::merge(array('weight' => $weight));
 
         }
+
         $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
         \Input::merge(array('breed_id' => $breed_id->id));
 
@@ -72,6 +74,7 @@ class PetRegisterController extends \BaseController
         $id = \Auth::user()->get()->id;
 
         if (\Input::hasFile('pet-photo')) {
+
 //            $file = array('image' => \Input::file('pet-photo'));
 //            $rules = array('image' => 'mimes:jpeg,png');
 //            $validator = \Validator::make($file, $rules);
@@ -83,6 +86,7 @@ class PetRegisterController extends \BaseController
             if (!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }
+
 
             $extension = \Input::file('pet-photo')->getClientOriginalExtension();
             $fileName = rand(11111, 99999) . '.' . $extension;
@@ -98,17 +102,15 @@ class PetRegisterController extends \BaseController
 
             $input['image_path'] = '/images/uploads/' . $id . '/' . $fileName;
 
-        } else {
-            $animal = $this->repository->create($input);
-
-            if ($animal == null) {
-                \App::abort(500);
-            }
-
-            return \Redirect::route('user.register.pet');
         }
 
+        $animal = $this->repository->create($input);
 
+        if ($animal == null) {
+            \App::abort(500);
+        }
+
+        return \Redirect::route('user.register.pet');
 
     }
 

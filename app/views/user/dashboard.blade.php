@@ -416,8 +416,8 @@
 
                                     <div class="col-sm-9">
                                         <div class="radio-pill-buttons">
-                                            <label><input type="radio" @if($animal->gender == 'Male') checked @endif name="gender" value="Male"><span class="pointer" >{{ Lang::get('general.Male') }}</span></label>
-                                            <label><input type="radio" @if($animal->gender == 'Female') checked @endif name="gender" value="Female"><span class="pointer" >{{ Lang::get('general.Female') }}</span></label>
+                                            <label><input type="radio" @if($animal->gender == '1') checked @endif name="gender" value="1"><span class="pointer" >{{ Lang::get('general.Male') }}</span></label>
+                                            <label><input type="radio" @if($animal->gender == '0') checked @endif name="gender" value="0"><span class="pointer" >{{ Lang::get('general.Female') }}</span></label>
                                         </div>
                                     </div>
                                 </div>
@@ -565,8 +565,8 @@
 
                                 <div class="col-sm-9">
                                     <div class="radio-pill-buttons">
-                                        <label><input type="radio" name="gender" value="Male"><span class="pointer" >{{ Lang::get('general.Male') }}</span></label>
-                                        <label><input type="radio" name="gender" value="Female"><span class="pointer" >{{ Lang::get('general.Female') }}</span></label>
+                                        <label><input type="radio" name="gender" value="1"><span class="pointer" >{{ Lang::get('general.Male') }}</span></label>
+                                        <label><input type="radio" name="gender" value="0"><span class="pointer" >{{ Lang::get('general.Female') }}</span></label>
                                     </div>
                                 </div>
                             </div>

@@ -20,7 +20,7 @@ class CreateAnimalsTable extends Migration {
 			$table->integer('breed_id')->nullable();
 			$table->date('date_of_birth')->nullable();
 			$table->text('weight', 65535)->nullable();
-			$table->string('gender')->nullable();
+			$table->tinyInteger('gender')->nullable();
 			$table->string('image_path')->nullable();
 			$table->integer('vet_id')->nullable();
 			$table->integer('user_id')->nullable();
