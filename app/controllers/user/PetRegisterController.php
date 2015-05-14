@@ -82,7 +82,7 @@ class PetRegisterController extends \BaseController
 //                return \Redirect::route('user.register.pet.create')->withInput()
 //                    ->withErrors($validator);
 //            }
-            $destinationPath = '/uploads/pets/' . $id;
+            $destinationPath = 'uploads/pets/' . $id;
             if (!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }

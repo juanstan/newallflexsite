@@ -116,7 +116,7 @@ class DashboardController extends \BaseController
                 ->withInput(\Input::except('password'));
         }
         if (\Input::hasFile('image_path')) {
-            $destinationPath = '/uploads/users/' . $id;
+            $destinationPath = 'uploads/users/' . $id;
             if (!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }
@@ -129,7 +129,7 @@ class DashboardController extends \BaseController
             } else {
                 \Image::make(\Input::file('image_path'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
             }
-            $image_path = '/uploads/users/' . $id . '/' . $fileName;
+            $image_path = 'uploads/users/' . $id . '/' . $fileName;
         } else {
             $image_path = $this->authUser->image_path;
         }
@@ -245,7 +245,7 @@ class DashboardController extends \BaseController
         else
         {
 
-            $destinationPath = '/uploads/pets/' . $userid;
+            $destinationPath = 'uploads/pets/' . $userid;
             if (!\File::exists($destinationPath))
             {
                 \File::makeDirectory($destinationPath);
@@ -262,8 +262,6 @@ class DashboardController extends \BaseController
             } else {
                 \Image::make(\Input::file('pet-photo'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
             }
-
-            $input['image_path'] = '/uploads/pets/' . $id . '/' . $fileName;
 
             $input['image_path'] = '/uploads/pets/' . $userid . '/' . $fileName;
             $animal = $this->repository->update($id, $input);
@@ -297,7 +295,7 @@ class DashboardController extends \BaseController
                 ->withErrors($validator);
         } else {
             if (\Input::file('pet-photo')->isValid()) {
-                $destinationPath = '/uploads/pets/' . $id;
+                $destinationPath = 'uploads/pets/' . $id;
                 if (!\File::exists($destinationPath)) {
                     \File::makeDirectory($destinationPath);
                 }
@@ -345,7 +343,7 @@ class DashboardController extends \BaseController
                 ->withErrors($validator);
         } else {
             if (\Input::file('file')->isValid()) {
-                $destinationPath = '/uploads/csv/' . \Crypt::encrypt($id);
+                $destinationPath = 'uploads/csv/' . \Crypt::encrypt($id);
                 if (!\File::exists($destinationPath)) {
                     \File::makeDirectory($destinationPath);
                 }

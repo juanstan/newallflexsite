@@ -119,7 +119,7 @@ class DashboardController extends \BaseController {
         }
 
         if (\Input::hasFile('image_path')){
-            $destinationPath = '/uploads/vets/'.$id;
+            $destinationPath = 'uploads/vets/'.$id;
             if(!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }
@@ -195,7 +195,7 @@ class DashboardController extends \BaseController {
         }
         else {
             if (\Input::file('file')->isValid()) {
-                $destinationPath = '/uploads/csv/'.\Crypt::encrypt($id);
+                $destinationPath = 'uploads/csv/'.\Crypt::encrypt($id);
                 if(!\File::exists($destinationPath)) {
                     \File::makeDirectory($destinationPath);
                 }

@@ -51,7 +51,7 @@ class RegisterController extends \BaseController {
         }
 
         if (\Input::hasFile('image_path')){
-            $destinationPath = '/uploads/vets/'.$id;
+            $destinationPath = 'uploads/vets/'.$id;
             if(!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }

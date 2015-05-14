@@ -37,11 +37,11 @@ class RegisterController extends \BaseController
         }
 
         if (\Input::hasFile('image_path')) {
-            $basePath = '/uploads/users/';
+            $basePath = 'uploads/users/';
             if (!\File::exists($basePath)) {
                 \File::makeDirectory($basePath);
             }
-            $destinationPath = '/uploads/users/' . $id;
+            $destinationPath = 'uploads/users/' . $id;
             if (!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }
