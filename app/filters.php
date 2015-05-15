@@ -122,7 +122,7 @@ Route::filter('auth.api', function()
             return Response::json(['error' => true, 'errors' => ['Authorization' => [Lang::get('error.auth.invalid-key')]]], 401);
         }
 
-        Auth::setUser($token->user);
+        Auth::login($token->user);
         $token->expires_at = \Carbon\Carbon::parse(Entities\User\Token::TOKEN_EXPIRY);
         $token->save();
     }

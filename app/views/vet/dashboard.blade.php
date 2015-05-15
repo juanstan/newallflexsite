@@ -14,12 +14,12 @@
     </div>
     <div class="row col-centered float-none" >
         <div class="col-md-4" >
-            @if($user->sensorReadings->count())
+            @if($vet->sensorReadings->count())
             <div class="jumbotron vet-dashboard top-buffer" >
                     <div class="col-md-11 col-centered float-none" >
                         <h3>{{ Lang::get('general.My Readings') }}</h3>
                     </div>
-                @foreach($user->sensorReadings->slice(0, 1) as $sensorReading)
+                @foreach($vet->sensorReadings->slice(0, 1) as $sensorReading)
                     <div class="row" >
                         <div class="col-md-7 col-centered float-none" >
                             <div class="circle top-buffer circle-small-border" style="border-color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}">
@@ -55,7 +55,7 @@
                 </div>
                 <div class="slider-content past-slider" >
                     <?php $counter = 0; ?>
-                    @foreach($user->sensorReadings as $sensorReading)
+                    @foreach($vet->sensorReadings as $sensorReading)
                         <?php if ($counter++ == 1) continue; ?>
                         <div class="row" >
                             <div class="col-md-12 " >
@@ -111,51 +111,48 @@
                     </div>
                 </div>
                 <div class="tab-content ">
-                    <div class="tab-pane active fade in" id="customer">
+                    <div class="tab-pane active fade in" id="recent">
                         <div class="slider-content recent-slider top-buffer" >
                             @foreach($requests as $request)
-                                @foreach ($pets as $pet)
-                                    @if($request->pet_id = $pet->id && $request->approved == 1)
-                                        @foreach ($pet->sensorReadings as $sensorReading)
-                                        <div class="row small-top-buffer" >
-                                            <div class="col-md-12 " >
-                                                <div class="col-md-2 col-xs-4" >
-                                                    {{ HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '80%')) }}
-                                                </div>
-                                                <div class="col-md-5 left-none" >
-                                                    <h3 class="small-top-buffer bottom-none">{{ $pet->name }}</h3><p class="blue" >@if(date("d/m/y",strtotime($sensorReading->created_at)) == date("d/m/y"))
-                                        {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
-                                    @else
-                                        {{ date("d/m/y",strtotime($sensorReading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
-                                    @endif</p>
-                                                    <p>{{ Lang::get('general.Read') }} @if($sensorReading->created_at == new DateTime())
-                                                            {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
-                                                        @else
-                                                            {{ date("d/m/y",strtotime($sensorReading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
-                                                        @endif</p>
-                                                </div>
-                                                    <div class="col-md-2 col-xs-4 vcenter" >
-                                                        <div class="circle circle-small-border" style="border-color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}">
-                                                            <div class="circle-inner">
-                                                                <div class="small-score-text prev-reading" style="color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}">
-                                                                    {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] }}<span>&#176;</span>
-                                                                </div>
+                                @if($request->approved == 1)
+                                    @foreach ($request->animal->sensorReadings as $sensorReading)
+                                    <div class="row small-top-buffer" >
+                                        <div class="col-md-12 " >
+                                            <div class="col-md-2 col-xs-4" >
+                                                {{ HTML::image(isset($request->animal->image_path) ? $request->animal->image_path : '/images/pet-image.png', $request->animal->name, array('class' => 'img-responsive img-circle', 'width' => '80%')) }}
+                                            </div>
+                                            <div class="col-md-5 left-none" >
+                                                <h3 class="small-top-buffer bottom-none">{{ $request->animal->name }}</h3><p class="blue" >@if(date("d/m/y",strtotime($sensorReading->created_at)) == date("d/m/y"))
+                                    {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
+                                @else
+                                    {{ date("d/m/y",strtotime($sensorReading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
+                                @endif</p>
+                                                <p>{{ Lang::get('general.Read') }} @if($sensorReading->created_at == new DateTime())
+                                                        {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
+                                                    @else
+                                                        {{ date("d/m/y",strtotime($sensorReading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
+                                                    @endif</p>
+                                            </div>
+                                                <div class="col-md-2 col-xs-4 vcenter" >
+                                                    <div class="circle circle-small-border" style="border-color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}">
+                                                        <div class="circle-inner">
+                                                            <div class="small-score-text prev-reading" style="color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}">
+                                                                {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] }}<span>&#176;</span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-2 vcenter" >
-                                                        <h4 class="top-buffer">+1.4<span>&#176;</span> <span><i class="fa fa-chevron-right"></i></span></h4>
-                                                    </div>
-                                            </div>
+                                                </div>
+                                                <div class="col-md-2 vcenter" >
+                                                    <h4 class="top-buffer">+1.4<span>&#176;</span> <span><i class="fa fa-chevron-right"></i></span></h4>
+                                                </div>
                                         </div>
-                                        <div class="row small-top-buffer" >
-                                            <div class="col-md-11 border-bottom col-centered float-none" ></div>
-                                        </div>
-                                        @endforeach
-                                    @endif
-                                @endforeach
+                                    </div>
+                                    <div class="row small-top-buffer" >
+                                        <div class="col-md-11 border-bottom col-centered float-none" ></div>
+                                    </div>
+                                    @endforeach
+                                @endif
                             @endforeach
-
                         </div>
                     </div>
                     <div class="tab-pane fade in" id="customer">
@@ -171,13 +168,11 @@
                                     $petsByName = array();
                                 ?>
                                 @foreach($requests as $request)
-                                    @foreach ($pets as $pet)
-                                        @if($request->pet_id = $pet->id && $request->approved == 1)
-                                            <?php
-                                            $petsByName[strtolower($pet->name[0])][]=$pet;
-                                            ?>
-                                        @endif
-                                    @endforeach
+                                    @if($request->approved == 1)
+                                        <?php
+                                        $petsByName[strtolower($request->animal->name[0])][]=$request->animal;
+                                        ?>
+                                    @endif
                                 @endforeach
                                     <?php
                                         ksort($petsByName);
@@ -186,7 +181,7 @@
                                     <li id="{{ $letter }}"><a name="{{ $letter }}" class="title">{{ strtoupper($letter) }}</a>
                                         <ul>
                                             @foreach($petsByLetter as $pet)
-                                                <li><a href="{{ URL::route('vet.dashboard.pet', $pet->id) }}">{{ $pet->name }}<span class="pull-right" >{{ $pet->breed }} <i class="small-left-buffer fa fa-chevron-right"></i></span></a></li>
+                                                <li><a href="{{ URL::route('vet.dashboard.pet', $pet->id) }}">{{ $pet->name }}<span class="pull-right" >{{ $pet->breed->name }} <i class="small-left-buffer fa fa-chevron-right"></i></span></a></li>
                                             @endforeach
                                         </ul>
                                     </li>

@@ -14,18 +14,18 @@ use League\Csv\Reader;
 class AuthController extends \BaseController
 {
 
-    protected $user;
-    protected $repository;
-    protected $rrepository;
-    protected $srepository;
+    protected $userRepository;
+    protected $animalRepository;
+    protected $animalReadingRepository;
+    protected $animalReadingSymptomRepository;
 
-    public function __construct(UserRepositoryInterface $user, AnimalRepositoryInterface $repository, AnimalReadingRepositoryInterface $rrepository, AnimalReadingSymptomRepositoryInterface $srepository)
+    public function __construct(UserRepositoryInterface $userRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->user = $user;
-        $this->rrepository = $rrepository;
-        $this->repository = $repository;
-        $this->srepository = $srepository;
+        $this->userRepository = $userRepository;
+        $this->animalReadingRepository = $animalReadingRepository;
+        $this->animalRepository = $animalRepository;
+        $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
         $this->beforeFilter('csrf',
             array(
                 'on' => 'post'
@@ -58,14 +58,14 @@ class AuthController extends \BaseController
         $confirmation_code = str_random(30);
         \Input::merge(array('confirmation_code' => $confirmation_code, 'units' => 'F', 'weight_units' => 'KG'));
         $input = \Input::all();
-        $validator = $this->user->getCreateValidator($input);
+        $validator = $this->userRepository->getCreateValidator($input);
         if ($validator->fails()) {
             return \Redirect::route('user.register')
                 ->withErrors($validator)
                 ->withInput(\Input::except('password'));
         }
 
-        $user = $this->user->create($input);
+        $user = $this->userRepository->create($input);
         if ($user == null) {
             \App::abort(500);
         }
@@ -75,7 +75,7 @@ class AuthController extends \BaseController
 
     public function getResendConfirmation()
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
         \Mail::send('emails.user-verify', array('confirmation_code' => \Auth::user()->get()->confirmation_code), function ($message) {
             $message->to(\Auth::user()->get()->email_address, 'New user')
                 ->subject('Verify your email address');
@@ -108,19 +108,18 @@ class AuthController extends \BaseController
     public function postLogin()
     {
         $input = \Input::all();
-        $validator = $this->user->getLoginValidator($input);
+        $validator = $this->userRepository->getLoginValidator($input);
         if ($validator->fails()) {
             return \Redirect::route('user')
                 ->withErrors($validator)
                 ->withInput(\Input::except('password'));
         } else {
-            $userdata = array(
+
+            $userData = array(
                 'email_address' => \Input::get('email_address'),
-                'password' => \Input::get('password')
+                'password' => \Input::get('password'),
             );
-            if (\Auth::user()->attempt($userdata)) {
-                $first_name = \Auth::user()->get()->first_name;
-                $last_name = \Auth::user()->get()->last_name;
+            if (\Auth::user()->attempt($userData)) {
                 return \Redirect::route('user.dashboard');
             }
         }

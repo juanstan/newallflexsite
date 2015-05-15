@@ -8,6 +8,7 @@ use Entities\SensorReadingSymptom;
 use Entities\Breed;
 use Entities\Help;
 use Entities\Symptom;
+use Entities\Condition;
 use Repositories\AnimalRepositoryInterface;
 use Repositories\AnimalReadingRepositoryInterface;
 use Repositories\AnimalReadingSymptomRepositoryInterface;
@@ -54,8 +55,8 @@ class DashboardController extends \BaseController
     public function getIndex()
     {
         $this->repository->setUser($this->authUser);
-        $symptoms = \Entities\Symptom::all();
-        $conditions = \Entities\Condition::all();
+        $symptoms = Symptom::all();
+        $conditions = Condition::all();
         $animals = $this->repository->all();
         $breed = Breed::all()->lists('name', 'id');
         if (\Auth::user()->get()->confirmed != null) {

@@ -54,7 +54,7 @@
         <div class="col-md-8" >
             <div class="jumbotron vet-dashboard top-buffer" >
                 <div class="row hero-banner" >
-                @foreach ($pet->readings as $reading)
+                @foreach ($pet->sensorReadings as $reading)
                     @if ($reading->average == 1)
                         <?php $allReadingTemps[] = $reading->temperature; ?>
                     @endif
@@ -66,8 +66,8 @@
                     $readingAverage = $readingSum/$readingCount;
                     ?>
                 @endif
-                    @if( $pet->readings->count() )
-                        @foreach ($pet->readings->slice(0, 1) as $reading)
+                    @if( $pet->sensorReadings->count() )
+                        @foreach ($pet->sensorReadings->slice(0, 1) as $reading)
                             <div class="col-md-12 col-centered float-none" >
                                 <div class="col-xs-10" >
                                     @if(!empty($allReadingTemps))
@@ -108,14 +108,14 @@
                         </div>
                     @endif
                 </div>
-                @if( $pet->readings->count() )
+                @if( $pet->sensorReadings->count() )
                 <div class="row top-buffer" >
                     <div class="col-md-11 col-centered float-none" >
                         <h3>{{ Lang::get('general.Readings over time') }}</h3>
                         <div class="vet-graph-container col-centered" style="width:95%; height:150px;" data-data='{{ $pet->readings }}' ></div>
                     </div>
                 </div>
-                @foreach ($pet->readings as $reading)
+                @foreach ($pet->sensorReadings as $reading)
                 <div class="row small-top-buffer" >
                     <div class="col-md-11 col-centered float-none" >
                         <div class="col-md-2">
@@ -128,9 +128,9 @@
                             </div>
                         </div>
                         <div class="col-md-9" >
-                            @if( $reading->symptom->count() )
-                                    @foreach ($reading->symptom as $readingSymptom)
-                                        <h4 style="color: #71787f;">{{ $readingSymptom->symptom_names->name }}</h4>
+                            @if( $reading->count() )
+                                    @foreach ($reading->sensorReadingSymptoms as $readingSymptom)
+                                        <h4 style="color: #71787f;">{{ $readingSymptom->name }}</h4>
                                     @endforeach
                             @else
                                 <h4>{{ Lang::get('general.No symptoms available') }}</h4>

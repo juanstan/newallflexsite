@@ -1,10 +1,11 @@
 <?php namespace Vet;
 
 use Entities\Animal;
-use Entities\User;
+use Entities\Vet;
 use Entities\SensorReading;
 use Entities\SensorReadingSymptom;
 use Entities\Symptom;
+use Entities\Animal\Request;
 use Repositories\AnimalRepositoryInterface;
 use Repositories\AnimalReadingRepositoryInterface;
 use Repositories\AnimalReadingSymptomRepositoryInterface;
@@ -13,36 +14,36 @@ use League\Csv\Reader;
 
 class DashboardController extends \BaseController {
 
-    protected $user;
-    protected $repository;
-    protected $rrepository;
-    protected $srepository;
+    protected $vet;
+    protected $animalRepository;
+    protected $animalReadingRepository;
+    protected $animalReadingSymptomRepository;
 
-    public function __construct(VetRepositoryInterface $user, AnimalRepositoryInterface $repository, AnimalReadingRepositoryInterface $rrepository, AnimalReadingSymptomRepositoryInterface $srepository)
+    public function __construct(VetRepositoryInterface $vet, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
     {
-        $this->authUser = \Auth::vet()->get();
-        $this->user = $user;
-        $this->rrepository = $rrepository;
-        $this->repository = $repository;
-        $this->srepository = $srepository;
+        $this->authVet = \Auth::vet()->get();
+        $this->vet = $vet;
+        $this->animalReadingRepository = $animalReadingRepository;
+        $this->animalRepository = $animalRepository;
+        $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
         $this->beforeFilter('csrf', array('on'=>'post'));
         $this->beforeFilter('vetAuth', array('only'=>array('postResetAverageTemperature', 'getSettings', 'postSettings', 'postUpdatePet', 'postAddSymptoms', 'postUpdatePetPhoto', 'postCreatePet', 'getRemovePet', 'postReadingUpload')));
 
     }
 
     public function getIndex() {
-            $this->repository->setUser($this->authUser);
-            $id = \Auth::vet()->get()->id;
-            $symptoms = \DB::table('symptoms')->get();
-            $requests = \DB::table('animal_requests')->where('vet_id', '=', $id)->get();
-            $user = $this->authUser;
-            $pets = $this->repository->all();
+            $this->animalRepository->setUser($this->authVet);
+            $id = $this->authVet->id;
+            $symptoms = Symptom::all();
+            $requests = Request::where('vet_id', '=', $id)->get();
+            $vet = $this->authVet;
+            $pets = $this->animalRepository->all();
             if (\Auth::vet()->get()->confirmed != null) {
-                return \View::make('vet.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests, 'user' => $user));
+                return \View::make('vet.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests, 'vet' => $vet));
             }
             else {
                 \Session::flash('not-verified', '');
-                return \View::make('vet.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests, 'user' => $user));
+                return \View::make('vet.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests, 'vet' => $vet));
             }
 
     }
@@ -72,18 +73,18 @@ class DashboardController extends \BaseController {
     }
 
     public function getPet($id) {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authVet);
         $Vetid = \Auth::vet()->get()->id;
-        $symptoms = \DB::table('symptoms')->get();
-        $pet = $this->repository->get($id);
-        if(\DB::table('animal_requests')->where('animal_id', '=', $id)->where('vet_id', '=', $Vetid)->where('approved', '=', 1)->get())
+        $symptoms = Symptom::all();
+        $pet = $this->animalRepository->get($id);
+        if(Request::where('vet_id', '=', $id)->where('animal_id', '=', $id)->where('approved', '=', 1)->get())
         {
             return \View::make('vet.information')->with(array('pet' => $pet, 'symptoms' => $symptoms));
         }
         else
         {
             \Session::flash('not-verified', '');
-            return \View::make('vet.dashboard')->with(array('pet' => $pet, 'symptoms' => $symptoms, 'requests' => $requests));
+            return \View::make('vet.dashboard')->with(array('pet' => $pet, 'symptoms' => $symptoms));
         }
 
 
@@ -109,7 +110,7 @@ class DashboardController extends \BaseController {
     {
         $input = \Input::all();
         $id =  \Auth::vet()->get()->id;
-        $validator = $this->user->getUpdateValidator($input, $id);
+        $validator = $this->vet->getUpdateValidator($input, $id);
 
         if($validator->fails())
         {
@@ -142,7 +143,7 @@ class DashboardController extends \BaseController {
         }
         else {
 
-            $image_path = $this->authUser->image_path;
+            $image_path = $this->authVet->image_path;
 
         }
 
@@ -161,7 +162,7 @@ class DashboardController extends \BaseController {
         if (\Input::has('password'))
         {
             $password = \Input::get('old_password');
-            if(\Hash::check($password,$this->authUser->password))
+            if(\Hash::check($password,$this->authVet->password))
             {
                 $input = array_merge($input, array('password' => \Input::get('password')));
             }
@@ -174,7 +175,7 @@ class DashboardController extends \BaseController {
             }
         }
 
-        if($this->user->update($this->authUser->id, $input) == false)
+        if($this->vet->update($this->authVet->id, $input) == false)
         {
             \App::abort(500);
         }
@@ -263,7 +264,7 @@ class DashboardController extends \BaseController {
 
                         $reading->save();
 
-                        $reading->vets()->attach($this->authUser);
+                        $reading->vets()->attach($this->authVet);
                     }
                 }
                 return \Redirect::route('vet.register.reading');
