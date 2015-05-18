@@ -6,7 +6,9 @@ use Entities\User;
 use Entities\SensorReading;
 use Entities\SensorReadingSymptom;
 use Entities\Breed;
+use Entities\Animal\Request;
 use Entities\Help;
+use Entities\Vet;
 use Entities\Symptom;
 use Entities\Condition;
 use Repositories\AnimalRepositoryInterface;
@@ -24,11 +26,11 @@ class DashboardController extends \BaseController
     protected $animalReadingRepository;
     protected $animalReadingSymptomRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository, VetRepositoryInterface $vet, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
+    public function __construct(UserRepositoryInterface $userRepository, VetRepositoryInterface $vetRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
     {
         $this->authUser = \Auth::user()->get();
         $this->userRepository = $userRepository;
-        $this->vet = $vet;
+        $this->vetRepository = $vetRepository;
         $this->animalReadingRepository = $animalReadingRepository;
         $this->animalRepository = $animalRepository;
         $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
@@ -69,33 +71,33 @@ class DashboardController extends \BaseController
 
     public function getHelp()
     {
-        $help = \DB::table('help')->get();
+        $help = Help::all();
         return \View::make('user.help')->with(array('help' => $help));
     }
 
     public function getResult($id)
     {
-        $help = \DB::table('help')->where('id', '=', $id)->get();
+        $help = Help::where('id', '=', $id)->get();
         return \View::make('user.result')->with(array('help' => $help));
     }
 
-    public function postInvite()
-    {
-        \Mail::send('emails.vet-verify',
-            array(
-                'confirmation_code' => \Auth::vet()->get()->confirmation_code
-            ),
-            function ($message) {
-                $message->to(\Input::get('email_address'))
-                    ->subject($this->authUser->name, 'has invited you to use All Flex');
-            });
-        \Session::flash('message', 'Verification email sent');
-        return \Redirect::route('user.dashboard');
-    }
+//    public function postInvite()
+//    {
+//        \Mail::send('emails.vet-verify',
+//            array(
+//                'confirmation_code' => $this->authUser->confirmation_code
+//            ),
+//            function ($message) {
+//                $message->to(\Input::get('email_address'))
+//                    ->subject($this->authUser->name, 'has invited you to use All Flex');
+//            });
+//        \Session::flash('message', 'Verification email sent');
+//        return \Redirect::route('user.dashboard');
+//    }
 
     public function postResetAverageTemperature($id)
     {
-        if (\DB::table('sensor_readings')->where('animal_id', '=', $id)->update(array('average' => 0))) {
+        if (SensorReading::where('animal_id', '=', $id)->update(array('average' => 0))) {
             return \Redirect::route('user.dashboard')->with('success', 'Average temperature reset');
         }
         return \Redirect::route('user.dashboard')->with('error', 'There was a problem with your request');
@@ -110,7 +112,7 @@ class DashboardController extends \BaseController
     {
         $input = \Input::all();
         $id = $this->authUser->id;
-        $validator = $this->user->getUpdateValidator($input, $id);
+        $validator = $this->userRepository->getUpdateValidator($input, $id);
         if ($validator->fails()) {
             return \Redirect::route('user.dashboard.settings')
                 ->withErrors($validator)
@@ -153,7 +155,15 @@ class DashboardController extends \BaseController
     public function postUpdatePet($id)
     {
         $this->animalRepository->setUser($this->authUser);
-        $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+        if(Breed::where('name', '=', \Input::get('breed_id'))->first())
+        {
+            $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+        }
+        else
+        {
+            return \Redirect::route('user.dashboard')->with('error', \Input::get('breed_id') . ' is not a valid breed');
+        }
+
         \Input::merge(array('breed_id' => $breed_id->id));
         if($this->authUser->weight_units == "LBS") {
 
@@ -173,7 +183,7 @@ class DashboardController extends \BaseController
         $animal = $this->animalRepository->get($id);
         $id = $this->authUser->id;
         if ($animal->vet_id != null) {
-            \DB::table('animal_requests')->insert(
+            Request::insert(
                 ['vet_id' => $animal->vet_id, 'user_id' => $id, 'animal_id' => $animal->id, 'approved' => 1]
             );
         }
@@ -223,7 +233,7 @@ class DashboardController extends \BaseController
 
     public function getSymptomRemove($reading_id, $id)
     {
-        if (\DB::table('sensor_reading_symptoms')->where('reading_id', '=', $reading_id)->where('symptom_id', '=', $id)->delete()) {
+        if (SensorReadingSymptom::where('reading_id', '=', $reading_id)->where('symptom_id', '=', $id)->delete()) {
             return \Redirect::route('user.dashboard')->with('success', 'Symptom removed');
         }
         return \Redirect::route('user.dashboard')->with('error', 'There was a problem with your request');
@@ -279,7 +289,14 @@ class DashboardController extends \BaseController
     public function postCreatePet()
     {
         $this->animalRepository->setUser($this->authUser);
-        $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+        if(Breed::where('name', '=', \Input::get('breed_id'))->first())
+        {
+            $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+        }
+        else
+        {
+            return \Redirect::route('user.dashboard')->with('error', \Input::get('breed_id') . ' is not a valid breed');
+        }
         \Input::merge(array('breed_id' => $breed_id->id));
         $input = \Input::all();
         $validator = $this->animalRepository->getCreateValidator($input);
@@ -327,8 +344,8 @@ class DashboardController extends \BaseController
     {
         $this->animalRepository->setUser($this->authUser);
         $this->animalRepository->delete($id);
-        \DB::table('animal_requests')->where('animal_id', '=', $id)->delete();
-        \DB::table('sensor_readings')->where('animal_id', '=', $id)->delete();
+        Request::where('animal_id', '=', $id)->delete();
+        SensorReading::where('animal_id', '=', $id)->delete();
         return \Redirect::route('user.dashboard')->with('message', 'Pet deleted');
     }
 
@@ -424,16 +441,16 @@ class DashboardController extends \BaseController
     {
         $id = $this->authUser->id;
         $this->animalRepository->setUser($this->authUser);
-        $requests = \DB::table('animal_requests')->where('user_id', '=', $id)->get();
+        $requests = Request::where('user_id', '=', $id)->get();
         $animals = $this->animalRepository->all();
-        $vets = \DB::table('vets')->get();
+        $vets = Vet::all();
         return \View::make('user.vet')->with(array('pets' => $animals, 'vets' => $vets, 'requests' => $requests));
     }
 
     public function postVet()
     {
         $vetSearch = \Input::get('vet-search');
-        $vets = \DB::table('vets')->where('company_name', 'LIKE', '%' . $vetSearch . '%')->get();
+        $vets = Vet::where('company_name', 'LIKE', '%' . $vetSearch . '%')->get();
         var_dump('Search results');
         foreach ($vets as $vet) {
             var_dump($vet->company_name);
@@ -446,7 +463,7 @@ class DashboardController extends \BaseController
         $this->animalRepository->setUser($this->authUser);
         $animals = $this->animalRepository->all();
         foreach ($animals as $animal) {
-            \DB::table('animal_requests')->insert(
+            Request::insert(
                 ['vet_id' => $id, 'user_id' => $userid, 'animal_id' => $animal->id, 'approved' => 1]
             );
         }
@@ -456,7 +473,7 @@ class DashboardController extends \BaseController
     public function getRemoveVet($id)
     {
         $userid = $this->authUser->id;
-        if (\DB::table('animal_requests')->where('user_id', '=', $userid)->where('vet_id', '=', $id)->delete()) {
+        if (Request::where('user_id', '=', $userid)->where('vet_id', '=', $id)->delete()) {
             return \Redirect::route('user.dashboard.vet')->with('success', 'Vet removed');
         }
         return \Redirect::route('user.dashboard.vet')->with('error', 'There was a problem with your request');
@@ -464,7 +481,7 @@ class DashboardController extends \BaseController
 
     public function getActivatepet($id)
     {
-        if (\DB::table('animal_requests')->where('animal_request_id', '=', $id)->update(array('approved' => 1))) {
+        if (Request::where('animal_request_id', '=', $id)->update(array('approved' => 1))) {
             return \Redirect::route('user.dashboard.vet')->with('success', 'Pet activated');
         }
         return \Redirect::route('user.dashboard.vet')->with('error', 'There was a problem with your request');
@@ -472,7 +489,7 @@ class DashboardController extends \BaseController
 
     public function getDeactivatepet($id)
     {
-        if (\DB::table('animal_requests')->where('animal_request_id', '=', $id)->update(array('approved' => 0))) {
+        if (Request::where('animal_request_id', '=', $id)->update(array('approved' => 0))) {
             return \Redirect::route('user.dashboard.vet')->with('success', 'Pet deactivated');
         }
         return \Redirect::route('user.dashboard.vet')->with('error', 'There was a problem with your request');

@@ -58,7 +58,15 @@ class PetRegisterController extends \BaseController
 
         }
 
-        $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+        if(Breed::where('name', '=', \Input::get('breed_id'))->first())
+        {
+            $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+        }
+        else
+        {
+            return \Redirect::route('user.register.pet.create')->with('error', \Input::get('breed_id') . ' is not a valid breed');
+        }
+
         \Input::merge(array('breed_id' => $breed_id->id));
 
         $input = \Input::all();
@@ -66,7 +74,7 @@ class PetRegisterController extends \BaseController
 
         if($validator->fails())
         {
-            return \Redirect::to('pet/register/pet/create')
+            return \Redirect::route('user.register.pet.create')
                 ->withErrors($validator);
         }
 

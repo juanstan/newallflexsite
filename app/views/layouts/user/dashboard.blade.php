@@ -29,7 +29,7 @@
   @include('layouts/core/javascript')
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script>
-        $( "#breedList" ).autocomplete({
+        $('.breed-list').autocomplete({
             source: '/user/register/pet/breeds',
             minLength:1,
         });

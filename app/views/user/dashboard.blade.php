@@ -374,9 +374,9 @@
 
                                     <div class="col-sm-10">
                                         @if(isset($animal->breed_id))
-                                            {{ Form::text('breed_id', $animal->breed->name, array('class' => 'form-control text-left', 'id' => 'breedList')) }}
+                                            {{ Form::text('breed_id', $animal->breed->name, array('class' => 'form-control text-left breed-list', 'id' => 'breedList' . $animal->id )) }}
                                         @else
-                                            {{ Form::text('breed_id', '', array('class' => 'form-control text-left', 'id' => 'breedList')) }}
+                                            {{ Form::text('breed_id', '', array('class' => 'form-control text-left breed-list', 'id' => 'breedList' . $animal->id )) }}
                                         @endif
                                     </div>
                                 </div>
@@ -527,7 +527,7 @@
 
                                 <div class="col-sm-9">
 
-                                    {{ Form::text('breed_id', '', array('class' => 'form-control text-left', 'id' => 'createBreedList')) }}
+                                    {{ Form::text('breed_id', '', array('class' => 'form-control text-left breed-list')) }}
 
                                 </div>
                             </div>
