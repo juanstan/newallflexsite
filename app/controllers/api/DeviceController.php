@@ -9,20 +9,20 @@ class DeviceController extends \BaseController
 
     protected $authUser;
 
-    protected $repository;
+    protected $deviceRepository;
 
-    public function __construct(DeviceRepositoryInterface $repository)
+    public function __construct(DeviceRepositoryInterface $deviceRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->repository = $repository;
+        $this->deviceRepository = $deviceRepository;
     }
 
     public function index()
     {
-        $this->repository->setUser($this->authUser);
+        $this->deviceRepository->setUser($this->authUser);
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->all()]);
+            'result' => $this->deviceRepository->all()]);
     }
 
     /**
@@ -32,17 +32,17 @@ class DeviceController extends \BaseController
      */
     public function store() // POST
     {
-        $this->repository->setUser($this->authUser);
+        $this->deviceRepository->setUser($this->authUser);
 
         $input = \Input::all();
-        $validator = $this->repository->getCreateValidator($input);
+        $validator = $this->deviceRepository->getCreateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        $animal = $this->repository->create($input);
+        $animal = $this->deviceRepository->create($input);
 
         if ($animal == null) {
             \App::abort(500);
@@ -61,10 +61,10 @@ class DeviceController extends \BaseController
      */
     public function show($id) // GET
     {
-        $this->repository->setUser($this->authUser);
+        $this->deviceRepository->setUser($this->authUser);
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->deviceRepository->get($id)]);
     }
 
 
@@ -76,22 +76,22 @@ class DeviceController extends \BaseController
      */
     public function update($id) // PUT
     {
-        $this->repository->setUser($this->authUser);
+        $this->deviceRepository->setUser($this->authUser);
 
         $input = \Input::all();
-        $validator = $this->repository->getUpdateValidator($input);
+        $validator = $this->deviceRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        if ($this->repository->update($id, $input) == false) {
+        if ($this->deviceRepository->update($id, $input) == false) {
             \App::abort(500);
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->deviceRepository->get($id)]);
     }
 
 

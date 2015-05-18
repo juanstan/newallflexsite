@@ -12,12 +12,12 @@ use Facebook\FacebookRequestException;
 class TwitterController extends \BaseController
 {
 
-    protected $user;
+    protected $userRepository;
 
-    public function __construct(UserRepositoryInterface $user)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->user = $user;
+        $this->userRepository = $userRepository;
         $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth', array('only' => array('getIndex', 'getNew', 'postNew')));
     }
@@ -61,11 +61,11 @@ class TwitterController extends \BaseController
 
                 $profile->save();
 
-                $user = $profile->user;
+                $user = $profile->userRepository;
 
                 \Auth::user()->login($user);
 
-                if (\Auth::user()->get()->first_name != null) {
+                if ($this->authUser->first_name != null) {
                     return \Redirect::route('user.dashboard')->with('message', 'Logged in with Twitter');
                 } else {
                     return \Redirect::route('user.register.about')->with('message', 'Logged in with Twitter');
@@ -73,7 +73,7 @@ class TwitterController extends \BaseController
 
             } else {
 
-                $user = $profile->user;
+                $user = $profile->userRepository;
 
                 \Auth::user()->login($user);
 

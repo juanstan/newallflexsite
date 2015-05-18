@@ -9,21 +9,20 @@ class PetRegisterController extends \BaseController
 {
 
     protected $authUser;
+    protected $animalRepository;
 
-    protected $repository;
-
-    public function __construct(AnimalRepositoryInterface $repository)
+    public function __construct(AnimalRepositoryInterface $animalRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->repository = $repository;
+        $this->animalRepository = $animalRepository;
         $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth', array('only' => array('getIndex', 'getNew', 'postNew')));
     }
 
     public function getIndex()
     {
-        $this->repository->setUser($this->authUser);
-        $pets = $this->repository->all();
+        $this->animalRepository->setUser($this->authUser);
+        $pets = $this->animalRepository->all();
         return \View::make('usersignup.stage3')->with('pets', $pets);
 
     }
@@ -50,9 +49,9 @@ class PetRegisterController extends \BaseController
     public function postCreate() // POST
     {
 
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        if(\Auth::user()->get()->weight_units == "LBS") {
+        if($this->authUser->weight_units == "LBS") {
 
             $weight = round(\Input::get('weight') * 0.453592, 1);
             \Input::merge(array('weight' => $weight));
@@ -63,7 +62,7 @@ class PetRegisterController extends \BaseController
         \Input::merge(array('breed_id' => $breed_id->id));
 
         $input = \Input::all();
-        $validator = $this->repository->getCreateValidator($input);
+        $validator = $this->animalRepository->getCreateValidator($input);
 
         if($validator->fails())
         {
@@ -71,7 +70,7 @@ class PetRegisterController extends \BaseController
                 ->withErrors($validator);
         }
 
-        $id = \Auth::user()->get()->id;
+        $id = $this->authUser->id;
 
         if (\Input::hasFile('pet-photo')) {
 
@@ -104,7 +103,7 @@ class PetRegisterController extends \BaseController
 
         }
 
-        $animal = $this->repository->create($input);
+        $animal = $this->animalRepository->create($input);
 
         if ($animal == null) {
             \App::abort(500);

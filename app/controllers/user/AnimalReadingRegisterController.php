@@ -10,16 +10,14 @@ class AnimalReadingRegisterController extends \BaseController
 {
 
     protected $authUser;
+    protected $animalReadingRepository;
+    protected $animalRepository;
 
-    protected $repository;
-
-    protected $arepository;
-
-    public function __construct(AnimalReadingRepositoryInterface $repository, AnimalRepositoryInterface $arepository)
+    public function __construct(AnimalReadingRepositoryInterface $animalReadingRepository, AnimalRepositoryInterface $animalRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->repository = $repository;
-        $this->arepository = $arepository;
+        $this->animalReadingRepository = $animalReadingRepository;
+        $this->animalRepository = $animalRepository;
         $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth', array('only' => array('getIndex', 'postAssign', 'postFinish', 'getAssign', 'postAssign')));
     }
@@ -133,8 +131,8 @@ class AnimalReadingRegisterController extends \BaseController
         if (\Agent::isMobile()) {
             return \Redirect::route('user.dashboard');
         }
-        $this->arepository->setUser($this->authUser);
-        $pets = $this->arepository->all();
+        $this->animalRepository->setUser($this->authUser);
+        $pets = $this->animalRepository->all();
         return \View::make('usersignup.stage7')->with(array('pets' => $pets));
     }
 

@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class VetAuthController extends \BaseController
 {
 
-    protected $user;
+    protected $vetRepository;
 
-    public function __construct(VetRepositoryInterface $user)
+    public function __construct(VetRepositoryInterface $vetRepository)
     {
-        $this->user = $user;
+        $this->vetRepository = $vetRepository;
     }
 
     public function postLogin()
     {
         $input = \Input::all();
-        $validator = $this->user->getLoginValidator($input);
+        $validator = $this->vetRepository->getLoginValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true, 'errors' => $validator->messages()]);
@@ -27,26 +27,26 @@ class VetAuthController extends \BaseController
             return \Response::json(['error' => true, 'errors' => ['password' => ['The password is incorrect']]]);
         }
 
-        $user = $this->user->getByEmailForLogin($input['email_address']);
+        $vet = $this->vetRepository->getByEmailForLogin($input['email_address']);
 
-        if ($user->tokens) {
-            foreach ($user->tokens as $token) {
+        if ($vet->tokens) {
+            foreach ($vet->tokens as $token) {
                 $token->delete();
             }
         }
 
-        $token = Token::generate($user);
-        $user->tokens()->save($token);
+        $token = Token::generate($vet);
+        $vet->tokens()->save($token);
 
-        return \Response::json(['error' => false, 'result' => ['token' => $token, 'user' => $user]]);
+        return \Response::json(['error' => false, 'result' => ['token' => $token, 'vet' => $vet]]);
     }
 
     public function postLogout()
     {
         if (\Auth::check()) {
-            $user = \Auth::user();
+            $vet = \Auth::vet();
 
-            foreach ($user->tokens as $token) {
+            foreach ($vet->tokens as $token) {
                 $token->delete();
             }
 

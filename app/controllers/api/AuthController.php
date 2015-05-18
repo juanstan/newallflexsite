@@ -7,17 +7,17 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class AuthController extends \BaseController
 {
 
-    protected $user;
+    protected $userRepository;
 
-    public function __construct(UserRepositoryInterface $user)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->user = $user;
+        $this->userRepository = $userRepository;
     }
 
     public function postLogin()
     {
         $input = \Input::all();
-        $validator = $this->user->getLoginValidator($input);
+        $validator = $this->userRepository->getLoginValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true, 'errors' => $validator->messages()]);
@@ -28,7 +28,7 @@ class AuthController extends \BaseController
 //			return \Response::json(['error' => true, 'errors' => ['password' => ['The password is incorrect']]]);
 //		}
 
-        $user = $this->user->getByEmailForLogin($input['email_address']);
+        $user = $this->userRepository->getByEmailForLogin($input['email_address']);
 
         if ($user->tokens) {
             foreach ($user->tokens as $token) {

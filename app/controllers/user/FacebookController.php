@@ -62,7 +62,7 @@ class FacebookController extends \BaseController
 
             \Auth::user()->login($user);
 
-            if (\Auth::user()->get()->first_name != null) {
+            if ($this->authUser->first_name != null) {
                 return \Redirect::route('user.dashboard')->with('message', 'Logged in with Facebook');
             } else {
                 return \Redirect::route('user.register.about')->with('message', 'Logged in with Facebook');

@@ -8,11 +8,11 @@ class UserController extends \BaseController
 
     protected $authUser;
 
-    protected $repository;
+    protected $userRepository;
 
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->repository = $repository;
+        $this->userRepository = $userRepository;
         $this->authUser = \Auth::user()->get();
     }
 
@@ -24,14 +24,14 @@ class UserController extends \BaseController
     public function store() // POST
     {
         $input = \Input::all();
-        $validator = $this->repository->getCreateValidator($input);
+        $validator = $this->userRepository->getCreateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        $user = $this->repository->create($input);
+        $user = $this->userRepository->create($input);
 
         if ($user == null) {
             \App::abort(500);
@@ -52,7 +52,7 @@ class UserController extends \BaseController
 
         if ($this->authUser->id != $id) return \Response::json(['error' => true, 'message' => \Lang::get('error.http.403')], 403);
         return \Response::json(['error' => false,
-            'result' => $this->repository->getUserDetails($id)]);
+            'result' => $this->userRepository->getUserDetails($id)]);
     }
 
     /**
@@ -66,19 +66,19 @@ class UserController extends \BaseController
 
         if ($this->authUser->id != $id) return \Response::json(['error' => true, 'message' => \Lang::get('error.http.403')], 403);
         $input = \Input::all();
-        $validator = $this->repository->getUpdateValidator($input);
+        $validator = $this->userRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        if ($this->repository->update($id, $input) == false) {
+        if ($this->userRepository->update($id, $input) == false) {
             \App::abort(500);
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->userRepository->get($id)]);
     }
 
     /**
@@ -92,7 +92,7 @@ class UserController extends \BaseController
 
         if ($this->authUser->id != $id) return \Response::json(['error' => true, 'message' => \Lang::get('error.http.403')], 403);
 
-        $this->repository->delete($id);
+        $this->userRepository->delete($id);
 
         return \Response::json(['error' => false]);
     }

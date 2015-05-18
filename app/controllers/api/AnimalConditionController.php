@@ -9,28 +9,28 @@ class AnimalConditionController extends \BaseController
 
     protected $authUser;
 
-    protected $repository;
+    protected $animalConditionRepository;
 
-    protected $arepository;
+    protected $animalRepository;
 
-    public function __construct(AnimalConditionRepositoryInterface $repository, AnimalRepositoryInterface $arepository)
+    public function __construct(AnimalConditionRepositoryInterface $animalConditionRepository, AnimalRepositoryInterface $animalRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->repository = $repository;
-        $this->arepository = $arepository;
+        $this->animalConditionRepository = $animalConditionRepository;
+        $this->animalRepository = $animalRepository;
     }
 
     public function index($animal_id)
     {
 
-        $this->arepository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->arepository->get($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
-        $this->repository->setAnimal($animal);
+        $this->animalConditionRepository->setAnimal($animal);
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->all()]);
+            'result' => $this->animalConditionRepository->all()]);
 
     }
 
@@ -42,15 +42,15 @@ class AnimalConditionController extends \BaseController
     public function store($animal_id) // POST
     {
 
-        $this->arepository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->arepository->get($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
-        $this->repository->setAnimal($animal);
+        $this->animalConditionRepository->setAnimal($animal);
 
         $input = \Input::all();
         $input['animal_id'] = $animal_id;
-        $validator = $this->repository->getCreateValidator($input);
+        $validator = $this->animalConditionRepository->getCreateValidator($input);
 
 
         if ($validator->fails()) {
@@ -58,7 +58,7 @@ class AnimalConditionController extends \BaseController
                 'errors' => $validator->messages()], 400);
         }
 
-        $reading = $this->repository->create($input);
+        $reading = $this->animalConditionRepository->create($input);
 
         if ($reading == null) {
             \App::abort(500);
@@ -78,14 +78,14 @@ class AnimalConditionController extends \BaseController
      */
     public function show($animal_id, $id) // GET
     {
-        $this->arepository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->arepository->get($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
-        $this->repository->setAnimal($animal);
+        $this->animalConditionRepository->setAnimal($animal);
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->animalConditionRepository->get($id)]);
     }
 
 
@@ -98,26 +98,26 @@ class AnimalConditionController extends \BaseController
     public function update($animal_id, $id) // PUT
     {
 
-        $this->arepository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->arepository->get($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
-        $this->repository->setAnimal($animal);
+        $this->animalConditionRepository->setAnimal($animal);
 
         $input = \Input::all();
-        $validator = $this->repository->getUpdateValidator($input);
+        $validator = $this->animalConditionRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        if ($this->repository->update($id, $input) == false) {
+        if ($this->animalConditionRepository->update($id, $input) == false) {
             \App::abort(500);
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->animalConditionRepository->get($id)]);
     }
 
 
@@ -129,13 +129,13 @@ class AnimalConditionController extends \BaseController
      */
     public function destroy($animal_id, $id) // DELETE
     {
-        $this->arepository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->arepository->get($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
-        $this->repository->setAnimal($animal);
+        $this->animalConditionRepository->setAnimal($animal);
 
-        $this->repository->delete($id);
+        $this->animalConditionRepository->delete($id);
         return \Response::json(['error' => false]);
     }
 

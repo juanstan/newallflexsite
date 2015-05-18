@@ -7,13 +7,13 @@ use Repositories\UserRepositoryInterface;
 class RegisterController extends \BaseController
 {
 
-    protected $user;
+    protected $userRepository;
     protected $authUser;
 
-    public function __construct(UserRepositoryInterface $user)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->user = $user;
+        $this->userRepository = $userRepository;
         $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth', array('only' => array('getAbout', 'putAbout')));
     }
@@ -27,8 +27,8 @@ class RegisterController extends \BaseController
     {
 
         $input = \Input::all();
-        $id = \Auth::user()->get()->id;
-        $validator = $this->user->getUpdateValidator($input, $id);
+        $id = $this->authUser->id;
+        $validator = $this->userRepository->getUpdateValidator($input, $id);
 
         if ($validator->fails()) {
             return \Redirect::route('user.register.about')
@@ -64,7 +64,7 @@ class RegisterController extends \BaseController
 
         }
 
-        if ($this->user->update($this->authUser->id, $input) == false) {
+        if ($this->userRepository->update($this->authUser->id, $input) == false) {
             \App::abort(500);
         }
 

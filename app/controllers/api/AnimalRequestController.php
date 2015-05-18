@@ -8,26 +8,26 @@ class AnimalRequestController extends \BaseController
 {
 
     protected $authUser;
+    protected $animalRepository;
+    protected $animalRequestRepository;
 
-    protected $repository;
-
-    public function __construct(AnimalRequestRepositoryInterface $repository, AnimalRepositoryInterface $arepository)
+    public function __construct(AnimalRequestRepositoryInterface $animalRequestRepository, AnimalRepositoryInterface $animalRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->repository = $repository;
+        $this->animalRequestRepository = $animalRequestRepository;
     }
 
     public function index($vet_id)
     {
 
-        $this->arepository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->arepository->get($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
-        $this->repository->setAnimal($animal);
+        $this->animalRequestRepository->setAnimal($animal);
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->all()]);
+            'result' => $this->animalRequestRepository->all()]);
 
     }
 
@@ -39,17 +39,17 @@ class AnimalRequestController extends \BaseController
     public function store() // POST
     {
 
-        $this->repository->setUser($this->authUser);
+        $this->animalRequestRepository->setUser($this->authUser);
 
         $input = \Input::all();
-        $validator = $this->repository->getCreateValidator($input);
+        $validator = $this->animalRequestRepository->getCreateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        $animal = $this->repository->create($input);
+        $animal = $this->animalRequestRepository->create($input);
 
         if ($animal == null) {
             \App::abort(500);
@@ -70,10 +70,10 @@ class AnimalRequestController extends \BaseController
     {
 
 
-        $this->repository->setUser($this->authUser);
+        $this->animalRequestRepository->setUser($this->authUser);
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->animalRequestRepository->get($id)]);
     }
 
 
@@ -85,22 +85,22 @@ class AnimalRequestController extends \BaseController
      */
     public function update($id) // PUT
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRequestRepository->setUser($this->authUser);
 
         $input = \Input::all();
-        $validator = $this->repository->getUpdateValidator($input);
+        $validator = $this->animalRequestRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        if ($this->repository->update($id, $input) == false) {
+        if ($this->animalRequestRepository->update($id, $input) == false) {
             \App::abort(500);
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->animalRequestRepository->get($id)]);
     }
 
 
@@ -112,33 +112,33 @@ class AnimalRequestController extends \BaseController
      */
     public function destroy($id) // DELETE
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRequestRepository->setUser($this->authUser);
 
-        $this->repository->delete($id);
+        $this->animalRequestRepository->delete($id);
         return \Response::json(['error' => false]);
     }
 
     public function approveRequest($id)
     {
 
-        $this->repository->setUser($this->authUser);
+        $this->animalRequestRepository->setUser($this->authUser);
 
-        $this->repository->get($id);
+        $this->animalRequestRepository->get($id);
 
         $input = \Input::all();
-        $validator = $this->repository->getApprovalValidator($input);
+        $validator = $this->animalRequestRepository->getApprovalValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        if ($this->repository->update($id, $input) == false) {
+        if ($this->animalRequestRepository->update($id, $input) == false) {
             \App::abort(500);
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->animalRequestRepository->get($id)]);
     }
 
 

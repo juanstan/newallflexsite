@@ -8,13 +8,12 @@ class VetRequestController extends \BaseController
 {
 
     protected $authUser;
-
     protected $repository;
 
-    public function __construct(VetRequestRepositoryInterface $repository)
+    public function __construct(VetRequestRepositoryInterface $vetRequestRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->repository = $repository;
+        $this->vetRequestRepository = $vetRequestRepository;
     }
 
 
@@ -26,17 +25,17 @@ class VetRequestController extends \BaseController
     public function store() // POST
     {
 
-        $this->repository->setUser($this->authUser);
+        $this->vetRequestRepository->setUser($this->authUser);
 
         $input = \Input::all();
-        $validator = $this->repository->getCreateValidator($input);
+        $validator = $this->vetRequestRepository->getCreateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        $animal = $this->repository->create($input);
+        $animal = $this->vetRequestRepository->create($input);
 
         if ($animal == null) {
             \App::abort(500);
@@ -57,10 +56,10 @@ class VetRequestController extends \BaseController
     {
 
 
-        $this->repository->setUser($this->authUser);
+        $this->vetRequestRepository->setUser($this->authUser);
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->vetRequestRepository->get($id)]);
     }
 
 
@@ -72,22 +71,22 @@ class VetRequestController extends \BaseController
      */
     public function update($id) // PUT
     {
-        $this->repository->setUser($this->authUser);
+        $this->vetRequestRepository->setUser($this->authUser);
 
         $input = \Input::all();
-        $validator = $this->repository->getUpdateValidator($input);
+        $validator = $this->vetRequestRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        if ($this->repository->update($id, $input) == false) {
+        if ($this->vetRequestRepository->update($id, $input) == false) {
             \App::abort(500);
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->vetRequestRepository->get($id)]);
     }
 
 
@@ -99,9 +98,9 @@ class VetRequestController extends \BaseController
      */
     public function destroy($id) // DELETE
     {
-        $this->repository->setUser($this->authUser);
+        $this->vetRequestRepository->setUser($this->authUser);
 
-        $this->repository->delete($id);
+        $this->vetRequestRepository->delete($id);
         return \Response::json(['error' => false]);
     }
 

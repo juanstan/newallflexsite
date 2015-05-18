@@ -10,16 +10,16 @@ class VetRegisterController extends \BaseController
 {
 
     protected $authUser;
-    protected $user;
-    protected $vet;
-    protected $repository;
+    protected $userRepository;
+    protected $vetRepository;
+    protected $animalRepository;
 
-    public function __construct(UserRepositoryInterface $user, AnimalRepositoryInterface $repository, VetRepositoryInterface $vet)
+    public function __construct(UserRepositoryInterface $userRepository, AnimalRepositoryInterface $animalRepository, VetRepositoryInterface $vetRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->repository = $repository;
-        $this->vet = $vet;
-        $this->user = $user;
+        $this->animalRepository = $animalRepository;
+        $this->vetRepository = $vetRepository;
+        $this->userRepository = $userRepository;
         $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth', array('only' => array('getIndex', 'getAdd', 'postNew')));
     }
@@ -32,15 +32,15 @@ class VetRegisterController extends \BaseController
 
     public function getAdd()
     {
-        $vets = $this->vet->all();
+        $vets = $this->vetRepository->all();
         return \View::make('usersignup.stage5')->with('vets', $vets);
     }
 
     public function postAdd($id) // PUT
     {
-        $this->repository->setUser($this->authUser);
-        $userid = \Auth::user()->get()->id;
-        $pets = $this->repository->all();
+        $this->animalRepository->setUser($this->authUser);
+        $userid = $this->authUser->id;
+        $pets = $this->animalRepository->all();
         foreach ($pets as $pet) {
             \DB::table('animal_requests')->insert(
                 ['vet_id' => $id, 'user_id' => $userid, 'animal_id' => $pet->id, 'approved' => 1]

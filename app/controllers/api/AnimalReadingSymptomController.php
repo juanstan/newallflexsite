@@ -10,31 +10,31 @@ class AnimalReadingSymptomController extends \BaseController
 
     protected $authUser;
 
-    protected $rrepository;
+    protected $animalReadingRepository;
 
-    protected $arepository;
+    protected $animalRepository;
 
-    protected $repository;
+    protected $animalReadingSymptomRepository;
 
-    public function __construct(AnimalReadingRepositoryInterface $rrepository, AnimalRepositoryInterface $arepository, AnimalReadingSymptomRepositoryInterface $repository)
+    public function __construct(AnimalReadingRepositoryInterface $animalReadingRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->repository = $repository;
-        $this->arepository = $arepository;
-        $this->rrepository = $rrepository;
+        $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
+        $this->animalRepository = $animalRepository;
+        $this->animalReadingRepository = $animalReadingRepository;
     }
 
     public function index($animal_id, $reading_id)
     {
 
-        $this->arepository->setUser($this->authUser);
-        $animal = $this->arepository->get($animal_id);
-        $this->rrepository->setAnimal($animal);
-        $reading = $this->rrepository->get($reading_id);
-        $this->repository->setReading($reading);
+        $this->animalRepository->setUser($this->authUser);
+        $animal = $this->animalRepository->get($animal_id);
+        $this->animalReadingRepository->setAnimal($animal);
+        $reading = $this->animalReadingRepository->get($reading_id);
+        $this->animalReadingSymptomRepository->setReading($reading);
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->all()]);
+            'result' => $this->animalReadingSymptomRepository->all()]);
 
     }
 
@@ -46,19 +46,19 @@ class AnimalReadingSymptomController extends \BaseController
     public function store($animal_id, $reading_id) // POST
     {
 
-        $this->arepository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->arepository->get($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
-        $this->rrepository->setAnimal($animal);
+        $this->animalReadingRepository->setAnimal($animal);
 
-        $reading = $this->rrepository->get($reading_id);
+        $reading = $this->animalReadingRepository->get($reading_id);
 
-        $this->repository->setReading($reading);
+        $this->animalReadingSymptomRepository->setReading($reading);
 
         $input = \Input::all();
         $input['reading_id'] = $reading_id;
-        $validator = $this->repository->getCreateValidator($input);
+        $validator = $this->animalReadingSymptomRepository->getCreateValidator($input);
 
 
         if ($validator->fails()) {
@@ -66,7 +66,7 @@ class AnimalReadingSymptomController extends \BaseController
                 'errors' => $validator->messages()], 400);
         }
 
-        $reading = $this->repository->create($input);
+        $reading = $this->animalReadingSymptomRepository->create($input);
 
         if ($reading == null) {
             \App::abort(500);
@@ -86,18 +86,18 @@ class AnimalReadingSymptomController extends \BaseController
      */
     public function show($animal_id, $reading_id, $id) // GET
     {
-        $this->arepository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->arepository->get($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
-        $this->rrepository->setAnimal($animal);
+        $this->animalReadingRepository->setAnimal($animal);
 
-        $reading = $this->rrepository->get($reading_id);
+        $reading = $this->animalReadingRepository->get($reading_id);
 
-        $this->repository->setReading($reading);
+        $this->animalReadingSymptomRepository->setReading($reading);
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->animalReadingSymptomRepository->get($id)]);
     }
 
 
@@ -110,31 +110,31 @@ class AnimalReadingSymptomController extends \BaseController
     public function update($animal_id, $reading_id, $id) // PUT
     {
 
-        $this->arepository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->arepository->get($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
-        $this->rrepository->setAnimal($animal);
+        $this->animalReadingRepository->setAnimal($animal);
 
-        $reading = $this->rrepository->get($reading_id);
+        $reading = $this->animalReadingRepository->get($reading_id);
 
-        $this->repository->setReading($reading);
+        $this->animalReadingSymptomRepository->setReading($reading);
 
         $input = \Input::all();
 
-        $validator = $this->repository->getUpdateValidator($input);
+        $validator = $this->animalReadingSymptomRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        if ($this->repository->update($id, $input) == false) {
+        if ($this->animalReadingSymptomRepository->update($id, $input) == false) {
             \App::abort(500);
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->animalReadingSymptomRepository->get($id)]);
     }
 
 
@@ -147,17 +147,17 @@ class AnimalReadingSymptomController extends \BaseController
     public function destroy($animal_id, $reading_id, $id) // DELETE
     {
 
-        $this->arepository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->arepository->get($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
-        $this->rrepository->setAnimal($animal);
+        $this->animalReadingRepository->setAnimal($animal);
 
-        $reading = $this->rrepository->get($reading_id);
+        $reading = $this->animalReadingRepository->get($reading_id);
 
-        $this->repository->setReading($reading);
+        $this->animalReadingSymptomRepository->setReading($reading);
 
-        $this->repository->deleteBySymptomIdForReading($reading_id, $id);
+        $this->animalReadingSymptomRepository->deleteBySymptomIdForReading($reading_id, $id);
         return \Response::json(['error' => false]);
     }
 

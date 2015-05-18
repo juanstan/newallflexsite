@@ -6,14 +6,13 @@ use Repositories\UserRepositoryInterface;
 
 class VetRegisterController extends \BaseController {
     
-    protected $authUser;
-    
-	protected $repository;
+    protected $authVet;
+	protected $vetRepository;
 
-	public function __construct(VetRepositoryInterface $repository)
+	public function __construct(VetRepositoryInterface $vetRepository)
 	{
-		$this->authUser = \Auth::user();
-        $this->repository = $repository;
+		$this->authVet = \Auth::vet()->get();
+        $this->vetRepository = $vetRepository;
         $this->beforeFilter('csrf', array('on'=>'post'));
         $this->beforeFilter('vetAuth', array('only'=>array('getIndex', 'getAdd', 'postNew')));
 	}
@@ -25,7 +24,7 @@ class VetRegisterController extends \BaseController {
     
     public function getAdd()
     { 
-        $vets = $this->repository->all();
+        $vets = $this->vetRepository->all();
         return \View::make('usersignup.stage5')->with('vets', $vets);
     }
     
@@ -37,7 +36,7 @@ class VetRegisterController extends \BaseController {
 	public function store() // POST
 	{
 		$input = \Input::all();
-		$validator = $this->repository->getCreateValidator($input);
+		$validator = $this->vetRepository->getCreateValidator($input);
 
 		if($validator->fails())
 		{
@@ -45,7 +44,7 @@ class VetRegisterController extends \BaseController {
 				'errors' => $validator->messages()], 400);
 		}
 
-		$user = $this->repository->create($input);
+		$user = $this->vetRepository->create($input);
 
 		if($user == null)
 		{
@@ -65,7 +64,7 @@ class VetRegisterController extends \BaseController {
 	public function show($id) // GET
 	{
 		return \Response::json(['error' => false,
-			'result' => $this->repository->getVetDetails($id)]);
+			'result' => $this->vetRepository->getVetDetails($id)]);
 	}
 
 	/**
@@ -77,7 +76,7 @@ class VetRegisterController extends \BaseController {
 	public function update($id) // PUT
 	{
 		$input = \Input::all();
-		$validator = $this->repository->getUpdateValidator($input);
+		$validator = $this->vetRepository->getUpdateValidator($input);
 
 		if($validator->fails())
 		{
@@ -85,13 +84,13 @@ class VetRegisterController extends \BaseController {
 				'errors' => $validator->messages()], 400);
 		}
 
-		if($this->repository->update($id, $input) == false)
+		if($this->vetRepository->update($id, $input) == false)
 		{
 			\App::abort(500);
 		}
 
 		return \Response::json(['error' => false,
-			'result' => $this->repository->get($id)]);
+			'result' => $this->vetRepository->get($id)]);
 	}
 
 	/**
@@ -102,7 +101,7 @@ class VetRegisterController extends \BaseController {
 	 */
 	public function destroy($id) // DELETE
 	{
-		$this->repository->delete($id);
+		$this->vetRepository->delete($id);
 
 		return \Response::json(['error' => false]);
 	}

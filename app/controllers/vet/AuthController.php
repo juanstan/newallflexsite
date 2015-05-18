@@ -14,18 +14,18 @@ use League\Csv\Reader;
 
 class AuthController extends \BaseController {
 
-	protected $user;
-    protected $repository;
-    protected $rrepository;
-    protected $srepository;
+	protected $vetRepository;
+    protected $animalRepository;
+    protected $animalReadingRepository;
+    protected $animalReadingSymptomRepository;
 
-	public function __construct(VetRepositoryInterface $user, AnimalRepositoryInterface $repository, AnimalReadingRepositoryInterface $rrepository, AnimalReadingSymptomRepositoryInterface $srepository)
+	public function __construct(VetRepositoryInterface $vetRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
 	{
-        $this->authUser = \Auth::vet()->get();
-		$this->user = $user;
-        $this->rrepository = $rrepository;
-        $this->repository = $repository;
-        $this->srepository = $srepository;
+        $this->authVet = \Auth::vet()->get();
+		$this->vetRepository = $vetRepository;
+        $this->animalReadingRepository = $animalReadingRepository;
+        $this->animalRepository = $animalRepository;
+        $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
         $this->beforeFilter('csrf', array('on'=>'post'));
         $this->beforeFilter('vetAuth', array('only'=>array('getLogout')));
        
@@ -49,7 +49,7 @@ class AuthController extends \BaseController {
         \Input::merge(array('confirmation_code' => $confirmation_code, 'units' => 'F'));
         $input = \Input::all();
 
-        $validator = $this->user->getCreateValidator($input);
+        $validator = $this->vetRepository->getCreateValidator($input);
 
         if($validator->fails())
         {
@@ -65,23 +65,23 @@ class AuthController extends \BaseController {
                 ->subject('Verify your email address');
         });
 
-        $user = $this->user->create($input);
+        $vet = $this->vetRepository->create($input);
 
-        if($user == null)
+        if($vet == null)
         {
             \App::abort(500);
         }
         
-        \Auth::vet()->login($user);
+        \Auth::vet()->login($vet);
         
         return \Redirect::route('vet.register.about');
          
     }
 
     public function getResendConfirmation() {
-        $this->repository->setUser($this->authUser);
-        \Mail::send('emails.vet-verify', array('confirmation_code' => \Auth::vet()->get()->confirmation_code), function($message) {
-            $message->to(\Auth::vet()->get()->email_address, 'New user')
+        $this->animalRepository->setUser($this->authVet);
+        \Mail::send('emails.vet-verify', array('confirmation_code' => $this->authVet->confirmation_code), function($message) {
+            $message->to($this->authVet->email_address, 'New vetRepository')
                 ->subject('Verify your email address');
         });
         \Session::flash('message', 'Verification email sent');
@@ -96,17 +96,17 @@ class AuthController extends \BaseController {
             return \Redirect::route('vet');
         }
 
-        $user = Vet::where('confirmation_code', '=', $confirmation_code)->first();
+        $vet = Vet::where('confirmation_code', '=', $confirmation_code)->first();
 
-        if(!$user)
+        if(!$vet)
         {
             \Session::flash('warning', 'Confirmation code invalid');
             return \Redirect::route('vet');
         }
 
-        $user->confirmed = 1;
-        $user->confirmation_code = null;
-        $user->save();
+        $vet->confirmed = 1;
+        $vet->confirmation_code = null;
+        $vet->save();
 
         \Session::flash('success', 'You have successfully verified your account.');
         if (\Auth::vet()->check())
@@ -119,9 +119,7 @@ class AuthController extends \BaseController {
 	public function postLogin()
 	{
 		$input = \Input::all();
-        
-		$validator = $this->user->getLoginValidator($input);
-
+		$validator = $this->vetRepository->getLoginValidator($input);
 		if($validator->fails())
 		{
 			return \Redirect::route('vet')
@@ -129,12 +127,12 @@ class AuthController extends \BaseController {
                 ->withInput(\Input::except('password'));
 		}else {
 
-            $userdata = array(
+            $vetData = array(
                 'email_address' => \Input::get('email_address'),
                 'password' => \Input::get('password')
             );
 
-            if (\Auth::vet()->attempt($userdata)) {
+            if (\Auth::vet()->attempt($vetData)) {
   
                 return \Redirect::route('vet.dashboard');
 
@@ -144,10 +142,10 @@ class AuthController extends \BaseController {
 	}
 
     public function getDelete() {
-        $id =  \Auth::vet()->get()->id;
+        $id =  $this->authVet->id;
         \DB::table('animal_requests')->where('vet_id', '=', $id)->delete();
         \DB::table('vet_readings')->where('vet_id', '=', $id)->delete();
-        \Auth::vet()->get()->delete();
+        $this->authVet->delete();
         return \Redirect::route('vet')->with('success', 'Your account was successfully deleted');
     }
 

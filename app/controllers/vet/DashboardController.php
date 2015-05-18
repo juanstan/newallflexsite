@@ -14,15 +14,15 @@ use League\Csv\Reader;
 
 class DashboardController extends \BaseController {
 
-    protected $vet;
+    protected $vetRepository;
     protected $animalRepository;
     protected $animalReadingRepository;
     protected $animalReadingSymptomRepository;
 
-    public function __construct(VetRepositoryInterface $vet, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
+    public function __construct(VetRepositoryInterface $vetRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
     {
         $this->authVet = \Auth::vet()->get();
-        $this->vet = $vet;
+        $this->vetRepository = $vetRepository;
         $this->animalReadingRepository = $animalReadingRepository;
         $this->animalRepository = $animalRepository;
         $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
@@ -38,7 +38,7 @@ class DashboardController extends \BaseController {
             $requests = Request::where('vet_id', '=', $id)->get();
             $vet = $this->authVet;
             $pets = $this->animalRepository->all();
-            if (\Auth::vet()->get()->confirmed != null) {
+            if ($this->authVet->confirmed != null) {
                 return \View::make('vet.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests, 'vet' => $vet));
             }
             else {
@@ -64,9 +64,9 @@ class DashboardController extends \BaseController {
 
     public function postInvite() {
 
-        \Mail::send('emails.vet-verify', array('confirmation_code' => \Auth::vet()->get()->confirmation_code), function($message) {
+        \Mail::send('emails.vet-verify', array('confirmation_code' => $this->authVet->confirmation_code), function($message) {
             $message->to(\Input::get('email_address'))
-                ->subject(\Auth::vet()->get()->name, 'has invited you to use All Flex');
+                ->subject($this->authVet->name, 'has invited you to use All Flex');
         });
         \Session::flash('message', 'Verification email sent');
         return \Redirect::route('vet.dashboard');
@@ -74,7 +74,7 @@ class DashboardController extends \BaseController {
 
     public function getPet($id) {
         $this->animalRepository->setUser($this->authVet);
-        $Vetid = \Auth::vet()->get()->id;
+        $Vetid = $this->authVet->id;
         $symptoms = Symptom::all();
         $pet = $this->animalRepository->get($id);
         if(Request::where('vet_id', '=', $id)->where('animal_id', '=', $id)->where('approved', '=', 1)->get())
@@ -109,8 +109,8 @@ class DashboardController extends \BaseController {
     public function postSettings()
     {
         $input = \Input::all();
-        $id =  \Auth::vet()->get()->id;
-        $validator = $this->vet->getUpdateValidator($input, $id);
+        $id =  $this->authVet->id;
+        $validator = $this->vetRepository->getUpdateValidator($input, $id);
 
         if($validator->fails())
         {
@@ -175,7 +175,7 @@ class DashboardController extends \BaseController {
             }
         }
 
-        if($this->vet->update($this->authVet->id, $input) == false)
+        if($this->vetRepository->update($this->authVet->id, $input) == false)
         {
             \App::abort(500);
         }
@@ -186,7 +186,7 @@ class DashboardController extends \BaseController {
     public function postReadingUpload()
     {
         $input = \Input::all();
-        $id = \Auth::vet()->get()->id;
+        $id = $this->authVet->id;
         $file = array('file' => \Input::file('file'));
         $rules = array('file' => 'required|max:4000');
         $validator = \Validator::make($file, $rules);

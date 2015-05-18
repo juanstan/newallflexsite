@@ -19,19 +19,19 @@ use League\Csv\Reader;
 class DashboardController extends \BaseController
 {
 
-    protected $user;
-    protected $repository;
-    protected $rrepository;
-    protected $srepository;
+    protected $userRepository;
+    protected $animalRepository;
+    protected $animalReadingRepository;
+    protected $animalReadingSymptomRepository;
 
-    public function __construct(UserRepositoryInterface $user, VetRepositoryInterface $vet, AnimalRepositoryInterface $repository, AnimalReadingRepositoryInterface $rrepository, AnimalReadingSymptomRepositoryInterface $srepository)
+    public function __construct(UserRepositoryInterface $userRepository, VetRepositoryInterface $vet, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->user = $user;
+        $this->userRepository = $userRepository;
         $this->vet = $vet;
-        $this->rrepository = $rrepository;
-        $this->repository = $repository;
-        $this->srepository = $srepository;
+        $this->animalReadingRepository = $animalReadingRepository;
+        $this->animalRepository = $animalRepository;
+        $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
         $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth',
             array(
@@ -54,12 +54,12 @@ class DashboardController extends \BaseController
 
     public function getIndex()
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
         $symptoms = Symptom::all();
         $conditions = Condition::all();
-        $animals = $this->repository->all();
+        $animals = $this->animalRepository->all();
         $breed = Breed::all()->lists('name', 'id');
-        if (\Auth::user()->get()->confirmed != null) {
+        if ($this->authUser->confirmed != null) {
             return \View::make('user.dashboard')->with(array('animals' => $animals, 'conditions' => $conditions, 'symptoms' => $symptoms, 'breed' => $breed));
         } else {
             \Session::flash('not-verified', '');
@@ -87,7 +87,7 @@ class DashboardController extends \BaseController
             ),
             function ($message) {
                 $message->to(\Input::get('email_address'))
-                    ->subject(\Auth::user()->get()->name, 'has invited you to use All Flex');
+                    ->subject($this->authUser->name, 'has invited you to use All Flex');
             });
         \Session::flash('message', 'Verification email sent');
         return \Redirect::route('user.dashboard');
@@ -109,7 +109,7 @@ class DashboardController extends \BaseController
     public function postSettings()
     {
         $input = \Input::all();
-        $id = \Auth::user()->get()->id;
+        $id = $this->authUser->id;
         $validator = $this->user->getUpdateValidator($input, $id);
         if ($validator->fails()) {
             return \Redirect::route('user.dashboard.settings')
@@ -144,7 +144,7 @@ class DashboardController extends \BaseController
                 return \Redirect::route('user.dashboard.settings');
             }
         }
-        if ($this->user->update($this->authUser->id, $input) == false) {
+        if ($this->userRepository->update($this->authUser->id, $input) == false) {
             \App::abort(500);
         }
         return \Redirect::route('user.dashboard')->with('success', 'Settings updated');
@@ -152,26 +152,26 @@ class DashboardController extends \BaseController
 
     public function postUpdatePet($id)
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
         $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
         \Input::merge(array('breed_id' => $breed_id->id));
-        if(\Auth::user()->get()->weight_units == "LBS") {
+        if($this->authUser->weight_units == "LBS") {
 
             $weight = round(\Input::get('weight') * 0.453592, 1);
             \Input::merge(array('weight' => $weight));
 
         }
         $input = \Input::all();
-        $validator = $this->repository->getUpdateValidator($input);
+        $validator = $this->animalRepository->getUpdateValidator($input);
         if ($validator->fails()) {
             return \Redirect::route('user.dashboard')->withInput()
                 ->withErrors($validator);
         }
-        if ($this->repository->update($id, $input) == false) {
+        if ($this->animalRepository->update($id, $input) == false) {
             \App::abort(500);
         }
-        $animal = $this->repository->get($id);
-        $id = \Auth::user()->get()->id;
+        $animal = $this->animalRepository->get($id);
+        $id = $this->authUser->id;
         if ($animal->vet_id != null) {
             \DB::table('animal_requests')->insert(
                 ['vet_id' => $animal->vet_id, 'user_id' => $id, 'animal_id' => $animal->id, 'approved' => 1]
@@ -182,7 +182,7 @@ class DashboardController extends \BaseController
 
     public function postAddConditions($id)
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
         $input = \Input::get('conditions');
         if (is_array($input)) {
             AnimalCondition::where('animal_id', '=', $id)->delete();
@@ -203,7 +203,7 @@ class DashboardController extends \BaseController
 
     public function postAddSymptoms($id)
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
         $input = \Input::get('symptoms');
         if (is_array($input)) {
             SensorReadingSymptom::where('reading_id', '=', $id)->delete();
@@ -232,8 +232,8 @@ class DashboardController extends \BaseController
     public function postUpdatePetPhoto($id)
     {
 
-        $this->repository->setUser($this->authUser);
-        $userid = \Auth::user()->get()->id;
+        $this->animalRepository->setUser($this->authUser);
+        $userid = $this->authUser->id;
         $file = array('image' => \Input::file('pet-photo'));
         $rules = array('image' => '');
         $validator = \Validator::make($file, $rules);
@@ -265,12 +265,12 @@ class DashboardController extends \BaseController
             }
 
             $input['image_path'] = '/uploads/pets/' . $userid . '/' . $fileName;
-            $animal = $this->repository->update($id, $input);
+            $animal = $this->animalRepository->update($id, $input);
             return \Redirect::route('user.dashboard')->with('success', 'Pet updated');
 
         }
 
-        if ($this->repository->update($id, $input) == false) {
+        if ($this->animalRepository->update($id, $input) == false) {
             \App::abort(500);
         }
 
@@ -278,16 +278,16 @@ class DashboardController extends \BaseController
 
     public function postCreatePet()
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
         $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
         \Input::merge(array('breed_id' => $breed_id->id));
         $input = \Input::all();
-        $validator = $this->repository->getCreateValidator($input);
+        $validator = $this->animalRepository->getCreateValidator($input);
         if ($validator->fails()) {
             return \Redirect::route('user.dashboard')
                 ->withErrors($validator);
         }
-        $id = \Auth::user()->get()->id;
+        $id = $this->authUser->id;
         $file = array('image' => \Input::file('pet-photo'));
         $rules = array('image' => 'required|max:4000|mimes:jpeg,png');
         $validator = \Validator::make($file, $rules);
@@ -310,7 +310,7 @@ class DashboardController extends \BaseController
                     \Image::make(\Input::file('pet-photo'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
                 }
                 $input['image_path'] = '/uploads/pets/' . $id . '/' . $fileName;
-                $animal = $this->repository->create($input);
+                $animal = $this->animalRepository->create($input);
                 return \Redirect::route('user.dashboard');
             } else {
                 \Session::flash('error', 'uploaded file is not valid');
@@ -325,8 +325,8 @@ class DashboardController extends \BaseController
 
     public function getRemovePet($id)
     {
-        $this->repository->setUser($this->authUser);
-        $this->repository->delete($id);
+        $this->animalRepository->setUser($this->authUser);
+        $this->animalRepository->delete($id);
         \DB::table('animal_requests')->where('animal_id', '=', $id)->delete();
         \DB::table('sensor_readings')->where('animal_id', '=', $id)->delete();
         return \Redirect::route('user.dashboard')->with('message', 'Pet deleted');
@@ -335,7 +335,7 @@ class DashboardController extends \BaseController
     public function postReadingUpload()
     {
         $input = \Input::all();
-        $id = \Auth::user()->get()->id;
+        $id = $this->authUser->id;
         $file = array('file' => \Input::file('file'));
         $rules = array('file' => 'required|max:4000');
         $validator = \Validator::make($file, $rules);
@@ -393,11 +393,11 @@ class DashboardController extends \BaseController
                     if (empty($animal)) {
                         $animal = new animal();
                         $animal->microchip_number = decoded_microchip_id($row[1]);
-                        $animal->user_id = \Auth::user()->get()->id;
+                        $animal->user_id = $this->authUser->id;
                         $animal->save();
                     }
                     if (empty($animal->user_id)) {
-                        $animal->user_id = \Auth::user()->get()->id;
+                        $animal->user_id = $this->authUser->id;
                         $animal->save();
                     }
                     if (empty($profile)) {
@@ -422,10 +422,10 @@ class DashboardController extends \BaseController
 
     public function getVet()
     {
-        $id = \Auth::user()->get()->id;
-        $this->repository->setUser($this->authUser);
+        $id = $this->authUser->id;
+        $this->animalRepository->setUser($this->authUser);
         $requests = \DB::table('animal_requests')->where('user_id', '=', $id)->get();
-        $animals = $this->repository->all();
+        $animals = $this->animalRepository->all();
         $vets = \DB::table('vets')->get();
         return \View::make('user.vet')->with(array('pets' => $animals, 'vets' => $vets, 'requests' => $requests));
     }
@@ -442,9 +442,9 @@ class DashboardController extends \BaseController
 
     public function getAddVet($id)
     {
-        $userid = \Auth::user()->get()->id;
-        $this->repository->setUser($this->authUser);
-        $animals = $this->repository->all();
+        $userid = $this->authUser->id;
+        $this->animalRepository->setUser($this->authUser);
+        $animals = $this->animalRepository->all();
         foreach ($animals as $animal) {
             \DB::table('animal_requests')->insert(
                 ['vet_id' => $id, 'user_id' => $userid, 'animal_id' => $animal->id, 'approved' => 1]
@@ -455,7 +455,7 @@ class DashboardController extends \BaseController
 
     public function getRemoveVet($id)
     {
-        $userid = \Auth::user()->get()->id;
+        $userid = $this->authUser->id;
         if (\DB::table('animal_requests')->where('user_id', '=', $userid)->where('vet_id', '=', $id)->delete()) {
             return \Redirect::route('user.dashboard.vet')->with('success', 'Vet removed');
         }

@@ -10,20 +10,20 @@ class AnimalController extends \BaseController
 
     protected $authUser;
 
-    protected $repository;
+    protected $animalRepository;
 
-    public function __construct(AnimalRepositoryInterface $repository)
+    public function __construct(AnimalRepositoryInterface $animalRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->repository = $repository;
+        $this->animalRepository = $animalRepository;
     }
 
     public function index()
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->all()]);
+            'result' => $this->animalRepository->all()]);
     }
 
     /**
@@ -33,17 +33,17 @@ class AnimalController extends \BaseController
      */
     public function store() // POST
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
         $input = \Input::all();
-        $validator = $this->repository->getCreateValidator($input);
+        $validator = $this->animalRepository->getCreateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        $animal = $this->repository->create($input);
+        $animal = $this->animalRepository->create($input);
 
         if ($animal == null) {
             \App::abort(500);
@@ -61,10 +61,10 @@ class AnimalController extends \BaseController
      */
     public function show($id) // GET
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->animalRepository->get($id)]);
     }
 
 
@@ -76,22 +76,22 @@ class AnimalController extends \BaseController
      */
     public function update($id) // PUT
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
         $input = \Input::all();
-        $validator = $this->repository->getUpdateValidator($input);
+        $validator = $this->animalRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        if ($this->repository->update($id, $input) == false) {
+        if ($this->animalRepository->update($id, $input) == false) {
             \App::abort(500);
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->repository->get($id)]);
+            'result' => $this->animalRepository->get($id)]);
     }
 
 
@@ -103,9 +103,9 @@ class AnimalController extends \BaseController
      */
     public function destroy($id) // DELETE
     {
-        $this->repository->setUser($this->authUser);
+        $this->animalRepository->setUser($this->authUser);
 
-        $this->repository->delete($id);
+        $this->animalRepository->delete($id);
         return \Response::json(['error' => false]);
     }
 

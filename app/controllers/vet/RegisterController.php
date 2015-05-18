@@ -14,19 +14,19 @@ use League\Csv\Reader;
 
 class RegisterController extends \BaseController {
     
-    protected $user;
-    protected $authUser;
-    protected $repository;
-    protected $rrepository;
-    protected $srepository;
+    protected $vetRepository;
+    protected $authVet;
+    protected $animalRepository;
+    protected $animalReadingRepository;
+    protected $animalReadingSymptomRepository;
 
-	public function __construct(VetRepositoryInterface $user, AnimalRepositoryInterface $repository, AnimalReadingRepositoryInterface $rrepository, AnimalReadingSymptomRepositoryInterface $srepository)
+	public function __construct(VetRepositoryInterface $vetRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
 	{
-        $this->authUser = \Auth::vet()->get();
-        $this->user = $user;
-        $this->rrepository = $rrepository;
-        $this->repository = $repository;
-        $this->srepository = $srepository;
+        $this->authVet = \Auth::vet()->get();
+        $this->vetRepository = $vetRepository;
+        $this->animalReadingRepository = $animalReadingRepository;
+        $this->animalRepository = $animalRepository;
+        $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
         $this->beforeFilter('csrf', array('on'=>'post'));
         $this->beforeFilter('vetAuth', array('only'=>array('getAbout', 'putAbout')));
 	}
@@ -40,8 +40,8 @@ class RegisterController extends \BaseController {
     {
 
         $input = \Input::all();
-        $id =  \Auth::vet()->get()->id;
-        $validator = $this->user->getUpdateValidator($input, $id);
+        $id =  $this->authVet->id;
+        $validator = $this->vetRepository->getUpdateValidator($input, $id);
 
         if($validator->fails())
         {
@@ -75,7 +75,7 @@ class RegisterController extends \BaseController {
 
         }
 
-        if($this->user->update($this->authUser->id, $input) == false)
+        if($this->vetRepository->update($this->authVet->id, $input) == false)
         {
             \App::abort(500);
         }
@@ -92,8 +92,8 @@ class RegisterController extends \BaseController {
     {
 
         $input = \Input::all();
-        $id =  \Auth::vet()->get()->id;
-        $validator = $this->user->getUpdateValidator($input, $id);
+        $id =  $this->authVet->id;
+        $validator = $this->vetRepository->getUpdateValidator($input, $id);
 
         if($validator->fails())
         {
@@ -112,7 +112,7 @@ class RegisterController extends \BaseController {
             $input = array_merge($input, array('latitude' => $latitude, 'longitude' => $longitude));
         }
 
-        if($this->user->update($this->authUser->id, $input) == false)
+        if($this->vetRepository->update($this->authVet->id, $input) == false)
         {
             \App::abort(500);
         }
