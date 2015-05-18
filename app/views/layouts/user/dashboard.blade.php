@@ -7,7 +7,7 @@
     <title></title>
 
       <!-- Stylesheets -->
-      @include('layouts/core/stylesheets')
+      @include('layouts.core.stylesheets')
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -18,39 +18,9 @@
   </head>
     <body>
         <div class="container">
-            <div class="col-md-7 col-centered float-none" >
-                @if(Session::has('success'))
-                    <div class="alert alert-info alert-dismissible" role="alert">
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <strong>{{ Lang::get('general.Success') }}</strong> {{ Session::get('success') }}
-                    </div>
-                @endif
-                @if(Session::has('message'))
-                    <div class="alert alert-warning alert-dismissible" role="alert">
-                      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                      <strong>{{ Lang::get('general.Message') }}</strong> {{ Session::get('message') }}
-                    </div>
-                @endif
-                @if(Session::has('not-verified'))
-                    <div class="alert alert-warning alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 
-                        <strong class="inline-block ">{{ Lang::get('general.Email not yet verified') }}</strong> {{ Lang::get('general.please verify') }}
+            @include('layouts.core.notifications')
 
-                        <a href="{{ URL::route('user.resendConfirmation') }}" >
-                        {{ Form::button(Lang::get('general.Resend confirmation email'), array('class' => 'btn-mobile btn btn-warning btn-sm pull-right border-none', 'style' => 'margin-top: -5px'))}}
-                        </a>
-                    </div>
-                @endif
-                @if($errors->has())
-                   @foreach ($errors->all() as $error)
-                        <div class="alert alert-danger alert-dismissible" role="alert">
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>{{ Lang::get('general.Error') }}</strong> {{ $error }}
-                        </div>
-                  @endforeach
-                @endif
-            </div>
             <nav class="navbar navbar-default" role="navigation">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header" >

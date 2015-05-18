@@ -18,16 +18,9 @@
   </head>
     <body>
         <div class="container">
-            <div class="col-md-8 col-centered float-none" >
-                @if($errors->has())
-                   @foreach ($errors->all() as $error)
-                        <div class="alert alert-warning alert-dismissible" role="alert">
-                          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                          <strong>Error!</strong> {{ $error }}
-                        </div>
-                  @endforeach
-                @endif
-            </div>
+
+            @include('layouts.core.notifications')
+
             <div class="row large-top-buffer" >
                 <div class="col-md-9 col-centered float-none" >
                     <div class="jumbotron text-center" >

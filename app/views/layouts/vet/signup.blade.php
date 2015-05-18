@@ -20,6 +20,9 @@
   </head>
     <body>
         <div class="container">
+
+            @include('layouts.core.notifications')
+
             <div class="row large-top-buffer" >
                 <div class="col-md-9 col-centered float-none" >
                     <div class="jumbotron text-center" >
