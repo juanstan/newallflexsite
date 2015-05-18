@@ -53,7 +53,7 @@
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('county', Lang::get('general.county'), array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('county', Lang::get('general.County'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 

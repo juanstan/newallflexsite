@@ -1,6 +1,6 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/05/18 14:55:36 
+ Generated via "php artisan localization:missing" at 2015/05/14 09:54:07 
 *************************************************************************/
 
 return array (
@@ -57,6 +57,8 @@ return array (
   'Easily share your readings with your vet' => 'Easily share your readings with your vet',
   'Email' => 'Email',
   'Email address' => 'Email address',
+  'Email not yet verified' => 'Email not yet verified',
+  'Error' => 'Error',
   'Fahrenheit' => 'Fahrenheit',
   'Fax number' => 'Fax number',
   'Female' => 'Female',
@@ -80,6 +82,7 @@ return array (
   'Male' => 'Male',
   'Manage <i class="fa fa-angle-right small-left-buffer"></i>' => 'Manage <i class="fa fa-angle-right small-left-buffer"></i>',
   'Map shows approximate location' => 'Map shows approximate location',
+  'Message' => 'Message',
   'My Pets' => 'My Pets',
   'My Readings' => 'My Readings',
   'My Vet' => 'My Vet',
@@ -113,6 +116,7 @@ return array (
   'Recent' => 'Recent',
   'Remove' => 'Remove',
   'Reports' => 'Reports',
+  'Resend confirmation email' => 'Resend confirmation email',
   'Retype password' => 'Retype password',
   'Save changes' => 'Save changes',
   'Scan your pets to see their Microchip numbers on the device to match up above' => 'Scan your pets to see their Microchip numbers on the device to match up above',
@@ -135,6 +139,7 @@ return array (
   'Skip' => 'Skip',
   'Store important vet details for emergencies' => 'Store important vet details for emergencies',
   'Submit' => 'Submit',
+  'Success' => 'Success',
   'Symptoms' => 'Symptoms',
   'Sync via Bluetooth' => 'Sync via Bluetooth',
   'Telephone Number' => 'Telephone Number',
@@ -171,9 +176,11 @@ return array (
   'Zip' => 'Zip',
   'Zip/ postal code' => 'Zip/ postal code',
   'at' => 'at',
+  'county' => 'county',
   'kg' => 'kg',
   'lbs' => 'lbs',
   'new microchip numbers' => 'new microchip numbers',
+  'please verify' => 'please verify',
   'today at' => 'today at',
   'yet' => 'yet',
   //================================== Obsolete strings ==================================//
@@ -181,18 +188,11 @@ return array (
   'Click the "settings"" button above to invite your customers' => 'Click the "settings"" button above to invite your customers',
   'Create new pet' => 'Create new pet',
   'Create pet' => 'Create pet',
-  'Email not yet verified' => 'Email not yet verified',
-  'Error' => 'Error',
   'Large' => 'Large',
   'Medium' => 'Medium',
-  'Message' => 'Message',
   'My readings' => 'My readings',
   'My sensorReadings' => 'My sensorReadings',
-  'Resend confirmation email' => 'Resend confirmation email',
   'Size' => 'Size',
   'Small' => 'Small',
-  'Success' => 'Success',
   'X-Large' => 'X-Large',
-  'county' => 'county',
-  'please verify' => 'please verify',
 );
