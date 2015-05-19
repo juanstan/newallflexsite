@@ -18,6 +18,7 @@ class Animal extends \Eloquent implements UserInterface, RemindableInterface {
         'name',
         'microchip_number',
         'breed_id',
+        'breed_wildcard',
         'date_of_birth',
         'weight',
         'gender',

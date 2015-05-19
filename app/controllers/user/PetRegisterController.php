@@ -61,13 +61,13 @@ class PetRegisterController extends \BaseController
         if(Breed::where('name', '=', \Input::get('breed_id'))->first())
         {
             $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+            \Input::merge(array('breed_id' => $breed_id->id));
         }
         else
         {
-            return \Redirect::route('user.register.pet.create')->with('error', \Input::get('breed_id') . ' is not a valid breed');
+            $breed_wildcard = \Input::get('breed_id');
+            \Input::merge(array('breed_wildcard' => $breed_wildcard));
         }
-
-        \Input::merge(array('breed_id' => $breed_id->id));
 
         $input = \Input::all();
         $validator = $this->animalRepository->getCreateValidator($input);

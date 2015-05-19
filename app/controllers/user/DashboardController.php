@@ -178,13 +178,13 @@ class DashboardController extends \BaseController
         if(Breed::where('name', '=', \Input::get('breed_id'))->first())
         {
             $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+            \Input::merge(array('breed_id' => $breed_id->id));
         }
         else
         {
-            return \Redirect::route('user.dashboard')->with('error', \Input::get('breed_id') . ' is not a valid breed');
+            $breed_wildcard = \Input::get('breed_id');
+            \Input::merge(array('breed_wildcard' => $breed_wildcard));
         }
-
-        \Input::merge(array('breed_id' => $breed_id->id));
         if($this->authUser->weight_units == "LBS") {
 
             $weight = round(\Input::get('weight') * 0.453592, 1);
@@ -312,10 +312,12 @@ class DashboardController extends \BaseController
         if(Breed::where('name', '=', \Input::get('breed_id'))->first())
         {
             $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
+            \Input::merge(array('breed_id' => $breed_id->id));
         }
         else
         {
-            return \Redirect::route('user.dashboard')->with('error', \Input::get('breed_id') . ' is not a valid breed');
+            $breed_wildcard = \Input::get('breed_id');
+            \Input::merge(array('breed_wildcard' => $breed_wildcard));
         }
         \Input::merge(array('breed_id' => $breed_id->id));
         $input = \Input::all();
