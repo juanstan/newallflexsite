@@ -76,8 +76,8 @@ class AuthController extends \BaseController
     public function getResendConfirmation()
     {
         $this->animalRepository->setUser($this->authUser);
-        \Mail::send('emails.user-verify', array('confirmation_code' => \Auth::user()->get()->confirmation_code), function ($message) {
-            $message->to(\Auth::user()->get()->email_address, 'New user')
+        \Mail::send('emails.user-verify', array('confirmation_code' => $this->authUser->confirmation_code), function ($message) {
+            $message->to($this->authUser->email_address, 'New user')
                 ->subject('Verify your email address');
         });
         \Session::flash('message', 'Verification email sent');
@@ -107,6 +107,7 @@ class AuthController extends \BaseController
 
     public function postLogin()
     {
+
         $input = \Input::all();
         $validator = $this->userRepository->getLoginValidator($input);
         if ($validator->fails()) {
@@ -117,17 +118,26 @@ class AuthController extends \BaseController
 
             $userData = array(
                 'email_address' => \Input::get('email_address'),
-                'password' => \Input::get('password'),
+                'password' => \Input::get('password')
             );
+
             if (\Auth::user()->attempt($userData)) {
+
                 return \Redirect::route('user.dashboard');
+            }
+            else
+            {
+                dd(\DB::getQueryLog());
+//                return \Redirect::route('user')
+//                    ->with('error', 'We cannot log you in at this time.')
+//                    ->withInput(\Input::except('password'));
             }
         }
     }
 
     public function getDelete()
     {
-        $id = \Auth::user()->get()->id;
+        $id = $this->authUser->id;
         \DB::table('animal_requests')->where('user_id', '=', $id)->delete();
         \DB::table('profiles')->where('user_id', '=', $id)->delete();
         $animals = \DB::table('animals')->where('user_id', '=', $id)->get();
@@ -141,7 +151,7 @@ class AuthController extends \BaseController
             \DB::table('sensor_readings')->where('animal_id', '=', $animal_id)->delete();
         }
         \DB::table('animals')->where('user_id', '=', $id)->delete();
-        \Auth::user()->get()->delete();
+        $this->authUser->delete();
         return \Redirect::route('user')->with('success', 'Your account was successfully deleted');
     }
 

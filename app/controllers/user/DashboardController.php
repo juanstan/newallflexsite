@@ -81,19 +81,19 @@ class DashboardController extends \BaseController
         return \View::make('user.result')->with(array('help' => $help));
     }
 
-//    public function postInvite()
-//    {
-//        \Mail::send('emails.vet-verify',
-//            array(
-//                'confirmation_code' => $this->authUser->confirmation_code
-//            ),
-//            function ($message) {
-//                $message->to(\Input::get('email_address'))
-//                    ->subject($this->authUser->name, 'has invited you to use All Flex');
-//            });
-//        \Session::flash('message', 'Verification email sent');
-//        return \Redirect::route('user.dashboard');
-//    }
+    public function postInvite()
+    {
+        \Mail::send('emails.vet-verify',
+            array(
+                'confirmation_code' => $this->authUser->confirmation_code
+            ),
+            function ($message) {
+                $message->to(\Input::get('email_address'))
+                    ->subject($this->authUser->name, 'has invited you to use All Flex');
+            });
+        \Session::flash('message', 'Verification email sent');
+        return \Redirect::route('user.dashboard');
+    }
 
     public function postResetAverageTemperature($id)
     {
@@ -110,46 +110,67 @@ class DashboardController extends \BaseController
 
     public function postSettings()
     {
-        $input = \Input::all();
         $id = $this->authUser->id;
-        $validator = $this->userRepository->getUpdateValidator($input, $id);
-        if ($validator->fails()) {
+        $validator = $this->userRepository->getUpdateValidator(\Input::all(), $id);
+        if ($validator->fails())
+        {
             return \Redirect::route('user.dashboard.settings')
                 ->withErrors($validator)
                 ->withInput(\Input::except('password'));
         }
-        if (\Input::hasFile('image_path')) {
+
+        if (\Input::has('old_password'))
+        {
+            $password = \Input::get('old_password');
+            if (!\Hash::check($password, $this->authUser->password))
+            {
+                \Session::flash('error', 'Password incorrect');
+                return \Redirect::route('user.dashboard.settings');
+            }
+        }
+
+        $input = \Input::only(array(
+            'email_address',
+            'first_name',
+            'last_name',
+            'image_path',
+            'password',
+        ));
+
+        if($input['password'] == '')
+        {
+            unset($input['password']);
+        }
+        if ($input['image_path'] != '')
+        {
             $destinationPath = 'uploads/users/' . $id;
-            if (!\File::exists($destinationPath)) {
+            if (!\File::exists($destinationPath))
+            {
                 \File::makeDirectory($destinationPath);
             }
             $extension = \Input::file('image_path')->getClientOriginalExtension();
             $fileName = rand(11111, 99999) . '.' . $extension;
             $height = \Image::make(\Input::file('image_path'))->height();
             $width = \Image::make(\Input::file('image_path'))->width();
-            if ($width > $height) {
+            if ($width > $height)
+            {
                 \Image::make(\Input::file('image_path'))->crop($height, $height)->save($destinationPath . '/' . $fileName);
-            } else {
+            } else
+            {
                 \Image::make(\Input::file('image_path'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
             }
-            $image_path = 'uploads/users/' . $id . '/' . $fileName;
-        } else {
-            $image_path = $this->authUser->image_path;
+            $input['image_path'] = 'uploads/users/' . $id . '/' . $fileName;
         }
-        $input = array_merge($input, array('image_path' => $image_path));
-        if (\Input::has('password')) {
-            $password = \Input::get('old_password');
-            if (\Hash::check($password, $this->authUser->password)) {
-                $input = array_merge($input, array('password' => \Input::get('password')));
-            } else {
-                \Session::flash('error', 'Password incorrect');
-                return \Redirect::route('user.dashboard.settings');
-            }
+        else
+        {
+            $input['image_path'] = $this->authUser->image_path;
         }
         if ($this->userRepository->update($this->authUser->id, $input) == false) {
             \App::abort(500);
         }
         return \Redirect::route('user.dashboard')->with('success', 'Settings updated');
+
+
     }
 
     public function postUpdatePet($id)

@@ -55,6 +55,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
             'password_confirmation' => ['min:6'],
 		]);
 	}
+
 }
 
 ?>
