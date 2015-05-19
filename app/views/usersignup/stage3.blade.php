@@ -14,7 +14,7 @@
                             </div>
                             <div class="col-xs-8 top-buffer" >
                                 <h3 class="bottom-none text-left">{{ $pet->name }}</h3>
-                                <h4 class="top-none text-left">{{ $pet->breed->name }}</h4>
+                                <h4 class="top-none text-left">{{ ($pet->breed) ? $pet->breed->name : $pet->breed_wildcard }}</h4>
                             </div>
                         </div>
                     @empty

@@ -373,10 +373,10 @@
                                         {{ Form::label('breed', Lang::get('general.Breed'), array('class' => 'col-sm-2 control-label')) }}
 
                                     <div class="col-sm-10">
-                                        @if(isset($animal->breed_id))
+                                        @if($animal->breed_id != '')
                                             {{ Form::text('breed_id', $animal->breed->name, array('class' => 'form-control text-left breed-list', 'id' => 'breedList' . $animal->id )) }}
                                         @else
-                                            {{ Form::text('breed_id', '', array('class' => 'form-control text-left breed-list', 'id' => 'breedList' . $animal->id )) }}
+                                            {{ Form::text('breed_id', $animal->breed_wildcard, array('class' => 'form-control text-left breed-list', 'id' => 'breedList' . $animal->id )) }}
                                         @endif
                                     </div>
                                 </div>
