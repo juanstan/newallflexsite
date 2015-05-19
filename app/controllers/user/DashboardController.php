@@ -36,19 +36,19 @@ class DashboardController extends \BaseController
         $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
         $this->beforeFilter('csrf', array('on' => 'post'));
         $this->beforeFilter('auth',
-            array(
-                'only' =>
-                    array(
-                        'postResetAverageTemperature',
-                        'getSettings',
-                        'postSettings',
-                        'postUpdatePet',
-                        'postAddSymptoms',
-                        'postUpdatePetPhoto',
-                        'postCreatePet',
-                        'getRemovePet',
-                        'postReadingUpload'
-                    )
+            array('only' =>
+                array(
+                    'getIndex',
+                    'postResetAverageTemperature',
+                    'getSettings',
+                    'postSettings',
+                    'postUpdatePet',
+                    'postAddSymptoms',
+                    'postUpdatePetPhoto',
+                    'postCreatePet',
+                    'getRemovePet',
+                    'postReadingUpload'
+                )
             )
         );
 
@@ -141,8 +141,7 @@ class DashboardController extends \BaseController
         {
             unset($input['password']);
         }
-        if ($input['image_path'] != '')
-        {
+        if ($input['image_path'] != '') {
             $destinationPath = 'uploads/users/' . $id;
             if (!\File::exists($destinationPath))
             {

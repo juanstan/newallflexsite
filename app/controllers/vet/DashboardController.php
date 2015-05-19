@@ -27,7 +27,22 @@ class DashboardController extends \BaseController {
         $this->animalRepository = $animalRepository;
         $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
         $this->beforeFilter('csrf', array('on'=>'post'));
-        $this->beforeFilter('vetAuth', array('only'=>array('postResetAverageTemperature', 'getSettings', 'postSettings', 'postUpdatePet', 'postAddSymptoms', 'postUpdatePetPhoto', 'postCreatePet', 'getRemovePet', 'postReadingUpload')));
+        $this->beforeFilter('vetAuth',
+            array('only'=>
+                array(
+                    'getIndex',
+                    'postResetAverageTemperature',
+                    'getSettings',
+                    'postSettings',
+                    'postUpdatePet',
+                    'postAddSymptoms',
+                    'postUpdatePetPhoto',
+                    'postCreatePet',
+                    'getRemovePet',
+                    'postReadingUpload'
+                )
+            )
+        );
 
     }
 
@@ -45,7 +60,6 @@ class DashboardController extends \BaseController {
                 \Session::flash('not-verified', '');
                 return \View::make('vet.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests, 'vet' => $vet));
             }
-
     }
 
     public function getHelp() {
@@ -108,10 +122,8 @@ class DashboardController extends \BaseController {
 
     public function postSettings()
     {
-        $input = \Input::all();
         $id =  $this->authVet->id;
-        $validator = $this->vetRepository->getUpdateValidator($input, $id);
-
+        $validator = $this->vetRepository->getUpdateValidator(\Input::all(), $id);
         if($validator->fails())
         {
             return \Redirect::route('vet.dashboard.settings')
@@ -119,7 +131,40 @@ class DashboardController extends \BaseController {
                 ->withInput(\Input::except('password'));
         }
 
-        if (\Input::hasFile('image_path')){
+        if (\Input::has('old_password'))
+        {
+            $password = \Input::get('old_password');
+            if (!\Hash::check($password, $this->authVet->password))
+            {
+                \Session::flash('error', 'Password incorrect');
+                return \Redirect::route('vet.dashboard.settings');
+            }
+        }
+
+        $input = \Input::only(array(
+            'company_name',
+            'contact_name',
+            'email_address',
+            'telephone',
+            'fax',
+            'address_1',
+            'address_2',
+            'city',
+            'county',
+            'zip',
+            'units',
+            'latitude',
+            'longitude',
+            'image_path',
+            'password',
+        ));
+
+        if($input['password'] == '')
+        {
+            unset($input['password']);
+        }
+
+        if ($input['image_path'] != ''){
             $destinationPath = 'uploads/vets/'.$id;
             if(!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
@@ -138,16 +183,14 @@ class DashboardController extends \BaseController {
                 \Image::make(\Input::file('image_path'))->crop($width, $width)->save($destinationPath.'/'.$fileName);
             }
 
-            $image_path = '/uploads/vets/'.$id.'/'.$fileName;
+            $input['image_path'] = '/uploads/vets/'.$id.'/'.$fileName;
 
         }
         else {
 
-            $image_path = $this->authVet->image_path;
+            $input['image_path'] = $this->authVet->image_path;
 
         }
-
-        $input = array_merge($input, array('image_path' => $image_path));
 
         $address = \Input::get('address_1') . ' ' . \Input::get('address_2') . ' ' . \Input::get('city') . ' ' . \Input::get('county') . ' ' . \Input::get('zip');
 
@@ -156,23 +199,8 @@ class DashboardController extends \BaseController {
         if($data_arr) {
             $latitude = $data_arr[0];
             $longitude = $data_arr[1];
-            $input = array_merge($input, array('latitude' => $latitude, 'longitude' => $longitude));
-        }
-
-        if (\Input::has('password'))
-        {
-            $password = \Input::get('old_password');
-            if(\Hash::check($password,$this->authVet->password))
-            {
-                $input = array_merge($input, array('password' => \Input::get('password')));
-            }
-            else
-            {
-
-                \Session::flash('error', 'Password incorrect');
-                return \Redirect::route('vet.dashboard.settings');
-
-            }
+            $input['latitude'] = $latitude;
+            $input['longitude'] = $longitude;
         }
 
         if($this->vetRepository->update($this->authVet->id, $input) == false)

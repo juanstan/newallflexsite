@@ -73,6 +73,31 @@ class VetController extends \BaseController
                 'errors' => $validator->messages()], 400);
         }
 
+        if (\Input::hasFile('image_path')){
+            $destinationPath = 'uploads/vets/'.$id;
+            if(!\File::exists($destinationPath)) {
+                \File::makeDirectory($destinationPath);
+            }
+
+            $extension = \Input::file('image_path')->getClientOriginalExtension();
+            $fileName = rand(11111,99999).'.'.$extension;
+
+            $height = \Image::make(\Input::file('image_path'))->height();
+            $width = \Image::make(\Input::file('image_path'))->width();
+
+            if($width > $height) {
+                \Image::make(\Input::file('image_path'))->crop($height, $height)->save($destinationPath.'/'.$fileName);
+            }
+            else {
+                \Image::make(\Input::file('image_path'))->crop($width, $width)->save($destinationPath.'/'.$fileName);
+            }
+
+            $image_path = '/uploads/vets/'.$id.'/'.$fileName;
+
+            $input = array_merge($input, array('image_path' => $image_path));
+
+        }
+
         if ($this->vetRepository->update($id, $input) == false) {
             \App::abort(500);
         }

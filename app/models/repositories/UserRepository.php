@@ -25,7 +25,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 		[
 			'first_name'    => [],
 			'last_name'     => [],
-			'email_address' => ['required','email','unique:users','unique:vets'],
+			'email_address' => ['required','email','unique:users'],
             'telephone' => [],
             'password'      => ['required','min:6','confirmed'],
             'password_confirmation' => ['required','min:6'],

@@ -134,8 +134,15 @@ class AuthController extends \BaseController {
 
             if (\Auth::vet()->attempt($vetData)) {
   
-                return \Redirect::route('vet.dashboard');
+                return \Redirect::route('vet.dashboard')
+                    ->with('success', 'You have logged in successfully');
 
+            }
+            else
+            {
+                return \Redirect::route('user')
+                    ->with('error', 'The password used is incorrect.')
+                    ->withInput(\Input::except('password'));
             }
 
         }

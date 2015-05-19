@@ -123,14 +123,14 @@ class AuthController extends \BaseController
 
             if (\Auth::user()->attempt($userData)) {
 
-                return \Redirect::route('user.dashboard');
+                return \Redirect::route('user.dashboard')
+                    ->with('success', 'You have logged in successfully');
             }
             else
             {
-                dd(\DB::getQueryLog());
-//                return \Redirect::route('user')
-//                    ->with('error', 'We cannot log you in at this time.')
-//                    ->withInput(\Input::except('password'));
+                return \Redirect::route('user')
+                    ->with('error', 'The password used is incorrect.')
+                    ->withInput(\Input::except('password'));
             }
         }
     }

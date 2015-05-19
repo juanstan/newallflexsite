@@ -23,7 +23,7 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 	{
 		return \Validator::make($input,
 		[
-			'email_address'    => ['required','unique:users','unique:vets'],
+			'email_address'    => ['required','unique:vets'],
             'password'      => ['required','min:6','confirmed'],
             'password_confirmation' => ['required','min:6']
 		]);

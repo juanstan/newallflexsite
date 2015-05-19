@@ -129,11 +129,8 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
     Route::group(['before' => 'auth.api'], function () {
         Route::post('user/logout', ['as' => 'api.user.logout', 'uses' => 'AuthController@postLogout']); // Done
         Route::resource('user', 'UserController', ['only' => ['show', 'update', 'destroy']]); // Done
-        Route::resource('user', 'UserController', ['only' => ['show', 'update', 'destroy']]); // to do
         Route::resource('animal', 'AnimalController'); // Done
         Route::resource('device', 'DeviceController'); // Done
-//        Route::resource('breeds', 'BreedController'); // Done
-//        Route::resource('conditions', 'ConditionController'); // Done
         Route::resource('symptoms', 'SymptomController'); // Done
         Route::resource('animal/{animal_id}/condition', 'AnimalConditionController');  // Done
         Route::resource('animal/{animal_id}/reading', 'AnimalReadingController'); //  Done
