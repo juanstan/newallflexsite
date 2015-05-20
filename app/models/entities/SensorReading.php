@@ -18,6 +18,7 @@ class SensorReading extends \Eloquent implements UserInterface, RemindableInterf
     protected $fillable = [
         'animal_id',
         'temperature',
+        'reading_time'
     ];
     
     public function animal()
