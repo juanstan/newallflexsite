@@ -32,7 +32,7 @@ class AnimalConditionRepository extends AbstractRepository implements AnimalCond
     {
         if($id)
         {
-            return $this->animal ? $this->animal->conditions()->findOrFail($id) : parent::get($id);
+            return $this->animal ? $this->animal->animalConditions()->findOrFail($id) : parent::get($id);
         }
 
     }
