@@ -1,6 +1,7 @@
 <?php namespace Api;
 
 use Entities\Condition;
+use Entities\AnimalCondition;
 use Repositories\AnimalConditionRepositoryInterface;
 use Repositories\AnimalRepositoryInterface;
 
@@ -135,7 +136,8 @@ class AnimalConditionController extends \BaseController
 
         $this->animalConditionRepository->setAnimal($animal);
 
-        $this->animalConditionRepository->delete($id);
+        AnimalCondition::where('animal_id', '=', $id)->delete();
+        //$this->animalConditionRepository->delete('condition_id', $id);
         return \Response::json(['error' => false]);
     }
 
