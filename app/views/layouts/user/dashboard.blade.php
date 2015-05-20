@@ -61,6 +61,22 @@
         }
         
     });
+
+    $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
+
+        var $target = $(this);
+
+        $target.closest( '.btn-group' )
+                .find( 'input' ).val( $target.attr( 'data-id' ) );
+        $target.closest( '.btn-group' )
+                .find( '[data-bind="label"]' ).text( $target.text() )
+                .end()
+                .children( '.dropdown-toggle' );
+        $target.closest('form').submit();
+//        .dropdown( 'toggle' )
+        return false;
+
+    });
     </script>
     
 </html>

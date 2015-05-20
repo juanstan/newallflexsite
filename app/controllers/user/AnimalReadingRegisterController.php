@@ -30,7 +30,7 @@ class AnimalReadingRegisterController extends \BaseController
     public function postReadingUpload()
     {
         $input = \Input::all();
-        $id = \Auth::user()->get()->id;
+        $id = $this->authUser->id;
         $file = array('file' => \Input::file('file'));
         $rules = array('file' => 'required|max:4000');
         $validator = \Validator::make($file, $rules);
@@ -98,7 +98,7 @@ class AnimalReadingRegisterController extends \BaseController
                     if (empty($animal)) {
                         $animal = new animal();
                         $animal->microchip_number = decoded_microchip_id($row[1]);
-                        $animal->user_id = \Auth::user()->get()->id;
+                        $animal->user_id = $this->authUser->id;
 
                         $animal->save();
                     }
@@ -139,10 +139,10 @@ class AnimalReadingRegisterController extends \BaseController
     public function postAssign($id)
     {
         $input = \Input::get('pet-id');
-        $query = \DB::table('animals')->where('id', '=', $id)->first();
-        if (\DB::table('animals')->where('id', $input)->update(array('microchip_number' => $query->microchip_number))) {
-            \DB::table('animals')->where('id', '=', $id)->delete();
-            \DB::table('sensor_readings')->where('animal_id', '=', $id)->update(array('animal_id' => $input));
+        $query = Animal::where('id', '=', $id)->first();
+        if (Animal::where('id', $input)->update(array('microchip_number' => $query->microchip_number))) {
+            Animal::where('id', '=', $id)->delete();
+            SensorReading::where('animal_id', '=', $id)->update(array('animal_id' => $input));
         }
         \Session::flash('success', 'Pet microchip number assigned');
         return \Redirect::route('user.register.reading.assign');
@@ -152,9 +152,9 @@ class AnimalReadingRegisterController extends \BaseController
 
     public function getFinish()
     {
-        $confirmation_code = \Auth::user()->get()->confirmation_code;
+        $confirmation_code = $this->authUser->confirmation_code;
         \Mail::send('emails.user-verify', array('confirmation_code' => $confirmation_code), function ($message) {
-            $message->to(\Auth::user()->get()->email_address, 'New user')
+            $message->to($this->authUser->email_address, 'New user')
                 ->subject('Verify your email address');
         });
         return \Redirect::route('user.dashboard');

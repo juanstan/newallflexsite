@@ -47,7 +47,8 @@ class DashboardController extends \BaseController
                     'postUpdatePetPhoto',
                     'postCreatePet',
                     'getRemovePet',
-                    'postReadingUpload'
+                    'postReadingUpload',
+                    'postAssign'
                 )
             )
         );
@@ -515,6 +516,20 @@ class DashboardController extends \BaseController
             return \Redirect::route('user.dashboard.vet')->with('success', 'Pet deactivated');
         }
         return \Redirect::route('user.dashboard.vet')->with('error', 'There was a problem with your request');
+    }
+
+    public function postAssign($id)
+    {
+        $input = \Input::get('pet-id');
+        $query = Animal::where('id', '=', $id)->first();
+        if (Animal::where('id', $input)->update(array('microchip_number' => $query->microchip_number))) {
+            Animal::where('id', '=', $id)->delete();
+            SensorReading::where('animal_id', '=', $id)->update(array('animal_id' => $input));
+        }
+        \Session::flash('success', 'Pet microchip number assigned');
+        return \Redirect::route('user.register.reading.assign');
+
+
     }
 
 }

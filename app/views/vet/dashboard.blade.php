@@ -181,7 +181,7 @@
                                     <li id="{{ $letter }}"><a name="{{ $letter }}" class="title">{{ strtoupper($letter) }}</a>
                                         <ul>
                                             @foreach($petsByLetter as $pet)
-                                                <li><a href="{{ URL::route('vet.dashboard.pet', $pet->id) }}">{{ $pet->name }}<span class="pull-right" >{{ $pet->breed->name }} <i class="small-left-buffer fa fa-chevron-right"></i></span></a></li>
+                                                <li><a href="{{ URL::route('vet.dashboard.pet', $pet->id) }}">{{ $pet->name }}<span class="pull-right" >{{ ($pet->breed) ? $pet->breed->name : $pet->breed_wildcard }} <i class="small-left-buffer fa fa-chevron-right"></i></span></a></li>
                                             @endforeach
                                         </ul>
                                     </li>

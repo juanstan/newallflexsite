@@ -10,21 +10,42 @@
             {{ Form::close() }}
         </div>
     </div>
-    
     @foreach ($animals as $animal) 
         @if ($animal->name == null)
             <div class="row col-md-11 float-none col-centered desktop" >
                 <div class="alert alert-grey alert-dismissible" role="alert">
                     <button type="button" class="close small-top-buffer" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="inline-block small-top-buffer">{{ Lang::get('general.1 unknown microchip found, would you like to create a new pet for this microchip?') }}</h4>
+                    <h4 class="inline-block small-top-buffer">{{ Lang::get('general.1 unknown microchip found, would you like to create a new pet?') }}</h4>
 
-                    <a href="#edit{{ $animal->id }}" data-toggle="pill" ><button data-toggle="collapse" data-target="#pet-photo{{ $animal->id }}" class="btn btn-file btn-md pull-right border-none" type="button">{{ Lang::get('Create') }}</button></a>
+                        <div class="btn-group btn-input clearfix pull-right">
+                            {{ Form::open(array('route' => array('user.dashboard.assign', $animal->id), 'method' => 'post')) }}
+                            <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown">
+                                <span data-bind="label">{{ Lang::get('general.Choose pet') }}</span> <span class="caret"></span>
+                                <input type="text" class="hidden" name="pet-id" value="" />
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                @foreach ($animals as $animal)
+                                    @if ($animal->microchip_number == null)
+                                        <li data-id="{{ $animal->id }}" ><a href="#">
+                                                <div class="row" >
+                                                    <div class="col-md-3 small-padding" >{{ HTML::image(isset($animal->image_path) ? $animal->image_path : '/images/pet-image.png', $animal->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}</div>
+                                                    <div class="col-md-9" ><h4>{{ $animal->name }}</h4></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    @endif
+                                @endforeach
+                            </ul>
+                            {{ Form::close() }}
+                        </div>
+                    <a href="#edit{{ $animal->id }}" data-toggle="pill" ><button data-toggle="collapse" data-target="#pet-photo{{ $animal->id }}" class="btn btn-file btn-lg pull-right" type="button">{{ Lang::get('Create') }}</button></a>
                 </div>
             </div>
+
         @endif
     @endforeach
+
     <div class="row col-md-12 col-centered float-none top-buffer" >
-       
         @foreach ($animals as $animal)
 
             <div class="col-md-4" >

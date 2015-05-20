@@ -67,6 +67,7 @@ Route::group(['prefix' => 'user', 'namespace' => 'user'], function () {
             'getRemoveVet' => 'user.dashboard.removeVet',
             'getActivatepet' => 'user.dashboard.activatePet',
             'getDeactivatepet' => 'user.dashboard.deactivatePet',
+            'postAssign' => 'user.dashboard.assign',
         ));
     Route::controller('/', 'AuthController',
         array(

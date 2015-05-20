@@ -1,18 +1,16 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/05/20 08:46:23 
+ Generated via "php artisan localization:missing" at 2015/05/18 14:55:36 
 *************************************************************************/
 
 return array (
-  //============================== New strings to translate ==============================//
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/dashboard.blade.php
-  '1 unknown microchip found, would you like to create a new pet?' => '1 unknown microchip found, would you like to create a new pet?',
   //==================================== Translations ====================================//
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
   '+ Add' => '+ Add',
   '+ Add a pet' => '+ Add a pet',
   '+ Add another pet' => '+ Add another pet',
+  '1 unknown microchip found, would you like to create a new pet for this microchip?' => '1 unknown microchip found, would you like to create a new pet for this microchip?',
   '<i class="fa fa-cog"></i> Edit' => '<i class="fa fa-cog"></i> Edit',
   '<i class="fa fa-refresh"></i> Reset' => '<i class="fa fa-refresh"></i> Reset',
   '<i class="fa fa-search"></i> Find my vet' => '<i class="fa fa-search"></i> Find my vet',
@@ -179,7 +177,6 @@ return array (
   'today at' => 'today at',
   'yet' => 'yet',
   //================================== Obsolete strings ==================================//
-  '1 unknown microchip found, would you like to create a new pet for this microchip?' => '1 unknown microchip found, would you like to create a new pet for this microchip?',
   '<i class="fa fa-plus"></i> Create pet' => '<i class="fa fa-plus"></i> Create pet',
   'Click the "settings"" button above to invite your customers' => 'Click the "settings"" button above to invite your customers',
   'Create new pet' => 'Create new pet',

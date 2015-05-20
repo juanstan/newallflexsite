@@ -52,7 +52,7 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
             //'breed'     => ['sometimes','required'],
         ]);
     }
-    
+
     public function setUser($user)
     {
         $this->user = is_numeric($user) ? $this->repository->get($user) : $user;

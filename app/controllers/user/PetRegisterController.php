@@ -33,7 +33,7 @@ class PetRegisterController extends \BaseController
         $term = \Input::get('term');
         $result = [];
         foreach($breeds as $breed) {
-            if(strpos(\Str::lower($breed),$term) !== false) {
+            if(strpos($breed,$term) !== false) {
                 $result[] = ['value' => $breed];
             }
         }
