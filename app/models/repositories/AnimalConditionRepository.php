@@ -1,5 +1,6 @@
 <?php namespace Repositories;
 
+use Entities\AnimalCondition;
 use Entities\Condition;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -21,7 +22,7 @@ class AnimalConditionRepository extends AbstractRepository implements AnimalCond
     {             
         if($this->animal)
         {
-            return $this->animal->conditions()->get();
+            return $this->animal->animalConditions()->get();
         }
 
         return parent::all();
