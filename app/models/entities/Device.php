@@ -17,6 +17,7 @@ class Device extends \Eloquent implements UserInterface, RemindableInterface {
     protected $fillable = [
         'serial_id',
         'device',
+        'user_id',
         'name',
         'version',
         'field_1',
