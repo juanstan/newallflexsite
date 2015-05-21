@@ -66,7 +66,7 @@ class UserController extends \BaseController
 
         if ($this->authUser->id != $id) return \Response::json(['error' => true, 'message' => \Lang::get('error.http.403')], 403);
         $input = \Input::all();
-        $validator = $this->userRepository->getUpdateValidator($input);
+        $validator = $this->userRepository->getUpdateValidator($input, $id);
 
         if ($validator->fails()) {
             return \Response::json(['error' => true,
