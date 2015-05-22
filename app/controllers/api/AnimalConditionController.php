@@ -136,7 +136,7 @@ class AnimalConditionController extends \BaseController
 
         $this->animalConditionRepository->setAnimal($animal);
 
-        AnimalCondition::where('animal_id', '=', $id)->delete();
+        AnimalCondition::where('condition_id', '=', $id)->delete();
         //$this->animalConditionRepository->delete('condition_id', $id);
         return \Response::json(['error' => false]);
     }
