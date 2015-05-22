@@ -17,6 +17,17 @@ class DeviceRepository extends AbstractRepository implements DeviceRepositoryInt
 		]);
 	}
 
+	public function all()
+	{
+		if($this->user)
+		{
+			return $this->user->device()->get();
+		}
+
+		return parent::all();
+	}
+
+
 	public function getUpdateValidator($input)
 	{
 		return \Validator::make($input,

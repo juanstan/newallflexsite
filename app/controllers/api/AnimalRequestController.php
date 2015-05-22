@@ -36,7 +36,7 @@ class AnimalRequestController extends \BaseController
      *
      * @return Response
      */
-    public function store() // POST
+    public function store($id) // POST
     {
 
         $this->animalRequestRepository->setUser($this->authUser);
@@ -57,6 +57,19 @@ class AnimalRequestController extends \BaseController
 
         return \Response::json(['error' => false, 'result' => $animal], 201)
             ->header('Location', \URL::route('api.animal.request.show', [$animal->id]));
+    }
+
+    public function getAddVet($id)
+    {
+        $userid = $this->authUser->id;
+        $this->animalRepository->setUser($this->authUser);
+        $animals = $this->animalRepository->all();
+        foreach ($animals as $animal) {
+            Request::insert(
+                ['vet_id' => $id, 'user_id' => $userid, 'animal_id' => $animal->id, 'approved' => 1]
+            );
+        }
+        return \Redirect::route('user.dashboard.vet')->with('success', 'Vet added');
     }
 
 
