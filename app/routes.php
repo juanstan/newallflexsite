@@ -126,6 +126,9 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
     Route::post('vet/login', ['as' => 'api.vet.login', 'uses' => 'VetAuthController@postLogin']); // Done
     Route::resource('vet', 'VetController', ['only' => ['store', 'index', 'show']]); // Done
     Route::resource('breeds', 'BreedController'); // Done
+    Route::controller('vet/search', 'VetSearchController', array(
+        'postLocation'=>'api.vet.search.location'
+    )); // Done
     Route::resource('conditions', 'ConditionController'); // Done
     Route::group(['before' => 'auth.api'], function () {
         Route::post('user/logout', ['as' => 'api.user.logout', 'uses' => 'AuthController@postLogout']); // Done
