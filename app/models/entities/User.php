@@ -61,7 +61,7 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
     
     public function device()
     {
-        return $this->belongsToMany('Entities\Devive', 'device_users')->withTimestamps();
+        return $this->belongsToMany('Entities\Device', 'device_users')->withTimestamps();
     }
 
 }
