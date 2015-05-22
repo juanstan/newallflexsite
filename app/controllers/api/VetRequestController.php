@@ -16,7 +16,13 @@ class VetRequestController extends \BaseController
         $this->vetRequestRepository = $vetRequestRepository;
     }
 
+    public function index()
+    {
+        $this->vetRequestRepository->setUser($this->authUser);
 
+        return \Response::json(['error' => false,
+            'result' => $this->vetRequestRepository->all()]);
+    }
     /**
      * Store a newly created resource in storage.
      *

@@ -37,21 +37,16 @@ class VetRequestRepository extends AbstractRepository implements VetRequestRepos
     public function create($input)
     {
 
-            /**
-            * @var \Entities\Device
-            */
-            
-            
-            $userrequest = parent::create($input);
-            
-            $userrequest->request_type = 1;
+        $userrequest = parent::create($input);
 
-            if($this->user)
-            {
-                // set access
-                $userrequest->user()->associate($this->user);
-                $userrequest->save();
-            }        
+        $userrequest->request_type = 1;
+
+        if($this->user)
+        {
+            // set access
+            $userrequest->user()->associate($this->user);
+            $userrequest->save();
+        }
 
         return $userrequest;
     }
@@ -62,7 +57,6 @@ class VetRequestRepository extends AbstractRepository implements VetRequestRepos
         [
             'vet_id' => ['required','exists:vets,id'],
             'animal_id' => ['required','exists:animals,id'],
-            'request_reason'     => ['required'],
         ]);
     }
 
@@ -73,7 +67,6 @@ class VetRequestRepository extends AbstractRepository implements VetRequestRepos
         [
             'vet_id' => ['required','exists:vets,id'],
             'animal_id' => ['required','exists:animals,id'],
-            'request_reason'     => ['required'],
         ]);
     }
     
