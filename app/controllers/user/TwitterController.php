@@ -14,27 +14,19 @@ class TwitterController extends \BaseController
         $this->authUser = \Auth::user()->get();
         $this->userRepository = $userRepository;
         $this->beforeFilter('csrf', array('on' => 'post'));
-        $this->beforeFilter('auth', array('only' => array('getIndex', 'getNew', 'postNew')));
     }
 
-    public function index()
+    public function getCreate()
     {
-        // get data from input
         $token = \Input::get('oauth_token');
         $verify = \Input::get('oauth_verifier');
 
-        // get twitter service
         $tw = \OAuth::consumer('Twitter');
 
-        // check if code is valid
-
-        // if code is provided get user data and sign in
         if (!empty($token) && !empty($verify)) {
 
-            // This was a callback request from twitter, get the token
             $token = $tw->requestAccessToken($token, $verify);
 
-            // Send a request with it
             $result = json_decode($tw->request('account/verify_credentials.json'), true);
 
             $uid = $result['id'];
@@ -43,6 +35,7 @@ class TwitterController extends \BaseController
 
                 $user = new User;
                 $user->units = 'F';
+                $user->weight_units = 'KG';
                 $user->image_path = str_replace('_normal.jpeg', '.jpeg', $result['profile_image_url']);
 
                 $user->save();
@@ -56,35 +49,60 @@ class TwitterController extends \BaseController
 
                 $profile->save();
 
-                $user = $profile->userRepository;
+                $user = $profile->user;
 
                 \Auth::user()->login($user);
 
-                if ($this->authUser->first_name != null) {
-                    return \Redirect::route('user.dashboard')->with('message', 'Logged in with Twitter');
-                } else {
-                    return \Redirect::route('user.register.about')->with('message', 'Logged in with Twitter');
-                }
-
-            } else {
-
-                $user = $profile->userRepository;
-
-                \Auth::user()->login($user);
-
-                return \Redirect::route('user.dashboard')->with('message', 'Logged in with Twitter');
+                return \Redirect::route('user.register.about')->with('message', 'You have registered with Twitter');
 
             }
+            else {
+                return \Redirect::route('user.register')->with('error', 'This Twitter user already exsists');
+            }
 
-        } // if not ask for permission first
+        }
         else {
-            // get request token
             $reqToken = $tw->requestRequestToken();
 
-            // get Authorization Uri sending the request token
             $url = $tw->getAuthorizationUri(array('oauth_token' => $reqToken->getRequestToken()));
 
-            // return to twitter login url
+            return \Redirect::to((string)$url);
+        }
+    }
+
+    public function getLogin()
+    {
+        $token = \Input::get('oauth_token');
+        $verify = \Input::get('oauth_verifier');
+
+        $tw = \OAuth::consumer('Twitter');
+
+        if (!empty($token) && !empty($verify)) {
+
+            $token = $tw->requestAccessToken($token, $verify);
+
+            $result = json_decode($tw->request('account/verify_credentials.json'), true);
+
+            $uid = $result['id'];
+            $profile = Profile::where(['uid' => $uid, 'type' => 'twitter'])->first();
+            if (empty($profile)) {
+
+                return \Redirect::route('user')->with('error', 'This Twitter account is not yet registered');
+
+            }
+            else {
+                $user = $profile->user;
+
+                \Auth::user()->login($user);
+                return \Redirect::route('user.dashboard')->with('message', 'Logged in with Twitter');
+            }
+
+        }
+        else {
+            $reqToken = $tw->requestRequestToken();
+
+            $url = $tw->getAuthorizationUri(array('oauth_token' => $reqToken->getRequestToken()));
+
             return \Redirect::to((string)$url);
         }
     }

@@ -14,10 +14,9 @@ class FacebookController extends \BaseController
         $this->authUser = \Auth::user()->get();
         $this->user = $user;
         $this->beforeFilter('csrf', array('on' => 'post'));
-        $this->beforeFilter('auth', array('only' => array('getIndex', 'getNew', 'postNew')));
     }
 
-    public function index()
+    public function getCreate()
     {
 
         $code = \Input::get('code');
@@ -29,8 +28,6 @@ class FacebookController extends \BaseController
 
             $result = json_decode($fb->request('/me'), true);
 
-            dd($result);
-
             $uid = $result['id'];
             $profile = Profile::where(['uid' => $uid, 'type' => 'facebook'])->first();
             if (empty($profile)) {
@@ -40,6 +37,7 @@ class FacebookController extends \BaseController
                 $user->last_name = $result['last_name'];
                 $user->email_address = $result['email'];
                 $user->units = 'F';
+                $user->weight_units = 'KG';
                 $user->image_path = 'https://graph.facebook.com/' . $result['id'] . '/picture?type=large';
 
                 $user->save();
@@ -51,22 +49,54 @@ class FacebookController extends \BaseController
                 $profile = $user->profiles()->save($profile);
                 $profile->access_token = $_GET['code'];
 
+                $profile->save();
+
+                $user = $profile->user;
+
+                \Auth::user()->login($user);
+
+                return \Redirect::route('user.register.about')->with('message', 'You have registered with Facebook');
+
             }
-
-            $profile->save();
-
-            $user = $profile->user;
-
-            \Auth::user()->login($user);
-
-            if ($this->authUser->first_name != null) {
-                return \Redirect::route('user.dashboard')->with('message', 'Logged in with Facebook');
-            } else {
-                return \Redirect::route('user.register.about')->with('message', 'Logged in with Facebook');
+            else {
+                return \Redirect::route('user.register')->with('error', 'This Facebook user already exsists');
             }
 
 
         } else {
+            $url = $fb->getAuthorizationUri();
+
+            return \Redirect::to((string)$url);
+        }
+
+    }
+
+    public function getLogin()
+    {
+
+        $code = \Input::get('code');
+        $fb = \OAuth::consumer('Facebook');
+
+        if (!empty($code)) {
+
+            $token = $fb->requestAccessToken($code);
+
+            $result = json_decode($fb->request('/me'), true);
+
+            $uid = $result['id'];
+            $profile = Profile::where(['uid' => $uid, 'type' => 'facebook'])->first();
+            if (empty($profile)) {
+                return \Redirect::route('user')->with('error', 'This Facebook account is not yet registered');
+            }
+            else {
+                $user = $profile->user;
+
+                \Auth::user()->login($user);
+                return \Redirect::route('user.dashboard')->with('message', 'Logged in with Facebook');
+            }
+
+        }
+        else {
             $url = $fb->getAuthorizationUri();
 
             return \Redirect::to((string)$url);

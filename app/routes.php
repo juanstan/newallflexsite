@@ -16,9 +16,16 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'user', 'namespace' => 'user'], function () {
-    Route::get('login/fb', array('uses'=>'FacebookController@index', 'as'=>'user.login.fb'));
-    Route::get('login/fb/callback', array('uses'=>'FacebookController@callback', 'as'=>'user.login.fb.callback'));
-    Route::get('login/twitter', array('uses'=>'TwitterController@index', 'as'=>'user.login.twitter'));
+    Route::controller('facebook', 'FacebookController',
+        array(
+            'getCreate'=>'user.facebook.create',
+            'getLogin'=>'user.facebook.login',
+        ));
+    Route::controller('twitter', 'TwitterController',
+        array(
+            'getCreate'=>'user.twitter.create',
+            'getLogin'=>'user.twitter.login',
+        ));
     Route::controller('register/pet', 'PetRegisterController',
         array(
             'getIndex'=>'user.register.pet',

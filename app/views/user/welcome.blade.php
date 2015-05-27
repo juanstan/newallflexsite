@@ -23,13 +23,13 @@
 
                     <h4>or</h4>
 
-                    {{ Form::open(array('route' => 'user.login.fb', 'method' => 'get')) }}
+                    {{ Form::open(array('route' => 'user.facebook.login', 'method' => 'get')) }}
 
                     {{ Form::submit(Lang::get('general.Sign in with Facebook'), array('class' => 'btn btn-lg btn-primary btn-block small-top-buffer')) }}
 
                     {{ Form::close() }}
 
-                    {{ Form::open(array('route' => 'user.login.twitter', 'method' => 'get')) }}
+                    {{ Form::open(array('route' => 'user.twitter.login', 'method' => 'get')) }}
 
                     {{ Form::submit(Lang::get('general.Sign in with Twitter'), array('class' => 'btn btn-lg btn-info btn-block small-top-buffer')) }}
 

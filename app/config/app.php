@@ -136,6 +136,7 @@ return array(
         'Services\DeviceServiceProvider',
         'Potsky\LaravelLocalizationHelpers\LaravelLocalizationHelpersServiceProvider',
         'Jenssegers\Agent\AgentServiceProvider',
+		'Artdarek\OAuth\OAuthServiceProvider',
 	),
 
 	/*
