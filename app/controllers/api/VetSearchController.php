@@ -44,13 +44,15 @@ class VetSearchController extends \BaseController
 
     public function postName()
     {
-        $breed = Breed::all();
-
-        return \Response::json(array(
-            'error' => false,
-            'result' => $breed->toArray()),
-            200
-        );
+        $vets = Vet::all();
+        $term = \Input::get('term');
+        $result = [];
+        foreach($vets as $vet) {
+            if(strpos($vet,$term) !== false) {
+                $result[] = ['value' => $vet];
+            }
+        }
+        return \Response::json($result);
 
     }
 

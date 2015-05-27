@@ -6,8 +6,7 @@
 	"require": {
 		"laravel/framework": "4.2.*",
 		"guzzle/guzzle": "dev-master",
-		"facebook/php-sdk-v4" : "4.0.*",
-		"artdarek/oauth-4-laravel": "dev-master",
+	  	"artdarek/oauth-4-laravel": "dev-master",
 		"intervention/image": "dev-master",
 		"orangehill/iseed": "dev-master",
 		"sebklaus/profiler": "1.7.6",

@@ -3,11 +3,6 @@
 use Entities\User;
 use Entities\Profile;
 use Repositories\UserRepositoryInterface;
-use Facebook\FacebookSession;
-use \LaravelFacebookRedirectLoginHelper;
-use Facebook\FacebookRequest;
-use Facebook\GraphObject;
-use Facebook\FacebookRequestException;
 
 class TwitterController extends \BaseController
 {

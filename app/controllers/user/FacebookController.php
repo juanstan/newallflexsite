@@ -3,11 +3,6 @@
 use Entities\User;
 use Entities\Profile;
 use Repositories\UserRepositoryInterface;
-use Facebook\FacebookSession;
-use \LaravelFacebookRedirectLoginHelper;
-use Facebook\FacebookRequest;
-use Facebook\GraphObject;
-use Facebook\FacebookRequestException;
 
 class FacebookController extends \BaseController
 {
@@ -33,6 +28,8 @@ class FacebookController extends \BaseController
             $token = $fb->requestAccessToken($code);
 
             $result = json_decode($fb->request('/me'), true);
+
+            dd($result);
 
             $uid = $result['id'];
             $profile = Profile::where(['uid' => $uid, 'type' => 'facebook'])->first();
