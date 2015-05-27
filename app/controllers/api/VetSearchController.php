@@ -34,6 +34,7 @@ class VetSearchController extends \BaseController
                 $coordB   = Geotools::coordinate([$vet->latitude, $vet->longitude]);
                 $distance = Geotools::distance()->setFrom($coordA)->setTo($coordB);
                 if($distance->in('km')->haversine() < $distance_set) {
+                    $vet['distance'] = $distance->in('km')->haversine();
                     $result[] = $vet;
                 }
                 else {
