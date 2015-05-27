@@ -65,14 +65,14 @@ class DashboardController extends \BaseController {
     public function getHelp() {
 
         $help = \DB::table('help')->get();
-        return \View::make('user.help')->with(array('help' => $help));
+        return \View::make('vet.help')->with(array('help' => $help));
 
     }
 
     public function getResult($id) {
 
         $help = \DB::table('help')->where('id', '=', $id)->get();
-        return \View::make('user.result')->with(array('help' => $help));
+        return \View::make('vet.result')->with(array('help' => $help));
 
     }
 
