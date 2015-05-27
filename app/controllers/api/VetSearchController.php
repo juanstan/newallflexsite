@@ -30,6 +30,15 @@ class VetSearchController extends \BaseController
 
         dd($location);
 
+        $app->get('/list/:lat/:lng', function ($lat, $lng) use ($app, $db) {
+            $result = $db->deals()->select('*', 'GeoDistDiff("mi", lat, lng, ' . $lat . ', ' . $lng . ') AS distance')->order('distance');
+            $deals = array_map('iterator_to_array', iterator_to_array($result));
+            foreach($deals as $key => $deal){
+                $deals[$key]['image_url'] = SITE_URL . $deal['image_path'];
+            }
+            success($deals);
+        });
+
 
 
         $breed = Breed::all();
@@ -52,7 +61,12 @@ class VetSearchController extends \BaseController
                 $result[] = ['value' => $vet];
             }
         }
-        return \Response::json($result);
+
+        return \Response::json(array(
+            'error' => false,
+            'result' => $result->toArray()),
+            200
+        );
 
     }
 
