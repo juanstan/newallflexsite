@@ -320,7 +320,7 @@ class DashboardController extends \BaseController
             $breed_wildcard = \Input::get('breed_id');
             \Input::merge(array('breed_wildcard' => $breed_wildcard));
         }
-        \Input::merge(array('breed_id' => $breed_id->id));
+
         $input = \Input::all();
         $validator = $this->animalRepository->getCreateValidator($input);
         if ($validator->fails()) {
@@ -329,13 +329,13 @@ class DashboardController extends \BaseController
         }
         $id = $this->authUser->id;
         $file = array('image' => \Input::file('pet-photo'));
-        $rules = array('image' => 'required|max:4000|mimes:jpeg,png');
+        $rules = array('image' => 'max:4000|mimes:jpeg,png');
         $validator = \Validator::make($file, $rules);
         if ($validator->fails()) {
             return \Redirect::route('user.dashboard')->withInput()
                 ->withErrors($validator);
         } else {
-            if (\Input::file('pet-photo')->isValid()) {
+            if (\Input::hasFile('pet-photo')) {
                 $destinationPath = 'uploads/pets/' . $id;
                 if (!\File::exists($destinationPath)) {
                     \File::makeDirectory($destinationPath);
@@ -352,10 +352,12 @@ class DashboardController extends \BaseController
                 $input['image_path'] = '/uploads/pets/' . $id . '/' . $fileName;
                 $animal = $this->animalRepository->create($input);
                 return \Redirect::route('user.dashboard');
-            } else {
-                \Session::flash('error', 'uploaded file is not valid');
-                return \Redirect::route('user.dashboard');
             }
+//            else {
+//                \Session::flash('error', 'uploaded file is not valid');
+//                return \Redirect::route('user.dashboard');
+//            }
+            $animal = $this->animalRepository->create($input);
         }
         if ($animal == null) {
             \App::abort(500);
@@ -526,8 +528,8 @@ class DashboardController extends \BaseController
             Animal::where('id', '=', $id)->delete();
             SensorReading::where('animal_id', '=', $id)->update(array('animal_id' => $input));
         }
-        \Session::flash('success', 'Pet microchip number assigned');
-        return \Redirect::route('user.register.reading.assign');
+        return \Redirect::route('user.dashboard')
+            ->with('success', 'Pet microchip number assigned');
 
 
     }

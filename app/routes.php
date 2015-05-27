@@ -127,6 +127,7 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
     Route::resource('vet', 'VetController', ['only' => ['store', 'index', 'show']]); // Done
     Route::resource('breeds', 'BreedController'); // Done
     Route::controller('vet/search', 'VetSearchController', array(
+        'getAll'=>'api.vet.search.all',
         'postLocation'=>'api.vet.search.location'
     )); // Done
     Route::resource('conditions', 'ConditionController'); // Done

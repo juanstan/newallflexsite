@@ -5,13 +5,13 @@ use Entities\Vet;
 class VetSearchController extends \BaseController
 {
 
-    public function index()
+    public function getAll()
     {
-        $breed = Breed::all();
+        $vet = Vet::all();
 
         return \Response::json(array(
             'error' => false,
-            'result' => $breed->toArray()),
+            'result' => $vet->toArray()),
             200
         );
 
