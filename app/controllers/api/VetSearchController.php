@@ -17,9 +17,31 @@ class VetSearchController extends \BaseController
 
     }
 
+    public function getLocation()
+    {
+
+        $vets = Vet::all();
+        foreach($vets as $vet) {
+            if($vet->longitude != null)
+            {
+                if($vet->city == "")
+                {
+                    continue;
+                }
+                $data_arr = geocode($vet->city);
+                $vet->latitude = $data_arr[0];
+                $vet->longitude = $data_arr[1];
+                $vet->save();
+            }
+
+        }
+
+    }
+
     public function postLocation()
     {
         $location = \Input::get('location');
+        $distance = \Input::get('distance');
         $data_arr = geocode($location);
 
         if($data_arr) {
@@ -29,17 +51,6 @@ class VetSearchController extends \BaseController
         }
 
         dd($location);
-
-        $app->get('/list/:lat/:lng', function ($lat, $lng) use ($app, $db) {
-            $result = $db->deals()->select('*', 'GeoDistDiff("mi", lat, lng, ' . $lat . ', ' . $lng . ') AS distance')->order('distance');
-            $deals = array_map('iterator_to_array', iterator_to_array($result));
-            foreach($deals as $key => $deal){
-                $deals[$key]['image_url'] = SITE_URL . $deal['image_path'];
-            }
-            success($deals);
-        });
-
-
 
         $breed = Breed::all();
 
