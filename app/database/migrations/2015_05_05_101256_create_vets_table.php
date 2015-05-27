@@ -26,7 +26,7 @@ class CreateVetsTable extends Migration {
 			$table->string('county')->nullable();
 			$table->string('zip')->nullable();
 			$table->string('units')->nullable();
-			$table->string('latitude');
+			$table->string('latitude')->nullable();
 			$table->string('longitude')->nullable();
 			$table->string('image_path')->nullable();
 			$table->string('password')->nullable();

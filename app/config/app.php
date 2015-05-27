@@ -137,6 +137,8 @@ return array(
         'Potsky\LaravelLocalizationHelpers\LaravelLocalizationHelpersServiceProvider',
         'Jenssegers\Agent\AgentServiceProvider',
 		'Artdarek\OAuth\OAuthServiceProvider',
+		'Orangehill\Iseed\IseedServiceProvider',
+		'Toin0u\Geotools\GeotoolsServiceProvider',
 	),
 
 	/*
@@ -166,7 +168,7 @@ return array(
 	'aliases' => array(
 
 		'App'             => 'Illuminate\Support\Facades\App',
-        'Agent' => 'Jenssegers\Agent\Facades\Agent',
+        'Agent' 		  => 'Jenssegers\Agent\Facades\Agent',
 		'Artisan'         => 'Illuminate\Support\Facades\Artisan',
 		'Auth'            => 'Illuminate\Support\Facades\Auth',
 		'Blade'           => 'Illuminate\Support\Facades\Blade',
@@ -181,9 +183,10 @@ return array(
 		'Event'           => 'Illuminate\Support\Facades\Event',
 		'File'            => 'Illuminate\Support\Facades\File',
 		'Form'            => 'Illuminate\Support\Facades\Form',
+		'Geotools' 		  => 'Toin0u\Geotools\Facade\Geotools',
 		'Hash'            => 'Illuminate\Support\Facades\Hash',
 		'HTML'            => 'Illuminate\Support\Facades\HTML',
-        'Image' => 'Intervention\Image\Facades\Image',
+        'Image' 		  => 'Intervention\Image\Facades\Image',
 		'Input'           => 'Illuminate\Support\Facades\Input',
 		'Lang'            => 'Illuminate\Support\Facades\Lang',
 		'Log'             => 'Illuminate\Support\Facades\Log',

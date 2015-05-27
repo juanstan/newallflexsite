@@ -1,5 +1,7 @@
 <?php namespace Api;
 
+use League\Geotools\Coordinate\Ellipsoid;
+use Toin0u\Geotools\Facade\Geotools;
 use Entities\Vet;
 
 class VetSearchController extends \BaseController
@@ -17,46 +19,35 @@ class VetSearchController extends \BaseController
 
     }
 
-    public function getLocation()
-    {
-
-        $vets = Vet::all();
-        foreach($vets as $vet) {
-            if($vet->longitude != null)
-            {
-                if($vet->city == "")
-                {
-                    continue;
-                }
-                $data_arr = geocode($vet->city);
-                $vet->latitude = $data_arr[0];
-                $vet->longitude = $data_arr[1];
-                $vet->save();
-            }
-
-        }
-
-    }
-
     public function postLocation()
     {
         $location = \Input::get('location');
-        $distance = \Input::get('distance');
+        $distance_set = \Input::get('distance');
         $data_arr = geocode($location);
 
-        if($data_arr) {
-            $latitude = $data_arr[0];
-            $longitude = $data_arr[1];
-            $location = array('latitude' => $latitude, 'longitude' => $longitude);
+        $coordA   = Geotools::coordinate([$data_arr[0], $data_arr[1]]);
+        $vets = Vet::all();
+        foreach($vets as $vet)
+        {
+            if($vet->latitude != null && $vet->longitude != null)
+            {
+                $coordB   = Geotools::coordinate([$vet->latitude, $vet->longitude]);
+                $distance = Geotools::distance()->setFrom($coordA)->setTo($coordB);
+                if($distance->in('km')->haversine() < $distance_set) {
+                    $result[] = $vet;
+                }
+                else {
+                    continue;
+                }
+            }
+            else {
+                continue;
+            }
         }
-
-        dd($location);
-
-        $breed = Breed::all();
 
         return \Response::json(array(
             'error' => false,
-            'result' => $breed->toArray()),
+            'result' => $result),
             200
         );
 
