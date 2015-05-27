@@ -64,7 +64,7 @@ class VetSearchController extends \BaseController
 
         return \Response::json(array(
             'error' => false,
-            'result' => $result->toArray()),
+            'result' => $result),
             200
         );
 
