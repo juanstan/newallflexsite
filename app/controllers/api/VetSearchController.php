@@ -69,7 +69,7 @@ class VetSearchController extends \BaseController
         $result = [];
         foreach($vets as $vet) {
             if(strpos($vet,$term) !== false) {
-                $result[] = ['value' => $vet];
+                $result[] = $vet;
             }
         }
 
