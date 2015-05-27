@@ -469,6 +469,9 @@ class DashboardController extends \BaseController
         $requests = Request::where('user_id', '=', $id)->get();
         $animals = $this->animalRepository->all();
         $vets = Vet::all();
+        if($this->authUser->animals->isEmpty()) {
+            return \Redirect::route('user.dashboard')->with('error', 'You must create a pet before you can perform this function.');
+        }
         return \View::make('user.vet')->with(array('pets' => $animals, 'vets' => $vets, 'requests' => $requests));
     }
 
