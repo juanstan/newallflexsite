@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="row col-md-12 col-centered top-buffer" >
+        @if(Illuminate\Auth\)
         <?php $vetId = ''; ?>
         @foreach ($vets as $vet)
             @foreach ($requests as $request)

@@ -134,8 +134,6 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
     Route::resource('user', 'UserController', ['only' => ['store']]); // Done
     Route::post('vet/login', ['as' => 'api.vet.login', 'uses' => 'VetAuthController@postLogin']); // Done
     Route::resource('vet', 'VetController', ['only' => ['store', 'index', 'show']]); // Done
-
-    Route::resource('conditions', 'ConditionController'); // Done
     Route::group(['before' => 'auth.api'], function () {
         Route::post('user/logout', ['as' => 'api.user.logout', 'uses' => 'AuthController@postLogout']); // Done
         Route::resource('user', 'UserController', ['only' => ['show', 'update', 'destroy']]); // Done
@@ -143,6 +141,7 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
         Route::resource('device', 'DeviceController'); // Done
         Route::resource('symptoms', 'SymptomController'); // Done
         Route::resource('breeds', 'BreedController'); // Done
+        Route::resource('conditions', 'ConditionController'); // Done
         Route::resource('animal/{animal_id}/condition', 'AnimalConditionController');  // Done
         Route::resource('animal/{animal_id}/reading', 'AnimalReadingController'); //  Done
         Route::resource('animal/{animal_id}/reading/{reading_id}/symptom', 'AnimalReadingSymptomController'); // Done
@@ -152,6 +151,7 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
             'postLocation'=>'api.vet.search.location',
             'postName'=>'api.vet.search.name'
         ));
+
     });
 
     Route::group(['before' => 'vet.auth.api'], function () {

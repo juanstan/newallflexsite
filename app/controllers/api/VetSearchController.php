@@ -69,6 +69,10 @@ class VetSearchController extends \BaseController
             }
         }
 
+        if(empty($result)){
+            return \Response::json(['error' => true, 'message' => 'There are no vets matching this search']);
+        }
+
         return \Response::json(array(
             'error' => false,
             'result' => $result),
