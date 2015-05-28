@@ -128,7 +128,6 @@ return array(
         'Services\UserServiceProvider',
         'Services\AnimalRequestServiceProvider',
         'Services\VetServiceProvider',
-        'Services\VetRequestServiceProvider',
         'Services\AnimalServiceProvider',
         'Services\AnimalReadingServiceProvider',
         'Services\AnimalReadingSymptomServiceProvider',

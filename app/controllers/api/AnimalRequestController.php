@@ -51,6 +51,26 @@ class AnimalRequestController extends \BaseController
             ->header('Location', \URL::route('api.animal.show', [$animalRequest->id]));
     }
 
+    public function update($id) // PUT
+    {
+        $this->animalRequestRepository->setUser($this->authUser);
+
+        $input = \Input::all();
+        $validator = $this->animalRequestRepository->getUpdateValidator($input);
+
+        if ($validator->fails()) {
+            return \Response::json(['error' => true,
+                'errors' => $validator->messages()], 400);
+        }
+
+        if ($this->animalRequestRepository->update($id, $input) == false) {
+            \App::abort(500);
+        }
+
+        return \Response::json(['error' => false,
+            'result' => $this->animalRequestRepository->get($id)]);
+    }
+
     public function show($id) // GET
     {
         $this->animalRequestRepository->setUser($this->authUser);

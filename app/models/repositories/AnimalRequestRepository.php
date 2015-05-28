@@ -49,7 +49,7 @@ class AnimalRequestRepository extends AbstractRepository implements AnimalReques
     {
         return \Validator::make($input,
         [
-            'animal_id' => ['required','exists:animals,id'],
+            'approved' => ['required'],
         ]);
     }
     

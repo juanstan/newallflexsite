@@ -27,18 +27,7 @@ class Request extends \Eloquent implements UserInterface, RemindableInterface {
         'approved',
     ];
 
-	/**
-	 * The database table used by the model.
-	 *
-	 * @var string
-	 */
 	protected $table = 'animal_requests';
-
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
     
     public function user()
     {
