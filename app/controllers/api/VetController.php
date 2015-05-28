@@ -20,11 +20,6 @@ class VetController extends \BaseController
             'result' => $this->vetRepository->all()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
     public function store() // POST
     {
         $input = \Input::all();
@@ -45,24 +40,12 @@ class VetController extends \BaseController
             ->header('Location', \URL::route('api.user.show', [$user->id]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function show($id) // GET
     {
         return \Response::json(['error' => false,
             'result' => $this->vetRepository->getVetDetails($id)]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function update($id) // PUT
     {
         $input = \Input::all();
@@ -106,20 +89,11 @@ class VetController extends \BaseController
             'result' => $this->vetRepository->get($id)]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function destroy($id) // DELETE
     {
         $this->vetRepository->delete($id);
 
         return \Response::json(['error' => false]);
     }
-
-
-
 
 }

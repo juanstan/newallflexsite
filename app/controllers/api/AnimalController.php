@@ -3,7 +3,6 @@
 use Entities\User;
 use Entities\Animal;
 use Repositories\AnimalRepositoryInterface;
-use Repositories\UserRepositoryInterface;
 
 class AnimalController extends \BaseController
 {
@@ -25,11 +24,6 @@ class AnimalController extends \BaseController
             'result' => $this->animalRepository->all()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
     public function store() // POST
     {
         $this->animalRepository->setUser($this->authUser);
@@ -52,12 +46,6 @@ class AnimalController extends \BaseController
             ->header('Location', \URL::route('api.animal.show', [$animal->id]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function show($id) // GET
     {
         $this->animalRepository->setUser($this->authUser);

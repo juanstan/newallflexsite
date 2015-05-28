@@ -1,8 +1,6 @@
 <?php namespace Api;
 
-use Entities\Device;
 use Repositories\DeviceRepositoryInterface;
-use Repositories\UserRepositoryInterface;
 
 class DeviceController extends \BaseController
 {
@@ -25,11 +23,6 @@ class DeviceController extends \BaseController
             'result' => $this->deviceRepository->all()]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
     public function store() // POST
     {
         $this->deviceRepository->setUser($this->authUser);
@@ -52,13 +45,6 @@ class DeviceController extends \BaseController
             ->header('Location', \URL::route('api.device.show', [$animal->id]));
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function show($id) // GET
     {
         $this->deviceRepository->setUser($this->authUser);
@@ -67,13 +53,6 @@ class DeviceController extends \BaseController
             'result' => $this->deviceRepository->get($id)]);
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function update($id) // PUT
     {
         $this->deviceRepository->setUser($this->authUser);
@@ -93,13 +72,5 @@ class DeviceController extends \BaseController
         return \Response::json(['error' => false,
             'result' => $this->deviceRepository->get($id)]);
     }
-
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
 
 }

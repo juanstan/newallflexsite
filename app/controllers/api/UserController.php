@@ -16,11 +16,6 @@ class UserController extends \BaseController
         $this->authUser = \Auth::user()->get();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
     public function store() // POST
     {
         $input = \Input::all();
@@ -41,12 +36,6 @@ class UserController extends \BaseController
             ->header('Location', \URL::route('api.user.show', [$user->id]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function show($id) // GET
     {
 
@@ -55,12 +44,6 @@ class UserController extends \BaseController
             'result' => $this->userRepository->getUserDetails($id)]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function update($id) // PUT
     {
 
@@ -109,12 +92,6 @@ class UserController extends \BaseController
             'result' => $this->userRepository->get($id)]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function destroy($id) // DELETE
     {
 

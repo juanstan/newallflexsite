@@ -1,6 +1,5 @@
 <?php namespace Api;
 
-use League\Geotools\Coordinate\Ellipsoid;
 use Toin0u\Geotools\Facade\Geotools;
 use Entities\Vet;
 
@@ -16,40 +15,6 @@ class VetSearchController extends \BaseController
             'result' => $vet->toArray()),
             200
         );
-
-    }
-
-    public function getLocation()
-    {
-       // \Iseed::generateSeed('vets');
-//        $vets = Vet::all();
-//        foreach($vets as $vet) {
-//            if($vet->latitude == null && $vet->longitude == null) {
-//                if($vet->city == '') {
-//                    $vet->delete();
-//                }
-//                else {
-//                    $location = $vet->company_name . ', ' . $vet->city . ', UK';
-//                    $a = geocode($location);
-//
-//                    $vet->latitude = $a[0];
-//                    $vet->longitude = $a[1];
-//
-//                    $vet->save();
-//                }
-//
-//            }
-//        }
-//        foreach($vets as $vet) {
-//            $vet->address_1 = '100 Dummy Street';
-//            $vet->address_2 = 'Fake lane';
-//            $vet->contact_name = 'Vet McVetison';
-//            $vet->county = 'Vetishire';
-//            $vet->zip = 'CB500TV';
-//            $vet->email_address = 'mcvetison@iownallthevets.com';
-//            $vet->fax = '012345678910';
-//            $vet->save();
-//        }
 
     }
 

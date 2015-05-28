@@ -2,7 +2,6 @@
 
 use Entities\Vet\Token;
 use Repositories\VetRepositoryInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class VetAuthController extends \BaseController
 {

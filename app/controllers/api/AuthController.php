@@ -2,7 +2,6 @@
 
 use Entities\User\Token;
 use Repositories\UserRepositoryInterface;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AuthController extends \BaseController
 {
@@ -22,11 +21,6 @@ class AuthController extends \BaseController
         if ($validator->fails()) {
             return \Response::json(['error' => true, 'errors' => $validator->messages()]);
         }
-
-//		if(\Auth::validate($input) == false)
-//		{
-//			return \Response::json(['error' => true, 'errors' => ['password' => ['The password is incorrect']]]);
-//		}
 
         $user = $this->userRepository->getByEmailForLogin($input['email_address']);
 
