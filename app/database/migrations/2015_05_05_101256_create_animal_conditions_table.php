@@ -18,6 +18,7 @@ class CreateAnimalConditionsTable extends Migration {
 			$table->integer('animal_id')->nullable();
 			$table->integer('condition_id')->nullable();
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

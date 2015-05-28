@@ -35,6 +35,7 @@ class CreateVetsTable extends Migration {
 			$table->integer('confirmed')->nullable();
 			$table->string('confirmation_code')->nullable();
 			$table->string('remember_token')->nullable();
+			$table->softDeletes();
 		});
 	}
 

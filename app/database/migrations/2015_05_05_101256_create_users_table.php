@@ -28,6 +28,7 @@ class CreateUsersTable extends Migration {
 			$table->string('remember_token', 100)->nullable();
 			$table->string('confirmation_code')->nullable();
 			$table->integer('confirmed')->nullable();
+			$table->softDeletes();
 		});
 	}
 

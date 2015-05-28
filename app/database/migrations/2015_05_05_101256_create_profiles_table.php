@@ -22,6 +22,7 @@ class CreateProfilesTable extends Migration {
 			$table->string('access_token_secret')->nullable();
 			$table->timestamps();
 			$table->string('type')->nullable();
+			$table->softDeletes();
 		});
 	}
 

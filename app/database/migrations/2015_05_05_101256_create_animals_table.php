@@ -26,6 +26,7 @@ class CreateAnimalsTable extends Migration {
 			$table->integer('vet_id')->nullable();
 			$table->integer('user_id')->nullable();
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

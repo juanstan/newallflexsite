@@ -18,6 +18,7 @@ class CreateSensorReadingSymptomsTable extends Migration {
 			$table->integer('reading_id')->nullable();
 			$table->integer('symptom_id')->nullable();
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

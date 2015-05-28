@@ -23,6 +23,7 @@ class CreateSensorReadingsTable extends Migration {
 			$table->integer('device_id')->nullable();
 			$table->integer('animal_id')->nullable();
 			$table->timestamps();
+			$table->softDeletes();
 		});
 	}
 

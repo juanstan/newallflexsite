@@ -27,6 +27,7 @@ class CreateAnimalRequestsTable extends Migration {
 			$table->timestamps();
 			$table->dateTime('approval_date')->nullable();
 			$table->dateTime('expiry_date')->nullable();
+			$table->softDeletes();
 		});
 	}
 
