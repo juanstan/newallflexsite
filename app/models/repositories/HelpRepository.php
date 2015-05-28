@@ -1,9 +1,5 @@
 <?php namespace Repositories;
 
-use Entities\Help;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-
 class HelpRepository extends AbstractRepository implements HelpRepositoryInterface
 {
     protected $classname = 'Entities\Help';
@@ -30,9 +26,6 @@ class HelpRepository extends AbstractRepository implements HelpRepositoryInterfa
     public function create($input)
     {
 
-        /**
-         * @var \Entities\Device
-         */
         $symptom = parent::create($input);
 
         $symptom->reading()->associate($this->reading);

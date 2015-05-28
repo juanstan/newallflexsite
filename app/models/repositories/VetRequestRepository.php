@@ -1,9 +1,5 @@
 <?php namespace Repositories;
 
-use Entities\Animal\Request;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-
 class VetRequestRepository extends AbstractRepository implements VetRequestRepositoryInterface
 {
     protected $classname = 'Entities\Animal\Request';
@@ -43,7 +39,6 @@ class VetRequestRepository extends AbstractRepository implements VetRequestRepos
 
         if($this->user)
         {
-            // set access
             $userrequest->user()->associate($this->user);
             $userrequest->save();
         }
@@ -59,7 +54,6 @@ class VetRequestRepository extends AbstractRepository implements VetRequestRepos
             'animal_id' => ['required','exists:animals,id'],
         ]);
     }
-
 
     public function getUpdateValidator($input)
     {

@@ -1,7 +1,6 @@
 <?php namespace Repositories;
 
 use Entities\Vet;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class VetRepository extends AbstractRepository implements VetRepositoryInterface
 {

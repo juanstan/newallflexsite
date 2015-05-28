@@ -1,7 +1,6 @@
 <?php namespace Repositories;
 
 use Entities\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
