@@ -21,7 +21,7 @@ class VetSearchController extends \BaseController
 
     public function getLocation()
     {
-        //\Iseed::generateSeed('vets');
+       // \Iseed::generateSeed('vets');
 //        $vets = Vet::all();
 //        foreach($vets as $vet) {
 //            if($vet->latitude == null && $vet->longitude == null) {
@@ -40,6 +40,17 @@ class VetSearchController extends \BaseController
 //
 //            }
 //        }
+//        foreach($vets as $vet) {
+//            $vet->address_1 = '100 Dummy Street';
+//            $vet->address_2 = 'Fake lane';
+//            $vet->contact_name = 'Vet McVetison';
+//            $vet->county = 'Vetishire';
+//            $vet->zip = 'CB500TV';
+//            $vet->email_address = 'mcvetison@iownallthevets.com';
+//            $vet->fax = '012345678910';
+//            $vet->save();
+//        }
+
     }
 
     public function postLocation()
