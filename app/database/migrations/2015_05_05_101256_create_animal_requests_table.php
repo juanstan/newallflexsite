@@ -18,7 +18,7 @@ class CreateAnimalRequestsTable extends Migration {
 			$table->integer('vet_id')->nullable();
 			$table->integer('user_id')->nullable();
 			$table->integer('animal_id')->nullable();
-			$table->integer('approved')->nullable()->default(0);
+			$table->integer('approved')->nullable()->default(1);
 			$table->integer('request_type')->nullable();
 			$table->text('request_reason', 65535)->nullable();
 			$table->text('response_reason', 65535)->nullable();

@@ -10,10 +10,10 @@ class AnimalRequestRepository extends AbstractRepository implements AnimalReques
     
     protected $repository;
     
-    public function __construct(VetRepositoryInterface $vrepository, UserRepositoryInterface $repository)
+    public function __construct(VetRepositoryInterface $vetRepositoryInterface, UserRepositoryInterface $userRepositoryInterface)
     {
-        $this->repository = $repository;
-        $this->vrepository = $vrepository;
+        $this->user = $userRepositoryInterface;
+        $this->vet = $vetRepositoryInterface;
     }
 
     public function all()
@@ -25,7 +25,7 @@ class AnimalRequestRepository extends AbstractRepository implements AnimalReques
 
         return parent::all();
     }
-    
+
     public function get($id)
     {
         if($id)
@@ -34,36 +34,13 @@ class AnimalRequestRepository extends AbstractRepository implements AnimalReques
         }
 
     }
-    
-    public function create($input)
-    {
-
-            /**
-            * @var \Entities\Device
-            */
-            
-            
-            $userrequest = parent::create($input);
-            
-            $userrequest->request_type = 0;
-
-            if($this->user)
-            {
-                // set access
-                $userrequest->user()->associate($this->user);
-                $userrequest->save();
-            }        
-
-        return $userrequest;
-    }
 
     public function getCreateValidator($input)
     {
         return \Validator::make($input,
         [
-            'vet_id' => ['required','exists:vets,id'],
             'animal_id' => ['required','exists:animals,id'],
-            'request_reason'     => ['required'],
+            'vet_id' => ['required','exists:vets,id'],
         ]);
     }
 
@@ -72,18 +49,7 @@ class AnimalRequestRepository extends AbstractRepository implements AnimalReques
     {
         return \Validator::make($input,
         [
-            'vet_id' => ['required','exists:vets,id'],
             'animal_id' => ['required','exists:animals,id'],
-            'request_reason'     => ['required'],
-        ]);
-    }
-    
-    public function getApprovalValidator($input)
-    {
-        return \Validator::make($input,
-        [
-            'approved' => ['required'],
-            'response_reason' => ['required'],
         ]);
     }
     
@@ -92,6 +58,22 @@ class AnimalRequestRepository extends AbstractRepository implements AnimalReques
         $this->user = is_numeric($user) ? $this->repository->get($user) : $user;
 
         return $this;
+    }
+
+    public function create($input)
+    {
+
+        $userRequest = parent::create($input);
+
+
+        if($this->user)
+        {
+            // set access
+            $userRequest->user()->associate($this->user);
+            $userRequest->save();
+        }
+
+        return $userRequest;
     }
     
 }

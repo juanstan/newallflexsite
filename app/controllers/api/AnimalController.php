@@ -9,7 +9,6 @@ class AnimalController extends \BaseController
 {
 
     protected $authUser;
-
     protected $animalRepository;
 
     public function __construct(AnimalRepositoryInterface $animalRepository)
@@ -67,13 +66,6 @@ class AnimalController extends \BaseController
             'result' => $this->animalRepository->get($id)]);
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function update($id) // PUT
     {
         $this->animalRepository->setUser($this->authUser);
@@ -94,13 +86,6 @@ class AnimalController extends \BaseController
             'result' => $this->animalRepository->get($id)]);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function destroy($id) // DELETE
     {
         $this->animalRepository->setUser($this->authUser);

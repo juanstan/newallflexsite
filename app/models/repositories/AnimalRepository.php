@@ -10,9 +10,9 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
     
     protected $repository;
     
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(UserRepositoryInterface $userRepositoryInterface)
     {
-        $this->repository = $repository;
+        $this->user = $userRepositoryInterface;
     }
 
     public function all()

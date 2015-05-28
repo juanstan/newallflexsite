@@ -11,7 +11,9 @@ class Request extends \Eloquent implements UserInterface, RemindableInterface {
 	use UserTrait, RemindableTrait, SoftDeletingTrait;
 
     protected $dates = ['deleted_at'];
-    
+
+    protected $primaryKey = 'animal_request_id';
+
     protected $hidden = [
         'created_at',
         'updated_at'

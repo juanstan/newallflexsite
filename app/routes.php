@@ -134,12 +134,6 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
     Route::resource('user', 'UserController', ['only' => ['store']]); // Done
     Route::post('vet/login', ['as' => 'api.vet.login', 'uses' => 'VetAuthController@postLogin']); // Done
     Route::resource('vet', 'VetController', ['only' => ['store', 'index', 'show']]); // Done
-    Route::controller('vet/search', 'VetSearchController', array(
-        'getAll'=>'api.vet.search.all',
-        'postLocation'=>'api.vet.search.location',
-        'getLocation'=>'api.vet.search.location',
-        'postName'=>'api.vet.search.name'
-    ));
     Route::group(['before' => 'auth.api'], function () {
         Route::post('user/logout', ['as' => 'api.user.logout', 'uses' => 'AuthController@postLogout']); // Done
         Route::resource('user', 'UserController', ['only' => ['show', 'update', 'destroy']]); // Done
@@ -148,17 +142,20 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
         Route::resource('symptoms', 'SymptomController'); // Done
         Route::resource('breeds', 'BreedController'); // Done
         Route::resource('conditions', 'ConditionController'); // Done
+        Route::resource('request', 'AnimalRequestController');
         Route::resource('animal/{animal_id}/condition', 'AnimalConditionController');  // Done
         Route::resource('animal/{animal_id}/reading', 'AnimalReadingController'); //  Done
         Route::resource('animal/{animal_id}/reading/{reading_id}/symptom', 'AnimalReadingSymptomController'); // Done
-        Route::resource('user/request', 'VetRequestController'); // Needs not allow muliple requests for same animal
-
-
+        Route::controller('vet/search', 'VetSearchController', array(
+            'getAll'=>'api.vet.search.all',
+            'postLocation'=>'api.vet.search.location',
+            'getLocation'=>'api.vet.search.location',
+            'postName'=>'api.vet.search.name',
+        ));
     });
 
     Route::group(['before' => 'vet.auth.api'], function () {
         Route::post('vet/logout', ['as' => 'api.vet.logout', 'uses' => 'VetAuthController@postLogout']); //
-        Route::resource('vet/request', 'AnimalRequestController'); // veiw all requests and singular requests
         Route::resource('vet/animal', 'AnimalController', ['only' => ['show', 'index']]); // View all vet animals
         Route::resource('vet/animal.reading', 'AnimalReadingController', ['only' => ['show', 'update', 'index']]);
         Route::resource('vet/animal.reading.symptom', 'AnimalReadingSymptomController'); //  done
