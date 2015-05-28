@@ -13,9 +13,10 @@ class AnimalCondition extends \Eloquent implements UserInterface, RemindableInte
     protected $dates = ['deleted_at'];
     
     protected $hidden = [
-            'created_at',
-            'updated_at'
-        ];
+        'created_at',
+        'updated_at',
+        'deleted_at'
+    ];
 
     protected $fillable = [
         'animal_id',

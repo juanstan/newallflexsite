@@ -8,6 +8,10 @@ class Profile extends \Eloquent {
 
     protected $dates = ['deleted_at'];
 
+    protected $hidden = [
+        'deleted_at',
+    ];
+
     public function user()
     {
         return $this->belongsTo('Entities\User');

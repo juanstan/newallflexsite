@@ -18,7 +18,8 @@ class Vet extends \Eloquent implements UserInterface, RemindableInterface {
         'devices',
         'access',
         'tokens',
-        'confirmation_code'
+        'confirmation_code',
+        'deleted_at'
     ];
 
     protected $fillable = [

@@ -15,8 +15,9 @@ class SensorReading extends \Eloquent implements UserInterface, RemindableInterf
     protected $hidden = [
         'created_at',
         'updated_at',
-        'expires_at'
-        ];
+        'expires_at',
+        'deleted_at'
+    ];
 
     protected $fillable = [
         'animal_id',

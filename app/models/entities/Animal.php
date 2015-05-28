@@ -14,8 +14,9 @@ class Animal extends \Eloquent implements UserInterface, RemindableInterface {
     
     protected $hidden = [
         'created_at',
-        'updated_at'
-        ];
+        'updated_at',
+        'deleted_at'
+    ];
 
     protected $fillable = [
         'name',

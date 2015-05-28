@@ -8,10 +8,6 @@ use Illuminate\Auth\Reminders\RemindableInterface;
 class Symptom extends \Eloquent implements UserInterface, RemindableInterface {
 
     use UserTrait, RemindableTrait;
-    
-    protected $hidden = [
-        
-    ];
 
     protected $fillable = [
         'name',

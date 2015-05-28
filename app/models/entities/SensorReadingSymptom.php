@@ -13,8 +13,8 @@ class SensorReadingSymptom extends \Eloquent implements UserInterface, Remindabl
     protected $dates = ['deleted_at'];
     
     protected $hidden = [
-        
-        ];
+        'deleted_at'
+    ];
 
     protected $fillable = [
         'reading_id',

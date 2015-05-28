@@ -16,7 +16,8 @@ class Request extends \Eloquent implements UserInterface, RemindableInterface {
 
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
+        'deleted_at'
         ];
 
     protected $fillable = [
@@ -24,11 +25,6 @@ class Request extends \Eloquent implements UserInterface, RemindableInterface {
         'user_id',
         'animal_id',
         'approved',
-        'request_type',
-        'request_reason',
-        'response_reason',
-        'expiry_type',
-        'expiry_days'       
     ];
 
 	/**
