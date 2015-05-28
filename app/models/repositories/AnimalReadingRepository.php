@@ -63,7 +63,7 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
     {
         return \Validator::make($input,
         [
-            'temperature' => ['sometimes','required'],
+            'average' => ['sometimes','required'],
         ]);
     }
     

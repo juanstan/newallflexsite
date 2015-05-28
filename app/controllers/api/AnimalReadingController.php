@@ -32,11 +32,6 @@ class AnimalReadingController extends \BaseController
 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
     public function store($animal_id) // POST
     {
 
@@ -67,13 +62,6 @@ class AnimalReadingController extends \BaseController
 
     }
 
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function show($animal_id, $id) // GET
     {
         $this->animalRepository->setUser($this->authUser);
@@ -86,13 +74,6 @@ class AnimalReadingController extends \BaseController
             'result' => $this->animalReadingRepository->get($id)]);
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
     public function update($animal_id, $id) // PUT
     {
 
@@ -119,12 +100,5 @@ class AnimalReadingController extends \BaseController
             'result' => $this->animalReadingRepository->get($id)]);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int $id
-     * @return Response
-     */
 
 }
