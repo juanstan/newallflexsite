@@ -19,6 +19,29 @@ class VetSearchController extends \BaseController
 
     }
 
+    public function getLocation()
+    {
+        //\Iseed::generateSeed('vets');
+//        $vets = Vet::all();
+//        foreach($vets as $vet) {
+//            if($vet->latitude == null && $vet->longitude == null) {
+//                if($vet->city == '') {
+//                    $vet->delete();
+//                }
+//                else {
+//                    $location = $vet->company_name . ', ' . $vet->city . ', UK';
+//                    $a = geocode($location);
+//
+//                    $vet->latitude = $a[0];
+//                    $vet->longitude = $a[1];
+//
+//                    $vet->save();
+//                }
+//
+//            }
+//        }
+    }
+
     public function postLocation()
     {
         $location = \Input::get('location');

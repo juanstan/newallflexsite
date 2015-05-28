@@ -37,6 +37,10 @@
             source: '/user/register/pet/breeds',
             minLength:1,
         });
+        $( "#vet-search" ).autocomplete({
+            source: '/user/dashboard/vet',
+            minLength:1,
+        });
         $(function(){ // this will be called when the DOM is ready
             $('#vetsearch').keyup(function() {
                 $('.vetname').show();

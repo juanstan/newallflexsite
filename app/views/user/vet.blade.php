@@ -76,7 +76,7 @@
         @endforeach
         <div class="col-md-4" >
             <div class="tab-content ">
-                <div  class="tab-pane active fade in" id="newPet">
+                <div  class="tab-pane  fade in" id="newPet">
                     <div class="jumbotron dashboard add-new-pet large-top-buffer" >
                         <div class="row" >
                             <div class="col-md-12 text-center" >
@@ -93,7 +93,7 @@
                         </div>
                     </div>
                 </div>
-                <div  class="tab-pane fade in" id="newPetDetails">
+                <div  class="tab-pane active fade in" id="newPetDetails">
                     <div class="jumbotron dashboard large-top-buffer" >
                         <div class="top-buffer col-md-12 col-centered">
                             <a href="#newPet" data-toggle="pill" data-target="" >
@@ -102,6 +102,22 @@
                             <div class="text-center" >
                             <p class="top-buffer">{{ Lang::get('general.To find your vet practice, search below') }}</p>
                             {{ HTML::image('/images/arrow.png', '', array('class' => '')) }}
+                            </div>
+
+                            <div class="btn-group btn-group-justified top-buffer vet-search" role="group" aria-label="...">
+                                <div class="btn-group" role="presentation">
+                                    <button type="button" class="btn active btn-default">Location</button>
+                                </div>
+                                <div class="btn-group" role="presentation">
+                                    <button type="button" class="btn btn-default">Vet Practice</button>
+                                </div>
+                            </div>
+
+                            <div class="input-group">
+                                {{ Form::text('vet-search', '', array('class' => 'form-control text-left', 'id' => 'vet-search' )) }}
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+                                </div>
                             </div>
                             <div class="input-group top-buffer">
                                 <span class="input-group-addon">
