@@ -66,7 +66,7 @@ class AnimalRequestController extends \BaseController
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->animalRequestRepository->findOrFail($id)]);
+            'result' => $this->animalRequestRepository->get($id)]);
     }
 
     public function show($id) // GET
@@ -74,7 +74,7 @@ class AnimalRequestController extends \BaseController
         $this->animalRequestRepository->setUser($this->authUser);
 
         return \Response::json(['error' => false,
-            'result' => $this->animalRequestRepository->findOrFail($id)]);
+            'result' => $this->animalRequestRepository->get($id)]);
     }
 
     public function destroy($id) // DELETE
