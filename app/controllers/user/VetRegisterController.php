@@ -22,7 +22,7 @@ class VetRegisterController extends \BaseController
         $this->vetRepository = $vetRepository;
         $this->userRepository = $userRepository;
         $this->beforeFilter('csrf', array('on' => 'post'));
-        $this->beforeFilter('auth', array('only' => array('getIndex', 'getAdd', 'postNew')));
+        $this->beforeFilter('auth', array('only' => array('getIndex', 'getAdd', 'getAddVet')));
     }
 
     public function getIndex()

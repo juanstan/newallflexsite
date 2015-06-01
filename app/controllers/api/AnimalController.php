@@ -51,7 +51,7 @@ class AnimalController extends \BaseController
         $this->animalRepository->setUser($this->authUser);
 
         return \Response::json(['error' => false,
-            'result' => $this->animalRepository->get($id)]);
+            'result' => $this->animalRepository->findOrFail($id)]);
     }
 
     public function update($id) // PUT
@@ -71,7 +71,7 @@ class AnimalController extends \BaseController
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->animalRepository->get($id)]);
+            'result' => $this->animalRepository->findOrFail($id)]);
     }
 
     public function destroy($id) // DELETE
@@ -79,7 +79,7 @@ class AnimalController extends \BaseController
         $this->animalRepository->setUser($this->authUser);
 
         $this->animalRepository->delete($id);
-        return \Response::json(['error' => false]);
+        return \Response::json(['error' => false, 'result' => 'Item removed']);
     }
 
 }

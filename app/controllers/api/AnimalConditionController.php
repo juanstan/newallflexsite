@@ -26,7 +26,7 @@ class AnimalConditionController extends \BaseController
 
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->get($animal_id);
+        $animal = $this->animalRepository->findOrFail($animal_id);
 
         $this->animalConditionRepository->setAnimal($animal);
 
@@ -45,7 +45,7 @@ class AnimalConditionController extends \BaseController
 
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->get($animal_id);
+        $animal = $this->animalRepository->findOrFail($animal_id);
 
         $this->animalConditionRepository->setAnimal($animal);
 
@@ -81,12 +81,12 @@ class AnimalConditionController extends \BaseController
     {
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->get($animal_id);
+        $animal = $this->animalRepository->findOrFail($animal_id);
 
         $this->animalConditionRepository->setAnimal($animal);
 
         return \Response::json(['error' => false,
-            'result' => $this->animalConditionRepository->get($id)]);
+            'result' => $this->animalConditionRepository->findOrFail($id)]);
     }
 
 
@@ -101,7 +101,7 @@ class AnimalConditionController extends \BaseController
 
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->get($animal_id);
+        $animal = $this->animalRepository->findOrFail($animal_id);
 
         $this->animalConditionRepository->setAnimal($animal);
 
@@ -118,7 +118,7 @@ class AnimalConditionController extends \BaseController
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->animalConditionRepository->get($id)]);
+            'result' => $this->animalConditionRepository->findOrFail($id)]);
     }
 
 
@@ -132,7 +132,7 @@ class AnimalConditionController extends \BaseController
     {
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->get($animal_id);
+        $animal = $this->animalRepository->findOrFail($animal_id);
 
         $this->animalConditionRepository->setAnimal($animal);
 
