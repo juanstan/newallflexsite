@@ -37,7 +37,7 @@ class AnimalReadingController extends \BaseController
 
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->findOrFail($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
         $this->animalReadingRepository->setAnimal($animal);
 

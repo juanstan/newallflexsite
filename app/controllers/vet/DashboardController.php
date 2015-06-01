@@ -208,7 +208,8 @@ class DashboardController extends \BaseController {
             \App::abort(500);
         }
 
-        return \Redirect::route('vet.dashboard')->with('success', 'Settings updated');
+        return \Redirect::route('vet.dashboard')
+            ->with('success', 'Settings updated');
     }
 
     public function postReadingUpload()
@@ -219,7 +220,7 @@ class DashboardController extends \BaseController {
         $rules = array('file' => 'required|max:4000');
         $validator = \Validator::make($file, $rules);
         if ($validator->fails()) {
-            return \Redirect::route('vet.register.reading')->withInput()
+            return \Redirect::route('vet.dashboard')->withInput()
                 ->withErrors($validator);
         }
         else {
@@ -295,11 +296,11 @@ class DashboardController extends \BaseController {
                         $reading->vets()->attach($this->authVet);
                     }
                 }
-                return \Redirect::route('vet.register.reading');
+                return \Redirect::route('vet.dashboard');
             }
             else {
-                \Session::flash('error', 'uploaded file is not valid');
-                return \Redirect::route('vet.register.reading');
+                return \Redirect::route('vet.dashboard')
+                    ->with('error', 'uploaded file is not valid');
             }
         }
     }

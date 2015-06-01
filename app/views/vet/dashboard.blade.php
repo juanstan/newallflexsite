@@ -10,6 +10,11 @@
             {{ Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) }}
             {{ Form::close() }}
 
+            {{ Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.readingUpload', 'method' => 'post')) }}
+            {{ Form::file('file') }}
+            {{ Form::submit() }}
+            {{ Form::close() }}
+
         </div>
     </div>
     <div class="row col-centered float-none" >

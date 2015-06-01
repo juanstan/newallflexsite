@@ -1,7 +1,11 @@
 <?php namespace User;
 
 use Entities\Animal;
+use Entities\SensorReading;
+use Entities\SensorReadingSymptom;
 use Entities\User;
+use Entities\Animal\Request;
+use Entities\Profile;
 use Repositories\AnimalRepositoryInterface;
 use Repositories\AnimalReadingRepositoryInterface;
 use Repositories\AnimalReadingSymptomRepositoryInterface;
@@ -134,19 +138,19 @@ class AuthController extends \BaseController
     public function getDelete()
     {
         $id = $this->authUser->id;
-        \DB::table('animal_requests')->where('user_id', '=', $id)->delete();
-        \DB::table('profiles')->where('user_id', '=', $id)->delete();
-        $animals = \DB::table('animals')->where('user_id', '=', $id)->get();
+        Request::where('user_id', '=', $id)->firstOrFail()->delete();
+        Profile::where('user_id', '=', $id)->firstOrFail()->delete();
+        $animals = Animal::where('user_id', '=', $id)->firstOrFail();
         foreach ($animals as $animal) {
             $animal_id = $animal->id;
-            $sensor_readings = \DB::table('sensor_readings')->where('animal_id', '=', $animal_id)->get();
+            $sensor_readings = SensorReading::where('animal_id', '=', $animal_id)->firstOrFail();
             foreach ($sensor_readings as $sensor_reading) {
                 $sensor_reading_id = $sensor_reading->id;
-                \DB::table('sensor_reading_symptoms')->where('reading_id', '=', $sensor_reading_id)->delete();
+                SensorReadingSymptom::where('reading_id', '=', $sensor_reading_id)->firstOrFail()->delete();
             }
-            \DB::table('sensor_readings')->where('animal_id', '=', $animal_id)->delete();
+            SensorReading::where('animal_id', '=', $animal_id)->firstOrFail()->delete();
         }
-        \DB::table('animals')->where('user_id', '=', $id)->delete();
+        Animal::where('user_id', '=', $id)->firstOrFail()->delete();
         $this->authUser->delete();
         return \Redirect::route('user')->with('success', 'Your account was successfully deleted');
     }

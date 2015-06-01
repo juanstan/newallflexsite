@@ -150,7 +150,7 @@ class AuthController extends \BaseController {
 
     public function getDelete() {
         $id =  $this->authVet->id;
-        \DB::table('animal_requests')->where('vet_id', '=', $id)->delete();
+        Request::where('vet_id', '=', $id)->delete();
         \DB::table('vet_readings')->where('vet_id', '=', $id)->delete();
         $this->authVet->delete();
         return \Redirect::route('vet')->with('success', 'Your account was successfully deleted');

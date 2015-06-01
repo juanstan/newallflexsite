@@ -3,14 +3,10 @@
 use Entities\Animal;
 use Entities\User;
 use Entities\Vet;
-use Entities\SensorReading;
-use Entities\SensorReadingSymptom;
-use Entities\Symptom;
 use Repositories\AnimalRepositoryInterface;
 use Repositories\AnimalReadingRepositoryInterface;
 use Repositories\AnimalReadingSymptomRepositoryInterface;
 use Repositories\VetRepositoryInterface;
-use League\Csv\Reader;
 
 class RegisterController extends \BaseController {
     
