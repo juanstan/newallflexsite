@@ -1,11 +1,9 @@
 <?php namespace Api;
 
-use Entities\Animal\Request;
 use Entities\User;
 use Entities\Animal;
 use Repositories\AnimalRepositoryInterface;
 use Repositories\AnimalRequestRepositoryInterface;
-use Repositories\UserRepositoryInterface;
 
 class AnimalRequestController extends \BaseController
 {

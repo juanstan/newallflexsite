@@ -3,7 +3,6 @@
 use Entities\Animal;
 use Entities\Breed;
 use Repositories\AnimalRepositoryInterface;
-use Repositories\UserRepositoryInterface;
 
 class PetRegisterController extends \BaseController
 {
