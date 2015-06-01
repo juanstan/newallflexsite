@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="<?= csrf_token() ?>">
     <title></title>
 
       <!-- Stylesheets -->
@@ -29,6 +30,42 @@
   @include('layouts/core/javascript')
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
     <script>
+
+        $("#searchVetName").keyup(function(e){
+            var q = $("#searchVetName").val();
+            $.getJSON("/user/dashboard/vet-search-location",
+                    {
+                        term: q,
+                    },
+                    function(data) {
+                        $("#results").empty();
+                        $("#results").append("<p>Results for <b>" + q + "</b></p>");
+                        $.each(data, function(i,item){
+                            $("#results").append("<div class='row vetname small-top-buffer' data-text='" + item.company_name + "' ><div class='col-xs-3 small-padding' ><img src='/images/vet-image.png' class='img-responsive img-circle' width='100%' /></div><div class='col-xs-6' ><h4 class='top-none bottom-none'>" + item.company_name + "</h4><small class='top-none'>" + item.city + "</small></div><div class='col-xs-3 small-padding' ><a href='/user/dashboard/addVet/" + item.id + "' ><button class='btn-block btn btn-default btn-md' >Add</button></a></div></div>");
+                        });
+                    });
+        });
+
+
+        $("#searchVetLocation").keyup(function(e){
+            var q = $("#searchVetLocation").val();
+            $.getJSON("/user/dashboard/vet-search-location",
+                    {
+                        term: q,
+                    },
+                    function(data) {
+                        $("#results").empty();
+                        $("#results").append("<p>Results for <b>" + q + "</b></p>");
+                        $.each(data, function(i,item){
+                            $("#results").append("<div class='row vetname small-top-buffer' data-text='" + item.company_name + "' ><div class='col-xs-3 small-padding' ><img src='/images/vet-image.png' class='img-responsive img-circle' width='100%' /></div><div class='col-xs-6' ><h4 class='top-none bottom-none'>" + item.company_name + "</h4><small class='top-none'>" + item.city + "</small></div><div class='col-xs-3 small-padding' ><a href='/user/dashboard/addVet/" + item.id + "' ><button class='btn-block btn btn-default btn-md' >Add</button></a></div></div>");
+                        });
+                    });
+        });
+
+
+
+
+        //        <a href='http://en.wikipedia.org/wiki/" + encodeURIComponent(item.title) + "'>" + item.title + "</a><br>" + item.snippet + "<br><br>
         $('.breed-list').autocomplete({
             source: '/user/register/pet/breeds',
             minLength:1,
@@ -77,10 +114,12 @@
                 .end()
                 .children( '.dropdown-toggle' );
         $target.closest('form').submit();
-//        .dropdown( 'toggle' )
         return false;
 
     });
+
+
+
     </script>
     
 </html>

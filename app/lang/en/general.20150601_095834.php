@@ -1,19 +1,18 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/06/01 09:58:31 
+ Generated via "php artisan localization:missing" at 2015/05/20 08:46:23 
 *************************************************************************/
 
 return array (
   //============================== New strings to translate ==============================//
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/vet.blade.php
-  'Search in your location' => 'Search in your location',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/dashboard.blade.php
+  '1 unknown microchip found, would you like to create a new pet?' => '1 unknown microchip found, would you like to create a new pet?',
   //==================================== Translations ====================================//
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
   '+ Add' => '+ Add',
   '+ Add a pet' => '+ Add a pet',
   '+ Add another pet' => '+ Add another pet',
-  '1 unknown microchip found, would you like to create a new pet?' => '1 unknown microchip found, would you like to create a new pet?',
   '<i class="fa fa-cog"></i> Edit' => '<i class="fa fa-cog"></i> Edit',
   '<i class="fa fa-refresh"></i> Reset' => '<i class="fa fa-refresh"></i> Reset',
   '<i class="fa fa-search"></i> Find my vet' => '<i class="fa fa-search"></i> Find my vet',

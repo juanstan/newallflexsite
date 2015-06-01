@@ -14,5 +14,9 @@
             </a>
         </div>
         @endforeach
+            <input id="searchterm" name="term" type="text" /> <button id="search">search</button>
+        <div id="results" ></div>
+
+
     </div>
 @stop

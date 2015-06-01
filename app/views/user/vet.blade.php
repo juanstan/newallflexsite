@@ -77,7 +77,7 @@
         <div class="col-md-4" >
             <div class="tab-content ">
                 <div  class="tab-pane  fade in" id="newPet">
-                    <div class="jumbotron dashboard add-new-pet large-top-buffer" >
+                    <div class="jumbotron dashboard add-new-pet" >
                         <div class="row" >
                             <div class="col-md-12 text-center" >
                                 <a href="#newPetDetails" data-toggle="pill" data-target="" >
@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div  class="tab-pane active fade in" id="newPetDetails">
-                    <div class="jumbotron dashboard large-top-buffer" >
+                    <div class="jumbotron dashboard" >
                         <div class="top-buffer col-md-12 col-centered">
                             <a href="#newPet" data-toggle="pill" data-target="" >
                                 {{ Form::button('Cancel', array('class' => 'btn btn-file top-left btn-md')) }}
@@ -104,44 +104,37 @@
                             {{ HTML::image('/images/arrow.png', '', array('class' => '')) }}
                             </div>
 
-                            <div class="btn-group btn-group-justified top-buffer vet-search" role="group" aria-label="...">
-                                <div class="btn-group" role="presentation">
-                                    <button type="button" class="btn active btn-default">Location</button>
+                            <div role="tabpanel">
+
+
+                                <ul class="nav mobile-nav nav-pills">
+                                    <li class="active "><a href="#vetLocation" aria-controls="vetLocation" role="tab" data-toggle="tab">Location</a></li>
+                                    <li class="report-toggle"><a href="#vetName" aria-controls="vetName" role="tab" data-toggle="tab">Vet Practice</a></li>
+                                </ul>
+
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane" id="vetName">
+                                        <div class="input-group top-buffer">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-search"></i>
+                                            </span>
+                                            {{ Form::text('term', null, array('placeholder' => Lang::get('general.Search for vet'), 'id' => 'searchVetName', 'class' => 'form-control text-left', 'autocomplete' => 'off')) }}
+                                        </div>
                                 </div>
-                                <div class="btn-group" role="presentation">
-                                    <button type="button" class="btn btn-default">Vet Practice</button>
+                                <div role="tabpanel" class="tab-pane active" id="vetLocation">
+                                    <div class="input-group top-buffer">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                        {{ Form::text('term', null, array('placeholder' => Lang::get('general.Search in your location'), 'id' => 'searchVetLocation', 'class' => 'form-control text-left', 'autocomplete' => 'off')) }}
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="input-group">
-                                {{ Form::text('vet-search', '', array('class' => 'form-control text-left', 'id' => 'vet-search' )) }}
-                                <div class="input-group-btn">
-                                    <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
-                                </div>
                             </div>
-                            <div class="input-group top-buffer">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-search"></i>
-                                </span>
-                                {{ Form::text('vet-search', null, array('placeholder' => Lang::get('general.Search for vet'), 'id' => 'vetsearch', 'class' => 'form-control text-left', 'autocomplete' => 'off')) }}
-                            </div>
+
                             <div class="top-buffer" ></div>
-                            @foreach ($vets as $vet)
-                                <div class="row vetname small-top-buffer" data-text="{{ $vet->company_name }}">
-                                    <div class="col-xs-3 small-padding" >
-                                        {{ HTML::image(isset($vet->image_path) ? $vet->image_path : '/images/vet-image.png', $vet->company_name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
-                                    </div>
-                                    <div class="col-xs-6" >
-                                        <h4 class="top-none bottom-none">{{ $vet->company_name }}</h4>
-                                        <small class="top-none">{{ $vet->city }}</small>
-                                    </div>
-                                    <div class="col-xs-3 small-padding" >
-                                        <a href="{{ URL::route('user.dashboard.addVet', $vet->id) }}" >
-                                            {{ Form::button(Lang::get('general.Add'), array('class' => 'btn-block btn btn-default btn-md')) }}
-                                        </a>
-                                    </div>
-                                </div>
-                            @endforeach
+                            <div id="results" ></div>
                         </div>
                     </div>
                 </div>
