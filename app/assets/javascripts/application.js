@@ -9,7 +9,7 @@ $("#searchVetName").keyup(function(e){
                 $("#results").empty();
                 $("#results").append("<p>Results for <b>" + q + "</b></p>");
                 $.each(data, function (i, item) {
-                    $("#results").append("<div class='row vetname small-top-buffer' data-text='" + item.company_name + "' ><div class='col-xs-3 small-padding' ><img src='/images/vet-image.png' class='img-responsive img-circle' width='100%' /></div><div class='col-xs-6' ><h4 class='top-none bottom-none'>" + item.company_name + "</h4><small class='top-none'>" + item.city + "</small></div><div class='col-xs-3 small-padding' ><a href='/user/dashboard/addVet/" + item.id + "' ><button class='btn-block btn btn-default btn-md' >Add</button></a></div></div>");
+                    $("#results").append("<div class='row vetname small-top-buffer' data-text='" + item.company_name + "' ><div class='col-xs-3 small-padding' ><img src='/images/vet-image.png' class='img-responsive img-circle' width='100%' /></div><div class='col-xs-6' ><h4 class='top-none bottom-none'>" + item.company_name + "</h4><small class='top-none'>" + item.city + "</small></div><div class='col-xs-3 small-padding' ><a href='/user/dashboard/add-vet/" + item.id + "' ><button class='btn-block btn btn-default btn-md' >Add</button></a></div></div>");
                 });
             }
             else {
@@ -31,7 +31,7 @@ $("#searchVetLocation").keyup(function(e){
                 $("#results").empty();
                 $("#results").append("<p>Results for <b>" + q + "</b></p>");
                 $.each(data, function (i, item) {
-                    $("#results").append("<div class='row vetname small-top-buffer' data-text='" + item.company_name + "' ><div class='col-xs-3 small-padding' ><img src='/images/vet-image.png' class='img-responsive img-circle' width='100%' /></div><div class='col-xs-6' ><h4 class='top-none bottom-none'>" + item.company_name + "</h4><small class='top-none'>" + item.city + "</small></div><div class='col-xs-3 small-padding' ><a href='/user/dashboard/addVet/" + item.id + "' ><button class='btn-block btn btn-default btn-md' >Add</button></a></div></div>");
+                    $("#results").append("<div class='row vetname small-top-buffer' data-text='" + item.company_name + "' ><div class='col-xs-3 small-padding' ><img src='/images/vet-image.png' class='img-responsive img-circle' width='100%' /></div><div class='col-xs-6' ><h4 class='top-none bottom-none'>" + item.company_name + "</h4><small class='top-none'>" + item.city + "</small></div><div class='col-xs-3 small-padding' ><a href='/user/dashboard/add-vet/" + item.id + "' ><button class='btn-block btn btn-default btn-md' >Add</button></a></div></div>");
                 });
             }
             else {

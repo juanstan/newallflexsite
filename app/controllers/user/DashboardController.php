@@ -531,9 +531,15 @@ class DashboardController extends \BaseController
         $this->animalRepository->setUser($this->authUser);
         $animals = $this->animalRepository->all();
         foreach ($animals as $animal) {
-            Request::insert(
-                ['vet_id' => $id, 'user_id' => $userid, 'animal_id' => $animal->id, 'approved' => 1]
-            );
+            if (Request::where('vet_id', $id)->where('animal_id', $animal->id)->first() == null) {
+                Request::insert(
+                    ['vet_id' => $id, 'user_id' => $userid, 'animal_id' => $animal->id, 'approved' => 1]
+                );
+            }
+            else {
+                continue;
+            }
+
         }
         return \Redirect::route('user.dashboard.vet')->with('success', 'Vet added');
     }

@@ -1,6 +1,7 @@
 <?php namespace User;
 
 use Entities\Vet;
+use Entities\Animal\Request;
 use Entities\User;
 use Repositories\VetRepositoryInterface;
 use Repositories\UserRepositoryInterface;
@@ -40,11 +41,16 @@ class VetRegisterController extends \BaseController
     {
         $this->animalRepository->setUser($this->authUser);
         $userid = $this->authUser->id;
-        $pets = $this->animalRepository->all();
-        foreach ($pets as $pet) {
-            \DB::table('animal_requests')->insert(
-                ['vet_id' => $id, 'user_id' => $userid, 'animal_id' => $pet->id, 'approved' => 1]
-            );
+        $animals = $this->animalRepository->all();
+        foreach ($animals as $animal) {
+            if (Request::where('vet_id', $id)->where('animal_id', $animal->id)->first() == null) {
+                Request::insert(
+                    ['vet_id' => $id, 'user_id' => $userid, 'animal_id' => $animal->id, 'approved' => 1]
+                );
+            }
+            else {
+                continue;
+            }
         }
         return \Redirect::route('user.register.vet')->with('success', 'Vet added');
     }
