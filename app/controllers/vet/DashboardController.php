@@ -3,6 +3,7 @@
 use Entities\Animal;
 use Entities\Vet;
 use Entities\SensorReading;
+
 use Entities\SensorReadingSymptom;
 use Entities\Symptom;
 use Entities\Animal\Request;

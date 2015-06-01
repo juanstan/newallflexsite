@@ -28,9 +28,9 @@ class AnimalReadingSymptomController extends \BaseController
     {
 
         $this->animalRepository->setUser($this->authUser);
-        $animal = $this->animalRepository->findOrFail($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
         $this->animalReadingRepository->setAnimal($animal);
-        $reading = $this->animalReadingRepository->findOrFail($reading_id);
+        $reading = $this->animalReadingRepository->get($reading_id);
         $this->animalReadingSymptomRepository->setReading($reading);
 
         return \Response::json(['error' => false,
@@ -48,11 +48,11 @@ class AnimalReadingSymptomController extends \BaseController
 
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->findOrFail($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
         $this->animalReadingRepository->setAnimal($animal);
 
-        $reading = $this->animalReadingRepository->findOrFail($reading_id);
+        $reading = $this->animalReadingRepository->get($reading_id);
 
         $this->animalReadingSymptomRepository->setReading($reading);
 
@@ -88,16 +88,16 @@ class AnimalReadingSymptomController extends \BaseController
     {
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->findOrFail($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
         $this->animalReadingRepository->setAnimal($animal);
 
-        $reading = $this->animalReadingRepository->findOrFail($reading_id);
+        $reading = $this->animalReadingRepository->get($reading_id);
 
         $this->animalReadingSymptomRepository->setReading($reading);
 
         return \Response::json(['error' => false,
-            'result' => $this->animalReadingSymptomRepository->findOrFail($id)]);
+            'result' => $this->animalReadingSymptomRepository->get($id)]);
     }
 
 
@@ -112,11 +112,11 @@ class AnimalReadingSymptomController extends \BaseController
 
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->findOrFail($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
         $this->animalReadingRepository->setAnimal($animal);
 
-        $reading = $this->animalReadingRepository->findOrFail($reading_id);
+        $reading = $this->animalReadingRepository->get($reading_id);
 
         $this->animalReadingSymptomRepository->setReading($reading);
 
@@ -134,7 +134,7 @@ class AnimalReadingSymptomController extends \BaseController
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->animalReadingSymptomRepository->findOrFail($id)]);
+            'result' => $this->animalReadingSymptomRepository->get($id)]);
     }
 
 
@@ -149,11 +149,11 @@ class AnimalReadingSymptomController extends \BaseController
 
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->findOrFail($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
         $this->animalReadingRepository->setAnimal($animal);
 
-        $reading = $this->animalReadingRepository->findOrFail($reading_id);
+        $reading = $this->animalReadingRepository->get($reading_id);
 
         $this->animalReadingSymptomRepository->setReading($reading);
 

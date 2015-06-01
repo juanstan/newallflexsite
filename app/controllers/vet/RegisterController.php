@@ -24,7 +24,7 @@ class RegisterController extends \BaseController {
         $this->animalRepository = $animalRepository;
         $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
         $this->beforeFilter('csrf', array('on'=>'post'));
-        $this->beforeFilter('vetAuth', array('only'=>array('getAbout', 'putAbout')));
+        $this->beforeFilter('vetAuth', array('only'=>array('getAbout', 'postAbout', 'getAddress', 'postAddress')));
 	}
     
     public function getAbout()
@@ -32,7 +32,7 @@ class RegisterController extends \BaseController {
         return \View::make('vetsignup.stage1');
     }
     
-    public function postAbout() // POST
+    public function postAbout()
     {
 
         $input = \Input::all();
