@@ -50,7 +50,7 @@ class DeviceController extends \BaseController
         $this->deviceRepository->setUser($this->authUser);
 
         return \Response::json(['error' => false,
-            'result' => $this->deviceRepository->findOrFail($id)]);
+            'result' => $this->deviceRepository->get($id)]);
     }
 
     public function update($id) // PUT
@@ -70,7 +70,7 @@ class DeviceController extends \BaseController
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->deviceRepository->findOrFail($id)]);
+            'result' => $this->deviceRepository->get($id)]);
     }
 
 }

@@ -86,7 +86,7 @@ class VetController extends \BaseController
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->vetRepository->findOrFail($id)]);
+            'result' => $this->vetRepository->get($id)]);
     }
 
     public function destroy($id) // DELETE

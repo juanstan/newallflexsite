@@ -89,7 +89,7 @@ class UserController extends \BaseController
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->userRepository->findOrFail($id)]);
+            'result' => $this->userRepository->get($id)]);
     }
 
     public function destroy($id) // DELETE
