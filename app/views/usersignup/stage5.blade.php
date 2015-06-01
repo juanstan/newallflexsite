@@ -8,42 +8,43 @@
         <div class="col-md-6 col-centered float-none top-buffer" >
             <h3>{{ Lang::get('general.To find your vet practice, search below') }}</h3>
             {{ HTML::image('images/arrow.png', 'a Logo') }}
-            <div class="btn-group btn-group-justified top-buffer vet-search" role="group" aria-label="...">
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default active">{{ Lang::get('general.Location') }}</button>
-              </div>
-              <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default">{{ Lang::get('general.Vet Practice') }}</button>
-              </div>
-            </div>
+
             <div class="row top-buffer" >
                 <div class="col-md-12 col-centered" >
-                    <div class="input-group">
+                    <div role="tabpanel small-top-buffer">
 
-                        <div class="input-group-addon"><i class="fa fa-search"></i></div>
-                        {{ Form::text('search', '', array('class' => ' form-control text-left', 'placeholder' => Lang::get('general.Search by location'))) }}
+
+                        <ul class="nav mobile-nav nav-pills">
+                            <li class="active "><a href="#vetLocation" aria-controls="vetLocation" role="tab" data-toggle="tab">Location</a></li>
+                            <li class="report-toggle"><a href="#vetName" aria-controls="vetName" role="tab" data-toggle="tab">Vet Practice</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane" id="vetName">
+                                <div class="input-group top-buffer">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-search"></i>
+                                            </span>
+                                    {{ Form::text('term', null, array('placeholder' => Lang::get('general.Search for vet'), 'id' => 'registerVetName', 'class' => 'form-control text-left', 'autocomplete' => 'off')) }}
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane active" id="vetLocation">
+                                <div class="input-group top-buffer">
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-search"></i>
+                                        </span>
+                                    {{ Form::text('term', null, array('placeholder' => Lang::get('general.Search in your location'), 'id' => 'registerVetLocation', 'class' => 'form-control text-left', 'autocomplete' => 'off')) }}
+                                </div>
+                            </div>
+                        </div>
 
                     </div>
                 </div>
             </div>
-            @foreach ($vets as $vet)
 
-                {{ Form::open(array('route' => array('user.register.vet.add', $vet->id), 'method' => 'post')) }}
-            <div class="row top-buffer col-md-12 col-centered" >
-                <div class="col-xs-3 small-padding" >
-                    {{ HTML::image(isset($vet->image_path) ? $vet->image_path : '/images/vet-image.png', $vet->company_name, array('class' => 'img-responsive img-circle', 'width' => '100%')) }}
-                </div>
-                <div class="col-xs-6" >
-                    <h4 class="top-none bottom-none">{{ $vet->company_name }}</h4>
-                    <small class="top-none">{{ $vet->city }}</small>
-                </div>
-                <div class="col-xs-3 small-padding" >
-                        {{ Form::submit(Lang::get('general.Add'), array('class' => 'btn-block btn btn-default btn-md')) }}
-                </div>
-            </div>
-                {{ Form::close() }}
+            <div id="results" ></div>
 
-            @endforeach
+
         </div>
     </div>
     <div class="row large-top-buffer" >

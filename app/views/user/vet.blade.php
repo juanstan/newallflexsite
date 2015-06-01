@@ -101,10 +101,10 @@
                             </a>
                             <div class="text-center" >
                             <p class="top-buffer">{{ Lang::get('general.To find your vet practice, search below') }}</p>
-                            {{ HTML::image('/images/arrow.png', '', array('class' => '')) }}
+                            <p>{{ HTML::image('/images/arrow.png', '', array('class' => '')) }}</p>
                             </div>
 
-                            <div role="tabpanel">
+                            <div role="tabpanel small-top-buffer">
 
 
                                 <ul class="nav mobile-nav nav-pills">

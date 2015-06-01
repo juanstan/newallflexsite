@@ -36,7 +36,7 @@ class VetRegisterController extends \BaseController
         return \View::make('usersignup.stage5')->with('vets', $vets);
     }
 
-    public function postAdd($id) // PUT
+    public function getAddVet($id) // PUT
     {
         $this->animalRepository->setUser($this->authUser);
         $userid = $this->authUser->id;

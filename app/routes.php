@@ -36,7 +36,7 @@ Route::group(['prefix' => 'user', 'namespace' => 'user'], function () {
         array(
             'getIndex'=>'user.register.vet',
             'getAdd'=>'user.register.vet.add',
-            'postAdd'=>'user.register.vet.add',
+            'getAddVet'=>'user.register.vet.addVet',
         ));
     Route::controller('register/reading', 'AnimalReadingRegisterController',
         array(
