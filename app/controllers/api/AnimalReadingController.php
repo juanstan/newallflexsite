@@ -23,7 +23,7 @@ class AnimalReadingController extends \BaseController
 
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->findOrFail($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
         $this->animalReadingRepository->setAnimal($animal);
 
@@ -66,12 +66,12 @@ class AnimalReadingController extends \BaseController
     {
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->findOrFail($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
         $this->animalReadingRepository->setAnimal($animal);
 
         return \Response::json(['error' => false,
-            'result' => $this->animalReadingRepository->findOrFail($id)]);
+            'result' => $this->animalReadingRepository->get($id)]);
     }
 
     public function update($animal_id, $id) // PUT
@@ -79,7 +79,7 @@ class AnimalReadingController extends \BaseController
 
         $this->animalRepository->setUser($this->authUser);
 
-        $animal = $this->animalRepository->findOrFail($animal_id);
+        $animal = $this->animalRepository->get($animal_id);
 
         $this->animalReadingRepository->setAnimal($animal);
 
@@ -97,7 +97,7 @@ class AnimalReadingController extends \BaseController
         }
 
         return \Response::json(['error' => false,
-            'result' => $this->animalReadingRepository->findOrFail($id)]);
+            'result' => $this->animalReadingRepository->get($id)]);
     }
 
 
