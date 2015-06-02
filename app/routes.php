@@ -136,6 +136,12 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
     Route::resource('symptoms', 'SymptomController'); // Done
     Route::resource('breeds', 'BreedController'); // Done
     Route::resource('conditions', 'ConditionController'); // Done
+    Route::controller('vet/search', 'VetSearchController', array(
+        'getAll'=>'api.vet.search.all',
+        'postLocation'=>'api.vet.search.location',
+        'getLocation'=>'api.vet.search.location',
+        'postName'=>'api.vet.search.name',
+    ));
     Route::group(['before' => 'auth.api'], function () {
         Route::post('user/logout', ['as' => 'api.user.logout', 'uses' => 'AuthController@postLogout']); // Done
         Route::resource('user', 'UserController', ['only' => ['show', 'update', 'destroy']]); // Done
@@ -145,12 +151,7 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
         Route::resource('animal/{animal_id}/condition', 'AnimalConditionController');  // Done
         Route::resource('animal/{animal_id}/reading', 'AnimalReadingController'); //  Done
         Route::resource('animal/{animal_id}/reading/{reading_id}/symptom', 'AnimalReadingSymptomController'); // Done
-        Route::controller('vet/search', 'VetSearchController', array(
-            'getAll'=>'api.vet.search.all',
-            'postLocation'=>'api.vet.search.location',
-            'getLocation'=>'api.vet.search.location',
-            'postName'=>'api.vet.search.name',
-        ));
+
     });
 
     Route::group(['before' => 'vet.auth.api'], function () {
