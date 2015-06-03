@@ -55,11 +55,13 @@ class FacebookController extends \BaseController
 
                 \Auth::user()->login($user);
 
-                return \Redirect::route('user.register.about')->with('message', 'You have registered with Facebook');
+                return \Redirect::route('user.register.about')
+                    ->with('message', \Lang::get('general.You have registered with Facebook'));
 
             }
             else {
-                return \Redirect::route('user.register')->with('error', 'This Facebook user already exsists');
+                return \Redirect::route('user.register')
+                    ->with('error', \Lang::get('general.This Facebook user already exsists'));
             }
 
 
@@ -86,13 +88,15 @@ class FacebookController extends \BaseController
             $uid = $result['id'];
             $profile = Profile::where(['uid' => $uid, 'type' => 'facebook'])->first();
             if (empty($profile)) {
-                return \Redirect::route('user')->with('error', 'This Facebook account is not yet registered');
+                return \Redirect::route('user')
+                    ->with('error', \Lang::get('general.This Facebook account is not yet registered'));
             }
             else {
                 $user = $profile->user;
 
                 \Auth::user()->login($user);
-                return \Redirect::route('user.dashboard')->with('message', 'Logged in with Facebook');
+                return \Redirect::route('user.dashboard')
+                    ->with('message', \Lang::get('general.Logged in with Facebook'));
             }
 
         }

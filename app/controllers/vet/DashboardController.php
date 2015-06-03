@@ -58,8 +58,7 @@ class DashboardController extends \BaseController {
                 return \View::make('vet.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests, 'vet' => $vet));
             }
             else {
-                \Session::flash('not-verified', '');
-                return \View::make('vet.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests, 'vet' => $vet));
+                return \View::make('vet.dashboard')->with(array('not-verified' => '', 'pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests, 'vet' => $vet));
             }
     }
 
@@ -83,8 +82,8 @@ class DashboardController extends \BaseController {
             $message->to(\Input::get('email'))
                 ->subject($this->authVet->name, 'has invited you to use All Flex');
         });
-        \Session::flash('message', 'Verification email sent');
-        return \Redirect::route('vet.dashboard');
+        return \Redirect::route('vet.dashboard')
+            ->with('message', \Lang::get('general.Verification email sent'));
     }
 
     public function getPet($id) {
@@ -98,22 +97,20 @@ class DashboardController extends \BaseController {
         }
         else
         {
-            \Session::flash('not-verified', '');
-            return \View::make('vet.dashboard')->with(array('pet' => $pet, 'symptoms' => $symptoms));
+            return \View::make('vet.dashboard')->with(array('not-verified' => '', 'pet' => $pet, 'symptoms' => $symptoms));
         }
 
 
-        //return \View::make('vet.information')->with(array('pets' => $pets, 'symptoms' => $symptoms));
     }
 
     public function postResetAverageTemperature($id)
     {
         if(\DB::table('sensor_readings')->where('animal_id', '=', $id)->update(array('average' => 0)))
         {
-            return \Redirect::route('user.dashboard')->with('success', 'Average temperature reset');
+            return \Redirect::route('user.dashboard')->with('success', \Lang::get('general.Average temperature reset'));
         }
 
-        return \Redirect::route('user.dashboard')->with('error', 'There was a problem with your request');
+        return \Redirect::route('user.dashboard')->with('error', \Lang::get('general.There was a problem with your request'));
     }
 
     public function getSettings()
@@ -137,8 +134,8 @@ class DashboardController extends \BaseController {
             $password = \Input::get('old_password');
             if (!\Hash::check($password, $this->authVet->password))
             {
-                \Session::flash('error', 'Password incorrect');
-                return \Redirect::route('vet.dashboard.settings');
+                return \Redirect::route('vet.dashboard.settings')
+                    ->with('error', \Lang::get('general.Password incorrect'));
             }
         }
 
@@ -210,7 +207,7 @@ class DashboardController extends \BaseController {
         }
 
         return \Redirect::route('vet.dashboard')
-            ->with('success', 'Settings updated');
+            ->with('success', \Lang::get('general.Settings updated'));
     }
 
     public function postReadingUpload()
@@ -301,7 +298,7 @@ class DashboardController extends \BaseController {
             }
             else {
                 return \Redirect::route('vet.dashboard')
-                    ->with('error', 'uploaded file is not valid');
+                    ->with('error', \Lang::get('general.uploaded file is not valid'));
             }
         }
     }

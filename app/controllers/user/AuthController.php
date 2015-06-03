@@ -87,20 +87,20 @@ class AuthController extends \BaseController
     public function getVerify($confirmation_code)
     {
         if (!$confirmation_code) {
-            \Session::flash('warning', 'Confirmation not provided');
-            return \Redirect::route('user');
+            return \Redirect::route('user')
+                ->with('error', \Lang::get('general.Confirmation not provided'));
         }
         $user = User::where('confirmation_code', '=', $confirmation_code)->first();
         if (!$user) {
-            \Session::flash('warning', 'Confirmation code invalid');
-            return \Redirect::route('user');
+            return \Redirect::route('user')
+                ->with('error', \Lang::get('general.Confirmation code is invalid'));
         }
         $user->confirmed = 1;
         $user->confirmation_code = null;
         $user->save();
-        \Session::flash('success', 'You have successfully verified your account.');
         if (\Auth::user()->check()) {
-            return \Redirect::route('user.dashboard');
+            return \Redirect::route('user.dashboard')
+                ->with('success', \Lang::get('general.You have successfully verified your account.'));
         }
         return \Redirect::route('user');
     }
@@ -124,12 +124,12 @@ class AuthController extends \BaseController
             if (\Auth::user()->attempt($userData)) {
 
                 return \Redirect::route('user.dashboard')
-                    ->with('success', 'You have logged in successfully');
+                    ->with('success', \Lang::get('general.You have logged in successfully'));
             }
             else
             {
                 return \Redirect::route('user')
-                    ->with('error', 'The password used is incorrect.')
+                    ->with('error', \Lang::get('general.The password used is incorrect.'))
                     ->withInput(\Input::except('password'));
             }
         }
@@ -152,13 +152,13 @@ class AuthController extends \BaseController
         }
         Animal::where('user_id', '=', $id)->firstOrFail()->delete();
         $this->authUser->delete();
-        return \Redirect::route('user')->with('success', 'Your account was successfully deleted');
+        return \Redirect::route('user')->with('success', \Lang::get('general.Your account was successfully deleted'));
     }
 
     public function getLogout()
     {
         \Auth::user()->logout();
-        return \Redirect::route('user')->with('success', 'Your are now logged out!');
+        return \Redirect::route('user')->with('success', \Lang::get('general.You are now logged out!'));
     }
 
 }

@@ -120,8 +120,8 @@ class AnimalReadingRegisterController extends \BaseController
                 return \Redirect::route('user.register.reading.assign');
 
             } else {
-                \Session::flash('error', 'uploaded file is not valid');
-                return \Redirect::route('register.reading');
+                return \Redirect::route('register.reading')
+                    ->with('error', \Lang::get('general.Uploaded file is not valid'));
             }
         }
     }
@@ -133,7 +133,8 @@ class AnimalReadingRegisterController extends \BaseController
         }
         $this->animalRepository->setUser($this->authUser);
         $pets = $this->animalRepository->all();
-        return \View::make('usersignup.stage7')->with(array('pets' => $pets));
+        return \View::make('usersignup.stage7')
+            ->with(array('pets' => $pets));
     }
 
     public function postAssign($id)
@@ -144,8 +145,8 @@ class AnimalReadingRegisterController extends \BaseController
             Animal::where('id', '=', $id)->delete();
             SensorReading::where('animal_id', '=', $id)->update(array('animal_id' => $input));
         }
-        \Session::flash('success', 'Pet microchip number assigned');
-        return \Redirect::route('user.register.reading.assign');
+        return \Redirect::route('user.register.reading.assign')
+            ->with('success', \Lang::get('general.Pet microchip number assigned'));
 
 
     }

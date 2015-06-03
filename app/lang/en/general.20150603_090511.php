@@ -1,90 +1,12 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/06/03 09:05:09 
+ Generated via "php artisan localization:missing" at 2015/06/01 09:58:31 
 *************************************************************************/
 
 return array (
   //============================== New strings to translate ==============================//
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/DashboardController.php
-  'Average temperature reset' => 'Average temperature reset',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
-  'Conditions updated' => 'Conditions updated',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/AuthController.php
-  'Confirmation code invalid' => 'Confirmation code invalid',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/AuthController.php
-  'Confirmation code is invalid' => 'Confirmation code is invalid',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/AuthController.php
-  'Confirmation not provided' => 'Confirmation not provided',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/FacebookController.php
-  'Logged in with Facebook' => 'Logged in with Facebook',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/TwitterController.php
-  'Logged in with Twitter' => 'Logged in with Twitter',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/DashboardController.php
-  'Password incorrect' => 'Password incorrect',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/remind.blade.php
-  'Password reset' => 'Password reset',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
-  'Pet activated' => 'Pet activated',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
-  'Pet deactivated' => 'Pet deactivated',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
-  'Pet deleted' => 'Pet deleted',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
-  'Pet microchip number assigned' => 'Pet microchip number assigned',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
-  'Pet updated' => 'Pet updated',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/DashboardController.php
-  'Settings updated' => 'Settings updated',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
-  'Symptom removed' => 'Symptom removed',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
-  'Symptoms updated' => 'Symptoms updated',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/AuthController.php
-  'The password used is incorrect' => 
-  array (
-    '' => 'The password used is incorrect.',
-  ),
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/DashboardController.php
-  'There was a problem with your request' => 'There was a problem with your request',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/FacebookController.php
-  'This Facebook account is not yet registered' => 'This Facebook account is not yet registered',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/FacebookController.php
-  'This Facebook user already exsists' => 'This Facebook user already exsists',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/TwitterController.php
-  'This Twitter account is not yet registered' => 'This Twitter account is not yet registered',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/TwitterController.php
-  'This Twitter user already exsists' => 'This Twitter user already exsists',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
-  'Uploaded file is not valid' => 'Uploaded file is not valid',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/DashboardController.php
-  'Verification email sent' => 'Verification email sent',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/VetRegisterController.php
-  'Vet added' => 'Vet added',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
-  'Vet removed' => 'Vet removed',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/AuthController.php
-  'You are now logged out!' => 'You are now logged out!',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/AuthController.php
-  'You have logged in successfully' => 'You have logged in successfully',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/FacebookController.php
-  'You have registered with Facebook' => 'You have registered with Facebook',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/TwitterController.php
-  'You have registered with Twitter' => 'You have registered with Twitter',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/AuthController.php
-  'You have successfully verified your account' => 'You have successfully verified your account',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
-  'You must create a pet before you can perform this function' => 
-  array (
-    '' => 'You must create a pet before you can perform this function.',
-  ),
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/AuthController.php
-  'Your account was successfully deleted' => 'Your account was successfully deleted',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/AuthController.php
-  'Your are now logged out!' => 'Your are now logged out!',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/PasswordController.php
-  'Your request to reset your password has been accepted, we have sent further details to your email address' => 'Your request to reset your password has been accepted, we have sent further details to your email address',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/DashboardController.php
-  'uploaded file is not valid' => 'uploaded file is not valid',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/vet.blade.php
+  'Search in your location' => 'Search in your location',
   //==================================== Translations ====================================//
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
@@ -96,6 +18,7 @@ return array (
   '<i class="fa fa-refresh"></i> Reset' => '<i class="fa fa-refresh"></i> Reset',
   '<i class="fa fa-search"></i> Find my vet' => '<i class="fa fa-search"></i> Find my vet',
   'About you' => 'About you',
+  'Add' => 'Add',
   'Add conditions' => 'Add conditions',
   'Add photo' => 'Add photo',
   'Add symptoms' => 'Add symptoms',
@@ -198,8 +121,8 @@ return array (
   'Scan your pets to see their Microchip numbers on the device to match up above' => 'Scan your pets to see their Microchip numbers on the device to match up above',
   'Scan your pets with the [device name] then follow one of the below methods' => 'Scan your pets with the [device name] then follow one of the below methods',
   'Search' => 'Search',
+  'Search by location' => 'Search by location',
   'Search for vet' => 'Search for vet',
-  'Search in your location' => 'Search in your location',
   'Select all that apply' => 'Select all that apply',
   'Settings' => 'Settings',
   'Sign in' => 'Sign in',
@@ -235,6 +158,7 @@ return array (
   'Upload' => 'Upload',
   'Upload instructions' => 'Upload instructions',
   'Upload readings via USB' => 'Upload readings via USB',
+  'Vet Practice' => 'Vet Practice',
   'Vet practice' => 'Vet practice',
   'We found' => 'We found',
   'We need to learn your pet&#39;s microchip number' => 'We need to learn your pet&#39;s microchip number',
@@ -258,7 +182,6 @@ return array (
   //================================== Obsolete strings ==================================//
   '1 unknown microchip found, would you like to create a new pet for this microchip?' => '1 unknown microchip found, would you like to create a new pet for this microchip?',
   '<i class="fa fa-plus"></i> Create pet' => '<i class="fa fa-plus"></i> Create pet',
-  'Add' => 'Add',
   'Click the "settings"" button above to invite your customers' => 'Click the "settings"" button above to invite your customers',
   'Create new pet' => 'Create new pet',
   'Create pet' => 'Create pet',
@@ -270,11 +193,9 @@ return array (
   'My readings' => 'My readings',
   'My sensorReadings' => 'My sensorReadings',
   'Resend confirmation email' => 'Resend confirmation email',
-  'Search by location' => 'Search by location',
   'Size' => 'Size',
   'Small' => 'Small',
   'Success' => 'Success',
-  'Vet Practice' => 'Vet Practice',
   'X-Large' => 'X-Large',
   'county' => 'county',
   'please verify' => 'please verify',

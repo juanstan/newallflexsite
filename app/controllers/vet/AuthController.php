@@ -84,36 +84,37 @@ class AuthController extends \BaseController {
             $message->to($this->authVet->email, 'New vetRepository')
                 ->subject('Verify your email address');
         });
-        \Session::flash('message', 'Verification email sent');
-        return \Redirect::route('vet.dashboard');
+        return \Redirect::route('vet.dashboard')
+            ->with('message', \Lang::get('general.Verification email sent'));
     }
 
     public function getVerify($confirmation_code) {
 
         if(!$confirmation_code)
         {
-            \Session::flash('warning', 'Confirmation not provided');
-            return \Redirect::route('vet');
+            return \Redirect::route('vet')
+                ->with('error', \Lang::get('general.Confirmation not provided'));
         }
 
         $vet = Vet::where('confirmation_code', '=', $confirmation_code)->first();
 
         if(!$vet)
         {
-            \Session::flash('warning', 'Confirmation code invalid');
-            return \Redirect::route('vet');
+            return \Redirect::route('vet')
+                ->with('error', \Lang::get('general.Confirmation code invalid'));
         }
 
         $vet->confirmed = 1;
         $vet->confirmation_code = null;
         $vet->save();
 
-        \Session::flash('success', 'You have successfully verified your account.');
         if (\Auth::vet()->check())
         {
-            return \Redirect::route('vet.dashboard');
+            return \Redirect::route('vet.dashboard')
+                ->with('success', \Lang::get('general.You have successfully verified your account'));
         }
-        return \Redirect::route('vet');
+        return \Redirect::route('vet')
+            ->with('success', \Lang::get('general.You have successfully verified your account'));
     }
 
 	public function postLogin()
@@ -135,13 +136,13 @@ class AuthController extends \BaseController {
             if (\Auth::vet()->attempt($vetData)) {
   
                 return \Redirect::route('vet.dashboard')
-                    ->with('success', 'You have logged in successfully');
+                    ->with('success', \Lang::get('general.You have logged in successfully'));
 
             }
             else
             {
                 return \Redirect::route('user')
-                    ->with('error', 'The password used is incorrect.')
+                    ->with('error', \Lang::get('general.The password used is incorrect.'))
                     ->withInput(\Input::except('password'));
             }
 
@@ -153,12 +154,12 @@ class AuthController extends \BaseController {
         Request::where('vet_id', '=', $id)->delete();
         \DB::table('vet_readings')->where('vet_id', '=', $id)->delete();
         $this->authVet->delete();
-        return \Redirect::route('vet')->with('success', 'Your account was successfully deleted');
+        return \Redirect::route('vet')->with('success', \Lang::get('general.Your account was successfully deleted'));
     }
 
     public function getLogout() {
         \Auth::vet()->logout();
-        return \Redirect::route('vet')->with('success', 'Your are now logged out!');
+        return \Redirect::route('vet')->with('success', \Lang::get('general.Your are now logged out!'));
     }
     
 }

@@ -53,11 +53,11 @@ class TwitterController extends \BaseController
 
                 \Auth::user()->login($user);
 
-                return \Redirect::route('user.register.about')->with('message', 'You have registered with Twitter');
+                return \Redirect::route('user.register.about')->with('message', \Lang::get('general.You have registered with Twitter'));
 
             }
             else {
-                return \Redirect::route('user.register')->with('error', 'This Twitter user already exsists');
+                return \Redirect::route('user.register')->with('error', \Lang::get('general.This Twitter user already exsists'));
             }
 
         }
@@ -87,14 +87,14 @@ class TwitterController extends \BaseController
             $profile = Profile::where(['uid' => $uid, 'type' => 'twitter'])->first();
             if (empty($profile)) {
 
-                return \Redirect::route('user')->with('error', 'This Twitter account is not yet registered');
+                return \Redirect::route('user')->with('error', \Lang::get('general.This Twitter account is not yet registered'));
 
             }
             else {
                 $user = $profile->user;
 
                 \Auth::user()->login($user);
-                return \Redirect::route('user.dashboard')->with('message', 'Logged in with Twitter');
+                return \Redirect::route('user.dashboard')->with('message', \Lang::get('general.Logged in with Twitter'));
             }
 
         }

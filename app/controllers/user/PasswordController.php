@@ -12,6 +12,7 @@ class PasswordController extends \BaseController {
         \Password::user()->remind(\Input::only('email'), function($message) {
             $message->subject('Password reminder');
         });
+        return \Redirect::route('user')->with('success', \Lang::get('general.Your request to reset your password has been accepted, we have sent further details to your email address'));
     }
 }
 

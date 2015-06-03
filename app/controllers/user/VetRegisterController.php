@@ -52,7 +52,7 @@ class VetRegisterController extends \BaseController
                 continue;
             }
         }
-        return \Redirect::route('user.register.vet')->with('success', 'Vet added');
+        return \Redirect::route('user.register.vet')->with('success', \Lang::get('general.Vet added'));
     }
 
 }

@@ -65,8 +65,7 @@ class DashboardController extends \BaseController
         if ($this->authUser->confirmed != null) {
             return \View::make('user.dashboard')->with(array('animals' => $animals, 'conditions' => $conditions, 'symptoms' => $symptoms, 'breed' => $breed));
         } else {
-            \Session::flash('not-verified', '');
-            return \View::make('user.dashboard')->with(array('animals' => $animals, 'conditions' => $conditions, 'symptoms' => $symptoms, 'breed' => $breed));
+            return \View::make('user.dashboard')->with(array('not-verified' => '', 'animals' => $animals, 'conditions' => $conditions, 'symptoms' => $symptoms, 'breed' => $breed));
         }
     }
 
@@ -92,16 +91,16 @@ class DashboardController extends \BaseController
                 $message->to(\Input::get('email'))
                     ->subject($this->authUser->name, 'has invited you to use All Flex');
             });
-        \Session::flash('message', 'Verification email sent');
-        return \Redirect::route('user.dashboard');
+        return \Redirect::route('user.dashboard')
+            ->with('message', \Lang::get('general.Verification email sent'));
     }
 
     public function postResetAverageTemperature($id)
     {
         if (SensorReading::where('animal_id', '=', $id)->update(array('average' => 0))) {
-            return \Redirect::route('user.dashboard')->with('success', 'Average temperature reset');
+            return \Redirect::route('user.dashboard')->with('success', \Lang::get('general.Average temperature reset'));
         }
-        return \Redirect::route('user.dashboard')->with('error', 'There was a problem with your request');
+        return \Redirect::route('user.dashboard')->with('error', \Lang::get('general.There was a problem with your request'));
     }
 
     public function getSettings()
@@ -125,8 +124,8 @@ class DashboardController extends \BaseController
             $password = \Input::get('old_password');
             if (!\Hash::check($password, $this->authUser->password))
             {
-                \Session::flash('error', 'Password incorrect');
-                return \Redirect::route('user.dashboard.settings');
+                return \Redirect::route('user.dashboard.settings')
+                    ->with('error', \Lang::get('general.Password incorrect'));
             }
         }
 
@@ -168,7 +167,7 @@ class DashboardController extends \BaseController
         if ($this->userRepository->update($this->authUser->id, $input) == false) {
             \App::abort(500);
         }
-        return \Redirect::route('user.dashboard')->with('success', 'Settings updated');
+        return \Redirect::route('user.dashboard')->with('success', \Lang::get('general.Settings updated'));
 
 
     }
@@ -208,7 +207,7 @@ class DashboardController extends \BaseController
                 ['vet_id' => $animal->vet_id, 'user_id' => $id, 'animal_id' => $animal->id, 'approved' => 1]
             );
         }
-        return \Redirect::route('user.dashboard')->with('success', 'Pet updated');
+        return \Redirect::route('user.dashboard')->with('success', \Lang::get('general.Pet updated'));
     }
 
     public function postAddConditions($id)
@@ -227,7 +226,7 @@ class DashboardController extends \BaseController
                     $animalCondition->save();
                 }
             }
-            return \Redirect::route('user.dashboard')->with('message', 'Conditions updated');
+            return \Redirect::route('user.dashboard')->with('message', \Lang::get('general.Conditions updated'));
         }
         return \Redirect::route('user.dashboard');
     }
@@ -247,7 +246,7 @@ class DashboardController extends \BaseController
                     $readingSymptom->save();
                 }
             }
-            return \Redirect::route('user.dashboard')->with('message', 'Symptoms updated');
+            return \Redirect::route('user.dashboard')->with('message', \Lang::get('general.Symptoms updated'));
         }
         return \Redirect::route('user.dashboard');
     }
@@ -255,9 +254,9 @@ class DashboardController extends \BaseController
     public function getSymptomRemove($reading_id, $id)
     {
         if (SensorReadingSymptom::where('reading_id', '=', $reading_id)->where('symptom_id', '=', $id)->delete()) {
-            return \Redirect::route('user.dashboard')->with('success', 'Symptom removed');
+            return \Redirect::route('user.dashboard')->with('success', \Lang::get('general.Symptom removed'));
         }
-        return \Redirect::route('user.dashboard')->with('error', 'There was a problem with your request');
+        return \Redirect::route('user.dashboard')->with('error', \Lang::get('general.There was a problem with your request'));
     }
 
     public function postUpdatePetPhoto($id)
@@ -297,7 +296,7 @@ class DashboardController extends \BaseController
 
             $input['image_path'] = '/uploads/pets/' . $userid . '/' . $fileName;
             $animal = $this->animalRepository->update($id, $input);
-            return \Redirect::route('user.dashboard')->with('success', 'Pet updated');
+            return \Redirect::route('user.dashboard')->with('success', \Lang::get('general.Pet updated'));
 
         }
 
@@ -353,10 +352,7 @@ class DashboardController extends \BaseController
                 $animal = $this->animalRepository->create($input);
                 return \Redirect::route('user.dashboard');
             }
-//            else {
-//                \Session::flash('error', 'uploaded file is not valid');
-//                return \Redirect::route('user.dashboard');
-//            }
+
             $animal = $this->animalRepository->create($input);
         }
         if ($animal == null) {
@@ -371,7 +367,7 @@ class DashboardController extends \BaseController
         $this->animalRepository->delete($id);
         Request::where('animal_id', '=', $id)->delete();
         SensorReading::where('animal_id', '=', $id)->delete();
-        return \Redirect::route('user.dashboard')->with('message', 'Pet deleted');
+        return \Redirect::route('user.dashboard')->with('message', \Lang::get('general.Pet deleted'));
     }
 
     public function postReadingUpload()
@@ -456,8 +452,8 @@ class DashboardController extends \BaseController
                 }
                 return \Redirect::route('user.dashboard');
             } else {
-                \Session::flash('error', 'uploaded file is not valid');
-                return \Redirect::route('user.dashboard');
+                return \Redirect::route('user.dashboard')
+                    ->with('error', \Lang::get('general.Uploaded file is not valid'));
             }
         }
     }
@@ -470,7 +466,7 @@ class DashboardController extends \BaseController
         $animals = $this->animalRepository->all();
         $vets = Vet::all();
         if($this->authUser->animals->isEmpty()) {
-            return \Redirect::route('user.dashboard')->with('error', 'You must create a pet before you can perform this function.');
+            return \Redirect::route('user.dashboard')->with('error', \Lang::get('general.You must create a pet before you can perform this function.'));
         }
         return \View::make('user.vet')->with(array('pets' => $animals, 'vets' => $vets, 'requests' => $requests));
     }
@@ -541,32 +537,32 @@ class DashboardController extends \BaseController
             }
 
         }
-        return \Redirect::route('user.dashboard.vet')->with('success', 'Vet added');
+        return \Redirect::route('user.dashboard.vet')->with('success', \Lang::get('general.Vet added'));
     }
 
     public function getRemoveVet($id)
     {
         $userid = $this->authUser->id;
         if (Request::where('user_id', '=', $userid)->where('vet_id', '=', $id)->delete()) {
-            return \Redirect::route('user.dashboard.vet')->with('success', 'Vet removed');
+            return \Redirect::route('user.dashboard.vet')->with('success', \Lang::get('general.Vet removed'));
         }
-        return \Redirect::route('user.dashboard.vet')->with('error', 'There was a problem with your request');
+        return \Redirect::route('user.dashboard.vet')->with('error', \Lang::get('general.There was a problem with your request'));
     }
 
     public function getActivatepet($id)
     {
         if (Request::where('animal_request_id', '=', $id)->update(array('approved' => 1))) {
-            return \Redirect::route('user.dashboard.vet')->with('success', 'Pet activated');
+            return \Redirect::route('user.dashboard.vet')->with('success', \Lang::get('general.Pet activated'));
         }
-        return \Redirect::route('user.dashboard.vet')->with('error', 'There was a problem with your request');
+        return \Redirect::route('user.dashboard.vet')->with('error', \Lang::get('general.There was a problem with your request'));
     }
 
     public function getDeactivatepet($id)
     {
         if (Request::where('animal_request_id', '=', $id)->update(array('approved' => 0))) {
-            return \Redirect::route('user.dashboard.vet')->with('success', 'Pet deactivated');
+            return \Redirect::route('user.dashboard.vet')->with('success', \Lang::get('general.Pet deactivated'));
         }
-        return \Redirect::route('user.dashboard.vet')->with('error', 'There was a problem with your request');
+        return \Redirect::route('user.dashboard.vet')->with('error', \Lang::get('general.There was a problem with your request'));
     }
 
     public function postAssign($id)
@@ -578,7 +574,7 @@ class DashboardController extends \BaseController
             SensorReading::where('animal_id', '=', $id)->update(array('animal_id' => $input));
         }
         return \Redirect::route('user.dashboard')
-            ->with('success', 'Pet microchip number assigned');
+            ->with('success', \Lang::get('general.Pet microchip number assigned'));
 
 
     }
