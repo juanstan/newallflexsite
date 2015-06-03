@@ -61,7 +61,7 @@ class AuthController extends \BaseController {
         }
 
         \Mail::send('emails.vet-verify', array('confirmation_code' => $confirmation_code), function($message) {
-            $message->to(\Input::get('email_address'), 'New user')
+            $message->to(\Input::get('email'), 'New user')
                 ->subject('Verify your email address');
         });
 
@@ -81,7 +81,7 @@ class AuthController extends \BaseController {
     public function getResendConfirmation() {
         $this->animalRepository->setUser($this->authVet);
         \Mail::send('emails.vet-verify', array('confirmation_code' => $this->authVet->confirmation_code), function($message) {
-            $message->to($this->authVet->email_address, 'New vetRepository')
+            $message->to($this->authVet->email, 'New vetRepository')
                 ->subject('Verify your email address');
         });
         \Session::flash('message', 'Verification email sent');
@@ -128,7 +128,7 @@ class AuthController extends \BaseController {
 		}else {
 
             $vetData = array(
-                'email_address' => \Input::get('email_address'),
+                'email' => \Input::get('email'),
                 'password' => \Input::get('password')
             );
 

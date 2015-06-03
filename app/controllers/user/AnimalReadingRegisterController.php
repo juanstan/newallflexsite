@@ -154,7 +154,7 @@ class AnimalReadingRegisterController extends \BaseController
     {
         $confirmation_code = $this->authUser->confirmation_code;
         \Mail::send('emails.user-verify', array('confirmation_code' => $confirmation_code), function ($message) {
-            $message->to($this->authUser->email_address, 'New user')
+            $message->to($this->authUser->email, 'New user')
                 ->subject('Verify your email address');
         });
         return \Redirect::route('user.dashboard');

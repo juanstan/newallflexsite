@@ -17,7 +17,7 @@ class CreateVetsTable extends Migration {
 			$table->integer('id', true);
 			$table->string('company_name')->nullable();
 			$table->string('contact_name')->nullable();
-			$table->string('email_address')->nullable();
+			$table->string('email')->nullable();
 			$table->string('fax')->nullable();
 			$table->string('telephone')->nullable();
 			$table->string('address_1')->nullable();

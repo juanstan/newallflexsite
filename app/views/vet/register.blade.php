@@ -12,7 +12,7 @@
                 </ul>
                     {{ Form::open(array('route' => 'vet.create', 'method' => 'post', 'class' => 'top-buffer')) }}
 
-                    {{  Form::text('email_address', '', array('class' => 'form-control', 'placeholder' => 'Email address')) }}
+                    {{  Form::text('email', '', array('class' => 'form-control', 'placeholder' => 'Email address')) }}
 
                     {{ Form::password('password', array('class' => 'small-top-buffer form-control', 'placeholder' => 'Create Password')) }}
 

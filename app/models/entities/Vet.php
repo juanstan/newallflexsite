@@ -25,7 +25,7 @@ class Vet extends \Eloquent implements UserInterface, RemindableInterface {
     protected $fillable = [
         'company_name',
         'contact_name',
-        'email_address',
+        'email',
         'telephone',
         'fax',
         'address_1',

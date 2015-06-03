@@ -77,6 +77,11 @@ Route::group(['prefix' => 'user', 'namespace' => 'user'], function () {
             'getDeactivatepet' => 'user.dashboard.deactivatePet',
             'postAssign' => 'user.dashboard.assign',
         ));
+    Route::controller('password/reset', 'PasswordController',
+        array(
+            'getIndex' => 'user.password.reset',
+            'postIndex' => 'user.password.reset',
+        ));
     Route::controller('/', 'AuthController',
         array(
             'getIndex' => 'user',
@@ -88,6 +93,7 @@ Route::group(['prefix' => 'user', 'namespace' => 'user'], function () {
             'getDelete' => 'user.delete',
             'getLogout' => 'user.logout',
         ));
+
 });
 
 Route::group(['prefix' => 'vet', 'namespace' => 'vet'], function () {

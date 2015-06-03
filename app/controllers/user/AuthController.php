@@ -77,7 +77,7 @@ class AuthController extends \BaseController
     {
         $this->animalRepository->setUser($this->authUser);
         \Mail::send('emails.user-verify', array('confirmation_code' => $this->authUser->confirmation_code), function ($message) {
-            $message->to($this->authUser->email_address, 'New user')
+            $message->to($this->authUser->email, 'New user')
                 ->subject('Verify your email address');
         });
         \Session::flash('message', 'Verification email sent');
@@ -117,7 +117,7 @@ class AuthController extends \BaseController
         } else {
 
             $userData = array(
-                'email_address' => \Input::get('email_address'),
+                'email' => \Input::get('email'),
                 'password' => \Input::get('password')
             );
 

@@ -27,7 +27,7 @@ class User extends \Eloquent implements UserInterface, RemindableInterface {
     protected $fillable = [
         'oauth_provider',
         'oauth_uid',
-        'email_address',
+        'email',
         'first_name',
         'last_name',
         'telephone',

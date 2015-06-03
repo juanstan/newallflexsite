@@ -22,7 +22,7 @@ class AuthController extends \BaseController
             return \Response::json(['error' => true, 'errors' => $validator->messages()]);
         }
 
-        $user = $this->userRepository->getByEmailForLogin($input['email_address']);
+        $user = $this->userRepository->getByEmailForLogin($input['email']);
 
         if ($user->tokens) {
             foreach ($user->tokens as $token) {

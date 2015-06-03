@@ -38,7 +38,7 @@
                                     {{ $vet->city }}<br>
                                     {{ $vet->zip }}<br><br>
                                     {{ isset($vet->fax) ? 'Fax: ' . $vet->fax : '' }}
-                                    {{ Lang::get('general.Email') }}: <a href="" >{{ $vet->email_address }}</a>
+                                    {{ Lang::get('general.Email') }}: <a href="" >{{ $vet->email }}</a>
                                 </address>
                                 @if($vet->latitude != null)
                                     <iframe width="100%" height="150" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q={{ $vet->latitude }}%20{{ $vet->longitude }}&key=AIzaSyD6-_l8AQw9Hyc_Cpi-HX2uZm2MiQuKH3I"></iframe>

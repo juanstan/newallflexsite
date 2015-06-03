@@ -35,7 +35,7 @@ class FacebookController extends \BaseController
                 $user = new User;
                 $user->first_name = $result['first_name'];
                 $user->last_name = $result['last_name'];
-                $user->email_address = $result['email'];
+                $user->email = $result['email'];
                 $user->units = 'F';
                 $user->weight_units = 'KG';
                 $user->image_path = 'https://graph.facebook.com/' . $result['id'] . '/picture?type=large';

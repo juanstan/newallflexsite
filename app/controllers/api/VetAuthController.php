@@ -26,7 +26,7 @@ class VetAuthController extends \BaseController
             return \Response::json(['error' => true, 'errors' => ['password' => ['The password is incorrect']]]);
         }
 
-        $vet = $this->vetRepository->getByEmailForLogin($input['email_address']);
+        $vet = $this->vetRepository->getByEmailForLogin($input['email']);
 
         if ($vet->tokens) {
             foreach ($vet->tokens as $token) {

@@ -9,7 +9,7 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 	public function getByEmailForLogin($email)
 	{
 		return Vet::with('tokens')
-			->where('email_address', '=', $email)
+			->where('email', '=', $email)
 			->firstOrFail();
 	}
 
@@ -22,7 +22,7 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 	{
 		return \Validator::make($input,
 		[
-			'email_address'    => ['required','unique:vets'],
+			'email'    => ['required','unique:vets'],
             'password'      => ['required','min:6','confirmed'],
             'password_confirmation' => ['required','min:6']
 		]);
@@ -32,7 +32,7 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 	{
 		return \Validator::make($input,
 		[
-			'email_address' => ['required','email','exists:vets'],
+			'email' => ['required','email','exists:vets'],
 			'password'      => ['required','min:6']
 		]);
 	}
@@ -41,7 +41,7 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 	{
 		return \Validator::make($input,
 		[
-            'email_address' => ['sometimes','required','email','unique:vets,email_address,'.$id],
+            'email' => ['sometimes','required','email','unique:vets,email,'.$id],
 			'first_name'    => ['sometimes','required'],
 			'last_name'     => ['sometimes','required'],
             'old_password'      => ['min:6'],

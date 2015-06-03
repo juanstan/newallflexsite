@@ -80,7 +80,7 @@ class DashboardController extends \BaseController {
     public function postInvite() {
 
         \Mail::send('emails.vet-verify', array('confirmation_code' => $this->authVet->confirmation_code), function($message) {
-            $message->to(\Input::get('email_address'))
+            $message->to(\Input::get('email'))
                 ->subject($this->authVet->name, 'has invited you to use All Flex');
         });
         \Session::flash('message', 'Verification email sent');
@@ -145,7 +145,7 @@ class DashboardController extends \BaseController {
         $input = \Input::only(array(
             'company_name',
             'contact_name',
-            'email_address',
+            'email',
             'telephone',
             'fax',
             'address_1',

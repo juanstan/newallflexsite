@@ -89,7 +89,7 @@ class DashboardController extends \BaseController
                 'confirmation_code' => $this->authUser->confirmation_code
             ),
             function ($message) {
-                $message->to(\Input::get('email_address'))
+                $message->to(\Input::get('email'))
                     ->subject($this->authUser->name, 'has invited you to use All Flex');
             });
         \Session::flash('message', 'Verification email sent');
@@ -131,7 +131,7 @@ class DashboardController extends \BaseController
         }
 
         $input = \Input::only(array(
-            'email_address',
+            'email',
             'first_name',
             'last_name',
             'image_path',

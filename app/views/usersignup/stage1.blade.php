@@ -39,11 +39,11 @@
                 </div>
                 <div class="form-group">
 
-                        {{ Form::label('email_address',  Lang::get('general.Email address'), array('class' => 'col-sm-4 control-label')) }}
+                        {{ Form::label('email',  Lang::get('general.Email address'), array('class' => 'col-sm-4 control-label')) }}
 
                     <div class="col-sm-8">
 
-                        {{ Form::email('email_address', Auth::user()->get()->email_address, array('class' => 'form-control text-left')) }}
+                        {{ Form::email('email', Auth::user()->get()->email, array('class' => 'form-control text-left')) }}
 
                     </div>
                 </div>
