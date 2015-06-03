@@ -11,6 +11,14 @@
 |
 */
 
+Route::group(['prefix' => 'aws'], function()
+{
+    Route::get('elb-test', function()
+    {
+        return 'OK';
+    });
+});
+
 Route::get('/', function () {
     return Redirect::route('user');
 });
@@ -77,10 +85,12 @@ Route::group(['prefix' => 'user', 'namespace' => 'user'], function () {
             'getDeactivatepet' => 'user.dashboard.deactivatePet',
             'postAssign' => 'user.dashboard.assign',
         ));
-    Route::controller('password/reset', 'PasswordController',
+    Route::controller('password', 'PasswordController',
         array(
-            'getIndex' => 'user.password.reset',
-            'postIndex' => 'user.password.reset',
+            'getRequest' => 'user.password.request',
+            'postRequest' => 'user.password.request',
+            'getReset' => 'user.password.reset',
+            'postReset' => 'user.password.reset'
         ));
     Route::controller('/', 'AuthController',
         array(

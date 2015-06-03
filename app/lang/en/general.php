@@ -21,7 +21,7 @@ return array (
   'Logged in with Twitter' => 'Logged in with Twitter',
   // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/vet/DashboardController.php
   'Password incorrect' => 'Password incorrect',
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/remind.blade.php
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/request.blade.php
   'Password reset' => 'Password reset',
   // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/DashboardController.php
   'Pet activated' => 'Pet activated',

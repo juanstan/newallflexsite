@@ -7,7 +7,7 @@
                 {{ HTML::image('images/logo-pet.png', 'a Logo', array('class' => 'signup-logo')) }}
                 <h2>{{ Lang::get('general.Password reset') }}</h2>
 
-                {{ Form::open(array('route' => 'user.password.reset', 'method' => 'post', 'class' => 'top-buffer')) }}
+                {{ Form::open(array('route' => 'user.password.request', 'method' => 'post', 'class' => 'top-buffer')) }}
 
                 {{  Form::text('email', '', array('class' => 'form-control', 'placeholder' => 'Email address')) }}
 
