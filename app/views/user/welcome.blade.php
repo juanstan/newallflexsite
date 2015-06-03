@@ -35,6 +35,9 @@
 
                     {{ Form::close() }}
 
+                user.password.request
+                             <p class="top-buffer">{{ Lang::get('general.Don&#39;t have an account?') }} <strong>{{ HTML::linkRoute('user.register', Lang::get('general.Sign up')) }}</strong>
+
                     <p class="top-buffer">{{ Lang::get('general.Don&#39;t have an account?') }} <strong>{{ HTML::linkRoute('user.register', Lang::get('general.Sign up')) }}</strong>
             </div>
         </div>

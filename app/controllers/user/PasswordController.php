@@ -9,11 +9,25 @@ class PasswordController extends \BaseController {
 
     public function postRequest()
     {
-        \Password::user()->remind(\Input::only('email'), function($message) {
-            $message->subject('Password reminder');
-        });
-        return \Redirect::route('user')
-            ->with('success', \Lang::get('general.Your request to reset your password has been accepted, we have sent further details to your email address'));
+
+        $rules = array (
+            'email' => 'required|email|exists:users',
+        );
+
+        $validator = Validator::make (Input::all(), $rules);
+
+        if ($validator -> passes()){
+            \Password::user()->remind(\Input::only('email'), function($message) {
+                $message->subject('Password reminder');
+            });
+            return \Redirect::route('user')
+                ->with('success', \Lang::get('general.Your request to reset your password has been accepted, we have sent further details to your email address'));
+        }
+        else{
+            return \Redirect::route('user.password.request')
+                ->with('error', \Lang::get('general.This email does not exist'));
+        }
+
     }
 
     public function getReset($token)
