@@ -14,7 +14,7 @@ class PasswordController extends \BaseController {
             'email' => 'required|email|exists:users',
         );
 
-        $validator = Validator::make (Input::all(), $rules);
+        $validator = \Validator::make (\Input::all(), $rules);
 
         if ($validator -> passes()){
             \Password::user()->remind(\Input::only('email'), function($message) {
