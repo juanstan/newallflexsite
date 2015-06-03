@@ -149,6 +149,8 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
     Route::resource('user', 'UserController', ['only' => ['store']]); // Done
     Route::post('vet/login', ['as' => 'api.vet.login', 'uses' => 'VetAuthController@postLogin']); // Done
     Route::resource('vet', 'VetController', ['only' => ['store', 'index', 'show']]); // Done
+    Route::post('password/reset', ['as' => 'api.password.reset', 'uses' => 'PasswordController@postRequest']); // Done
+    Route::resource('password', 'PasswordController', ['only' => ['store', 'index', 'show']]); // Done
     Route::resource('symptoms', 'SymptomController'); // Done
     Route::resource('breeds', 'BreedController'); // Done
     Route::resource('conditions', 'ConditionController'); // Done
