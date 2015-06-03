@@ -25,9 +25,9 @@ class PasswordController extends \BaseController {
         else{
             return \Response::json(array(
                 'error' => true,
-                'result' => \Lang::get('general.This email does not exist')),
-                200
+                'message' => \Lang::get('general.This email does not exist'))
             );
+
         }
 
     }
