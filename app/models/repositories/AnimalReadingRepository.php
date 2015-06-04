@@ -1,13 +1,12 @@
 <?php namespace Repositories;
 
-use Entities\sensorReading;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Entities\User;
+use Entities\Animal;
 
 class AnimalReadingRepository extends AbstractRepository implements AnimalReadingRepositoryInterface
 {
     protected $classname = 'Entities\SensorReading';
-    
+
     protected $repository;
     
     protected $animal;
@@ -36,16 +35,17 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
         }
 
     }
-    
+
+
     public function create($input)
     {
 
             $reading = parent::create($input);
-            
-            $reading->animal()->associate($this->animal); 
-            
+
+            $reading->animal()->associate($this->animal);
+
             $reading->save();
-                 
+
 
         return $reading;
     }
@@ -74,17 +74,17 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
         return $this;
     }
     
-    public function update($id, $input)
-    {
-        
-        $object = $this->animal->sensorReadings()->where('created_at', '>=', \Carbon\Carbon::now()->subSeconds(30))->findOrFail($id);
-        
-        $object->fill($input);
-        $object->save();
-
-        return $object;
-        
-    }
+//    public function update($id, $input)
+//    {
+//
+//        $object = $this->animal->sensorReadings()->where('created_at', '>=', \Carbon\Carbon::now()->subSeconds(30))->findOrFail($id);
+//
+//        $object->fill($input);
+//        $object->save();
+//
+//        return $object;
+//
+//    }
     
     public function updateTimeout($input)
     {

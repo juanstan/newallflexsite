@@ -11,9 +11,9 @@
 
                 {{  Form::text('email', '', array('class' => 'form-control', 'placeholder' => 'Email address')) }}
 
-                {{  Form::text('password', '', array('class' => 'form-control small-top-buffer', 'placeholder' => 'Password')) }}
+                {{  Form::password('password', array('class' => 'form-control small-top-buffer', 'placeholder' => 'Password')) }}
 
-                {{  Form::text('password_confirmation', '', array('class' => 'form-control small-top-buffer', 'placeholder' => 'Password confirm')) }}
+                {{  Form::password('password_confirmation', array('class' => 'form-control small-top-buffer', 'placeholder' => 'Password confirm')) }}
 
                 {{ Form::hidden('token', $token) }}
 

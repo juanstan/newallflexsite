@@ -81,13 +81,6 @@ class PetRegisterController extends \BaseController
 
         if (\Input::hasFile('pet-photo')) {
 
-//            $file = array('image' => \Input::file('pet-photo'));
-//            $rules = array('image' => 'mimes:jpeg,png');
-//            $validator = \Validator::make($file, $rules);
-//            if ($validator->fails()) {
-//                return \Redirect::route('user.register.pet.create')->withInput()
-//                    ->withErrors($validator);
-//            }
             $destinationPath = 'uploads/pets/' . $id;
             if (!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);

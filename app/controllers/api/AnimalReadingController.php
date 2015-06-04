@@ -41,8 +41,12 @@ class AnimalReadingController extends \BaseController
 
         $this->animalReadingRepository->setAnimal($animal);
 
+
+
         $input = \Input::all();
         $input['animal_id'] = $animal_id;
+
+
         $validator = $this->animalReadingRepository->getCreateValidator($input);
 
 
@@ -51,7 +55,11 @@ class AnimalReadingController extends \BaseController
                 'errors' => $validator->messages()], 400);
         }
 
+
+
         $reading = $this->animalReadingRepository->create($input);
+
+
 
         if ($reading == null) {
             \App::abort(500);
@@ -93,11 +101,24 @@ class AnimalReadingController extends \BaseController
         }
 
         if ($this->animalReadingRepository->update($id, $input) == false) {
+
             \App::abort(500);
         }
 
         return \Response::json(['error' => false,
             'result' => $this->animalReadingRepository->get($id)]);
+    }
+
+    public function postAssign($id)
+    {
+        $input = \Input::get('pet-id');
+        $query = Animal::where('id', '=', $id)->first();
+        if (Animal::where('id', $input)->update(array('microchip_number' => $query->microchip_number))) {
+            Animal::where('id', '=', $id)->delete();
+            SensorReading::where('animal_id', '=', $id)->update(array('animal_id' => $input));
+        }
+        return \Redirect::route('user.dashboard')
+            ->with('success', \Lang::get('general.Pet microchip number assigned'));
     }
 
 

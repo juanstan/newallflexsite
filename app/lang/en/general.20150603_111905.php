@@ -1,12 +1,12 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/06/03 14:21:33 
+ Generated via "php artisan localization:missing" at 2015/06/03 10:49:57 
 *************************************************************************/
 
 return array (
   //============================== New strings to translate ==============================//
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/dashboard.blade.php
-  'Create' => 'Create',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/PasswordController.php
+  'This email does not exist' => 'This email does not exist',
   //==================================== Translations ====================================//
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
@@ -72,7 +72,6 @@ return array (
   'Finish setup' => 'Finish setup',
   'First name' => 'First name',
   'First upload' => 'First upload',
-  'Forgot your password?' => 'Forgot your password?',
   'Gender' => 'Gender',
   'Help' => 'Help',
   'How to upload readings via USB' => 'How to upload readings via USB',
@@ -130,7 +129,6 @@ return array (
   'Recent' => 'Recent',
   'Remove' => 'Remove',
   'Reports' => 'Reports',
-  'Reset password' => 'Reset password',
   'Retype password' => 'Retype password',
   'Save changes' => 'Save changes',
   'Scan your pets to see their Microchip numbers on the device to match up above' => 'Scan your pets to see their Microchip numbers on the device to match up above',
@@ -176,7 +174,6 @@ return array (
   'This Facebook user already exsists' => 'This Facebook user already exsists',
   'This Twitter account is not yet registered' => 'This Twitter account is not yet registered',
   'This Twitter user already exsists' => 'This Twitter user already exsists',
-  'This email does not exist' => 'This email does not exist',
   'This is a title for another FAQ' => 'This is a title for another FAQ',
   'To find your vet practice, search below' => 'To find your vet practice, search below',
   'Town/City' => 'Town/City',
@@ -209,7 +206,6 @@ return array (
   ),
   'Your account was successfully deleted' => 'Your account was successfully deleted',
   'Your are now logged out!' => 'Your are now logged out!',
-  'Your password has been reset successfully' => 'Your password has been reset successfully',
   'Your pets' => 'Your pets',
   'Your practice' => 'Your practice',
   'Your readings' => 'Your readings',
@@ -245,7 +241,6 @@ return array (
   'Success' => 'Success',
   'Vet Practice' => 'Vet Practice',
   'X-Large' => 'X-Large',
-  'Your password has been reset' => 'Your password has been reset',
   'county' => 'county',
   'please verify' => 'please verify',
 );

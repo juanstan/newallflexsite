@@ -1,12 +1,12 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/06/03 14:21:33 
+ Generated via "php artisan localization:missing" at 2015/06/03 14:20:38 
 *************************************************************************/
 
 return array (
   //============================== New strings to translate ==============================//
-  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/dashboard.blade.php
-  'Create' => 'Create',
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/controllers/user/PasswordController.php
+  'Your password has been reset successfully' => 'Your password has been reset successfully',
   //==================================== Translations ====================================//
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
@@ -209,7 +209,6 @@ return array (
   ),
   'Your account was successfully deleted' => 'Your account was successfully deleted',
   'Your are now logged out!' => 'Your are now logged out!',
-  'Your password has been reset successfully' => 'Your password has been reset successfully',
   'Your pets' => 'Your pets',
   'Your practice' => 'Your practice',
   'Your readings' => 'Your readings',

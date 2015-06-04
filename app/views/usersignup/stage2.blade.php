@@ -3,7 +3,7 @@
 @section('content')
     <div class="row" >
         <div class="col-md-12 mobile" >
-            <h3>{{ Lang::get('Your pets') }}</h3>
+            <h3>{{ Lang::get('general.Your pets') }}</h3>
         </div>
         <div class="col-md-9 col-centered float-none" >
 

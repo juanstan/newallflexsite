@@ -42,7 +42,7 @@
                                 </ul>
                             </div>
                         {{ Form::close() }}
-                    <a href="#edit{{ $animal->id }}" data-toggle="pill" ><button data-toggle="collapse" data-target="#pet-photo{{ $animal->id }}" class="btn btn-file btn-lg pull-right" type="button">{{ Lang::get('Create') }}</button></a>
+                    <a href="#edit{{ $animal->id }}" data-toggle="pill" ><button data-toggle="collapse" data-target="#pet-photo{{ $animal->id }}" class="btn btn-file btn-lg pull-right" type="button">{{ Lang::get('general.Create') }}</button></a>
                 </div>
             </div>
 
@@ -205,10 +205,10 @@
                                             <div class="circle-inner">
                                                  <div class="score-text" style="color: {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] }}" >
                                                         {{ getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] }}<span>&#176;</span>
-                                                     <p>@if(date("d/m/y",strtotime($sensorReading->created_at)) == date("d/m/y"))
-                                                         {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
+                                                     <p>@if(date("d/m/y",strtotime($sensorReading->reading_time)) == date("d/m/y"))
+                                                         {{ Lang::get('general.today at') }} {{ date("h.ia",strtotime($sensorReading->reading_time)) }}
                                                      @else
-                                                     {{ date("d/m/y",strtotime($sensorReading->created_at)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($sensorReading->created_at)) }}
+                                                     {{ date("d/m/y",strtotime($sensorReading->reading_time)) }} {{ Lang::get('general.at') }} {{ date("h.ia",strtotime($sensorReading->reading_time)) }}
                                                      @endif</p>
                                                  </div>
                                             </div>
@@ -264,7 +264,7 @@
                                                      </div>
                                                  </div>
                                             </div>
-                                            <small>{{ date("d/m/y",strtotime($sensorReading->created_at)) }}</small>
+                                            <small>{{ date("d/m/y",strtotime($sensorReading->reading_time)) }}</small>
                                         </div>
                                         @endforeach
                                     @else

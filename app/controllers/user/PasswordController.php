@@ -1,5 +1,9 @@
 <?php namespace User;
 
+use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\Reminders\RemindableInterface;
+use \Illuminate\Database\Eloquent\ModelNotFoundException;
+
 class PasswordController extends \BaseController {
 
     public function getRequest()
@@ -30,36 +34,42 @@ class PasswordController extends \BaseController {
 
     }
 
-    public function getReset($token)
+    public function getReset($token = null)
     {
+        if (is_null($token)) App::abort(404);
+
         return \View::make('user.reset')
             ->with('token', $token);
     }
 
     public function postReset()
     {
+
         $credentials = array(
             'email' => \Input::get('email'),
             'password' => \Input::get('password'),
             'password_confirmation' => \Input::get('password_confirmation'),
             'token' => \Input::get('token')
         );
-        \Password::user()->reset($credentials, function($user, $password) {
-            $user->password = \Hash::make($password);
+
+
+        $response = \Password::user()->reset($credentials, function ($user, $password) {
+
+            $user->password = $password;
             $user->save();
-            return Redirect::route('user')
-                ->with('success', 'Your password has been reset');
+
         });
+
+        switch ($response)
+        {
+            case \Password::INVALID_PASSWORD:
+            case \Password::INVALID_TOKEN:
+            case \Password::INVALID_USER:
+                return \Redirect::back()->with('error', \Lang::get($response));
+
+            case \Password::PASSWORD_RESET:
+                return \Redirect::route('user')->with('success', \Lang::get('general.Your password has been reset successfully'));
+        }
+
     }
 }
-
-//Password::account()->remind(Input::only('email'), function($message) {
-//$message->subject('Password reminder');
-//});
-//
-//
-//
-//Password::account()->reset($credentials, function($user, $password) {
-//$user->password = Hash::make($password);
-//$user->save();
-//});

@@ -300,10 +300,6 @@ class DashboardController extends \BaseController
 
         }
 
-        if ($this->animalRepository->update($id, $input) == false) {
-            \App::abort(500);
-        }
-
     }
 
     public function postCreatePet()
@@ -372,7 +368,7 @@ class DashboardController extends \BaseController
 
     public function postReadingUpload()
     {
-        $input = \Input::all();
+
         $id = $this->authUser->id;
         $file = array('file' => \Input::file('file'));
         $rules = array('file' => 'required|max:4000');
@@ -575,8 +571,6 @@ class DashboardController extends \BaseController
         }
         return \Redirect::route('user.dashboard')
             ->with('success', \Lang::get('general.Pet microchip number assigned'));
-
-
     }
 
 }
