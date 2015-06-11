@@ -26,7 +26,11 @@ class FacebookController extends \BaseController
 
             $token = $fb->requestAccessToken($code);
 
+            var_dump($token);
+
             $result = json_decode($fb->request('/me'), true);
+
+            dd($result);
 
             $uid = $result['id'];
             $profile = Profile::where(['uid' => $uid, 'type' => 'facebook'])->first();

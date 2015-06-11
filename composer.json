@@ -14,7 +14,8 @@
 		"league/csv": "7.0.*@dev",
 		"ollieread/multiauth": "dev-master",
 		"potsky/laravel-localization-helpers" : "~1.1",
-		"jenssegers/agent" : "dev-master"
+		"jenssegers/agent" : "dev-master",
+		"barryvdh/laravel-debugbar": "~1.8"
 	},
 	"autoload": {
         "files": [

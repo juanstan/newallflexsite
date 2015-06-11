@@ -1,5 +1,6 @@
 <?php namespace Api;
 
+use Entities\Animal;
 use Entities\SensorReading;
 use Repositories\AnimalReadingRepositoryInterface;
 use Repositories\AnimalRepositoryInterface;
@@ -109,16 +110,16 @@ class AnimalReadingController extends \BaseController
             'result' => $this->animalReadingRepository->get($id)]);
     }
 
-    public function postAssign($id)
+    public function postAssign($animal_id)
     {
-        $input = \Input::get('pet-id');
-        $query = Animal::where('id', '=', $id)->first();
+        $input = \Input::get('pet_id');
+        $query = Animal::where('id', '=', $animal_id)->first();
         if (Animal::where('id', $input)->update(array('microchip_number' => $query->microchip_number))) {
-            Animal::where('id', '=', $id)->delete();
-            SensorReading::where('animal_id', '=', $id)->update(array('animal_id' => $input));
+            Animal::where('id', '=', $animal_id)->delete();
+            SensorReading::where('animal_id', '=', $animal_id)->update(array('animal_id' => $input));
         }
-        return \Redirect::route('user.dashboard')
-            ->with('success', \Lang::get('general.Pet microchip number assigned'));
+        return \Response::json(['error' => false,
+            'result' => \Lang::get('general.Pet microchip number assigned')]);
     }
 
 

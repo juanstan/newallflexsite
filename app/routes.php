@@ -146,6 +146,11 @@ Route::group(['prefix' => 'vet', 'namespace' => 'vet'], function () {
 
 Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api'], function () {
     Route::post('user/login', ['as' => 'api.user.login', 'uses' => 'AuthController@postLogin']); // Done
+    Route::controller('user/facebook', 'FacebookController',
+        array(
+            'postCreate'=>'user.facebook.create',
+            'postLogin'=>'user.facebook.login',
+        ));
     Route::resource('user', 'UserController', ['only' => ['store']]); // Done
     Route::post('vet/login', ['as' => 'api.vet.login', 'uses' => 'VetAuthController@postLogin']); // Done
     Route::resource('vet', 'VetController', ['only' => ['store', 'index', 'show']]); // Done
@@ -168,6 +173,7 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
         Route::resource('request', 'AnimalRequestController');
         Route::resource('animal/{animal_id}/condition', 'AnimalConditionController');  // Done
         Route::resource('animal/{animal_id}/reading', 'AnimalReadingController'); //  Done
+        Route::post('animal/{animal_id}/reading/assign', ['as' => 'api.animal.{animal_id}.reading.assign', 'uses' => 'AnimalReadingController@postAssign']); // Done
         Route::resource('animal/{animal_id}/reading/{reading_id}/symptom', 'AnimalReadingSymptomController'); // Done
 
     });
