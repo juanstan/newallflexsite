@@ -7,12 +7,12 @@ use Repositories\UserRepositoryInterface;
 class FacebookController extends \BaseController
 {
 
-    protected $user;
+    protected $userRepository;
 
-    public function __construct(UserRepositoryInterface $user)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
         $this->authUser = \Auth::user()->get();
-        $this->user = $user;
+        $this->user = $userRepository;
         $this->beforeFilter('csrf', array('on' => 'post'));
     }
 
@@ -26,11 +26,7 @@ class FacebookController extends \BaseController
 
             $token = $fb->requestAccessToken($code);
 
-            var_dump($token);
-
             $result = json_decode($fb->request('/me'), true);
-
-            dd($result);
 
             $uid = $result['id'];
             $profile = Profile::where(['uid' => $uid, 'type' => 'facebook'])->first();

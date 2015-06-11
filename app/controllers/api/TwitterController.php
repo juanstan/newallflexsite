@@ -12,100 +12,86 @@ class TwitterController extends \BaseController
 
     public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->authUser = \Auth::user()->get();
         $this->userRepository = $userRepository;
-        $this->beforeFilter('csrf', array('on' => 'post'));
     }
 
-    public function getCreate()
+    public function postCreate()
     {
-        $token = \Input::get('oauth_token');
-        $verify = \Input::get('oauth_verifier');
+        $input = \Input::all();
+        $validator = $this->userRepository->getTwitterCreateValidator($input);
 
-        $tw = \OAuth::consumer('Twitter');
+        if($validator->fails())
+        {
+            return \Response::json(['error' => true, 'errors' => $validator->messages()]);
+        }
 
-        if (!empty($token) && !empty($verify)) {
+        $uid = \Input::get('id');
+        $profile = Profile::where(['uid' => $uid, 'type' => 'twitter'])->first();
+        if (empty($profile)) {
 
-            $token = $tw->requestAccessToken($token, $verify);
+            $user = new User;
+            $user->units = 'F';
+            $user->weight_units = 'KG';
+            $user->image_path = str_replace('_normal.jpeg', '.jpeg', \Input::get('profile_image_url'));
 
-            $result = json_decode($tw->request('account/verify_credentials.json'), true);
+            $user->save();
 
-            $uid = $result['id'];
-            $profile = Profile::where(['uid' => $uid, 'type' => 'twitter'])->first();
-            if (empty($profile)) {
+            $profile = new Profile();
+            $profile->uid = $uid;
+            $profile->type = 'twitter';
+            $profile->username = \Input::get('screen_name');
+            $profile = $user->profiles()->save($profile);
+            $profile->access_token = \Input::get('oauth_token');
 
-                $user = new User;
-                $user->units = 'F';
-                $user->weight_units = 'KG';
-                $user->image_path = str_replace('_normal.jpeg', '.jpeg', $result['profile_image_url']);
+            $profile->save();
 
-                $user->save();
+            $user = $profile->user;
 
-                $profile = new Profile();
-                $profile->uid = $uid;
-                $profile->type = 'twitter';
-                $profile->username = $result['screen_name'];
-                $profile = $user->profiles()->save($profile);
-                $profile->access_token = $_GET['oauth_token'];
+            $token = Token::generate($user);
+            $user->tokens()->save($token);
 
-                $profile->save();
-
-                $user = $profile->user;
-
-                \Auth::user()->login($user);
-
-                return \Redirect::route('user.register.about')->with('message', \Lang::get('general.You have registered with Twitter'));
-
-            }
-            else {
-                return \Redirect::route('user.register')->with('error', \Lang::get('general.This Twitter user already exsists'));
-            }
+            return \Response::json(['error' => false, 'result' => ['token' => $token, 'user' => $user]]);
 
         }
         else {
-            $reqToken = $tw->requestRequestToken();
-
-            $url = $tw->getAuthorizationUri(array('oauth_token' => $reqToken->getRequestToken()));
-
-            return \Redirect::to((string)$url);
+            return \Response::json(['error' => true, 'errors' => 'This Twitter user already exsists']);
         }
+
     }
 
-    public function getLogin()
+    public function postLogin()
     {
-        $token = \Input::get('oauth_token');
-        $verify = \Input::get('oauth_verifier');
 
-        $tw = \OAuth::consumer('Twitter');
+        $input = \Input::all();
+        $validator = $this->userRepository->getTwitterLoginValidator($input);
 
-        if (!empty($token) && !empty($verify)) {
+        if($validator->fails())
+        {
+            return \Response::json(['error' => true, 'errors' => $validator->messages()]);
+        }
 
-            $token = $tw->requestAccessToken($token, $verify);
+        $uid = \Input::get('id');
+        $profile = Profile::where(['uid' => $uid, 'type' => 'twitter'])->first();
+        if (empty($profile)) {
 
-            $result = json_decode($tw->request('account/verify_credentials.json'), true);
-
-            $uid = $result['id'];
-            $profile = Profile::where(['uid' => $uid, 'type' => 'twitter'])->first();
-            if (empty($profile)) {
-
-                return \Redirect::route('user')->with('error', \Lang::get('general.This Twitter account is not yet registered'));
-
-            }
-            else {
-                $user = $profile->user;
-
-                \Auth::user()->login($user);
-                return \Redirect::route('user.dashboard')->with('message', \Lang::get('general.Logged in with Twitter'));
-            }
+            return \Response::json(['error' => true, 'errors' => 'This Twitter user does not exsist']);
 
         }
         else {
-            $reqToken = $tw->requestRequestToken();
+            $user = $profile->user;
 
-            $url = $tw->getAuthorizationUri(array('oauth_token' => $reqToken->getRequestToken()));
+            if ($user->tokens) {
+                foreach ($user->tokens as $token) {
+                    $token->delete();
+                }
+            }
 
-            return \Redirect::to((string)$url);
+            $token = Token::generate($user);
+            $user->tokens()->save($token);
+
+            return \Response::json(['error' => false, 'result' => ['token' => $token, 'user' => $user]]);
         }
+
     }
 
 }

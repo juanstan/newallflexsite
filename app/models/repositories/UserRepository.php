@@ -39,7 +39,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 				'id'    => ['required'],
 				'first_name'    => ['required'],
 				'last_name'     => ['required'],
-				'email' => ['required','email','unique:users'],
+				//'email' => ['required','email','unique:users'],
 				'code'	=> ['required'],
 			]);
 	}
@@ -50,6 +50,25 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 			[
 				'id'    => ['required'],
 				'code'	=> ['required'],
+			]);
+	}
+
+	public function getTwitterCreateValidator($input)
+	{
+		return \Validator::make($input,
+			[
+				'id'    => ['required'],
+				'screen_name'     => ['required'],
+				'oauth_token'	=> ['required'],
+			]);
+	}
+
+	public function getTwitterLoginValidator($input)
+	{
+		return \Validator::make($input,
+			[
+				'id'    => ['required'],
+				'oauth_token'	=> ['required'],
 			]);
 	}
 

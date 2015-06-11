@@ -8,11 +8,6 @@
         <div class="collapse" id="file-upload">
             {{ Form::open(array('files'=> 'true', 'route' => 'user.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) }}
             {{ Form::close() }}
-
-            {{ Form::open(array('files'=> 'true', 'route' => 'user.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) }}
-            {{ Form::file('file') }}
-            {{ Form::submit('submit') }}
-            {{ Form::close() }}
         </div>
     </div>
     @foreach ($animals as $animal) 

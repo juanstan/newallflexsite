@@ -148,8 +148,13 @@ Route::group(['prefix' => 'api', 'before' => 'api.before', 'namespace' => 'api']
     Route::post('user/login', ['as' => 'api.user.login', 'uses' => 'AuthController@postLogin']); // Done
     Route::controller('user/facebook', 'FacebookController',
         array(
-            'postCreate'=>'user.facebook.create',
-            'postLogin'=>'user.facebook.login',
+            'postCreate'=>'api.user.facebook.create',
+            'postLogin'=>'api.user.facebook.login',
+        ));
+    Route::controller('user/twitter', 'TwitterController',
+        array(
+            'postCreate'=>'api.user.twitter.create',
+            'postLogin'=>'api.user.twitter.login',
         ));
     Route::resource('user', 'UserController', ['only' => ['store']]); // Done
     Route::post('vet/login', ['as' => 'api.vet.login', 'uses' => 'VetAuthController@postLogin']); // Done
