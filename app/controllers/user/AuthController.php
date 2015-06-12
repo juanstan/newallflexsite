@@ -138,19 +138,19 @@ class AuthController extends \BaseController
     public function getDelete()
     {
         $id = $this->authUser->id;
-        Request::where('user_id', '=', $id)->firstOrFail()->delete();
-        Profile::where('user_id', '=', $id)->firstOrFail()->delete();
-        $animals = Animal::where('user_id', '=', $id)->firstOrFail();
+        Request::where('user_id', '=', $id)->delete();
+        Profile::where('user_id', '=', $id)->delete();
+        $animals = Animal::where('user_id', '=', $id)->get();
         foreach ($animals as $animal) {
             $animal_id = $animal->id;
-            $sensor_readings = SensorReading::where('animal_id', '=', $animal_id)->firstOrFail();
+            $sensor_readings = SensorReading::where('animal_id', '=', $animal_id)->get();
             foreach ($sensor_readings as $sensor_reading) {
                 $sensor_reading_id = $sensor_reading->id;
-                SensorReadingSymptom::where('reading_id', '=', $sensor_reading_id)->firstOrFail()->delete();
+                SensorReadingSymptom::where('reading_id', '=', $sensor_reading_id)->delete();
             }
-            SensorReading::where('animal_id', '=', $animal_id)->firstOrFail()->delete();
+            SensorReading::where('animal_id', '=', $animal_id)->delete();
         }
-        Animal::where('user_id', '=', $id)->firstOrFail()->delete();
+        Animal::where('user_id', '=', $id)->delete();
         $this->authUser->delete();
         return \Redirect::route('user')->with('success', \Lang::get('general.Your account was successfully deleted'));
     }

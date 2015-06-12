@@ -1,6 +1,11 @@
 <?php namespace Api;
 
+use Entities\Animal;
+use Entities\SensorReading;
+use Entities\SensorReadingSymptom;
 use Entities\User;
+use Entities\Animal\Request;
+use Entities\Profile;
 use Repositories\UserRepositoryInterface;
 
 class UserController extends \BaseController
@@ -92,14 +97,24 @@ class UserController extends \BaseController
             'result' => $this->userRepository->get($id)]);
     }
 
-    public function destroy($id) // DELETE
+    public function destroy() // DELETE
     {
-
-        if ($this->authUser->id != $id) return \Response::json(['error' => true, 'message' => \Lang::get('error.http.403')], 403);
-
-        $this->userRepository->delete($id);
-
-        return \Response::json(['error' => false, 'result' => 'Item removed']);
+        $id = $this->authUser->id;
+        Request::where('user_id', '=', $id)->delete();
+        Profile::where('user_id', '=', $id)->delete();
+        $animals = Animal::where('user_id', '=', $id)->get();
+        foreach ($animals as $animal) {
+            $animal_id = $animal->id;
+            $sensor_readings = SensorReading::where('animal_id', '=', $animal_id)->get();
+            foreach ($sensor_readings as $sensor_reading) {
+                $sensor_reading_id = $sensor_reading->id;
+                SensorReadingSymptom::where('reading_id', '=', $sensor_reading_id)->delete();
+            }
+            SensorReading::where('animal_id', '=', $animal_id)->delete();
+        }
+        Animal::where('user_id', '=', $id)->delete();
+        $this->authUser->delete();
+        return \Response::json(['error' => false, 'result' => 'general.Your account was successfully deleted']);
     }
 
 }
