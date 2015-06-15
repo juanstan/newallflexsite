@@ -26,7 +26,7 @@ $app = new Illuminate\Foundation\Application;
 
 $env = $app->detectEnvironment(array(
 
-	'local' => array('UKSFLAP043', 'Axels-MacBook-Pro.local'),
+	'local' => array('UKSFLAP043', 'Axels-MacBook-Pro.local', 'Axels-MBP'),
     'stage' => array('Development'),
     'development' => ['centos.sureflap.com']
 

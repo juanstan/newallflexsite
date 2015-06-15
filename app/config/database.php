@@ -54,10 +54,10 @@ return array(
 
 		'mysql' => array(
             'driver'    => 'mysql',
-            'host'      => 'localhost',
-            'database'  => 'allflex',
-            'username'  => 'root',
-            'password'  => 'delta1234',
+            'host'      => 'allflextempsensor.c6wlmmno3n5p.eu-west-1.rds.amazonaws.com',
+            'database'  => 'Allflexdb',
+            'username'  => 'Allflex',
+            'password'  => 'dfi4389Ufui3sdh23',
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
