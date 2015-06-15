@@ -66,6 +66,7 @@ class AnimalReadingSymptomController extends \BaseController
                 'errors' => $validator->messages()], 400);
         }
 
+
         $reading = $this->animalReadingSymptomRepository->create($input);
 
         if ($reading == null) {

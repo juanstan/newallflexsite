@@ -56,7 +56,7 @@ class AnimalReadingSymptomRepository extends AbstractRepository implements Anima
     {
         return \Validator::make($input,
         [
-            'symptom_id' => ['required','integer','exists:symptoms,id']
+            'symptom_id' => ['required','integer','exists:symptoms,id','unique:sensor_reading_symptoms,symptom_id,reading_id,'.$input['reading_id']]
         ]);
     }
 
