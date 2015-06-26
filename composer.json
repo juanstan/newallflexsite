@@ -12,7 +12,7 @@
 	  	"orangehill/iseed": "1.1",
 	  	"toin0u/geotools-laravel": "~1.0",
 		"league/csv": "7.0.*@dev",
-		"ollieread/multiauth": "dev-master",
+		"ollieread/multiauth": "3.3.1",
 		"potsky/laravel-localization-helpers" : "~1.1",
 		"jenssegers/agent" : "dev-master",
 		"barryvdh/laravel-debugbar": "~1.8"
