@@ -1,10 +1,10 @@
-<?php namespace Repositories;
+<?php namespace App\Models\Repositories;
 
-use Entities\Vet;
+use App\Models\Entities\Vet;
 
 class VetRepository extends AbstractRepository implements VetRepositoryInterface
 {
-	protected $classname = 'Entities\Vet';
+	protected $classname = 'App\Models\Entities\Vet';
 
 	public function getByEmailForLogin($email)
 	{

@@ -1,10 +1,10 @@
-<?php namespace Repositories;
+<?php namespace App\Models\Repositories;
 
-use Entities\User;
+use App\Models\Entities\User;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
-	protected $classname = 'Entities\User';
+	protected $classname = 'App\Models\Entities\User';
 
 	public function getByEmailForLogin($email_address)
 	{

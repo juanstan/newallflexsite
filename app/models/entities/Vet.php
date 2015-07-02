@@ -1,14 +1,14 @@
-<?php namespace Entities;
+<?php namespace App\Models\Entities;
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Vet extends \Eloquent implements UserInterface, RemindableInterface {
+class Vet extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract {
 
-    use UserTrait, RemindableTrait, SoftDeletingTrait;
+    use Authenticatable, CanResetPassword, SoftDeletes;
 
     protected $dates = ['deleted_at'];
     
@@ -48,17 +48,17 @@ class Vet extends \Eloquent implements UserInterface, RemindableInterface {
     
     public function tokens()
     {
-        return $this->hasMany('Entities\Vet\Token');
+        return $this->hasMany('App\Models\Entities\Vet\Token');
     }
     
     public function requests()
     {
-        return $this->hasMany('Entities\Animal\Request', 'vet_id');
+        return $this->hasMany('App\Models\Entities\Animal\Request', 'vet_id');
     }
     
     public function requestedAnimals()
     {
-        return $this->belongsToMany('Entities\Animal', 'animal_requests')->withTimestamps();
+        return $this->belongsToMany('App\Models\Entities\Animal', 'animal_requests')->withTimestamps();
     }
 
     public function animals()
@@ -68,12 +68,12 @@ class Vet extends \Eloquent implements UserInterface, RemindableInterface {
 
     public function sensorReadings()
     {
-        return $this->belongsToMany('Entities\SensorReading', 'vet_readings', 'vet_id', 'reading_id');
+        return $this->belongsToMany('App\Models\Entities\SensorReading', 'vet_readings', 'vet_id', 'reading_id');
     }
     
     public function device()
     {
-        return $this->belongsToMany('Entities\Device', 'device_vets')->withTimestamps();
+        return $this->belongsToMany('App\Models\Entities\Device', 'device_vets')->withTimestamps();
     }
     
 }

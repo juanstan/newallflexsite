@@ -7,7 +7,7 @@ module.exports = function(grunt) {
         src: [
           './bower_components/jquery/dist/jquery.js',
           './bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap.js',
-          './app/assets/javascripts/*.js'       
+          './resources/assets/javascripts/*.js'
         ],
         dest: './public/assets/javascripts/application.js'
       }
@@ -25,9 +25,9 @@ module.exports = function(grunt) {
     sass: {
       development: {
         files: {
-          "./public/assets/stylesheets/application.css":"./app/assets/stylesheets/application.sass",
-            "./public/assets/stylesheets/mobile.css":"./app/assets/stylesheets/mobile.sass",
-            "./public/assets/stylesheets/tablet.css":"./app/assets/stylesheets/tablet.sass"
+          "./public/assets/stylesheets/application.css":"./resources/assets/stylesheets/application.sass",
+            "./public/assets/stylesheets/mobile.css":"./resources/assets/stylesheets/mobile.sass",
+            "./public/assets/stylesheets/tablet.css":"./resources/assets/stylesheets/tablet.sass"
         }
       }
     },
@@ -36,12 +36,12 @@ module.exports = function(grunt) {
         files: [
           './bower_components/jquery/dist/jquery.js',
           './bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap.js',
-          './app/assets/javascripts/*.js'
+          './resources/assets/javascripts/*.js'
           ],
         tasks: ['concat:js', 'uglify:js']
       },
       sass: {
-        files: ['./app/assets/stylesheets/*.sass'],
+        files: ['./resources/assets/stylesheets/*.sass'],
         tasks: ['sass']
       }
     }    

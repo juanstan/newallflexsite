@@ -1,7 +1,6 @@
-<?php namespace Entities\Vet;
+<?php namespace App\Models\Entities\Vet;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Token extends \Eloquent {
@@ -17,7 +16,7 @@ class Token extends \Eloquent {
     protected $fillable = ['vet_id', 'token', 'expires_at'];
     protected $visible = ['token', 'expires_at', 'created_at'];
 
-    static public function generate(\Entities\Vet $vet, Carbon $dt = null)
+    static public function generate(\App\Models\Entities\Vet $vet, Carbon $dt = null)
     {
         if($dt == null)
         {
@@ -31,6 +30,6 @@ class Token extends \Eloquent {
 
     public function vet()
     {
-        return $this->belongsTo('Entities\Vet');
+        return $this->belongsTo('\App\Models\Entities\Vet');
     }
 }

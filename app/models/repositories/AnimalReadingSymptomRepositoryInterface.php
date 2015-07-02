@@ -1,4 +1,4 @@
-<?php namespace Repositories;
+<?php namespace App\Models\Repositories;
 
 interface AnimalReadingSymptomRepositoryInterface extends AbstractRepositoryInterface
 {

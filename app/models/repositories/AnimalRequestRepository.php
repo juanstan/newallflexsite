@@ -1,12 +1,12 @@
-<?php namespace Repositories;
+<?php namespace App\Models\Repositories;
 
-use Entities\Animal\Request;
+use App\Models\Entities\Animal\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AnimalRequestRepository extends AbstractRepository implements AnimalRequestRepositoryInterface
 {
-    protected $classname = 'Entities\Animal\Request';
+    protected $classname = 'App\Models\Entities\Animal\Request';
     
     protected $repository;
     

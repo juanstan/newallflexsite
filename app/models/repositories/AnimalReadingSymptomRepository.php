@@ -1,12 +1,12 @@
-<?php namespace Repositories;
+<?php namespace App\Models\Repositories;
 
-use Entities\SensorReading;
+use App\Models\Entities\SensorReading;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AnimalReadingSymptomRepository extends AbstractRepository implements AnimalReadingSymptomRepositoryInterface
 {
-    protected $classname = 'Entities\SensorReadingSymptom';
+    protected $classname = 'App\Models\Entities\SensorReadingSymptom';
     
     protected $repository;
         
@@ -56,7 +56,7 @@ class AnimalReadingSymptomRepository extends AbstractRepository implements Anima
     {
         return \Validator::make($input,
         [
-            'symptom_id' => ['required','integer','exists:symptoms,id','unique:sensor_reading_symptoms,symptom_id,reading_id,'.$input['reading_id']]
+            'symptom_id' => ['required','integer','exists:symptoms,id','unique:sensor_reading_symptoms,symptom_id,NULL,id,reading_id,'.$input['reading_id']]
         ]);
     }
 

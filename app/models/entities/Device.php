@@ -1,13 +1,13 @@
-<?php namespace Entities;
+<?php namespace App\Models\Entities;
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class Device extends \Eloquent implements UserInterface, RemindableInterface {
+class Device extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract {
 
-	use UserTrait, RemindableTrait;
+	use Authenticatable, CanResetPassword;
     
     protected $hidden = [
         'created_at',
@@ -29,17 +29,17 @@ class Device extends \Eloquent implements UserInterface, RemindableInterface {
     
     public function user()
     {
-        return $this->belongsToMany('Entities\User', 'device_users')->withTimestamps();
+        return $this->belongsToMany('App\Models\Entities\User', 'device_users')->withTimestamps();
     }
     
     public function vet()
     {
-        return $this->belongsToMany('Entities\Vet', 'device_vets')->withTimestamps();
+        return $this->belongsToMany('App\Models\Entities\Vet', 'device_vets')->withTimestamps();
     }
     
     public function sensorReading()
     {
-        return $this->hasMany('Entities\SensorReading', 'device_id');
+        return $this->hasMany('App\Models\Entities\SensorReading', 'device_id');
     }
 
 }

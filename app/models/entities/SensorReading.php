@@ -1,14 +1,14 @@
-<?php namespace Entities;
+<?php namespace App\Models\Entities;
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SensorReading extends \Eloquent implements UserInterface, RemindableInterface {
+class SensorReading extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract {
 
-	use UserTrait, RemindableTrait, SoftDeletingTrait;
+	use Authenticatable, CanResetPassword, SoftDeletes;
 
     protected $dates = ['deleted_at'];
 
@@ -31,26 +31,26 @@ class SensorReading extends \Eloquent implements UserInterface, RemindableInterf
     
     public function animal()
     {
-        return $this->belongsTo('Entities\Animal', 'animal_id');
+        return $this->belongsTo('App\Models\Entities\Animal', 'animal_id');
     }
 
     public function vet()
     {
-        return $this->belongsTo('Entities\vet', 'animal_id');
+        return $this->belongsTo('App\Models\Entities\vet', 'animal_id');
     }
 
     public function vets()
     {
-        return $this->belongsToMany('Entities\Vet', 'vet_readings', 'reading_id', 'vet_id');
+        return $this->belongsToMany('App\Models\Entities\Vet', 'vet_readings', 'reading_id', 'vet_id');
     }
     
     public function device()
     {
-        return $this->belongsTo('Entities\Device', 'device_id');
+        return $this->belongsTo('App\Models\Entities\Device', 'device_id');
     }
     
     public function sensorReadingSymptoms()
     {
-        return $this->hasMany('Entities\SensorReadingSymptom', 'reading_id');
+        return $this->hasMany('App\Models\Entities\SensorReadingSymptom', 'reading_id');
     }
 }

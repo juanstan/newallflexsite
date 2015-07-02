@@ -1,14 +1,14 @@
-<?php namespace Entities;
+<?php namespace App\Models\Entities;
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SensorReadingSymptom extends \Eloquent implements UserInterface, RemindableInterface {
+class SensorReadingSymptom extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract {
 
-	use UserTrait, RemindableTrait, SoftDeletingTrait;
+	use Authenticatable, CanResetPassword, SoftDeletes;
 
     protected $dates = ['deleted_at'];
     
@@ -23,11 +23,11 @@ class SensorReadingSymptom extends \Eloquent implements UserInterface, Remindabl
     
     public function sensorReading()
     {
-        return $this->belongsTo('Entities\SensorReading', 'reading_id');
+        return $this->belongsTo('\App\Models\Entities\SensorReading', 'reading_id');
     }
     
     public function symptom()
     {
-        return $this->belongsTo('Entities\Symptom');
+        return $this->belongsTo('\App\Models\Entities\Symptom');
     }
 }

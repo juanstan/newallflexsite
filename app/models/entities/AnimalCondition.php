@@ -1,14 +1,14 @@
-<?php namespace Entities;
+<?php namespace App\Models\Entities;
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AnimalCondition extends \Eloquent implements UserInterface, RemindableInterface {
+class AnimalCondition extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract {
 
-	use UserTrait, RemindableTrait, SoftDeletingTrait;
+	use Authenticatable, CanResetPassword, SoftDeletes;
 
     protected $dates = ['deleted_at'];
     
@@ -38,12 +38,12 @@ class AnimalCondition extends \Eloquent implements UserInterface, RemindableInte
     
     public function animal()
     {
-        return $this->belongsTo('Entities\Animal', 'animal_id');
+        return $this->belongsTo('App\Models\Entities\Animal', 'animal_id');
     }
 
     public function condition()
     {
-        return $this->belongsTo('Entities\Condition');
+        return $this->belongsTo('App\Models\Entities\Condition');
     }
 
 }

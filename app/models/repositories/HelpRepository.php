@@ -1,8 +1,8 @@
-<?php namespace Repositories;
+<?php namespace App\Models\Repositories;
 
 class HelpRepository extends AbstractRepository implements HelpRepositoryInterface
 {
-    protected $classname = 'Entities\Help';
+    protected $classname = 'App\Models\Entities\Help';
 
     public function all()
     {

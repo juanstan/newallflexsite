@@ -1,14 +1,14 @@
-<?php namespace Entities;
+<?php namespace App\Models\Entities;
 
-use Illuminate\Auth\UserTrait;
-use Illuminate\Auth\UserInterface;
-use Illuminate\Auth\Reminders\RemindableTrait;
-use Illuminate\Auth\Reminders\RemindableInterface;
-use Illuminate\Database\Eloquent\SoftDeletingTrait;
+use Illuminate\Auth\Authenticatable;
+use Illuminate\Auth\Passwords\CanResetPassword;
+use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
+use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Animal extends \Eloquent implements UserInterface, RemindableInterface {
+class Animal extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract {
 
-	use UserTrait, RemindableTrait, SoftDeletingTrait;
+	use Authenticatable, CanResetPassword, SoftDeletes;
 
     protected $dates = ['deleted_at'];
     
@@ -33,26 +33,26 @@ class Animal extends \Eloquent implements UserInterface, RemindableInterface {
     
     public function user()
     {
-        return $this->belongsTo('Entities\User', 'user_id');
+        return $this->belongsTo('App\Models\Entities\User', 'user_id');
     }
     
     public function vet()
     {
-        return $this->belongsToMany('Entities\Vet', 'animal_requests');
+        return $this->belongsToMany('App\Models\Entities\Vet', 'animal_requests');
     }
     
     public function sensorReadings()
     {
-        return $this->hasMany('Entities\SensorReading', 'animal_id');
+        return $this->hasMany('App\Models\Entities\SensorReading', 'animal_id');
     }
 
     public function breed()
     {
-        return $this->belongsTo('Entities\Breed', 'breed_id');
+        return $this->belongsTo('App\Models\Entities\Breed', 'breed_id');
     }
     
     public function animalConditions()
     {
-        return $this->hasMany('Entities\AnimalCondition', 'animal_id');
+        return $this->hasMany('App\Models\Entities\AnimalCondition', 'animal_id');
     }
 }

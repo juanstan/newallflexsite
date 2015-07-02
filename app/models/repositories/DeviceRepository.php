@@ -1,11 +1,11 @@
-<?php namespace Repositories;
+<?php namespace App\Models\Repositories;
 
-use Entities\Device;
+use App\Models\Entities\Device;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DeviceRepository extends AbstractRepository implements DeviceRepositoryInterface
 {
-	protected $classname = 'Entities\Device';
+	protected $classname = 'App\Models\Entities\Device';
 
 	public function getCreateValidator($input)
 	{

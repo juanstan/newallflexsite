@@ -1,11 +1,11 @@
-<?php namespace Repositories;
+<?php namespace App\Models\Repositories;
 
-use Entities\User;
-use Entities\Animal;
+use App\Models\Entities\User;
+use App\Models\Entities\Animal;
 
 class AnimalReadingRepository extends AbstractRepository implements AnimalReadingRepositoryInterface
 {
-    protected $classname = 'Entities\SensorReading';
+    protected $classname = 'App\Models\Entities\SensorReading';
 
     protected $repository;
     

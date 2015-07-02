@@ -1,13 +1,13 @@
-<?php namespace Repositories;
+<?php namespace App\Models\Repositories;
 
-use Entities\AnimalCondition;
-use Entities\Condition;
+use App\Models\Entities\AnimalCondition;
+use App\Models\Entities\Condition;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AnimalConditionRepository extends AbstractRepository implements AnimalConditionRepositoryInterface
 {
-    protected $classname = 'Entities\AnimalCondition';
+    protected $classname = 'App\Models\Entities\AnimalCondition';
     
     protected $repository;
     

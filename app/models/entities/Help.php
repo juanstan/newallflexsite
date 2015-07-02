@@ -1,4 +1,4 @@
-<?php namespace Entities;
+<?php namespace App\Models\Entities;
 
 class Help extends \Eloquent {
 
