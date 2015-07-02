@@ -36,7 +36,7 @@ class SensorReading extends \Eloquent implements AuthenticatableContract, CanRes
 
     public function vet()
     {
-        return $this->belongsTo('App\Models\Entities\vet', 'animal_id');
+        return $this->belongsTo('App\Models\Entities\Vet', 'animal_id');
     }
 
     public function vets()

@@ -120,7 +120,7 @@ Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
 
 });
 
-Route::group(['prefix' => 'vet', 'namespace' => 'vet'], function () {
+Route::group(['prefix' => 'vet', 'namespace' => 'Vet'], function () {
     Route::controller('register/reading', 'AnimalReadingRegisterController',
         array(
             'getIndex'=>'vet.register.reading'
@@ -158,7 +158,7 @@ Route::group(['prefix' => 'vet', 'namespace' => 'vet'], function () {
 });
 
 
-Route::group(['prefix' => 'api', 'namespace' => 'api'], function () {
+Route::group(['prefix' => 'api', 'namespace' => 'Api'], function () {
     Route::post('user/login', ['as' => 'api.user.login', 'uses' => 'AuthController@postLogin']); // Done
     Route::controller('user/facebook', 'FacebookController',
         array(
