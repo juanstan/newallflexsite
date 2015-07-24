@@ -34,7 +34,7 @@ class TwitterController extends \App\Http\Controllers\Controller
 
                 $user = new User;
                 $user->units = 'F';
-                $user->weight_units = 'KG';
+                $user->weight_units = 'kg';
                 $user->image_path = str_replace('_normal.jpeg', '.jpeg', $result['profile_image_url']);
 
                 $user->save();

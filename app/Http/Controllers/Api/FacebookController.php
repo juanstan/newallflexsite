@@ -35,7 +35,7 @@ class FacebookController extends \App\Http\Controllers\Controller
             $user->last_name = \Input::get('last_name');
             $user->email = \Input::get('email');
             $user->units = 'F';
-            $user->weight_units = 'KG';
+            $user->weight_units = 'kg';
             $user->image_path = 'https://graph.facebook.com/' . \Input::get('id') . '/picture?type=large';
 
             $user->save();

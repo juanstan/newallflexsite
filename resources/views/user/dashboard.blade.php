@@ -408,13 +408,12 @@
                                         <div class="col-sm-8">
 
                                             <div class="input-group">
-                                                @if(Auth::user()->get()->weight_units == 'KG')
+                                                @if(Auth::user()->get()->weight_units == 'kg')
                                                     {!! Form::text('weight', $animal->weight, array('class' => 'form-control text-left')) !!}
                                                 @else
                                                     {!! Form::text('weight', round($animal->weight * 2.20462, 1), array('class' => 'form-control text-left')) !!}
                                                 @endif
-                                                <div class="input-group-addon">@if(Auth::user()->get()->weight_units == 'KG') {!! Lang::get('general.kg') !!} @else {!! Lang::get('general.lbs') !!} @endif</div>
-
+                                                <div class="input-group-addon">@if(Auth::user()->get()->weight_units == 'kg') {!! Lang::get('general.kg') !!} @else {!! Lang::get('general.lbs') !!} @endif</div>
                                             </div>
 
                                         </div>
