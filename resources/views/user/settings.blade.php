@@ -120,7 +120,7 @@
                             <div class="col-sm-8">
 
                                 <div class="radio-pill-buttons">
-                                    <label><input type="radio" @if(Auth::user()->get()->weight_units == 'kg') checked @endif name="weight_units" value="KG"><span class="pointer" >{!! Lang::get('general.Kilograms') !!}</span></label>
+                                    <label><input type="radio" @if(Auth::user()->get()->weight_units == 'Kg') checked @endif name="weight_units" value="KG"><span class="pointer" >{!! Lang::get('general.Kilograms') !!}</span></label>
                                     <label><input type="radio" @if(Auth::user()->get()->weight_units == 'lbs') checked @endif name="weight_units" value="LBS"><span class="pointer" >{!! Lang::get('general.Pounds') !!}</span></label>
                                 </div>
 
