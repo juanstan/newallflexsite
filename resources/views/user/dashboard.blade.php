@@ -415,7 +415,6 @@
                                                 @endif
                                                 <div class="input-group-addon">@if(Auth::user()->get()->weight_units == 'Kg') {!! Lang::get('general.kg') !!} @else {!! Lang::get('general.lbs') !!} @endif</div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>

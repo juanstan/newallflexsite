@@ -116,7 +116,7 @@ return [
         'cluster' => false,
 
         'default' => [
-            'host'     => '127.0.0.1',
+            'host'     => 'allflextempsensor.kyvxjy.0001.euw1.cache.amazonaws.com',
             'port'     => 6379,
             'database' => 0,
         ],
