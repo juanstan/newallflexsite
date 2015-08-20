@@ -2,7 +2,3 @@
 /node_modules
 Homestead.yaml
 .env
-/public/uploads/csv/*
-/public/uploads/users/*
-/public/uploads/vets/*
-/public/uploads/pets/*
