@@ -153,10 +153,10 @@ class AnimalReadingRegisterController extends \App\Http\Controllers\Controller
     public function getFinish()
     {
         $confirmation_code = $this->authUser->confirmation_code;
-        \Mail::send('emails.user-verify', array('confirmation_code' => $confirmation_code), function ($message) {
-            $message->to($this->authUser->email, 'New user')
-                ->subject('Verify your email address');
-        });
+//        \Mail::send('emails.user-verify', array('confirmation_code' => $confirmation_code), function ($message) {
+//            $message->to($this->authUser->email, 'New user')
+//                ->subject('Verify your email address');
+//        });
         return \Redirect::route('user.dashboard');
     }
 
