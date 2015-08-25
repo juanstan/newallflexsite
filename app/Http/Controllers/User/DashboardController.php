@@ -323,7 +323,7 @@ class DashboardController extends \App\Http\Controllers\Controller
         }
         $id = $this->authUser->id;
         $file = array('image' => \Input::file('pet-photo'));
-        $rules = array('image' => 'max:4000|mimes:jpeg,png');
+        $rules = array('image' => 'max:4000|mimes:jpg,jpeg,png');
         $validator = \Validator::make($file, $rules);
         if ($validator->fails()) {
             return \Redirect::route('user.dashboard')->withInput()
