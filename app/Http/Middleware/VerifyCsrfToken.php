@@ -26,7 +26,7 @@ class VerifyCsrfToken extends BaseVerifier
             return $this->addCookieToResponse($request, $next($request));
         }
 
-        throw new TokenMismatchException;
+        //throw new TokenMismatchException;
     }
     /**
      * The URIs that should be excluded from CSRF verification.
