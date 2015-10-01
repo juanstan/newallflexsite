@@ -19,7 +19,6 @@ class Vet extends \Eloquent implements AuthenticatableContract, CanResetPassword
         'access',
         'tokens',
         'confirmation_code',
-        'deleted_at'
     ];
 
     protected $fillable = [

@@ -21,7 +21,6 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
         'access',
         'tokens',
         'confirmation_code',
-        'deleted_at'
     ];
 
     protected $fillable = [

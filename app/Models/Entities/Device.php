@@ -10,8 +10,6 @@ class Device extends \Eloquent implements AuthenticatableContract, CanResetPassw
 	use Authenticatable, CanResetPassword;
     
     protected $hidden = [
-        'created_at',
-        'updated_at',
         'deleted_at'
     ];
 

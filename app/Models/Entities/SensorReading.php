@@ -13,9 +13,6 @@ class SensorReading extends \Eloquent implements AuthenticatableContract, CanRes
     protected $dates = ['deleted_at'];
 
     protected $hidden = [
-        'created_at',
-        'updated_at',
-        'expires_at',
         'deleted_at'
     ];
 
