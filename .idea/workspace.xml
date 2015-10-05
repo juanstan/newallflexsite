@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a034c456-ea4b-43de-8129-1cfef07c0b7d" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/AnimalController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/AnimalController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/UserController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/User/DashboardController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/DashboardController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/User/PetRegisterController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/User/PetRegisterController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/api_routes.php" afterPath="$PROJECT_DIR$/app/Http/api_routes.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Models/Repositories/PhotoRepository.php" afterPath="$PROJECT_DIR$/app/Models/Repositories/PhotoRepository.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/user/settings.blade.php" afterPath="$PROJECT_DIR$/resources/views/user/settings.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/usersignup/userRegister.blade.php" afterPath="$PROJECT_DIR$/resources/views/usersignup/userRegister.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/vet/settings.blade.php" afterPath="$PROJECT_DIR$/resources/views/vet/settings.blade.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php" />
     </list>
     <ignored path="allflex-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,11 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PhotoController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PhotoController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-17.48">
-              <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+            <state vertical-scroll-proportion="0.5200594">
+              <caret line="45" column="54" selection-start-line="45" selection-start-column="54" selection-end-line="45" selection-end-column="54" />
               <folding>
                 <element signature="e#43#52#0#PHP" expanded="true" />
               </folding>
@@ -52,10 +42,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="api_routes.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="api_routes.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/api_routes.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5065789">
+            <state vertical-scroll-proportion="-18.48">
               <caret line="26" column="56" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
               <folding />
             </state>
@@ -85,8 +75,8 @@
       <file leaf-file-name="AnimalController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/AnimalController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.52">
-              <caret line="96" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
+            <state vertical-scroll-proportion="-16.28">
+              <caret line="68" column="79" selection-start-line="67" selection-start-column="8" selection-end-line="68" selection-end-column="79" />
               <folding>
                 <element signature="e#43#52#0#PHP" expanded="true" />
               </folding>
@@ -151,8 +141,8 @@
         <option value="$PROJECT_DIR$/storage/framework/views/c81047497c4980991ae893cc1b58692b" />
         <option value="$PROJECT_DIR$/storage/framework/views/eedd9f231635cf8c1ff09758a4f89e42" />
         <option value="$PROJECT_DIR$/app/Models/Repositories/PhotoRepository.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php" />
         <option value="$PROJECT_DIR$/app/Http/api_routes.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php" />
       </list>
     </option>
   </component>
@@ -587,7 +577,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32746115" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2476684" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2476684" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -992,16 +982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/AnimalController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.52">
-          <caret line="96" column="33" selection-start-line="0" selection-start-column="0" selection-end-line="125" selection-end-column="0" />
-          <folding>
-            <element signature="e#43#52#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Models/Repositories/AnimalRepository.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-22.8">
@@ -1018,21 +998,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/api_routes.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-17.48">
-          <caret line="35" column="25" selection-start-line="35" selection-start-column="25" selection-end-line="35" selection-end-column="25" />
+        <state vertical-scroll-proportion="-18.48">
+          <caret line="26" column="56" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/AnimalController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-16.28">
+          <caret line="68" column="79" selection-start-line="67" selection-start-column="8" selection-end-line="68" selection-end-column="79" />
           <folding>
             <element signature="e#43#52#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/api_routes.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5065789">
-          <caret line="26" column="56" selection-start-line="26" selection-start-column="56" selection-end-line="26" selection-end-column="56" />
-          <folding />
+        <state vertical-scroll-proportion="0.5200594">
+          <caret line="45" column="54" selection-start-line="45" selection-start-column="54" selection-end-line="45" selection-end-column="54" />
+          <folding>
+            <element signature="e#43#52#0#PHP" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -36,13 +36,14 @@ class PhotoController extends Controller
             'location' => $this->photoRepository->uploadImage($input['image_path'], $user)
         );
 
-        $photoId = $this->photoRepository->createForUser($photo, $user);
+        $photo = $this->photoRepository->createForUser($photo, $user);
 
-        if ($photoId == null) {
+        if ($photo == null) {
             \App::abort(500);
         }
 
-        return response()->json(['error' => false, 'result' => $photoId], 201);
+        return response()->json(['error' => false, 'result' => $photo], 201)
+            ->header('Location', URL::route('api.photo.show', [$photo->id]));
     }
 
     public function show($id) // GET
