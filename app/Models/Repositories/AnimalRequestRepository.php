@@ -6,6 +6,13 @@ class AnimalRequestRepository extends AbstractRepository implements AnimalReques
 {
     protected $classname = 'App\Models\Entities\Animal\Request';
 
+    protected $repository;
+
+    public function __construct(UserRepositoryInterface $userRepositoryInterface)
+    {
+        $this->user = $userRepositoryInterface;
+    }
+
     public function setUser($user)
     {
         $this->user = is_numeric($user) ? $this->repository->get($user) : $user;
