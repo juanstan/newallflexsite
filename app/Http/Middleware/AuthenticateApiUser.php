@@ -34,7 +34,6 @@ class AuthenticateApiUser {
     public function handle($request, Closure $next)
     {
         $str_token = \Request::header('X-Authorization');
-        dd($str_token);
         if($str_token == null)
         {
             return response()->json(['error' => true, 'errors' => ['Authorization' => [\Lang::get('error.auth.header-missing')]]], 400);
@@ -49,6 +48,8 @@ class AuthenticateApiUser {
             {
                 return response()->json(['error' => true, 'errors' => ['Authorization' => [\Lang::get('error.auth.invalid-key')]]], 401);
             }
+
+            dd();
 
             \Auth::user()->login($token->user);
             $token->expires_at = Carbon::parse(Token::TOKEN_EXPIRY);
