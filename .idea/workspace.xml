@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="a034c456-ea4b-43de-8129-1cfef07c0b7d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Middleware/AuthenticateApiUser.php" afterPath="$PROJECT_DIR$/app/Http/Middleware/AuthenticateApiUser.php" />
     </list>
     <ignored path="allflex-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,11 +30,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="AnimalRequestController.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="AnimalRequestController.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/AnimalRequestController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.8076923">
-              <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.7647059">
+              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
               <folding>
                 <element signature="e#43#52#0#PHP" expanded="true" />
               </folding>
@@ -46,8 +45,8 @@
       <file leaf-file-name="AnimalRepository.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Models/Repositories/AnimalRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.6282053">
-              <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+            <state vertical-scroll-proportion="-3.4102564">
+              <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
               <folding>
                 <element signature="e#42#73#0#PHP" expanded="true" />
               </folding>
@@ -99,10 +98,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AuthenticateApiUser.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="AuthenticateApiUser.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Middleware/AuthenticateApiUser.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7459138">
+            <state vertical-scroll-proportion="-20.08">
               <caret line="57" column="31" selection-start-line="57" selection-start-column="31" selection-end-line="57" selection-end-column="31" />
               <folding>
                 <element signature="e#38#47#0#PHP" expanded="true" />
@@ -196,10 +195,10 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/User/DashboardController.php" />
         <option value="$PROJECT_DIR$/app/Models/Repositories/AnimalRequestRepositoryInterface.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Api/AnimalController.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/Api/AnimalRequestController.php" />
         <option value="$PROJECT_DIR$/app/Models/Repositories/AnimalRequestRepository.php" />
-        <option value="$PROJECT_DIR$/app/Models/Repositories/AnimalRepository.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/AuthenticateApiUser.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/Api/AnimalRequestController.php" />
+        <option value="$PROJECT_DIR$/app/Models/Repositories/AnimalRepository.php" />
       </list>
     </option>
   </component>
@@ -659,7 +658,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1440" y="-60" width="1920" height="1057" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19914803" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -670,7 +669,7 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32746115" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2476684" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2476684" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1099,32 +1098,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/AnimalRequestController.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/AuthenticateApiUser.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.8076923">
-          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+        <state vertical-scroll-proportion="-20.08">
+          <caret line="57" column="31" selection-start-line="57" selection-start-column="31" selection-end-line="57" selection-end-column="31" />
           <folding>
-            <element signature="e#43#52#0#PHP" expanded="true" />
+            <element signature="e#38#47#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/Models/Repositories/AnimalRepository.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.6282053">
-          <caret line="19" column="19" selection-start-line="19" selection-start-column="19" selection-end-line="19" selection-end-column="19" />
+        <state vertical-scroll-proportion="-3.4102564">
+          <caret line="14" column="0" selection-start-line="14" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
           <folding>
             <element signature="e#42#73#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Http/Middleware/AuthenticateApiUser.php">
+    <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/AnimalRequestController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7459138">
-          <caret line="57" column="31" selection-start-line="57" selection-start-column="31" selection-end-line="57" selection-end-column="31" />
+        <state vertical-scroll-proportion="0.7647059">
+          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
           <folding>
-            <element signature="e#38#47#0#PHP" expanded="true" />
+            <element signature="e#43#52#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -8,6 +8,7 @@ use App\Models\Entities\User;
 use App\Models\Entities\Animal;
 use App\Models\Repositories\AnimalRepository;
 use App\Models\Repositories\AnimalRequestRepository;
+use App\Models\Repositories\BreedRepository;
 use App\Http\Controllers\Controller;
 
 class AnimalController extends Controller
@@ -16,12 +17,14 @@ class AnimalController extends Controller
     protected $authUser;
     protected $animalRepository;
     protected $animalRequestRepository;
+    protected $breedRepository;
 
-    public function __construct(AnimalRepository $animalRepository, AnimalRequestRepository $animalRequestRepository)
+    public function __construct(AnimalRepository $animalRepository, AnimalRequestRepository $animalRequestRepository, BreedRepository $breedRepository)
     {
         $this->authUser = Auth::user()->get();
         $this->animalRepository = $animalRepository;
         $this->animalRequestRepository = $animalRequestRepository;
+        $this->breedRepository = $breedRepository;
     }
 
     public function index()
