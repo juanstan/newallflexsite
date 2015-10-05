@@ -26,7 +26,6 @@ class AnimalRequestController extends Controller
 
     public function index()
     {
-        dd($this->authUser);
         $this->animalRequestRepository->setUser($this->authUser);
 
         return response()->json(['error' => false,

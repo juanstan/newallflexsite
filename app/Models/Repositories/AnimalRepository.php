@@ -17,7 +17,6 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
 
     public function all()
     {
-        dd('here');
         if($this->user)
         {
             return $this->user->animals()->get();
