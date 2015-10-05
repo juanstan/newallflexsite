@@ -12,10 +12,12 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
     public function __construct(UserRepositoryInterface $userRepositoryInterface)
     {
         $this->user = $userRepositoryInterface;
+
     }
 
     public function all()
     {
+        dd('here');
         if($this->user)
         {
             return $this->user->animals()->get();
