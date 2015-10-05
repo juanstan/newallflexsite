@@ -49,10 +49,7 @@ class AuthenticateApiUser {
                 return response()->json(['error' => true, 'errors' => ['Authorization' => [\Lang::get('error.auth.invalid-key')]]], 401);
             }
 
-            dd($token);
-            dd($token->user);
-
-            Auth::user()->attempt($token->user);
+            Auth::user()->login($token->user);
             $token->expires_at = Carbon::parse(Token::TOKEN_EXPIRY);
             $token->save();
 
