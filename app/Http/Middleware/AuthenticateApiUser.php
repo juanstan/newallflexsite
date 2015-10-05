@@ -51,10 +51,11 @@ class AuthenticateApiUser {
 
 
 
-            \Auth::user()->login($token->user);
+            Auth::user()->login($token->user);
+            dd(Auth::user());
             $token->expires_at = Carbon::parse(Token::TOKEN_EXPIRY);
             $token->save();
-            dd($token);
+
         }
 
         return $next($request);
