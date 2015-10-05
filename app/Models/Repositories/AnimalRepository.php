@@ -7,7 +7,7 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
 {
     protected $classname = 'App\Models\Entities\Animal';
     
-    protected $repository;
+    protected $userRepositoryInterface;
 
     public function __construct(UserRepositoryInterface $userRepositoryInterface)
     {
