@@ -33,6 +33,7 @@ class AuthenticateApiUser {
      */
     public function handle($request, Closure $next)
     {
+        dd('woops');
         $str_token = \Request::header('X-Authorization');
         if($str_token == null)
         {
