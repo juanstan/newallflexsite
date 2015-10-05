@@ -7,7 +7,7 @@ use URL;
 
 use App\Models\Entities\Animal;
 use App\Models\Entities\User;
-use App\Models\Repositories\UserRepositoryInterface;
+use App\Models\Repositories\UserRepository;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -17,7 +17,7 @@ class UserController extends Controller
 
     protected $userRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
         $this->authUser = Auth::user()->get();
@@ -61,28 +61,6 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
-        }
-
-        if (Input::hasFile('image_path')) {
-
-            $imageValidator = $this->photoRepository->getCreateValidator($input);
-
-            if ($imageValidator->fails()) {
-                return redirect()->back()
-                    ->withErrors($imageValidator)
-                    ->withInput();
-            }
-
-            $photo = array(
-                'title' => $user->id,
-                'location' => $this->photoRepository->uploadImage($input['image_path'], $user)
-            );
-
-            $photoId = $this->photoRepository->createForUser($photo, $user);
-
-            unset($input['image_path']);
-            $input['photo_id'] = $photoId->id;
-
         }
 
         if ($this->userRepository->update($id, $input) == false) {

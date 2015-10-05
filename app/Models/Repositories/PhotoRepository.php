@@ -16,6 +16,13 @@ class PhotoRepository extends AbstractRepository implements PhotoRepositoryInter
     {
         $this->user = $userRepositoryInterface;
     }
+
+    public function setUser($user)
+    {
+        $this->user = is_numeric($user) ? $this->repository->get($user) : $user;
+
+        return $this;
+    }
     /**
      * @param Pet $animal
      * @return object[]

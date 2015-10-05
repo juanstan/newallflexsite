@@ -260,7 +260,7 @@ class DashboardController extends Controller
         {
             $input['breed_wildcard'] = $input['breed_id'];
         }
-        if($user->weight_units == "lbs") {
+        if($user->weight_units == 1) {
             $input['weight'] = round($input['weight'] * 0.453592, 1);
         }
         $validator = $this->animalRepository->getUpdateValidator($input);
@@ -352,7 +352,7 @@ class DashboardController extends Controller
 
         $this->animalRepository->setUser($user);
 
-        if($user->weight_units == "lbs") {
+        if($user->weight_units == 1) {
             $input['weight'] = $input['weight'] * 0.453592;
         }
 

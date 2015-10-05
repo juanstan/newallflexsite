@@ -6,7 +6,7 @@ use URL;
 
 use App\Models\Entities\User;
 use App\Models\Entities\Animal;
-use App\Models\Repositories\AnimalRepositoryInterface;
+use App\Models\Repositories\AnimalRepository;
 use App\Http\Controllers\Controller;
 
 class AnimalController extends Controller
@@ -15,7 +15,7 @@ class AnimalController extends Controller
     protected $authUser;
     protected $animalRepository;
 
-    public function __construct(AnimalRepositoryInterface $animalRepository)
+    public function __construct(AnimalRepository $animalRepository)
     {
         $this->authUser = Auth::user()->get();
         $this->animalRepository = $animalRepository;
@@ -37,7 +37,7 @@ class AnimalController extends Controller
 
         $this->animalRepository->setUser($user);
 
-        if($user->weight_units == "lbs") {
+        if($user->weight_units == 1) {
             $input['weight'] = $input['weight'] * 0.453592;
         }
 
@@ -57,25 +57,6 @@ class AnimalController extends Controller
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
-        }
-
-        if (Input::hasFile('image_path')) {
-
-            $imageValidator = $this->photoRepository->getCreateValidator($input);
-            if($imageValidator->fails())
-            {
-                return redirect()->back()
-                    ->withErrors($imageValidator)
-                    ->withInput();
-            }
-            $photo = array(
-                'title' => $user->id,
-                'location' => $this->photoRepository->uploadImage($input['image_path'], $user)
-            );
-            $photoId = $this->photoRepository->createForUser($photo, $user);
-            unset($input['image_path']);
-            $input['photo_id'] = $photoId->id;
-
         }
 
         $animal = $this->animalRepository->create($input);
@@ -110,7 +91,7 @@ class AnimalController extends Controller
         {
             $input['breed_wildcard'] = $input['breed_id'];
         }
-        if($user->weight_units == "lbs") {
+        if($user->weight_units == 1) {
             $input['weight'] = round($input['weight'] * 0.453592, 1);
         }
         $validator = $this->animalRepository->getUpdateValidator($input);

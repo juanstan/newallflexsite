@@ -76,7 +76,7 @@ class PetRegisterController extends Controller
 
         $this->animalRepository->setUser($user);
 
-        if($user->weight_units == "lbs") {
+        if($user->weight_units == 1) {
             $input['weight'] = $input['weight'] * 0.453592;
         }
 
