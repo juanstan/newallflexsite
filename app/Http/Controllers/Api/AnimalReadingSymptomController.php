@@ -1,11 +1,15 @@
 <?php namespace App\Http\Controllers\Api;
 
-use App\Models\Entities\SensorReading;
+use Auth;
+use Input;
+use URL;
+
 use App\Models\Repositories\AnimalReadingSymptomRepositoryInterface;
 use App\Models\Repositories\AnimalRepositoryInterface;
 use App\Models\Repositories\AnimalReadingRepositoryInterface;
+use App\Http\Controllers\Controller;
 
-class AnimalReadingSymptomController extends \App\Http\Controllers\Controller
+class AnimalReadingSymptomController extends Controller
 {
 
     protected $authUser;
@@ -18,7 +22,7 @@ class AnimalReadingSymptomController extends \App\Http\Controllers\Controller
 
     public function __construct(AnimalReadingRepositoryInterface $animalReadingRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
     {
-        $this->authUser = \Auth::user()->get();
+        $this->authUser = Auth::user()->get();
         $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
         $this->animalRepository = $animalRepository;
         $this->animalReadingRepository = $animalReadingRepository;
@@ -33,7 +37,7 @@ class AnimalReadingSymptomController extends \App\Http\Controllers\Controller
         $reading = $this->animalReadingRepository->get($reading_id);
         $this->animalReadingSymptomRepository->setReading($reading);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalReadingSymptomRepository->all()]);
 
     }
@@ -56,13 +60,13 @@ class AnimalReadingSymptomController extends \App\Http\Controllers\Controller
 
         $this->animalReadingSymptomRepository->setReading($reading);
 
-        $input = \Input::all();
+        $input = Input::all();
         $input['reading_id'] = $reading_id;
         $validator = $this->animalReadingSymptomRepository->getCreateValidator($input);
 
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
@@ -73,8 +77,8 @@ class AnimalReadingSymptomController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false, 'result' => $reading], 201)
-            ->header('Location', \URL::route('api.animal.{animal_id}.reading.{reading_id}.symptom.show', [$reading->id]));
+        return response()->json(['error' => false, 'result' => $reading], 201)
+            ->header('Location', URL::route('api.animal.{animal_id}.reading.{reading_id}.symptom.show', [$reading->id]));
 
     }
 
@@ -97,7 +101,7 @@ class AnimalReadingSymptomController extends \App\Http\Controllers\Controller
 
         $this->animalReadingSymptomRepository->setReading($reading);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalReadingSymptomRepository->get($id)]);
     }
 
@@ -121,12 +125,12 @@ class AnimalReadingSymptomController extends \App\Http\Controllers\Controller
 
         $this->animalReadingSymptomRepository->setReading($reading);
 
-        $input = \Input::all();
+        $input = Input::all();
 
         $validator = $this->animalReadingSymptomRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
@@ -134,7 +138,7 @@ class AnimalReadingSymptomController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalReadingSymptomRepository->get($id)]);
     }
 
@@ -159,7 +163,7 @@ class AnimalReadingSymptomController extends \App\Http\Controllers\Controller
         $this->animalReadingSymptomRepository->setReading($reading);
 
         $this->animalReadingSymptomRepository->deleteBySymptomIdForReading($reading_id, $id);
-        return \Response::json(['error' => false]);
+        return response()->json(['error' => false]);
     }
 
 

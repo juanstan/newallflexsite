@@ -29,49 +29,10 @@
     <!-- Javascript -->
   @include('layouts/core/javascript')
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-    <script>
-
-        $('.breed-list').autocomplete({
-            source: '/user/register/pet/breeds',
-            minLength:1,
-        });
-        $( "#createBreedList" ).autocomplete({
-            source: '/user/register/pet/breeds',
-            minLength:1,
-        });
-        $( "#vet-search" ).autocomplete({
-            source: '/user/dashboard/vet',
-            minLength:1,
-        });
-        $(function(){ // this will be called when the DOM is ready
-            $('#vetsearch').keyup(function() {
-                $('.vetname').show();
-                var val = $(this).val().toLowerCase();
-                $('.vetname').hide();
-                $('.vetname').each(function() {
-                    var text = $(this).text().toLowerCase();
-                    if(text.indexOf(val) != -1)
-                    {
-                        $(this).show();
-                    }
-                });
-            });
-        });
-
-    var md = new Dropzone(".dropzone", {
-
-    });
-    md.on("complete", function (file) {
-        if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-            window.setTimeout(function(){window.location.reload()}, 3000);
-        }
-        
-    });
-
+<script>
+$( document ).ready(function() {
     $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
-
         var $target = $(this);
-
         $target.closest( '.btn-group' )
                 .find( 'input' ).val( $target.attr( 'data-id' ) );
         $target.closest( '.btn-group' )
@@ -80,11 +41,48 @@
                 .children( '.dropdown-toggle' );
         $target.closest('form').submit();
         return false;
-
     });
+});
 
+$('.breed-list').autocomplete({
+    source: '/user/register/pet/breeds',
+    minLength:1,
+});
 
+$( "#createBreedList" ).autocomplete({
+    source: '/user/register/pet/breeds',
+    minLength:1,
+});
 
-    </script>
-    
+$( "#vet-search" ).autocomplete({
+    source: '/user/dashboard/vet',
+    minLength:1,
+});
+
+$(function(){ // this will be called when the DOM is ready
+    $('#vetsearch').keyup(function() {
+        $('.vetname').show();
+        var val = $(this).val().toLowerCase();
+        $('.vetname').hide();
+        $('.vetname').each(function() {
+            var text = $(this).text().toLowerCase();
+            if(text.indexOf(val) != -1)
+            {
+                $(this).show();
+            }
+        });
+    });
+});
+
+var md = new Dropzone(".dropzone", {
+
+});
+md.on("complete", function (file) {
+    if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+        window.setTimeout(function(){window.location.reload()}, 3000);
+    }
+
+});
+
+</script>
 </html>

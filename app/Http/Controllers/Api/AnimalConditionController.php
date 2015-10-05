@@ -1,22 +1,24 @@
 <?php namespace App\Http\Controllers\Api;
 
-use App\Models\Entities\Condition;
+use Auth;
+use Input;
+use URL;
+
 use App\Models\Entities\AnimalCondition;
 use App\Models\Repositories\AnimalConditionRepositoryInterface;
 use App\Models\Repositories\AnimalRepositoryInterface;
+use App\Http\Controllers\Controller;
 
-class AnimalConditionController extends \App\Http\Controllers\Controller
+class AnimalConditionController extends Controller
 {
 
     protected $authUser;
-
     protected $animalConditionRepository;
-
     protected $animalRepository;
 
     public function __construct(AnimalConditionRepositoryInterface $animalConditionRepository, AnimalRepositoryInterface $animalRepository)
     {
-        $this->authUser = \Auth::user()->get();
+        $this->authUser = Auth::user()->get();
         $this->animalConditionRepository = $animalConditionRepository;
         $this->animalRepository = $animalRepository;
     }
@@ -30,7 +32,7 @@ class AnimalConditionController extends \App\Http\Controllers\Controller
 
         $this->animalConditionRepository->setAnimal($animal);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalConditionRepository->all()]);
 
     }
@@ -49,13 +51,13 @@ class AnimalConditionController extends \App\Http\Controllers\Controller
 
         $this->animalConditionRepository->setAnimal($animal);
 
-        $input = \Input::all();
+        $input = Input::all();
         $input['animal_id'] = $animal_id;
         $validator = $this->animalConditionRepository->getCreateValidator($input);
 
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
@@ -65,8 +67,8 @@ class AnimalConditionController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false, 'result' => $reading], 201)
-            ->header('Location', \URL::route('api.animal.{animal_id}.condition.show', [$reading->id]));
+        return response()->json(['error' => false, 'result' => $reading], 201)
+            ->header('Location', URL::route('api.animal.{animal_id}.condition.show', [$reading->id]));
 
     }
 
@@ -85,7 +87,7 @@ class AnimalConditionController extends \App\Http\Controllers\Controller
 
         $this->animalConditionRepository->setAnimal($animal);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalConditionRepository->get($id)]);
     }
 
@@ -105,11 +107,11 @@ class AnimalConditionController extends \App\Http\Controllers\Controller
 
         $this->animalConditionRepository->setAnimal($animal);
 
-        $input = \Input::all();
+        $input = Input::all();
         $validator = $this->animalConditionRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
@@ -117,7 +119,7 @@ class AnimalConditionController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalConditionRepository->get($id)]);
     }
 
@@ -138,7 +140,7 @@ class AnimalConditionController extends \App\Http\Controllers\Controller
 
         AnimalCondition::where('condition_id', '=', $id)->delete();
 
-        return \Response::json(['error' => false]);
+        return response()->json(['error' => false]);
     }
 
 

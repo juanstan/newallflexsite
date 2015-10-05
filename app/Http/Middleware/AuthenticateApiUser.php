@@ -36,7 +36,7 @@ class AuthenticateApiUser {
         $str_token = \Request::header('X-Authorization');
         if($str_token == null)
         {
-            return \Response::json(['error' => true, 'errors' => ['Authorization' => [\Lang::get('error.auth.header-missing')]]], 400);
+            return response()->json(['error' => true, 'errors' => ['Authorization' => [\Lang::get('error.auth.header-missing')]]], 400);
         }
         else
         {
@@ -46,7 +46,7 @@ class AuthenticateApiUser {
 
             if($token == null || $token->expires_at->lt(Carbon::now()))
             {
-                return \Response::json(['error' => true, 'errors' => ['Authorization' => [\Lang::get('error.auth.invalid-key')]]], 401);
+                return response()->json(['error' => true, 'errors' => ['Authorization' => [\Lang::get('error.auth.invalid-key')]]], 401);
             }
 
             \Auth::user()->login($token->user);

@@ -45,7 +45,7 @@ class AuthController extends \App\Http\Controllers\Controller {
     public function postCreate() {
 
         $confirmation_code = str_random(30);
-        \Input::merge(array('confirmation_code' => $confirmation_code, 'units' => 'F'));
+        \Input::merge(array('confirmation_code' => $confirmation_code, 'units' => 1));
         $input = \Input::all();
 
         $validator = $this->vetRepository->getCreateValidator($input);

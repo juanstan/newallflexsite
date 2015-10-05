@@ -1,7 +1,6 @@
 <?php namespace App\Models\Repositories;
 
 use App\Models\Entities\AnimalCondition;
-use App\Models\Entities\Condition;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -16,41 +15,6 @@ class AnimalConditionRepository extends AbstractRepository implements AnimalCond
     public function __construct(UserRepositoryInterface $repository)
     {
         $this->repository = $repository;
-    }
-
-    public function all()
-    {             
-        if($this->animal)
-        {
-            return $this->animal->animalConditions()->get();
-        }
-
-        return parent::all();
-    }
-    
-    public function get($id)
-    {
-        if($id)
-        {
-            return $this->animal ? $this->animal->animalConditions()->findOrFail($id) : parent::get($id);
-        }
-
-    }
-    
-    public function create($input)
-    {
-
-            /**
-            * @var \Entities\Device
-            */
-            $reading = parent::create($input);
-            
-            $reading->animal()->associate($this->animal); 
-            
-            $reading->save();
-                 
-
-        return $reading;
     }
 
     public function getCreateValidator($input)
@@ -75,6 +39,23 @@ class AnimalConditionRepository extends AbstractRepository implements AnimalCond
         $this->animal = $animal;
 
         return $this;
+    }
+
+    public function removeAndUpdateConditions($animalId, $conditions)
+    {
+        $this->query()->where('animal_id', '=', $animalId)->delete();
+
+        foreach ($conditions as $condition) {
+
+            $animalCondition = $this->query()->where(['animal_id' => $animalId, 'condition_id' => $condition])->first();
+            if (empty($animalCondition)) {
+                $animalCondition = new AnimalCondition;
+                $animalCondition->condition_id = $condition;
+                $animalCondition->animal_id = $animalId;
+                $animalCondition->save();
+            }
+        }
+
     }
    
 }

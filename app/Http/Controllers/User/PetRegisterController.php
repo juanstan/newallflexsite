@@ -1,19 +1,32 @@
 <?php namespace App\Http\Controllers\User;
 
-use App\Models\Entities\Animal;
-use App\Models\Entities\Breed;
-use App\Models\Repositories\AnimalRepositoryInterface;
+use Auth;
+use View;
+use Input;
+use Redirect;
+use Image;
+use File;
 
-class PetRegisterController extends \App\Http\Controllers\Controller
+use App\Models\Entities\Animal;
+use App\Models\Repositories\AnimalRepository;
+use App\Models\Repositories\PhotoRepository;
+use App\Models\Repositories\BreedRepository;
+use App\Http\Controllers\Controller;
+
+class PetRegisterController extends Controller
 {
 
     protected $authUser;
     protected $animalRepository;
+    protected $photoRepository;
+    protected $breedRepository;
 
-    public function __construct(AnimalRepositoryInterface $animalRepository)
+    public function __construct(AnimalRepository $animalRepository, PhotoRepository $photoRepository, BreedRepository $breedRepository)
     {
-        $this->authUser = \Auth::user()->get();
+        $this->authUser = Auth::user()->get();
         $this->animalRepository = $animalRepository;
+        $this->photoRepository = $photoRepository;
+        $this->breedRepository = $breedRepository;
         $this->middleware('auth.user', array('only' => array('getIndex', 'getNew', 'postNew')));
     }
 
@@ -21,84 +34,86 @@ class PetRegisterController extends \App\Http\Controllers\Controller
     {
         $this->animalRepository->setUser($this->authUser);
         $pets = $this->animalRepository->all();
-        return \View::make('usersignup.stage3')->with('pets', $pets);
+        return View::make('usersignup.petList')
+            ->with(array(
+                'pets' => $pets
+            ));
 
     }
 
     public function getBreeds()
     {
-        $breeds = Breed::all()->lists('name', 'id');
-        $term = \Input::get('term');
+        $breeds = $this->breedRepository->all();
+        $breeds = $breeds->lists('name', 'id');
+        $term = Input::get('term');
         $result = [];
         foreach($breeds as $breed) {
             if(strpos($breed,$term) !== false) {
                 $result[] = ['value' => $breed];
             }
         }
-        return \Response::json($result);
+        return response()->json($result);
     }
 
     public function getCreate()
     {
-        $breed = Breed::all()->lists('name', 'id');
-        return \View::make('usersignup.stage2')->with('breed', $breed);
+        $user = $this->authUser;
+        $breeds = $this->breedRepository->all();
+        $breed = $breeds->lists('name', 'id');
+        return View::make('usersignup.petCreate')
+            ->with(
+                array(
+                    'breed' => $breed,
+                    'user' => $user
+                ));
     }
 
-    public function postCreate() // POST
+    public function postCreate()
     {
+        $input = Input::all();
+        $user = $this->authUser;
+        $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
 
-        $this->animalRepository->setUser($this->authUser);
+        $this->animalRepository->setUser($user);
 
-        if($this->authUser->weight_units == "LBS") {
-
-            $weight = round(\Input::get('weight') * 0.453592, 1);
-            \Input::merge(array('weight' => $weight));
-
+        if($user->weight_units == "lbs") {
+            $input['weight'] = $input['weight'] * 0.453592;
         }
 
-        if(Breed::where('name', '=', \Input::get('breed_id'))->first())
+        if($breed == NULL)
         {
-            $breed_id = Breed::where('name', '=', \Input::get('breed_id'))->first();
-            \Input::merge(array('breed_id' => $breed_id->id));
+            $input['breed_wildcard'] = $input['breed_id'];
         }
         else
         {
-            $breed_wildcard = \Input::get('breed_id');
-            \Input::merge(array('breed_wildcard' => $breed_wildcard));
+            $input['breed_id'] = $breed->id;
         }
 
-        $input = \Input::all();
         $validator = $this->animalRepository->getCreateValidator($input);
 
         if($validator->fails())
         {
-            return \Redirect::route('user.register.pet.create')
-                ->withErrors($validator);
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
         }
 
-        $id = $this->authUser->id;
+        if (Input::hasFile('image_path')) {
 
-        if (\Input::hasFile('pet-photo')) {
-
-            $destinationPath = 'uploads/pets/' . $id;
-            if (!\File::exists($destinationPath)) {
-                \File::makeDirectory($destinationPath);
+            $imageValidator = $this->photoRepository->getCreateValidator($input);
+            if($imageValidator->fails())
+            {
+                return redirect()->back()
+                    ->withErrors($imageValidator)
+                    ->withInput();
             }
-
-
-            $extension = \Input::file('pet-photo')->getClientOriginalExtension();
-            $fileName = rand(11111, 99999) . '.' . $extension;
-
-            $height = \Image::make(\Input::file('pet-photo'))->height();
-            $width = \Image::make(\Input::file('pet-photo'))->width();
-
-            if ($width > $height) {
-                \Image::make(\Input::file('pet-photo'))->crop($height, $height)->save($destinationPath . '/' . $fileName);
-            } else {
-                \Image::make(\Input::file('pet-photo'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
-            }
-
-            $input['image_path'] = '/uploads/pets/' . $id . '/' . $fileName;
+            $photo = array(
+                'title' => $user->id,
+                'location' => $this->photoRepository->uploadImage($input['image_path'], $user)
+            );
+            $photoId = $this->photoRepository->createForUser($photo, $user);
+            unset($input['image_path']);
+            $input['photo_id'] = $photoId->id;
 
         }
 
@@ -108,7 +123,7 @@ class PetRegisterController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Redirect::route('user.register.pet');
+        return redirect()->route('user.register.pet');
 
     }
 

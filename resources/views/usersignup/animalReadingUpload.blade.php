@@ -16,24 +16,18 @@
             <p>{!! Lang::get('general.Easily pair the reader via Bluetooth on your mobile') !!}</p>
             <div class="col-md-12 text-center vcenterwrap" >
                 <div class="col-md-6 vcenter">
-
                     {!! HTML::image('images/phones.png', 'a Logo', array('width' => '100%')) !!}
-                
                 </div>
                 <div class="col-md-6 vcenter">
-
                     {!! HTML::image('images/app-store.svg', 'a Logo', array('width' => '100%', 'class' => 'col-xs-6 col-md-12 small-padding')) !!}
                     {!! HTML::image('images/play-store.png', 'a Logo', array('width' => '100%', 'class' => 'col-xs-6 col-md-12 small-padding')) !!}
-                
                 </div>    
             </div>
         </div>
         <div class="col-sm-6 desktop">
             <h3 class="blue" >{!! Lang::get('general.Upload readings via USB') !!}</h3>
-
             {!! Form::open(array('files'=> 'true', 'route' => 'user.register.reading.readingUpload', 'class'=>'dropzone', 'method' => 'post')) !!}
             {!! Form::close() !!}
-
             <div class="row text-center top-buffer" >
                 <p>{!! Lang::get('general.Upload instructions') !!}</p>
                 <div class="col-sm-6 text-right">

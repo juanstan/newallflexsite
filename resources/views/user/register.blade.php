@@ -25,17 +25,13 @@
 
                     <h4>or</h4>
 
-                    {!! Form::open(array('route' => 'user.facebook.create', 'method' => 'get')) !!}
+                    <a href="{!! URL::route('user.auth.external.redirect', array('provider' => 'facebook')) !!}" >
+                        {!! Form::button(Lang::get('general.Sign up with Facebook'), array('class' => 'btn btn-lg btn-primary btn-block small-top-buffer')) !!}
+                    </a>
 
-                    {!! Form::submit(Lang::get('general.Sign up with Facebook'), array('class' => 'btn btn-lg btn-primary btn-block small-top-buffer')) !!}
-
-                    {!! Form::close() !!}
-
-                    {!! Form::open(array('route' => 'user.twitter.create', 'method' => 'get')) !!}
-
-                    {!! Form::submit(Lang::get('general.Sign up with Twitter'), array('class' => 'btn btn-lg btn-info btn-block small-top-buffer')) !!}
-
-                    {!! Form::close() !!}
+                    <a href="{!! URL::route('user.auth.external.redirect', array('provider' => 'twitter')) !!}" >
+                        {!! Form::submit(Lang::get('general.Sign up with Twitter'), array('class' => 'btn btn-lg btn-info btn-block small-top-buffer')) !!}
+                    </a>
 
                     <p class="top-buffer">{!! Lang::get('general.Already have an account?') !!} <strong>{!! HTML::linkroute('user', Lang::get('general.Sign in')) !!}</strong>
 

@@ -18,10 +18,12 @@ class CreateUsersTable extends Migration {
 			$table->string('first_name')->nullable();
 			$table->string('last_name')->nullable();
 			$table->string('email')->nullable();
+			$table->string('provider')->nullable();
+			$table->string('provider_id')->unique()->nullable();
+			$table->integer('photo_id')->unsigned()->nullable()->index('`ndx_users_photo_id`');
 			$table->string('telephone')->nullable();
-			$table->string('units')->nullable();
-			$table->string('weight_units')->nullable();
-			$table->string('image_path')->nullable();
+			$table->integer('units')->nullable();
+			$table->integer('weight_units')->nullable();
 			$table->string('password')->nullable();
 			$table->timestamps();
 			$table->integer('access')->default(1);

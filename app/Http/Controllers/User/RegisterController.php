@@ -1,65 +1,73 @@
 <?php namespace App\Http\Controllers\User;
 
+use View;
+use Auth;
+use Input;
+use File;
+use Image;
+
 use App\Models\Entities\User;
 use App\Models\Entities\Breeds;
-use App\Models\Repositories\UserRepositoryInterface;
+use App\Models\Repositories\UserRepository;
+use App\Models\Repositories\PhotoRepository;
+use App\Http\Controllers\Controller;
 
-class RegisterController extends \App\Http\Controllers\Controller
+class RegisterController extends Controller
 {
 
     protected $userRepository;
+    protected $photoRepository;
     protected $authUser;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(UserRepository $userRepository, PhotoRepository $photoRepository)
     {
-        $this->authUser = \Auth::user()->get();
+        $this->authUser = Auth::user()->get();
         $this->userRepository = $userRepository;
+        $this->photoRepository = $photoRepository;
         $this->middleware('auth.user', array('only' => array('getAbout', 'putAbout')));
     }
 
     public function getAbout()
     {
-        return \View::make('usersignup.stage1');
+        $user = $this->authUser;
+        return View::make('usersignup.userRegister')
+            ->with(array(
+                'user' => $user,
+            ));
     }
 
-    public function postAbout() // POST
+    public function postAbout()
     {
 
-        $input = \Input::all();
-        $id = $this->authUser->id;
-        $validator = $this->userRepository->getUpdateValidator($input, $id);
+        $input = Input::all();
+        $user = $this->authUser;
+        $validator = $this->userRepository->getUpdateValidator($input, $user->id);
 
         if ($validator->fails()) {
-            return \Redirect::route('user.register.about')
+            return redirect()->back()
                 ->withErrors($validator)
-                ->withInput(\Input::except('password'));
+                ->withInput(Input::except('password'));
         }
 
-        if (\Input::hasFile('image_path')) {
-            $basePath = 'uploads/users/';
-            if (!\File::exists($basePath)) {
-                \File::makeDirectory($basePath);
-            }
-            $destinationPath = 'uploads/users/' . $id;
-            if (!\File::exists($destinationPath)) {
-                \File::makeDirectory($destinationPath);
-            }
+        if (Input::hasFile('image_path')) {
 
-            $extension = \Input::file('image_path')->getClientOriginalExtension();
-            $fileName = rand(11111, 99999) . '.' . $extension;
+            $imageValidator = $this->photoRepository->getCreateValidator($input);
 
-            $height = \Image::make(\Input::file('image_path'))->height();
-            $width = \Image::make(\Input::file('image_path'))->width();
-
-            if ($width > $height) {
-                \Image::make(\Input::file('image_path'))->crop($height, $height)->save($destinationPath . '/' . $fileName);
-            } else {
-                \Image::make(\Input::file('image_path'))->crop($width, $width)->save($destinationPath . '/' . $fileName);
+            if ($imageValidator->fails()) {
+                return redirect()->back()
+                    ->withErrors($imageValidator)
+                    ->withInput();
             }
 
-            $image_path = '/uploads/users/' . $id . '/' . $fileName;
+            $photo = array(
+                'title' => $user->id,
+                'location' => $this->photoRepository->uploadImage($input['image_path'], $user)
+            );
 
-            $input = array_merge($input, array('image_path' => $image_path));
+            $photoId = $this->photoRepository->createForUser($photo, $user);
+
+            unset($input['image_path']);
+            $input['photo_id'] = $photoId->id;
 
         }
 
@@ -67,7 +75,7 @@ class RegisterController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Redirect::route('user.register.pet');
+        return redirect()->route('user.register.pet');
     }
 
 

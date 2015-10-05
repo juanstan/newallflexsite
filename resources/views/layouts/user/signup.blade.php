@@ -42,6 +42,19 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
   <script>
+      function readURL(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('.image-placeholder')
+                          .attr('src', e.target.result)
+                          .width(100)
+                          .height(100);
+              };
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+
       $( "#breedList" ).autocomplete({
           source: '/user/register/pet/breeds',
           minLength:1,

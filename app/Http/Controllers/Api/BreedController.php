@@ -1,15 +1,23 @@
 <?php namespace App\Http\Controllers\Api;
 
-use App\Models\Entities\Breed;
+use App\Models\Repositories\BreedRepository;
+use App\Http\Controllers\Controller;
 
-class BreedController extends \App\Http\Controllers\Controller
+class BreedController extends Controller
 {
+
+    protected $breedRepository;
+
+    public function __construct(BreedRepository $breedRepository)
+    {
+        $this->breedRepository = $breedRepository;
+    }
 
     public function index()
     {
-        $breed = Breed::all();
+        $breed = $this->breedRepository->all();
 
-        return \Response::json(array(
+        return response()->json(array(
             'error' => false,
             'result' => $breed->toArray()),
             200

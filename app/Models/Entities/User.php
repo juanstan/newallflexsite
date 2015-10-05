@@ -5,12 +5,15 @@ use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Entities\User\Token;
 
 class User extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract {
 
 	use Authenticatable, CanResetPassword, SoftDeletes;
 
     protected $dates = ['deleted_at'];
+
+    protected $softDelete = true;
     
     protected $hidden = [
         'oauth_provider',
@@ -24,13 +27,13 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
     ];
 
     protected $fillable = [
-        'oauth_provider',
-        'oauth_uid',
-        'email',
         'first_name',
         'last_name',
+        'email',
+        'provider',
+        'provider_id',
+        'photo_id',
         'telephone',
-        'image_path',
         'units',
         'weight_units',
         'password',
@@ -41,27 +44,42 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
     {
         $this->attributes['password'] = \Hash::make($value);
     }
-    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function tokens()
     {
-        return $this->hasMany('App\Models\Entities\User\Token');
+        return $this->hasMany(Token::class);
     }
-    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function requests()
     {
-        return $this->hasMany('App\Models\Entities\Animal\Request');
+        return $this->hasMany(Request::class);
     }
-    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function animals()
     {
-        return $this->hasMany('App\Models\Entities\Animal');
+        return $this->hasMany(Animal::class);
     }
-    
-    public function profiles()
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function photo()
     {
-        return $this->hasMany('App\Models\Entities\Profile');
+        return $this->belongsTo(Photo::class);
     }
-    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
     public function device()
     {
         return $this->belongsToMany('App\Models\Entities\Device', 'device_users')->withTimestamps();

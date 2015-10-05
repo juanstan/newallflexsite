@@ -157,8 +157,8 @@
                     <div class="col-sm-8">
 
                         <div class="radio-pill-buttons">
-                            <label><input type="radio" @if(Auth::vet()->get()->units == 'C') checked @endif name="units" value="C"><span class="pointer" >{!! Lang::get('general.Celcius') !!}</span></label>
-                            <label><input type="radio" @if(Auth::vet()->get()->units == 'F') checked @endif name="units" value="F"><span class="pointer" >{!! Lang::get('general.Fahrenheit') !!}</span></label>
+                            <label><input type="radio" @if(Auth::vet()->get()->units == 0) checked @endif name="units" value="C"><span class="pointer" >{!! Lang::get('general.Celcius') !!}</span></label>
+                            <label><input type="radio" @if(Auth::vet()->get()->units == 1) checked @endif name="units" value="F"><span class="pointer" >{!! Lang::get('general.Fahrenheit') !!}</span></label>
                         </div>
 
                     </div>

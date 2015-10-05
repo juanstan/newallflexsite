@@ -22,7 +22,8 @@ class Device extends \Eloquent implements AuthenticatableContract, CanResetPassw
         'field_1',
         'field_2',
         'field_3',
-        'field_4'        
+        'field_4',
+        'pivot'
     ];
     
     public function user()

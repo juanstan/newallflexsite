@@ -13,8 +13,6 @@ class Animal extends \Eloquent implements AuthenticatableContract, CanResetPassw
     protected $dates = ['deleted_at'];
     
     protected $hidden = [
-        'created_at',
-        'updated_at',
         'deleted_at'
     ];
 
@@ -26,33 +24,63 @@ class Animal extends \Eloquent implements AuthenticatableContract, CanResetPassw
         'date_of_birth',
         'weight',
         'gender',
-        'image_path',
+        'photo_id',
         'user_id'        
     ];
 
-    
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
     public function user()
     {
-        return $this->belongsTo('App\Models\Entities\User', 'user_id');
-    }
-    
-    public function vet()
-    {
-        return $this->belongsToMany('App\Models\Entities\Vet', 'animal_requests');
-    }
-    
-    public function sensorReadings()
-    {
-        return $this->hasMany('App\Models\Entities\SensorReading', 'animal_id');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function vet()
+    {
+        return $this->belongsToMany(Vet::class, 'animal_requests');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
+    public function sensorReadings()
+    {
+        return $this->hasMany(SensorReading::class, 'animal_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
     public function breed()
     {
-        return $this->belongsTo('App\Models\Entities\Breed', 'breed_id');
+        return $this->belongsTo(Breed::class, 'breed_id');
     }
-    
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
+     */
     public function animalConditions()
     {
-        return $this->hasMany('App\Models\Entities\AnimalCondition', 'animal_id');
+        return $this->hasMany(AnimalCondition::class, 'animal_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function photo()
+    {
+        return $this->belongsTo(Photo::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function photos()
+    {
+        return $this->belongsToMany(Photo::class, 'animal_photos')->withTimestamps();
     }
 }

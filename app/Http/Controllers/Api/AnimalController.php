@@ -1,10 +1,15 @@
 <?php namespace App\Http\Controllers\Api;
 
+use Auth;
+use Input;
+use URL;
+
 use App\Models\Entities\User;
 use App\Models\Entities\Animal;
 use App\Models\Repositories\AnimalRepositoryInterface;
+use App\Http\Controllers\Controller;
 
-class AnimalController extends \App\Http\Controllers\Controller
+class AnimalController extends Controller
 {
 
     protected $authUser;
@@ -12,7 +17,7 @@ class AnimalController extends \App\Http\Controllers\Controller
 
     public function __construct(AnimalRepositoryInterface $animalRepository)
     {
-        $this->authUser = \Auth::user()->get();
+        $this->authUser = Auth::user()->get();
         $this->animalRepository = $animalRepository;
     }
 
@@ -20,20 +25,57 @@ class AnimalController extends \App\Http\Controllers\Controller
     {
         $this->animalRepository->setUser($this->authUser);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalRepository->all()]);
     }
 
     public function store() // POST
     {
-        $this->animalRepository->setUser($this->authUser);
+        $input = Input::all();
+        $user = $this->authUser;
+        $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
 
-        $input = \Input::all();
+        $this->animalRepository->setUser($user);
+
+        if($user->weight_units == "lbs") {
+            $input['weight'] = $input['weight'] * 0.453592;
+        }
+
+        if($breed == NULL)
+        {
+            $input['breed_wildcard'] = $input['breed_id'];
+        }
+        else
+        {
+            $input['breed_id'] = $breed->id;
+        }
+
         $validator = $this->animalRepository->getCreateValidator($input);
 
-        if ($validator->fails()) {
-            return \Response::json(['error' => true,
-                'errors' => $validator->messages()], 400);
+        if($validator->fails())
+        {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        if (Input::hasFile('image_path')) {
+
+            $imageValidator = $this->photoRepository->getCreateValidator($input);
+            if($imageValidator->fails())
+            {
+                return redirect()->back()
+                    ->withErrors($imageValidator)
+                    ->withInput();
+            }
+            $photo = array(
+                'title' => $user->id,
+                'location' => $this->photoRepository->uploadImage($input['image_path'], $user)
+            );
+            $photoId = $this->photoRepository->createForUser($photo, $user);
+            unset($input['image_path']);
+            $input['photo_id'] = $photoId->id;
+
         }
 
         $animal = $this->animalRepository->create($input);
@@ -42,35 +84,52 @@ class AnimalController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false, 'result' => $animal], 201)
-            ->header('Location', \URL::route('api.animal.show', [$animal->id]));
+        return response()->json(['error' => false, 'result' => $animal], 201)
+            ->header('Location', URL::route('api.animal.show', [$animal->id]));
     }
 
     public function show($id) // GET
     {
         $this->animalRepository->setUser($this->authUser);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalRepository->get($id)]);
     }
 
     public function update($id) // PUT
     {
-        $this->animalRepository->setUser($this->authUser);
-
-        $input = \Input::all();
-        $validator = $this->animalRepository->getUpdateValidator($input);
-
-        if ($validator->fails()) {
-            return \Response::json(['error' => true,
-                'errors' => $validator->messages()], 400);
+        $user = $this->authUser;
+        $input = Input::all();
+        $this->animalRepository->setUser($user);
+        $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
+        if($breed)
+        {
+            $input['breed_id'] = $breed->id;
         }
-
+        else
+        {
+            $input['breed_wildcard'] = $input['breed_id'];
+        }
+        if($user->weight_units == "lbs") {
+            $input['weight'] = round($input['weight'] * 0.453592, 1);
+        }
+        $validator = $this->animalRepository->getUpdateValidator($input);
+        if ($validator->fails()) {
+            return redirect()->route('user.dashboard')->withInput()
+                ->withErrors($validator);
+        }
         if ($this->animalRepository->update($id, $input) == false) {
             \App::abort(500);
         }
+        $animal = $this->animalRepository->get($id);
+        $userId = $user->id;
+        if ($animal->vet_id != null) {
+            Request::insert(
+                ['vet_id' => $animal->vet_id, 'user_id' => $userId, 'animal_id' => $animal->id, 'approved' => 1]
+            );
+        }
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalRepository->get($id)]);
     }
 
@@ -79,7 +138,7 @@ class AnimalController extends \App\Http\Controllers\Controller
         $this->animalRepository->setUser($this->authUser);
 
         $this->animalRepository->delete($id);
-        return \Response::json(['error' => false, 'result' => 'Item removed']);
+        return response()->json(['error' => false, 'result' => 'Item removed']);
     }
 
 }

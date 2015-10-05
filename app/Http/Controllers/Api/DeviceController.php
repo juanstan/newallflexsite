@@ -1,17 +1,22 @@
 <?php namespace App\Http\Controllers\Api;
 
-use App\Models\Repositories\DeviceRepositoryInterface;
+use Auth;
+use Input;
+use URL;
 
-class DeviceController extends \App\Http\Controllers\Controller
+use App\Models\Repositories\DeviceRepository;
+use App\Http\Controllers\Controller;
+
+class DeviceController extends Controller
 {
 
     protected $authUser;
 
     protected $deviceRepository;
 
-    public function __construct(DeviceRepositoryInterface $deviceRepository)
+    public function __construct(DeviceRepository $deviceRepository)
     {
-        $this->authUser = \Auth::user()->get();
+        $this->authUser = Auth::user()->get();
         $this->deviceRepository = $deviceRepository;
     }
 
@@ -19,7 +24,7 @@ class DeviceController extends \App\Http\Controllers\Controller
     {
         $this->deviceRepository->setUser($this->authUser);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->deviceRepository->all()]);
     }
 
@@ -27,11 +32,11 @@ class DeviceController extends \App\Http\Controllers\Controller
     {
         $this->deviceRepository->setUser($this->authUser);
 
-        $input = \Input::all();
+        $input = Input::all();
         $validator = $this->deviceRepository->getCreateValidator($input);
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
@@ -41,15 +46,15 @@ class DeviceController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false, 'result' => $animal], 201)
-            ->header('Location', \URL::route('api.device.show', [$animal->id]));
+        return response()->json(['error' => false, 'result' => $animal], 201)
+            ->header('Location', URL::route('api.device.show', [$animal->id]));
     }
 
     public function show($id) // GET
     {
         $this->deviceRepository->setUser($this->authUser);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->deviceRepository->get($id)]);
     }
 
@@ -57,11 +62,11 @@ class DeviceController extends \App\Http\Controllers\Controller
     {
         $this->deviceRepository->setUser($this->authUser);
 
-        $input = \Input::all();
+        $input = Input::all();
         $validator = $this->deviceRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
@@ -69,7 +74,7 @@ class DeviceController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->deviceRepository->get($id)]);
     }
 

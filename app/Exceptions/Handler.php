@@ -28,7 +28,7 @@ class Handler extends ExceptionHandler {
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Exception  $e
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Httpresponse()->
      */
     public function render($request, Exception $e)
     {
@@ -41,7 +41,7 @@ class Handler extends ExceptionHandler {
                 {
                     $data['context'] = ['model' => $e->getModel()];
                 }
-                return \Response::json($data, 404);
+                return response()->json($data, 404);
             }
             else
             {

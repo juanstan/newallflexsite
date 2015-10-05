@@ -23,18 +23,13 @@
 
                     <h4>or</h4>
 
-                    {!! Form::open(array('route' => 'user.facebook.login', 'method' => 'get')) !!}
+                    <a href="{!! URL::route('user.auth.external.redirect', array('provider' => 'facebook')) !!}" >
+                        {!! Form::button(Lang::get('general.Sign in with Facebook'), array('class' => 'btn btn-lg btn-primary btn-block small-top-buffer')) !!}
+                    </a>
 
-                    {!! Form::submit(Lang::get('general.Sign in with Facebook'), array('class' => 'btn btn-lg btn-primary btn-block small-top-buffer')) !!}
-
-                    {!! Form::close() !!}
-
-                    {!! Form::open(array('route' => 'user.twitter.login', 'method' => 'get')) !!}
-
-                    {!! Form::submit(Lang::get('general.Sign in with Twitter'), array('class' => 'btn btn-lg btn-info btn-block small-top-buffer')) !!}
-
-                    {!! Form::close() !!}
-
+                    <a href="{!! URL::route('user.auth.external.redirect', array('provider' => 'twitter')) !!}" >
+                        {!! Form::button(Lang::get('general.Sign in with Twitter'), array('class' => 'btn btn-lg btn-info btn-block small-top-buffer')) !!}
+                    </a>
 
                     <p class="top-buffer">{!! Lang::get('general.Forgot your password?') !!} <strong>{!! HTML::linkRoute('user.password.request', Lang::get('general.Reset password')) !!}</strong>
 

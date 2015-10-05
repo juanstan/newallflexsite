@@ -1,9 +1,13 @@
 <?php namespace App\Http\Controllers\Api;
 
+use Input;
+use URL;
+
 use App\Models\Entities\Vet;
 use App\Models\Repositories\VetRepositoryInterface;
+use App\Http\Controllers\Controller;
 
-class VetController extends \App\Http\Controllers\Controller
+class VetController extends Controller
 {
 
     protected $vetRepository;
@@ -16,17 +20,17 @@ class VetController extends \App\Http\Controllers\Controller
     public function index()
     {
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->vetRepository->all()]);
     }
 
     public function store() // POST
     {
-        $input = \Input::all();
+        $input = Input::all();
         $validator = $this->vetRepository->getCreateValidator($input);
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
@@ -36,43 +40,43 @@ class VetController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false, 'result' => $user], 201)
-            ->header('Location', \URL::route('api.user.show', [$user->id]));
+        return response()->json(['error' => false, 'result' => $user], 201)
+            ->header('Location', URL::route('api.user.show', [$user->id]));
     }
 
     public function show($id) // GET
     {
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->vetRepository->getVetDetails($id)]);
     }
 
     public function update($id) // PUT
     {
-        $input = \Input::all();
+        $input = Input::all();
         $validator = $this->vetRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        if (\Input::hasFile('image_path')){
+        if (Input::hasFile('image_path')){
             $destinationPath = 'uploads/vets/'.$id;
             if(!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }
 
-            $extension = \Input::file('image_path')->getClientOriginalExtension();
+            $extension = Input::file('image_path')->getClientOriginalExtension();
             $fileName = rand(11111,99999).'.'.$extension;
 
-            $height = \Image::make(\Input::file('image_path'))->height();
-            $width = \Image::make(\Input::file('image_path'))->width();
+            $height = \Image::make(Input::file('image_path'))->height();
+            $width = \Image::make(Input::file('image_path'))->width();
 
             if($width > $height) {
-                \Image::make(\Input::file('image_path'))->crop($height, $height)->save($destinationPath.'/'.$fileName);
+                \Image::make(Input::file('image_path'))->crop($height, $height)->save($destinationPath.'/'.$fileName);
             }
             else {
-                \Image::make(\Input::file('image_path'))->crop($width, $width)->save($destinationPath.'/'.$fileName);
+                \Image::make(Input::file('image_path'))->crop($width, $width)->save($destinationPath.'/'.$fileName);
             }
 
             $image_path = '/uploads/vets/'.$id.'/'.$fileName;
@@ -85,7 +89,7 @@ class VetController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->vetRepository->get($id)]);
     }
 
@@ -93,7 +97,7 @@ class VetController extends \App\Http\Controllers\Controller
     {
         $this->vetRepository->delete($id);
 
-        return \Response::json(['error' => false, 'result' => 'Item removed']);
+        return response()->json(['error' => false, 'result' => 'Item removed']);
     }
 
 }

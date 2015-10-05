@@ -2,19 +2,10 @@
 
 interface AnimalReadingRepositoryInterface extends AbstractRepositoryInterface
 {
-    /**
-    * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-    * @return \Entities\User
-    */
 
-    /**
-    * @returns Validator
-    */
+    public function getReadingUploadValidator($input);
 
-    /**
-    * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-    * @return \Entities\User
-    */
+    public function readingUpload($input, $user);
     
 }
 

@@ -1,8 +1,7 @@
 <?php namespace App\Models\Repositories;
 
 use App\Models\Entities\Animal;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Validator;
 
 class AnimalRepository extends AbstractRepository implements AnimalRepositoryInterface
 {
@@ -15,41 +14,19 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
         $this->user = $userRepositoryInterface;
     }
 
-    public function all()
-    {             
-        if($this->user)
-        {
-            return $this->user->animals()->get();
-        }
-
-        return parent::all();
-    }
-    
-    public function get($id)
-    {
-        if($id)
-        {
-            return $this->user ? $this->user->animals()->findOrFail($id) : parent::get($id);
-        }
-
-    }
-
     public function getCreateValidator($input)
     {
-        return \Validator::make($input,
+        return Validator::make($input,
         [
-            //'name' => ['required'],
-            //'breed' => ['required'],
+
         ]);
     }
 
-
     public function getUpdateValidator($input)
     {
-        return \Validator::make($input,
+        return Validator::make($input,
         [
-            //'name' => ['sometimes','required'],
-            //'breed'     => ['sometimes','required'],
+
         ]);
     }
 

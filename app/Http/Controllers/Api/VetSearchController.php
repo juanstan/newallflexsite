@@ -1,16 +1,28 @@
 <?php namespace App\Http\Controllers\Api;
 
+use Input;
+
 use Toin0u\Geotools\Facade\Geotools;
 use App\Models\Entities\Vet;
+use App\Http\Controllers\Controller;
 
-class VetSearchController extends \App\Http\Controllers\Controller
+use App\Models\Repositories\VetRepository;
+
+class VetSearchController extends Controller
 {
+
+    protected $vetRepository;
+
+    public function __construct(VetRepository $vetRepository)
+    {
+        $this->vetRepository = $vetRepository;
+    }
 
     public function getAll()
     {
-        $vet = Vet::all();
+        $vet = $this->vetRepository->all();
 
-        return \Response::json(array(
+        return response()->json(array(
             'error' => false,
             'result' => $vet->toArray()),
             200
@@ -20,12 +32,12 @@ class VetSearchController extends \App\Http\Controllers\Controller
 
     public function postLocation()
     {
-        $location = \Input::get('location');
-        $distance_set = \Input::get('distance');
+        $location = Input::get('location');
+        $distance_set = Input::get('distance');
         $data_arr = geocode($location);
 
         $coordA   = Geotools::coordinate([$data_arr[0], $data_arr[1]]);
-        $vets = Vet::all();
+        $vets = $this->vetRepository->all();
         foreach($vets as $vet)
         {
             if($vet->latitude != null && $vet->longitude != null)
@@ -46,10 +58,10 @@ class VetSearchController extends \App\Http\Controllers\Controller
         }
 
         if(empty($result)){
-            return \Response::json(['error' => true, 'message' => 'There are no vets in this area']);
+            return response()->json(['error' => true, 'message' => 'There are no vets in this area']);
         }
 
-        return \Response::json(array(
+        return response()->json(array(
             'error' => false,
             'result' => $result),
             200
@@ -59,8 +71,8 @@ class VetSearchController extends \App\Http\Controllers\Controller
 
     public function postName()
     {
-        $vets = Vet::all();
-        $term = \Input::get('term');
+        $vets = $this->vetRepository->all();
+        $term = Input::get('term');
         $result = [];
         foreach($vets as $vet) {
             if(strpos($vet,$term) !== false) {
@@ -69,10 +81,10 @@ class VetSearchController extends \App\Http\Controllers\Controller
         }
 
         if(empty($result)){
-            return \Response::json(['error' => true, 'message' => 'There are no vets matching this search']);
+            return response()->json(['error' => true, 'message' => 'There are no vets matching this search']);
         }
 
-        return \Response::json(array(
+        return response()->json(array(
             'error' => false,
             'result' => $result),
             200

@@ -10,7 +10,7 @@
                     @forelse ($pets as $pet)
                         <div class="row" >
                             <div class="col-xs-4 top-buffer" >
-                                {!! HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
+                                {!! HTML::image(isset($pet->photo_id) ? $pet->photo->location : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
                             </div>
                             <div class="col-xs-8 top-buffer" >
                                 <h3 class="bottom-none text-left">{!! $pet->name !!}</h3>

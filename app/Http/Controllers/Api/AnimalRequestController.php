@@ -1,11 +1,16 @@
 <?php namespace App\Http\Controllers\Api;
 
+use Auth;
+use Input;
+use URL;
+
 use App\Models\Entities\User;
 use App\Models\Entities\Animal;
 use App\Models\Repositories\AnimalRepositoryInterface;
 use App\Models\Repositories\AnimalRequestRepositoryInterface;
+use App\Http\Controllers\Controller;
 
-class AnimalRequestController extends \App\Http\Controllers\Controller
+class AnimalRequestController extends Controller
 {
 
     protected $authUser;
@@ -14,7 +19,7 @@ class AnimalRequestController extends \App\Http\Controllers\Controller
 
     public function __construct(AnimalRequestRepositoryInterface $animalRequestRepository, AnimalRepositoryInterface $animalRepository)
     {
-        $this->authUser = \Auth::user()->get();
+        $this->authUser = Auth::user()->get();
         $this->animalRepository = $animalRepository;
         $this->animalRequestRepository = $animalRequestRepository;
     }
@@ -23,7 +28,7 @@ class AnimalRequestController extends \App\Http\Controllers\Controller
     {
         $this->animalRequestRepository->setUser($this->authUser);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalRequestRepository->all()]);
     }
 
@@ -31,11 +36,11 @@ class AnimalRequestController extends \App\Http\Controllers\Controller
     {
         $this->animalRequestRepository->setUser($this->authUser);
 
-        $input = \Input::all();
+        $input = Input::all();
         $validator = $this->animalRequestRepository->getCreateValidator($input);
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
@@ -45,19 +50,19 @@ class AnimalRequestController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false, 'result' => $animalRequest], 201)
-            ->header('Location', \URL::route('api.animal.show', [$animalRequest->id]));
+        return response()->json(['error' => false, 'result' => $animalRequest], 201)
+            ->header('Location', URL::route('api.animal.show', [$animalRequest->id]));
     }
 
     public function update($id) // PUT
     {
         $this->animalRequestRepository->setUser($this->authUser);
 
-        $input = \Input::all();
+        $input = Input::all();
         $validator = $this->animalRequestRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
@@ -65,7 +70,7 @@ class AnimalRequestController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalRequestRepository->get($id)]);
     }
 
@@ -73,7 +78,7 @@ class AnimalRequestController extends \App\Http\Controllers\Controller
     {
         $this->animalRequestRepository->setUser($this->authUser);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalRequestRepository->get($id)]);
     }
 
@@ -82,7 +87,7 @@ class AnimalRequestController extends \App\Http\Controllers\Controller
         $this->animalRequestRepository->setUser($this->authUser);
 
         $this->animalRequestRepository->delete($id);
-        return \Response::json(['error' => false, 'result' => 'Request #' . $id . ' deleted']);
+        return response()->json(['error' => false, 'result' => 'Request #' . $id . ' deleted']);
     }
 
 

@@ -15,6 +15,8 @@ interface AnimalConditionRepositoryInterface extends AbstractRepositoryInterface
     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
     * @return \Entities\User
     */
+
+    public function removeAndUpdateConditions($animalId, $conditions);
     
 }
 

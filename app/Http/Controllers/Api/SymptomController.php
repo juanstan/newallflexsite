@@ -1,15 +1,23 @@
 <?php namespace App\Http\Controllers\Api;
 
-use App\Models\Entities\Symptom;
+use App\Models\Repositories\SymptomRepository;
+use App\Http\Controllers\Controller;
 
-class SymptomController extends \App\Http\Controllers\Controller
+class SymptomController extends Controller
 {
+
+    protected $symptomRepository;
+
+    public function __construct(SymptomRepository $symptomRepository)
+    {
+        $this->symptomRepository = $symptomRepository;
+    }
 
     public function index()
     {
-        $symptoms = Symptom::all();
+        $symptoms = $this->symptomRepository->all();
 
-        return \Response::json(array(
+        return response()->json(array(
             'error' => false,
             'result' => $symptoms->toArray()),
             200

@@ -45,15 +45,13 @@ class DeviceRepository extends AbstractRepository implements DeviceRepositoryInt
     
     public function create($input)
     {
-        
-        
+
         $device = parent::create($input);
         if($device->user->find($this->user) == null)
         {
             $device->user()->attach($this->user);
         }
         return $device;
-    
     
     } 
 }

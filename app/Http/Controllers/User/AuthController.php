@@ -1,17 +1,20 @@
 <?php namespace App\Http\Controllers\User;
 
+use Auth;
+use View;
+use Input;
+use Session;
+use Lang;
+
 use App\Models\Entities\Animal;
-use App\Models\Entities\SensorReading;
-use App\Models\Entities\SensorReadingSymptom;
 use App\Models\Entities\User;
-use App\Models\Entities\Animal\Request;
-use App\Models\Entities\Profile;
 use App\Models\Repositories\AnimalRepositoryInterface;
 use App\Models\Repositories\AnimalReadingRepositoryInterface;
 use App\Models\Repositories\AnimalReadingSymptomRepositoryInterface;
 use App\Models\Repositories\UserRepositoryInterface;
+use App\Http\Controllers\Controller;
 
-class AuthController extends \App\Http\Controllers\Controller
+class AuthController extends Controller
 {
 
     protected $userRepository;
@@ -21,7 +24,7 @@ class AuthController extends \App\Http\Controllers\Controller
 
     public function __construct(UserRepositoryInterface $userRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
     {
-        $this->authUser = \Auth::user()->get();
+        $this->authUser = Auth::user()->get();
         $this->userRepository = $userRepository;
         $this->animalReadingRepository = $animalReadingRepository;
         $this->animalRepository = $animalRepository;
@@ -37,35 +40,36 @@ class AuthController extends \App\Http\Controllers\Controller
 
     public function getIndex()
     {
-        if (\Auth::user()->check()) {
-            return \Redirect::route('user.dashboard');
+        if (Auth::user()->check()) {
+            return redirect()->route('user.dashboard');
         }
-        return \View::make('user.welcome');
+        return View::make('user.welcome');
     }
 
     public function getRegister()
     {
-        return \View::make('user.register');
+        return View::make('user.register');
     }
 
     public function postCreate()
     {
-        $confirmation_code = str_random(30);
-        \Input::merge(array('confirmation_code' => $confirmation_code, 'units' => 'F', 'weight_units' => 'Kg'));
-        $input = \Input::all();
+        $input = Input::all();
+        $input['confirmation_code'] = str_random(30);
+        $input['units'] = 0;
+        $input['weight_units'] = 0;
         $validator = $this->userRepository->getCreateValidator($input);
         if ($validator->fails()) {
-            return \Redirect::route('user.register')
+            return redirect()->route('user.register')
                 ->withErrors($validator)
-                ->withInput(\Input::except('password'));
+                ->withInput(Input::except('password'));
         }
 
         $user = $this->userRepository->create($input);
         if ($user == null) {
             \App::abort(500);
         }
-        \Auth::user()->login($user);
-        return \Redirect::route('user.register.about');
+        Auth::user()->login($user);
+        return redirect()->route('user.register.about');
     }
 
     public function getResendConfirmation()
@@ -75,85 +79,74 @@ class AuthController extends \App\Http\Controllers\Controller
             $message->to($this->authUser->email, 'New user')
                 ->subject('Verify your email address');
         });
-        \Session::flash('message', 'Verification email sent');
-        return \Redirect::route('user.dashboard');
+        return redirect()->route('user.dashboard')
+            ->with('message', Lang::get('general.Verification email sent'));
     }
 
     public function getVerify($confirmation_code)
     {
         if (!$confirmation_code) {
-            return \Redirect::route('user')
-                ->with('error', \Lang::get('general.Confirmation not provided'));
+            return redirect()->route('user')
+                ->with('error', Lang::get('general.Confirmation not provided'));
         }
         $user = User::where('confirmation_code', '=', $confirmation_code)->first();
         if (!$user) {
-            return \Redirect::route('user')
-                ->with('error', \Lang::get('general.Confirmation code is invalid'));
+            return redirect()->route('user')
+                ->with('error', Lang::get('general.Confirmation code is invalid'));
         }
         $user->confirmed = 1;
         $user->confirmation_code = null;
         $user->save();
-        if (\Auth::user()->check()) {
-            return \Redirect::route('user.dashboard')
-                ->with('success', \Lang::get('general.You have successfully verified your account.'));
+        if (Auth::user()->check()) {
+            return redirect()->route('user.dashboard')
+                ->with('success', Lang::get('general.You have successfully verified your account.'));
         }
-        return \Redirect::route('user');
+        return redirect()->route('user');
     }
 
     public function postLogin()
     {
 
-        $input = \Input::all();
+        $input = Input::all();
         $validator = $this->userRepository->getLoginValidator($input);
         if ($validator->fails()) {
-            return \Redirect::route('user')
+            return redirect()->route('user')
                 ->withErrors($validator)
-                ->withInput(\Input::except('password'));
+                ->withInput(Input::except('password'));
         } else {
 
             $userData = array(
-                'email' => \Input::get('email'),
-                'password' => \Input::get('password')
+                'email' => $input['email'],
+                'password' => $input['password']
             );
 
-            if (\Auth::user()->attempt($userData)) {
+            if (Auth::user()->attempt($userData)) {
 
-                return \Redirect::route('user.dashboard')
-                    ->with('success', \Lang::get('general.You have logged in successfully'));
+                return redirect()->route('user.dashboard')
+                    ->with('success', Lang::get('general.You have logged in successfully'));
             }
             else
             {
-                return \Redirect::route('user')
-                    ->with('error', \Lang::get('general.The password used is incorrect.'))
-                    ->withInput(\Input::except('password'));
+                return redirect()->route('user')
+                    ->with('error', Lang::get('general.The password used is incorrect.'))
+                    ->withInput(Input::except('password'));
             }
         }
     }
 
     public function getDelete()
     {
-        $id = $this->authUser->id;
-        Request::where('user_id', '=', $id)->delete();
-        Profile::where('user_id', '=', $id)->delete();
-        $animals = Animal::where('user_id', '=', $id)->get();
-        foreach ($animals as $animal) {
-            $animal_id = $animal->id;
-            $sensor_readings = SensorReading::where('animal_id', '=', $animal_id)->get();
-            foreach ($sensor_readings as $sensor_reading) {
-                $sensor_reading_id = $sensor_reading->id;
-                SensorReadingSymptom::where('reading_id', '=', $sensor_reading_id)->delete();
-            }
-            SensorReading::where('animal_id', '=', $animal_id)->delete();
-        }
-        Animal::where('user_id', '=', $id)->delete();
-        $this->authUser->delete();
-        return \Redirect::route('user')->with('success', \Lang::get('general.Your account was successfully deleted'));
+        $user = $this->authUser;
+        $this->userRepository->delete($user->id);
+        return redirect()->route('user')
+            ->with('success', Lang::get('general.Your account was successfully deleted'));
     }
 
     public function getLogout()
     {
-        \Auth::user()->logout();
-        return \Redirect::route('user')->with('success', \Lang::get('general.You are now logged out!'));
+        Auth::user()->logout();
+        return redirect()->route('user')
+            ->with('success', Lang::get('general.You are now logged out!'));
     }
 
 }

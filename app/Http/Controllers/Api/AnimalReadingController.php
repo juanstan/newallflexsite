@@ -1,11 +1,17 @@
 <?php namespace App\Http\Controllers\Api;
 
+use Auth;
+use Input;
+use Lang;
+use URL;
+
 use App\Models\Entities\Animal;
 use App\Models\Entities\SensorReading;
 use App\Models\Repositories\AnimalReadingRepositoryInterface;
 use App\Models\Repositories\AnimalRepositoryInterface;
+use App\Http\Controllers\Controller;
 
-class AnimalReadingController extends \App\Http\Controllers\Controller
+class AnimalReadingController extends Controller
 {
 
     protected $authUser;
@@ -14,7 +20,7 @@ class AnimalReadingController extends \App\Http\Controllers\Controller
 
     public function __construct(AnimalReadingRepositoryInterface $animalReadingRepository, AnimalRepositoryInterface $animalRepository)
     {
-        $this->authUser = \Auth::user()->get();
+        $this->authUser = Auth::user()->get();
         $this->animalReadingRepository = $animalReadingRepository;
         $this->animalRepository = $animalRepository;
     }
@@ -28,7 +34,7 @@ class AnimalReadingController extends \App\Http\Controllers\Controller
 
         $this->animalReadingRepository->setAnimal($animal);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalReadingRepository->all()]);
 
     }
@@ -44,7 +50,7 @@ class AnimalReadingController extends \App\Http\Controllers\Controller
 
 
 
-        $input = \Input::all();
+        $input = Input::all();
         $input['animal_id'] = $animal_id;
 
 
@@ -52,7 +58,7 @@ class AnimalReadingController extends \App\Http\Controllers\Controller
 
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
@@ -66,8 +72,8 @@ class AnimalReadingController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false, 'result' => $reading], 201)
-            ->header('Location', \URL::route('api.animal.{animal_id}.reading.show', [$reading->id]));
+        return response()->json(['error' => false, 'result' => $reading], 201)
+            ->header('Location', URL::route('api.animal.{animal_id}.reading.show', [$reading->id]));
 
     }
 
@@ -79,7 +85,7 @@ class AnimalReadingController extends \App\Http\Controllers\Controller
 
         $this->animalReadingRepository->setAnimal($animal);
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalReadingRepository->get($id)]);
     }
 
@@ -92,12 +98,12 @@ class AnimalReadingController extends \App\Http\Controllers\Controller
 
         $this->animalReadingRepository->setAnimal($animal);
 
-        $input = \Input::all();
+        $input = Input::all();
 
         $validator = $this->animalReadingRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
-            return \Response::json(['error' => true,
+            return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
@@ -106,20 +112,22 @@ class AnimalReadingController extends \App\Http\Controllers\Controller
             \App::abort(500);
         }
 
-        return \Response::json(['error' => false,
+        return response()->json(['error' => false,
             'result' => $this->animalReadingRepository->get($id)]);
     }
 
     public function postAssign($animal_id)
     {
-        $input = \Input::get('pet_id');
-        $query = Animal::where('id', '=', $animal_id)->first();
-        if (Animal::where('id', $input)->update(array('microchip_number' => $query->microchip_number))) {
-            Animal::where('id', '=', $animal_id)->delete();
-            SensorReading::where('animal_id', '=', $animal_id)->update(array('animal_id' => $input));
+        $newPetId = Input::get('pet_id');
+        $query = $this->animalRepository->get($animal_id);
+        $data['microchip_number'] = $query->microchip_number;
+        if ($this->animalRepository->update($newPetId, $data)) {
+            $this->animalRepository->delete($animal_id);
+            $sensorReading = $this->sensorReadingRepository->getByAnimalId($animal_id);
+            $this->sensorReadingRepository->update($sensorReading->id, array('animal_id' => $newPetId));
         }
-        return \Response::json(['error' => false,
-            'result' => \Lang::get('general.Pet microchip number assigned')]);
+        return response()->json(['error' => false,
+            'result' => Lang::get('general.Pet microchip number assigned')]);
     }
 
 

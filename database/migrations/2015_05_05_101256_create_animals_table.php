@@ -19,10 +19,10 @@ class CreateAnimalsTable extends Migration {
 			$table->string('microchip_number')->nullable();
 			$table->integer('breed_id')->nullable();
 			$table->string('breed_wildcard')->nullable();
+			$table->integer('photo_id')->nullable();
 			$table->date('date_of_birth')->nullable();
 			$table->text('weight', 65535)->nullable();
 			$table->tinyInteger('gender')->nullable();
-			$table->string('image_path')->nullable();
 			$table->integer('vet_id')->nullable();
 			$table->integer('user_id')->nullable();
 			$table->timestamps();

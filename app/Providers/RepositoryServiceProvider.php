@@ -20,6 +20,7 @@ use App\Models\Repositories\UserRepository;
 use App\Models\Repositories\UserRepositoryInterface;
 use App\Models\Repositories\VetRepository;
 use App\Models\Repositories\VetRepositoryInterface;
+use App\Repositories\PhotoRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -48,6 +49,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(AnimalRequestRepositoryInterface::class, AnimalRequestRepository::class);
         $this->app->bind(DeviceRepositoryInterface::class, DeviceRepository::class);
         $this->app->bind(HelpRepositoryInterface::class, HelpRepository::class);
+        $this->app->bind(PhotoRepositoryInterface::class, PhotoRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(VetRepositoryInterface::class, VetRepository::class);
     }

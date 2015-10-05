@@ -148,7 +148,7 @@ return [
         Potsky\LaravelLocalizationHelpers\LaravelLocalizationHelpersServiceProviderLaravel5::class,
         Jenssegers\Agent\AgentServiceProvider::class,
         Illuminate\Html\HtmlServiceProvider::class,
-        Artdarek\OAuth\OAuthServiceProvider::class,
+        Laravel\Socialite\SocialiteServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -209,6 +209,7 @@ return [
         'Schema'    => Illuminate\Support\Facades\Schema::class,
         'Session'   => Illuminate\Support\Facades\Session::class,
         'Storage'   => Illuminate\Support\Facades\Storage::class,
+        'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,

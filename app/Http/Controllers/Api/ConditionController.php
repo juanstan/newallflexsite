@@ -1,15 +1,22 @@
 <?php namespace App\Http\Controllers\Api;
 
-use App\Models\Entities\Condition;
+use App\Http\Controllers\Controller;
+use App\Models\Repositories\ConditionRepository;
 
-class ConditionController extends \App\Http\Controllers\Controller
+class ConditionController extends Controller
 {
+    protected $conditionRespository;
+
+    public function __construct(ConditionRepository $conditionRespository)
+    {
+        $this->conditionRespository = $conditionRespository;
+    }
 
     public function index()
     {
-        $breed = Condition::all();
+        $breed = $this->conditionRespository->all();
 
-        return \Response::json(array(
+        return response()->json(array(
             'error' => false,
             'result' => $breed->toArray()),
             200
