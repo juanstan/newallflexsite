@@ -7,6 +7,7 @@ use URL;
 use App\Models\Entities\User;
 use App\Models\Entities\Animal;
 use App\Models\Repositories\AnimalRepository;
+use App\Models\Repositories\AnimalRequestRepository;
 use App\Http\Controllers\Controller;
 
 class AnimalController extends Controller
@@ -14,11 +15,13 @@ class AnimalController extends Controller
 
     protected $authUser;
     protected $animalRepository;
+    protected $animalRequestRepository;
 
-    public function __construct(AnimalRepository $animalRepository)
+    public function __construct(AnimalRepository $animalRepository, AnimalRequestRepository $animalRequestRepository)
     {
         $this->authUser = Auth::user()->get();
         $this->animalRepository = $animalRepository;
+        $this->animalRequestRepository = $animalRequestRepository;
     }
 
     public function index()
@@ -105,9 +108,13 @@ class AnimalController extends Controller
         $animal = $this->animalRepository->get($id);
         $userId = $user->id;
         if ($animal->vet_id != null) {
-            Request::insert(
-                ['vet_id' => $animal->vet_id, 'user_id' => $userId, 'animal_id' => $animal->id, 'approved' => 1]
+            $data = array(
+                'vet_id' => $animal->vet_id,
+                'user_id' => $userId,
+                'animal_id' => $animal->id,
+                'approved' => 1
             );
+            $this->animalRequestRepository->create($data);
         }
 
         return response()->json(['error' => false,

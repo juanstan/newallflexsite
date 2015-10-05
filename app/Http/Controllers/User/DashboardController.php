@@ -7,7 +7,6 @@ use Auth;
 
 use App\Models\Entities\Animal;
 use App\Models\Entities\User;
-use App\Models\Entities\Animal\Request;
 use App\Models\Entities\Vet;
 
 use App\Models\Repositories\AnimalRepository;
@@ -23,6 +22,7 @@ use App\Models\Repositories\HelpRepository;
 use App\Models\Repositories\SensorReadingRepository;
 use App\Models\Repositories\AnimalConditionRepository;
 use App\Models\Repositories\SensorReadingSymptomRepository;
+use App\Models\Repositories\AnimalRequestRepository;
 
 use App\Http\Controllers\Controller;
 
@@ -41,6 +41,7 @@ class DashboardController extends Controller
     protected $sensorReadingRepository;
     protected $animalConditionRepository;
     protected $sensorReadingSymptomRepository;
+    protected $animalRequestRepository;
 
     public function __construct(
         UserRepository $userRepository,
@@ -56,7 +57,8 @@ class DashboardController extends Controller
         HelpRepository $helpRepository,
         SensorReadingRepository $sensorReadingRepository,
         AnimalConditionRepository $animalConditionRepository,
-        SensorReadingSymptomRepository $sensorReadingSymptomRepository
+        SensorReadingSymptomRepository $sensorReadingSymptomRepository,
+        AnimalRequestRepository $animalRequestRepository
     )
 
     {
@@ -74,6 +76,7 @@ class DashboardController extends Controller
         $this->sensorReadingRepository = $sensorReadingRepository;
         $this->animalConditionRepository = $animalConditionRepository;
         $this->sensorReadingSymptomRepository = $sensorReadingSymptomRepository;
+        $this->animalRequestRepository = $animalRequestRepository;
 
         $this->middleware('auth.user',
             array('only' =>
@@ -274,9 +277,13 @@ class DashboardController extends Controller
         $animal = $this->animalRepository->get($id);
         $userId = $user->id;
         if ($animal->vet_id != null) {
-            Request::insert(
-                ['vet_id' => $animal->vet_id, 'user_id' => $userId, 'animal_id' => $animal->id, 'approved' => 1]
+            $data = array(
+                'vet_id' => $animal->vet_id,
+                'user_id' => $userId,
+                'animal_id' => $animal->id,
+                'approved' => 1
             );
+            $this->animalRequestRepository->create($data);
         }
         return redirect()->route('user.dashboard')
             ->with('success', Lang::get('general.Pet updated'));
@@ -406,7 +413,7 @@ class DashboardController extends Controller
     {
         $this->animalRepository->setUser($this->authUser);
         $this->animalRepository->delete($animalId);
-        Request::where('animal_id', '=', $id)->delete();
+        $this->animalRequestRepository->removeByAnimalId($animalId);
         $this->sensorReadingRepository->removeByAnimalId($animalId);
         return redirect()->route('user.dashboard')
             ->with('message', Lang::get('general.Pet deleted'));
@@ -436,9 +443,9 @@ class DashboardController extends Controller
 
     public function getVet()
     {
-        $id = $this->authUser->id;
+        $user = $this->authUser;
         $this->animalRepository->setUser($this->authUser);
-        $requests = Request::where('user_id', '=', $id)->get();
+        $requests = $this->animalRequestRepository->getByUserId($user->id);
         $animals = $this->animalRepository->all();
         $vets = $this->vetRepository->all();
         if($this->authUser->animals->isEmpty()) {
@@ -502,29 +509,34 @@ class DashboardController extends Controller
 
     }
 
-    public function getAddVet($id)
+    public function getAddVet($vetId)
     {
         $userid = $this->authUser->id;
         $this->animalRepository->setUser($this->authUser);
         $animals = $this->animalRepository->all();
         foreach ($animals as $animal) {
-            if (Request::where('vet_id', $id)->where('animal_id', $animal->id)->first() == null) {
-                Request::insert(
-                    ['vet_id' => $id, 'user_id' => $userid, 'animal_id' => $animal->id, 'approved' => 1]
+            if ($this->animalRequestRepository->getByVetAndAnimalId($vetId, $animal->id) == null) {
+                $data = array(
+                    'vet_id' => $vetId,
+                    'user_id' => $userid,
+                    'animal_id' => $animal->id,
+                    'approved' => 1
                 );
+                $this->animalRequestRepository->create($data);
             }
             else {
                 continue;
             }
 
         }
-        return redirect()->route('user.dashboard.vet')->with('success', Lang::get('general.Vet added'));
+        return redirect()->route('user.dashboard.vet')
+            ->with('success', Lang::get('general.Vet added'));
     }
 
-    public function getRemoveVet($id)
+    public function getRemoveVet($vetId)
     {
-        $userid = $this->authUser->id;
-        if (Request::where('user_id', '=', $userid)->where('vet_id', '=', $id)->delete()) {
+        $user = $this->authUser;
+        if ($this->animalRequestRepository->removeByVetAndUserId($vetId, $user->id)) {
             return redirect()->route('user.dashboard.vet')
                 ->with('success', Lang::get('general.Vet removed'));
         }
@@ -534,7 +546,7 @@ class DashboardController extends Controller
 
     public function getActivatepet($id)
     {
-        if (Request::where('animal_request_id', '=', $id)->update(array('approved' => 1))) {
+        if ($this->animalRequestRepository->update($id, array('approved' => 1))) {
             return redirect()->route('user.dashboard.vet')
                 ->with('success', Lang::get('general.Pet activated'));
         }
@@ -544,7 +556,7 @@ class DashboardController extends Controller
 
     public function getDeactivatepet($id)
     {
-        if (Request::where('animal_request_id', '=', $id)->update(array('approved' => 0))) {
+        if ($this->animalRequestRepository->update($id, array('approved' => 0))) {
             return redirect()->route('user.dashboard.vet')->with('success', Lang::get('general.Pet deactivated'));
         }
         return redirect()->route('user.dashboard.vet')

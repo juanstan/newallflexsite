@@ -6,8 +6,8 @@ use URL;
 
 use App\Models\Entities\User;
 use App\Models\Entities\Animal;
-use App\Models\Repositories\AnimalRepositoryInterface;
-use App\Models\Repositories\AnimalRequestRepositoryInterface;
+use App\Models\Repositories\AnimalRepository;
+use App\Models\Repositories\AnimalRequestRepository;
 use App\Http\Controllers\Controller;
 
 class AnimalRequestController extends Controller
@@ -17,7 +17,7 @@ class AnimalRequestController extends Controller
     protected $animalRepository;
     protected $animalRequestRepository;
 
-    public function __construct(AnimalRequestRepositoryInterface $animalRequestRepository, AnimalRepositoryInterface $animalRepository)
+    public function __construct(AnimalRequestRepository $animalRequestRepository, AnimalRepository $animalRepository)
     {
         $this->authUser = Auth::user()->get();
         $this->animalRepository = $animalRepository;
@@ -26,6 +26,7 @@ class AnimalRequestController extends Controller
 
     public function index()
     {
+        dd($this->authUser);
         $this->animalRequestRepository->setUser($this->authUser);
 
         return response()->json(['error' => false,
