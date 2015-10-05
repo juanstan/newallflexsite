@@ -44,12 +44,12 @@ class AuthenticateApiUser {
                 ->where('token', '=', $str_token)
                 ->first();
 
+            dd($token);
+
             if($token == null || $token->expires_at->lt(Carbon::now()))
             {
                 return response()->json(['error' => true, 'errors' => ['Authorization' => [\Lang::get('error.auth.invalid-key')]]], 401);
             }
-
-
 
             Auth::user()->login($token->user);
             dd(Auth::user());
