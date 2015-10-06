@@ -92,14 +92,14 @@ class AnimalController extends Controller
         $user = $this->authUser;
         $input = Input::all();
         $this->animalRepository->setUser($user);
-        $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
-        if($breed)
-        {
-            $input['breed_id'] = $breed->id;
-        }
-        else
-        {
-            $input['breed_wildcard'] = $input['breed_id'];
+
+        if(isset($input['breed_id'])) {
+            $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
+            if ($breed) {
+                $input['breed_id'] = $breed->id;
+            } else {
+                $input['breed_wildcard'] = $input['breed_id'];
+            }
         }
         if($user->weight_units == 1) {
             $input['weight'] = round($input['weight'] * 0.453592, 1);
