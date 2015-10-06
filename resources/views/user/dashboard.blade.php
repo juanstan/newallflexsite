@@ -12,7 +12,7 @@ $temperaturePref = $user->units;
 </div>
 @foreach ($animals as $animal)
     @if ($animal->name == null)
-        <div class="row col-md-11 float-none col-centered desktop" >
+        <div class="row col-md-11 float-none top-buffer col-centered desktop" >
             <div class="alert alert-grey alert-dismissible" role="alert">
                 <button type="button" class="close small-top-buffer" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="inline-block small-top-buffer">{!! Lang::get('general.1 unknown microchip found, would you like to create a new pet?') !!}</h4>
