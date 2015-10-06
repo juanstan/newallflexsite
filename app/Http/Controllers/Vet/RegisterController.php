@@ -1,5 +1,8 @@
 <?php namespace App\Http\Controllers\Vet;
 
+use Auth;
+use Input;
+
 use App\Models\Entities\Animal;
 use App\Models\Entities\User;
 use App\Models\Entities\Vet;
@@ -7,8 +10,9 @@ use App\Models\Repositories\AnimalRepositoryInterface;
 use App\Models\Repositories\AnimalReadingRepositoryInterface;
 use App\Models\Repositories\AnimalReadingSymptomRepositoryInterface;
 use App\Models\Repositories\VetRepositoryInterface;
+use App\Http\Controllers\Controller;
 
-class RegisterController extends \App\Http\Controllers\Controller {
+class RegisterController extends Controller {
     
     protected $vetRepository;
     protected $authVet;
@@ -18,7 +22,7 @@ class RegisterController extends \App\Http\Controllers\Controller {
 
 	public function __construct(VetRepositoryInterface $vetRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
 	{
-        $this->authVet = \Auth::vet()->get();
+        $this->authVet = Auth::vet()->get();
         $this->vetRepository = $vetRepository;
         $this->animalReadingRepository = $animalReadingRepository;
         $this->animalRepository = $animalRepository;
@@ -27,41 +31,45 @@ class RegisterController extends \App\Http\Controllers\Controller {
 	}
     
     public function getAbout()
-    {   
-        return \View::make('vetsignup.stage1');
+    {
+        $vet = $this->authVet;
+        return View::make('vetsignup.stage1')
+            ->with(array(
+                'vet' => $vet
+            ));
     }
     
     public function postAbout()
     {
 
-        $input = \Input::all();
+        $input = Input::all();
         $id =  $this->authVet->id;
         $validator = $this->vetRepository->getUpdateValidator($input, $id);
 
         if($validator->fails())
         {
-            return \Redirect::route('vet.register.about')
+            return redirect()->route('vet.register.about')
                 ->withErrors($validator)
-                ->withInput(\Input::except('password'));
+                ->withInput(Input::except('password'));
         }
 
-        if (\Input::hasFile('image_path')){
+        if (Input::hasFile('image_path')){
             $destinationPath = 'uploads/vets/'.$id;
             if(!\File::exists($destinationPath)) {
                 \File::makeDirectory($destinationPath);
             }
 
-            $extension = \Input::file('image_path')->getClientOriginalExtension();
+            $extension = Input::file('image_path')->getClientOriginalExtension();
             $fileName = rand(11111,99999).'.'.$extension;
 
-            $height = \Image::make(\Input::file('image_path'))->height();
-            $width = \Image::make(\Input::file('image_path'))->width();
+            $height = \Image::make(Input::file('image_path'))->height();
+            $width = \Image::make(Input::file('image_path'))->width();
 
             if($width > $height) {
-                \Image::make(\Input::file('image_path'))->crop($height, $height)->save($destinationPath.'/'.$fileName);
+                \Image::make(Input::file('image_path'))->crop($height, $height)->save($destinationPath.'/'.$fileName);
             }
             else {
-                \Image::make(\Input::file('image_path'))->crop($width, $width)->save($destinationPath.'/'.$fileName);
+                \Image::make(Input::file('image_path'))->crop($width, $width)->save($destinationPath.'/'.$fileName);
             }
 
             $image_path = '/uploads/vets/'.$id.'/'.$fileName;
@@ -75,29 +83,29 @@ class RegisterController extends \App\Http\Controllers\Controller {
             \App::abort(500);
         }
 
-        return \Redirect::route('vet.register.address');
+        return redirect()->route('vet.register.address');
     }
 
     public function getAddress()
     {
-        return \View::make('vetsignup.stage2');
+        return View::make('vetsignup.stage2');
     }
 
     public function postAddress() // POST
     {
 
-        $input = \Input::all();
+        $input = Input::all();
         $id =  $this->authVet->id;
         $validator = $this->vetRepository->getUpdateValidator($input, $id);
 
         if($validator->fails())
         {
-            return \Redirect::route('vet.register.about')
+            return redirect()->route('vet.register.about')
                 ->withErrors($validator)
-                ->withInput(\Input::except('password'));
+                ->withInput(Input::except('password'));
         }
 
-        $address = \Input::get('address_1') . ' ' . \Input::get('address_2') . ' ' . \Input::get('city') . ' ' . \Input::get('county') . ' ' . \Input::get('zip');
+        $address = Input::get('address_1') . ' ' . Input::get('address_2') . ' ' . Input::get('city') . ' ' . Input::get('county') . ' ' . Input::get('zip');
 
         $data_arr = geocode($address);
 
@@ -112,7 +120,7 @@ class RegisterController extends \App\Http\Controllers\Controller {
             \App::abort(500);
         }
 
-        return \Redirect::route('vet.register.reading');
+        return redirect()->route('vet.register.reading');
     }
     
     

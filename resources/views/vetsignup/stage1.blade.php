@@ -16,9 +16,7 @@
                     </div>
 
                     <div class="col-sm-8 text-left">
-                        @if (Auth::vet()->get()->image_path != NULL)
-                            {!! HTML::image(Auth::vet()->get()->image_path, '', array('class' => 'img-responsive img-circle', 'width' => '30%', 'height' => '80px')) !!}
-                        @endif
+                        {!! HTML::image(isset($vet->photo_id)?$vet->photo->location:'/images/grey-circle.png', '', array('class' => 'image-placeholder img-responsive img-centered img-circle')) !!}
                     </div>
                 </div>
 

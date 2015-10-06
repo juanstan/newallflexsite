@@ -67,6 +67,19 @@ class PhotoRepository extends AbstractRepository implements PhotoRepositoryInter
             ] + $input);
     }
 
+
+    /**
+     * @param array $input
+     * @param Vet $vet
+     * @return Photo
+     */
+    public function createForVet($input, $vet)
+    {
+        return parent::create([
+                'uploading_vet_id' => $vet->id
+            ] + $input);
+    }
+
     /**
      * @param array $image
      * @param User $user
@@ -207,6 +220,36 @@ class PhotoRepository extends AbstractRepository implements PhotoRepositoryInter
             $fileData = $fileObject->fread($fileObject->getSize());
             $fileName = preg_replace("/[+=\\/]+/", '', base64_encode(hash('sha512', $fileData . $image->getClientOriginalName() . (string)$user->id . Carbon::now()->toIso8601String(), true))) . '.' . strtolower($image->getClientOriginalExtension());
             $fileLocation = 'uploads/users/' . (string)$user->id;
+            if (!@is_dir($fileLocation)) {
+                @mkdir($fileLocation, 0755, true);
+            }
+            $publicPath = $fileLocation . '/' . $fileName;
+
+            Image::make($image->getRealPath())->fit(200)->save($publicPath);
+
+            $image->move(storage_path($fileLocation), $fileName);
+            $location = $fileLocation . '/' . $fileName;
+
+
+        }
+        return $location;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\File\UploadedFile $image
+     * @param Vet $vet
+     * @return string
+     */
+    public function uploadVetImage($image, $vet)
+    {
+        $location = null;
+
+        if ($image->isValid())
+        {
+            $fileObject = $image->openFile();
+            $fileData = $fileObject->fread($fileObject->getSize());
+            $fileName = preg_replace("/[+=\\/]+/", '', base64_encode(hash('sha512', $fileData . $image->getClientOriginalName() . (string)$vet->id . Carbon::now()->toIso8601String(), true))) . '.' . strtolower($image->getClientOriginalExtension());
+            $fileLocation = 'uploads/vets/' . (string)$vet->id;
             if (!@is_dir($fileLocation)) {
                 @mkdir($fileLocation, 0755, true);
             }

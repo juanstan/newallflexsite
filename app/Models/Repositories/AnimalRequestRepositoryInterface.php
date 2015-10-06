@@ -24,9 +24,13 @@ interface AnimalRequestRepositoryInterface extends AbstractRepositoryInterface
 
     public function getByUserId($userId);
 
+    public function getAllByUserId($userId);
+
     public function getByVetAndAnimalId($vetId, $animalId);
 
     public function removeByVetAndUserId($vetId, $userId);
+
+    public function removeByVetId($vetId);
 
 
 }

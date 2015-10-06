@@ -1,31 +1,49 @@
 <?php namespace App\Http\Controllers\Vet;
 
+use Auth;
+use View;
+use Input;
+use Lang;
+
 use App\Models\Entities\Animal;
 use App\Models\Entities\Vet;
-use App\Models\Entities\SensorReading;
-use App\Models\Entities\SensorReadingSymptom;
-use App\Models\Entities\Symptom;
-use App\Models\Entities\Animal\Request;
 use App\Models\Repositories\AnimalRepositoryInterface;
 use App\Models\Repositories\AnimalReadingRepositoryInterface;
 use App\Models\Repositories\AnimalReadingSymptomRepositoryInterface;
 use App\Models\Repositories\VetRepositoryInterface;
-use League\Csv\Reader;
+use App\Models\Repositories\AnimalRequestRepository;
+use App\Models\Repositories\SymptomRepository;
+use App\Models\Repositories\HelpRepository;
+use App\Http\Controllers\Controller;
 
-class DashboardController extends \App\Http\Controllers\Controller {
+class DashboardController extends Controller {
 
     protected $vetRepository;
     protected $animalRepository;
     protected $animalReadingRepository;
     protected $animalReadingSymptomRepository;
+    protected $animalRequestRepository;
+    protected $symptomRepository;
+    protected $helpRepository;
 
-    public function __construct(VetRepositoryInterface $vetRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
+    public function __construct(
+        VetRepositoryInterface $vetRepository, 
+        AnimalRepositoryInterface $animalRepository, 
+        AnimalReadingRepositoryInterface $animalReadingRepository, 
+        AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository,
+        AnimalRequestRepository $animalRequestRepository,
+        SymptomRepository $symptomRepository,
+        HelpRepository $helpRepository
+    )
     {
-        $this->authVet = \Auth::vet()->get();
+        $this->authVet = Auth::vet()->get();
         $this->vetRepository = $vetRepository;
         $this->animalReadingRepository = $animalReadingRepository;
         $this->animalRepository = $animalRepository;
         $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
+        $this->animalRequestRepository = $animalRequestRepository;
+        $this->symptomRepository = $symptomRepository;
+        $this->helpRepository = $helpRepository;
         $this->middleware('vetAuth',
             array('only'=>
                 array(
@@ -48,54 +66,82 @@ class DashboardController extends \App\Http\Controllers\Controller {
     public function getIndex() {
             $this->animalRepository->setUser($this->authVet);
             $id = $this->authVet->id;
-            $symptoms = Symptom::all();
-            $requests = Request::where('vet_id', '=', $id)->get();
+            $symptoms = $this->symptomRepository->all();
+            $requests = $this->animalRequestRepository->getAllByVetId($id);
             $vet = $this->authVet;
             $pets = $this->animalRepository->all();
             if ($this->authVet->confirmed != null) {
-                return \View::make('vet.dashboard')->with(array('pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests, 'vet' => $vet));
+                return View::make('vet.dashboard')
+                    ->with(array(
+                        'pets' => $pets, 
+                        'symptoms' => $symptoms, 
+                        'requests' => $requests, 
+                        'vet' => $vet
+                    ));
             }
             else {
-                return \View::make('vet.dashboard')->with(array('not-verified' => '', 'pets' => $pets, 'symptoms' => $symptoms, 'requests' => $requests, 'vet' => $vet));
+                return View::make('vet.dashboard')
+                    ->with(array(
+                        'not-verified' => '', 
+                        'pets' => $pets, 
+                        'symptoms' => $symptoms, 
+                        'requests' => $requests, 
+                        'vet' => $vet
+                    ));
             }
     }
 
     public function getHelp() {
 
-        $help = \DB::table('help')->get();
-        return \View::make('vet.help')->with(array('help' => $help));
+        $help = $this->helpRepository->all();
+        return View::make('vet.help')
+            ->with(array(
+                'help' => $help
+            ));
 
     }
 
     public function getResult($id) {
 
-        $help = \DB::table('help')->where('id', '=', $id)->get();
-        return \View::make('vet.result')->with(array('help' => $help));
+        $help = $this->helpRepository->get($id);
+        return View::make('vet.result')
+            ->with(array(
+                'help' => $help
+            ));
 
     }
 
     public function postInvite() {
 
         \Mail::send('emails.vet-verify', array('confirmation_code' => $this->authVet->confirmation_code), function($message) {
-            $message->to(\Input::get('email'))
+            $message->to(Input::get('email'))
                 ->subject($this->authVet->name, 'has invited you to use All Flex');
         });
-        return \Redirect::route('vet.dashboard')
-            ->with('message', \Lang::get('general.Verification email sent'));
+        return redirect()->route('vet.dashboard')
+            ->with('message', Lang::get('general.Verification email sent'));
     }
 
-    public function getPet($id) {
+    public function getPet($animalId) {
         $this->animalRepository->setUser($this->authVet);
-        $Vetid = $this->authVet->id;
-        $symptoms = Symptom::all();
-        $pet = $this->animalRepository->get($id);
-        if(Request::where('vet_id', '=', $id)->where('animal_id', '=', $id)->where('approved', '=', 1)->get())
+        $vetid = $this->authVet->id;
+        $symptoms = $this->symptomRepository->all();
+        $pet = $this->animalRepository->get($animalId);
+        if($this->animalRequestRepository->getApprovedByVetAndAnimalId($vetid, $animalId))
         {
-            return \View::make('vet.information')->with(array('pet' => $pet, 'symptoms' => $symptoms));
+            return View::make('vet.information')
+                ->with(array(
+                    'pet' => $pet,
+                    'symptoms' => $symptoms
+                ));
         }
         else
         {
-            return \View::make('vet.dashboard')->with(array('not-verified' => '', 'pet' => $pet, 'symptoms' => $symptoms));
+            return View::make('vet.dashboard')
+                ->with(array(
+                    'not-verified' => '',
+                    'pet' => $pet,
+                    'symptoms' => $symptoms
+                ));
         }
 
 
@@ -103,41 +149,44 @@ class DashboardController extends \App\Http\Controllers\Controller {
 
     public function postResetAverageTemperature($id)
     {
-        if(\DB::table('sensor_readings')->where('animal_id', '=', $id)->update(array('average' => 0)))
+        $animal = $this->sensorReadingRepository->getByAnimalId($id);
+        if ($this->sensorReadingRepository->update($animal->id, array('average' => 0)))
         {
-            return \Redirect::route('user.dashboard')->with('success', \Lang::get('general.Average temperature reset'));
+            return redirect()->route('user.dashboard')
+                ->with('success', Lang::get('general.Average temperature reset'));
         }
 
-        return \Redirect::route('user.dashboard')->with('error', \Lang::get('general.There was a problem with your request'));
+        return redirect()->route('user.dashboard')
+            ->with('error', Lang::get('general.There was a problem with your request'));
     }
 
     public function getSettings()
     {
-        return \View::make('vet.settings');
+        return View::make('vet.settings');
     }
 
     public function postSettings()
     {
-        $id =  $this->authVet->id;
-        $validator = $this->vetRepository->getUpdateValidator(\Input::all(), $id);
+        $vet =  $this->authVet;
+        $validator = $this->vetRepository->getUpdateValidator(Input::all(), $vet->id);
         if($validator->fails())
         {
-            return \Redirect::route('vet.dashboard.settings')
+            return redirect()->route('vet.dashboard.settings')
                 ->withErrors($validator)
-                ->withInput(\Input::except('password'));
+                ->withInput(Input::except('password'));
         }
 
-        if (\Input::has('old_password'))
+        if (Input::has('old_password'))
         {
-            $password = \Input::get('old_password');
+            $password = Input::get('old_password');
             if (!\Hash::check($password, $this->authVet->password))
             {
-                return \Redirect::route('vet.dashboard.settings')
-                    ->with('error', \Lang::get('general.Password incorrect'));
+                return redirect()->route('vet.dashboard.settings')
+                    ->with('error', Lang::get('general.Password incorrect'));
             }
         }
 
-        $input = \Input::only(array(
+        $input = Input::only(array(
             'company_name',
             'contact_name',
             'email',
@@ -161,25 +210,24 @@ class DashboardController extends \App\Http\Controllers\Controller {
         }
 
         if ($input['image_path'] != ''){
-            $destinationPath = 'uploads/vets/'.$id;
-            if(!\File::exists($destinationPath)) {
-                \File::makeDirectory($destinationPath);
+
+            $imageValidator = $this->photoRepository->getCreateValidator($input);
+
+            if ($imageValidator->fails()) {
+                return redirect()->back()
+                    ->withErrors($imageValidator)
+                    ->withInput();
             }
 
-            $extension = \Input::file('image_path')->getClientOriginalExtension();
-            $fileName = rand(11111,99999).'.'.$extension;
+            $photo = array(
+                'title' => $vet->id,
+                'location' => $this->photoRepository->uploadVetImage($input['image_path'], $vet)
+            );
 
-            $height = \Image::make(\Input::file('image_path'))->height();
-            $width = \Image::make(\Input::file('image_path'))->width();
+            $photoId = $this->photoRepository->createForVet($photo, $vet);
 
-            if($width > $height) {
-                \Image::make(\Input::file('image_path'))->crop($height, $height)->save($destinationPath.'/'.$fileName);
-            }
-            else {
-                \Image::make(\Input::file('image_path'))->crop($width, $width)->save($destinationPath.'/'.$fileName);
-            }
-
-            $input['image_path'] = '/uploads/vets/'.$id.'/'.$fileName;
+            unset($input['image_path']);
+            $input['photo_id'] = $photoId->id;
 
         }
         else {
@@ -188,7 +236,7 @@ class DashboardController extends \App\Http\Controllers\Controller {
 
         }
 
-        $address = \Input::get('address_1') . ' ' . \Input::get('address_2') . ' ' . \Input::get('city') . ' ' . \Input::get('county') . ' ' . \Input::get('zip');
+        $address = Input::get('address_1') . ' ' . Input::get('address_2') . ' ' . Input::get('city') . ' ' . Input::get('county') . ' ' . Input::get('zip');
 
         $data_arr = geocode($address);
 
@@ -204,101 +252,28 @@ class DashboardController extends \App\Http\Controllers\Controller {
             \App::abort(500);
         }
 
-        return \Redirect::route('vet.dashboard')
-            ->with('success', \Lang::get('general.Settings updated'));
+        return redirect()->route('vet.dashboard')
+            ->with('success', Lang::get('general.Settings updated'));
     }
 
     public function postReadingUpload()
     {
-        $input = \Input::all();
-        $id = $this->authVet->id;
-        $file = array('file' => \Input::file('file'));
-        $rules = array('file' => 'required|max:4000');
-        $validator = \Validator::make($file, $rules);
-        if ($validator->fails()) {
-            return \Redirect::route('vet.dashboard')->withInput()
-                ->withErrors($validator);
+        $input = Input::all();
+        $vet = $this->authVet->id;
+        $readingValidator = $this->animalReadingRepository->getReadingUploadValidator($input);
+        if ($readingValidator->fails()) {
+            return redirect()->back()
+                ->withErrors($readingValidator)
+                ->withInput();
         }
-        else {
-            if (\Input::file('file')->isValid()) {
-                $destinationPath = 'uploads/csv/'.\Crypt::encrypt($id);
-                if(!\File::exists($destinationPath)) {
-                    \File::makeDirectory($destinationPath);
-                }
-                $extension = \Input::file('file')->getClientOriginalExtension();
-                $fileName = rand(11111,99999).'.'.$extension;
 
-                \Input::file('file')->move($destinationPath, $fileName);
-
-                $csv = Reader::createFromFileObject(new \SplFileObject($destinationPath.'/'.$fileName));
-
-                $topRow = $csv->fetchOne(0);
-                $reading_device_id = $topRow[0];
-                $device_current_time_epoch = $topRow[4];
-                $device_current_time = new \DateTime("@$device_current_time_epoch");
-
-                function decoded_microchip_id($coded_string)
-                {
-                    // Convert to binary
-                    $bin = base_convert($coded_string, 16, 2);
-                    // Split to 10/38 bits
-                    $manufacturer = substr($bin, 0, 10);
-                    $device_id = substr($bin, 10, 38);
-                    // Convert to decimal
-                    $manufacturer = bindec($manufacturer);
-                    $device_id = bindec($device_id);
-                    // Put pieces back
-                    return $manufacturer.'.'.$device_id;
-                }
-
-                function reading_timestamp($device_current_time_epoch, $epoch)
-                {
-                    $epoch = $device_current_time_epoch - $epoch;
-                    return new \DateTime("@$epoch");
-                };
-
-                function reading_temperature_c($temperature)
-                {
-                    return ($temperature * 0.112) + 23.3;
-                };
-                function reading_temperature_f($temperature)
-                {
-                    return ($temperature * 0.202) + 73.9;
-                };
-                $csv->setOffset(1);
-                $data = $csv->query();
-                foreach ($data as $lineIndex => $row) {
-                    $profile = SensorReading::where(['reading_id' => $row[0], 'microchip_id' => decoded_microchip_id($row[1])])->first();
-                    $animal = Animal::where(['microchip_number' => decoded_microchip_id($row[1])])->first();
-
-                    if (empty($animal)) {
-                        $animal = new animal();
-                        $animal->microchip_number = decoded_microchip_id($row[1]);
-
-                        $animal->save();
-                    }
-                    if (empty($profile)) {
-                        $reading = new SensorReading();
-                        $reading->reading_id = $row[0];
-                        $reading->microchip_id = decoded_microchip_id($row[1]);
-                        $reading->temperature = reading_temperature_c($row[2]);
-                        $reading->device_id = $reading_device_id;
-                        $reading->animal_id = $animal->id;
-                        $reading->average = 1;
-                        $reading->reading_time = reading_timestamp($device_current_time_epoch, $row[3]);
-
-                        $reading->save();
-
-                        $reading->vets()->attach($this->authVet);
-                    }
-                }
-                return \Redirect::route('vet.dashboard');
-            }
-            else {
-                return \Redirect::route('vet.dashboard')
-                    ->with('error', \Lang::get('general.uploaded file is not valid'));
-            }
+        if($this->animalReadingRepository->readingUpload($input, $vet))
+        {
+            return redirect()->route('vet.dashboard');
         }
+
+        return redirect()->route('vet.dashboard')
+            ->with('error', Lang::get('general.Uploaded file is not valid'));
     }
 
 

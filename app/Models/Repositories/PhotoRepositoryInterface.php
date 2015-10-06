@@ -80,4 +80,11 @@ interface PhotoRepositoryInterface extends AbstractRepositoryInterface
      * @return string
      */
     public function uploadImage($image, $user);
+
+    /**
+     * @param $image
+     * @param object|Vet $vet
+     * @return string
+     */
+    public function uploadVetImage($image, $vet);
 }

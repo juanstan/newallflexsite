@@ -39,7 +39,6 @@ class AnimalController extends Controller
     {
         $input = Input::all();
         $user = $this->authUser;
-        $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
 
         $this->animalRepository->setUser($user);
 
@@ -47,14 +46,19 @@ class AnimalController extends Controller
             $input['weight'] = $input['weight'] * 0.453592;
         }
 
-        if($breed == NULL)
+        if(isset($input['breed_id']))
         {
-            $input['breed_wildcard'] = $input['breed_id'];
+            $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
+            if($breed == NULL)
+            {
+                $input['breed_wildcard'] = $input['breed_id'];
+            }
+            else
+            {
+                $input['breed_id'] = $breed->id;
+            }
         }
-        else
-        {
-            $input['breed_id'] = $breed->id;
-        }
+
 
         $validator = $this->animalRepository->getCreateValidator($input);
 

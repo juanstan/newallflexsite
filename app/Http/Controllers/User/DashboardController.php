@@ -445,7 +445,7 @@ class DashboardController extends Controller
     {
         $user = $this->authUser;
         $this->animalRepository->setUser($this->authUser);
-        $requests = $this->animalRequestRepository->getByUserId($user->id);
+        $requests = $this->animalRequestRepository->getAllByUserId($user->id);
         $animals = $this->animalRepository->all();
         $vets = $this->vetRepository->all();
         if($this->authUser->animals->isEmpty()) {
