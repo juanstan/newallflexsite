@@ -1,9 +1,12 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/10/07 14:22:21 
+ Generated via "php artisan localization:missing" at 2015/10/07 14:21:47 
 *************************************************************************/
 
 return array (
+  //============================== New strings to translate ==============================//
+  // Defined in file /Applications/MAMP/htdocs/allflex-web/app/Http/Controllers/User/ExternalController.php
+  'Your accont has been created successfully' => 'Your accont has been created successfully',
   //==================================== Translations ====================================//
   ' account to update your account details' => ' account to update your account details',
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
@@ -200,7 +203,6 @@ return array (
   array (
     '' => 'You must create a pet before you can perform this function.',
   ),
-  'Your accont has been created successfully' => 'Your accont has been created successfully',
   'Your account was successfully deleted' => 'Your account was successfully deleted',
   'Your are now logged out!' => 'Your are now logged out!',
   'Your password has been reset successfully' => 'Your password has been reset successfully',

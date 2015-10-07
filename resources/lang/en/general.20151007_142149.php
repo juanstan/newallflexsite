@@ -1,11 +1,15 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/10/07 14:22:21 
+ Generated via "php artisan localization:missing" at 2015/10/07 13:36:47 
 *************************************************************************/
 
 return array (
-  //==================================== Translations ====================================//
+  //============================== New strings to translate ==============================//
+  // Defined in file /Applications/MAMP/htdocs/allflex-web/resources/views/user/settings.blade.php
   ' account to update your account details' => ' account to update your account details',
+  // Defined in file /Applications/MAMP/htdocs/allflex-web/resources/views/user/settings.blade.php
+  'Log into your' => 'Log into your',
+  //==================================== Translations ====================================//
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
   '+ Add' => '+ Add',
@@ -82,7 +86,6 @@ return array (
   'Latest' => 'Latest',
   'Loading map' => 'Loading map',
   'Location' => 'Location',
-  'Log into your' => 'Log into your',
   'Logout' => 'Logout',
   'Mac' => 'Mac',
   'Male' => 'Male',
@@ -200,7 +203,6 @@ return array (
   array (
     '' => 'You must create a pet before you can perform this function.',
   ),
-  'Your accont has been created successfully' => 'Your accont has been created successfully',
   'Your account was successfully deleted' => 'Your account was successfully deleted',
   'Your are now logged out!' => 'Your are now logged out!',
   'Your password has been reset successfully' => 'Your password has been reset successfully',

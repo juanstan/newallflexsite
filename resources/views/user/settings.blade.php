@@ -5,6 +5,11 @@
     <div class="jumbotron text-center" >
         <div class="form-horizontal ">
             {!! Form::open(array('files'=> 'true', 'route' => 'user.dashboard.settings', 'method' => 'post' )) !!}
+            @if(isset($user->provider))
+                <div class="col-md-12 text-center" >
+                    <h4><i class="fa fa-exclamation-circle"></i> {!! Lang::get('general.Log into your') . ' ' . $user->provider . ' ' . Lang::get('general. account to update your account details') !!} <i class="fa fa-exclamation-circle"></i></h4>
+                </div>
+            @endif
             <div class="form-group">
                 <div class="col-sm-offset-4 col-sm-8 text-left">
                     {!! HTML::image(isset($user->photo_id)?$user->photo->location:'/images/grey-circle.png', '', array('class' => 'image-placeholder img-responsive img-centered img-circle')) !!}
@@ -13,29 +18,34 @@
             <div class="form-group">
                     {!! Form::label('image_path', 'Profile photo', array('class' => 'col-sm-4 control-label')) !!}
                 <div class="col-sm-8 text-left">
-                    {!! Form::button(Lang::get('general.Browse'), array('class' => 'btn btn-file pull-left', 'onclick' => '$("#ufile").click()' )) !!}
-                    {!! Form::file('image_path', array('class' => 'hide', 'id'=>'ufile')) !!}
+                    @if(isset($user->provider))
+                        {!! Form::button(Lang::get('general.Browse'), array('class' => 'btn btn-file pull-left disabled')) !!}
+                    @else
+                        {!! Form::button(Lang::get('general.Browse'), array('class' => 'btn btn-file pull-left', 'onclick' => '$("#ufile").click()' )) !!}
+                        {!! Form::file('image_path', array('class' => 'hide', 'id'=>'ufile')) !!}
+                    @endif
                     <small class="small-left-buffer">{!! Lang::get('general.JPEG or PNG 4mb file limit') !!}</small>
                 </div>
             </div>
             <div class="form-group">
                     {!! Form::label('first_name', Lang::get('general.First name'), array('class' => 'col-sm-4 control-label')) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('first_name', $user->first_name, array('class' => 'form-control text-left')) !!}
+                    {!! Form::text('last_name', $user->first_name, $user->provider ? array('class' => 'form-control text-left', 'disabled' => 'true') : array('class' => 'form-control  text-left')) !!}
                 </div>
             </div>
             <div class="form-group">
                     {!! Form::label('last_name', Lang::get('general.Last name'), array('class' => 'col-sm-4 control-label')) !!}
                 <div class="col-sm-8">
-                    {!! Form::text('last_name', $user->last_name, array('class' => 'form-control text-left')) !!}
+                    {!! Form::text('last_name', $user->first_name, $user->provider ? array('class' => 'form-control text-left', 'disabled' => 'true') : array('class' => 'form-control  text-left')) !!}
                 </div>
             </div>
             <div class="form-group">
                     {!! Form::label('email', Lang::get('general.Email address'), array('class' => 'col-sm-4 control-label')) !!}
                 <div class="col-sm-8">
-                    {!! Form::email('email', $user->email, array('class' => 'form-control text-left')) !!}
+                    {!! Form::email('email', $user->email, $user->provider ? array('class' => 'form-control text-left', 'disabled' => 'true') : array('class' => 'form-control  text-left')) !!}
                 </div>
             </div>
+            @if(!isset($user->provider))
             <div class="form-group">
                 {!! Form::label('old_password', Lang::get('general.Password'), array('class' => 'col-sm-4 control-label')) !!}
                 <div class="col-sm-8">
@@ -54,6 +64,7 @@
                     {!! Form::password('password_confirmation', array('class' => 'small-top-buffer form-control text-left')) !!}
                 </div>
             </div>
+            @endif
             <div class="form-group">
                 {!! Form::label('units', Lang::get('general.Temperature units'), array('class' => 'col-sm-4 control-label')) !!}
                 <div class="col-sm-8">

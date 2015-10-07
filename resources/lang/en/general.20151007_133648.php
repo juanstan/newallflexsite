@@ -1,11 +1,13 @@
 <?php
 /*************************************************************************
- Generated via "php artisan localization:missing" at 2015/10/07 14:22:21 
+ Generated via "php artisan localization:missing" at 2015/06/03 14:21:33 
 *************************************************************************/
 
 return array (
+  //============================== New strings to translate ==============================//
+  // Defined in file /Applications/MAMP/htdocs/allflex/app/views/user/dashboard.blade.php
+  'Create' => 'Create',
   //==================================== Translations ====================================//
-  ' account to update your account details' => ' account to update your account details',
   '&#39; temperature is usually around' => '&#39; temperature is usually around',
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
   '+ Add' => '+ Add',
@@ -51,7 +53,6 @@ return array (
   'Connect with your vet' => 'Connect with your vet',
   'Contact name' => 'Contact name',
   'County' => 'County',
-  'Create' => 'Create',
   'Create account' => 'Create account',
   'Customer activity' => 'Customer activity',
   'Date of birth' => 'Date of birth',
@@ -82,7 +83,8 @@ return array (
   'Latest' => 'Latest',
   'Loading map' => 'Loading map',
   'Location' => 'Location',
-  'Log into your' => 'Log into your',
+  'Logged in with Facebook' => 'Logged in with Facebook',
+  'Logged in with Twitter' => 'Logged in with Twitter',
   'Logout' => 'Logout',
   'Mac' => 'Mac',
   'Male' => 'Male',
@@ -170,6 +172,10 @@ return array (
   'There is no reading data submitted for' => 'There is no reading data submitted for',
   'There is not average temperature for' => 'There is not average temperature for',
   'There was a problem with your request' => 'There was a problem with your request',
+  'This Facebook account is not yet registered' => 'This Facebook account is not yet registered',
+  'This Facebook user already exsists' => 'This Facebook user already exsists',
+  'This Twitter account is not yet registered' => 'This Twitter account is not yet registered',
+  'This Twitter user already exsists' => 'This Twitter user already exsists',
   'This email does not exist' => 'This email does not exist',
   'This is a title for another FAQ' => 'This is a title for another FAQ',
   'To find your vet practice, search below' => 'To find your vet practice, search below',
@@ -182,7 +188,6 @@ return array (
   'Upload readings via USB' => 'Upload readings via USB',
   'Uploaded file is not valid' => 'Uploaded file is not valid',
   'Verification email sent' => 'Verification email sent',
-  'Vet Practice' => 'Vet Practice',
   'Vet added' => 'Vet added',
   'Vet practice' => 'Vet practice',
   'Vet removed' => 'Vet removed',
@@ -195,12 +200,13 @@ return array (
   'Yes, remove' => 'Yes, remove',
   'You are now logged out!' => 'You are now logged out!',
   'You have logged in successfully' => 'You have logged in successfully',
+  'You have registered with Facebook' => 'You have registered with Facebook',
+  'You have registered with Twitter' => 'You have registered with Twitter',
   'You have successfully verified your account' => 'You have successfully verified your account',
   'You must create a pet before you can perform this function' => 
   array (
     '' => 'You must create a pet before you can perform this function.',
   ),
-  'Your accont has been created successfully' => 'Your accont has been created successfully',
   'Your account was successfully deleted' => 'Your account was successfully deleted',
   'Your are now logged out!' => 'Your are now logged out!',
   'Your password has been reset successfully' => 'Your password has been reset successfully',
@@ -216,6 +222,7 @@ return array (
   'lbs' => 'lbs',
   'new microchip numbers' => 'new microchip numbers',
   'today at' => 'today at',
+  'uploaded file is not valid' => 'uploaded file is not valid',
   'yet' => 'yet',
   //================================== Obsolete strings ==================================//
   '1 unknown microchip found, would you like to create a new pet for this microchip?' => '1 unknown microchip found, would you like to create a new pet for this microchip?',
@@ -227,8 +234,6 @@ return array (
   'Email not yet verified' => 'Email not yet verified',
   'Error' => 'Error',
   'Large' => 'Large',
-  'Logged in with Facebook' => 'Logged in with Facebook',
-  'Logged in with Twitter' => 'Logged in with Twitter',
   'Medium' => 'Medium',
   'Message' => 'Message',
   'My readings' => 'My readings',
@@ -238,15 +243,9 @@ return array (
   'Size' => 'Size',
   'Small' => 'Small',
   'Success' => 'Success',
-  'This Facebook account is not yet registered' => 'This Facebook account is not yet registered',
-  'This Facebook user already exsists' => 'This Facebook user already exsists',
-  'This Twitter account is not yet registered' => 'This Twitter account is not yet registered',
-  'This Twitter user already exsists' => 'This Twitter user already exsists',
+  'Vet Practice' => 'Vet Practice',
   'X-Large' => 'X-Large',
-  'You have registered with Facebook' => 'You have registered with Facebook',
-  'You have registered with Twitter' => 'You have registered with Twitter',
   'Your password has been reset' => 'Your password has been reset',
   'county' => 'county',
   'please verify' => 'please verify',
-  'uploaded file is not valid' => 'uploaded file is not valid',
 );

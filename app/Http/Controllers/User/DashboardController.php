@@ -206,15 +206,9 @@ class DashboardController extends Controller
             }
         }
 
-        $input = Input::only(array(
-            'email',
-            'first_name',
-            'last_name',
-            'image_path',
-            'password',
-        ));
+        $input = Input::all();
 
-        if($input['password'] == '')
+        if(isset($input['password']) && $input['password'] == '')
         {
             unset($input['password']);
         }
