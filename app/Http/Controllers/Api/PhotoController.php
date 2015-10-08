@@ -42,6 +42,7 @@ class PhotoController extends Controller
             $photo = $this->photoRepository->createForUser($input, $this->authUser);
 
             return $photo;
+            dd($photo);
         });
 
         return response()->json(['error' => false, 'result' => $photo], 201)
