@@ -39,8 +39,10 @@ class PhotoController extends Controller
                     'location' => $this->photoRepository->uploadImage(Request::file('image_path'), $this->authUser)
                 ]);
 
+            dd($input);
+
+
             $photo = $this->photoRepository->createForUser($input, $this->authUser);
-            dd($photo);
             return $photo;
 
         });
