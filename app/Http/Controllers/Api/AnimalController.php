@@ -3,6 +3,7 @@
 use Auth;
 use Input;
 use URL;
+use Request;
 
 use App\Models\Entities\User;
 use App\Models\Entities\Animal;
