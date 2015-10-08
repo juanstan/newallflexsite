@@ -19,9 +19,9 @@ class PhotoController extends Controller
         $this->photoRepository = $photoRepository;
     }
 
-    public function store(Request $request)
+    public function store()
     {
-        $validator = $this->photoRepository->getCreateValidator($request->all());
+        $validator = $this->photoRepository->getCreateValidator(Input::all());
 
         if($validator->fails())
         {
@@ -30,9 +30,11 @@ class PhotoController extends Controller
                 ->withInput();
         }
 
+        $request = Request::all();
+
         $photo = \DB::transaction(function() use($request)
         {
-            $input = array_filter($request->only(['title']) + [
+            $input = array_filter(Request::only(['title']) + [
                     'location' => $this->photoRepository->uploadImage($request->file('file'), $this->user)
                 ]);
 

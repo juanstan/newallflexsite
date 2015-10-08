@@ -5,8 +5,6 @@ Route::get('auth/{provider}/callback', ['as' => 'api.auth.external.callback', 'u
 
 Route::post('user/login', ['as' => 'api.user.login', 'uses' => 'AuthController@postLogin']); // Done
 
-//Route::resource('photo', 'PhotoController'); // Done
-
 Route::resource('user', 'UserController', ['only' => ['store']]); // Done
 Route::post('vet/login', ['as' => 'api.vet.login', 'uses' => 'VetAuthController@postLogin']); // Done
 Route::resource('vet', 'VetController', ['only' => ['store', 'index', 'show']]); // Done
