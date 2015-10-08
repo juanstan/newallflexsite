@@ -8,6 +8,7 @@ use URL;
 use App\Models\Entities\Animal;
 use App\Models\Entities\User;
 use App\Models\Repositories\UserRepository;
+use App\Models\Repositories\PhotoRepository;
 use App\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -16,10 +17,12 @@ class UserController extends Controller
     protected $authUser;
 
     protected $userRepository;
+    protected $photoRepository;
 
-    public function __construct(UserRepository $userRepository)
+    public function __construct(UserRepository $userRepository, PhotoRepository $photoRepository)
     {
         $this->userRepository = $userRepository;
+        $this->photoRepository = $photoRepository;
         $this->authUser = Auth::user()->get();
     }
 
