@@ -130,6 +130,8 @@ class AnimalController extends Controller
 
     public function postPhoto($animal_id)
     {
+        $user = $this->authUser;
+        $this->animalRepository->setUser($user);
         $validator = $this->photoRepository->getCreateValidator(Input::all());
 
         if($validator->fails())
