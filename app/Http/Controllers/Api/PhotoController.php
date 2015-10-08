@@ -19,32 +19,32 @@ class PhotoController extends Controller
         $this->photoRepository = $photoRepository;
     }
 
-    public function store() // POST
+    public function store(Request $request)
     {
-        $input = Input::all();
-        $user = $this->authUser;
-        $imageValidator = $this->photoRepository->getCreateValidator($input);
+        $validator = $this->photoRepository->getCreateValidator($request->all());
 
-        if ($imageValidator->fails()) {
+        if($validator->fails())
+        {
             return redirect()->back()
-                ->withErrors($imageValidator)
+                ->withErrors($validator)
                 ->withInput();
         }
 
-        $photo = array(
-            'title' => $user->id,
-            'location' => $this->photoRepository->uploadImage($input['image_path'], $user)
-        );
+        $photo = \DB::transaction(function() use($request)
+        {
+            $input = array_filter($request->only(['title']) + [
+                    'location' => $this->photoRepository->uploadImage($request->file('file'), $this->user)
+                ]);
 
-        $photo = $this->photoRepository->createForUser($photo, $user);
+            $photo = $this->photoRepository->createForUser($input, $this->user);
 
-        if ($photo == null) {
-            \App::abort(500);
-        }
+            return $photo;
+        });
 
         return response()->json(['error' => false, 'result' => $photo], 201)
             ->header('Location', URL::route('api.photo.show', [$photo->id]));
     }
+
 
     public function show($id) // GET
     {

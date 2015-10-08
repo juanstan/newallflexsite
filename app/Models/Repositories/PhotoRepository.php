@@ -218,6 +218,7 @@ class PhotoRepository extends AbstractRepository implements PhotoRepositoryInter
         {
             $fileObject = $image->openFile();
             $fileData = $fileObject->fread($fileObject->getSize());
+            dd($fileData);
             $fileName = preg_replace("/[+=\\/]+/", '', base64_encode(hash('sha512', $fileData . $image->getClientOriginalName() . (string)$user->id . Carbon::now()->toIso8601String(), true))) . '.' . strtolower($image->getClientOriginalExtension());
             $fileLocation = 'uploads/users/' . (string)$user->id;
             if (!@is_dir($fileLocation)) {
