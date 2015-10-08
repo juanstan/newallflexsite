@@ -3,6 +3,7 @@
 use Auth;
 use Input;
 use URL;
+use Request;
 
 use App\Models\Repositories\PhotoRepository;
 use App\Http\Controllers\Controller;
