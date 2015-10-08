@@ -128,6 +128,38 @@ class AnimalController extends Controller
             'result' => $this->animalRepository->get($id)]);
     }
 
+    public function postPhoto($animal_id)
+    {
+        $validator = $this->photoRepository->getCreateValidator(Input::all());
+
+        if($validator->fails())
+        {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user = $this->authUser;
+        $request = Request::all();
+
+        $photo = array(
+            'title' => $user->id,
+            'location' => $this->photoRepository->uploadImage($request['image_path'], $user)
+        );
+
+        $photo = $this->photoRepository->createForUser($photo, $user);
+
+        unset($request['image_path']);
+        $request['photo_id'] = $photo->id;
+
+        if ($this->animalRepository->update($animal_id, $request) == false) {
+            \App::abort(500);
+        }
+
+        return response()->json(['error' => false,
+            'result' => $this->animalRepository->get($animal_id)]);
+    }
+
     public function destroy($id) // DELETE
     {
         $this->animalRepository->setUser($this->authUser);

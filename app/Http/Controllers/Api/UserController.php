@@ -71,6 +71,38 @@ class UserController extends Controller
             'result' => $this->userRepository->get($id)]);
     }
 
+    public function postPhoto()
+    {
+        $validator = $this->photoRepository->getCreateValidator(Input::all());
+
+        if($validator->fails())
+        {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $user = $this->authUser;
+        $request = Request::all();
+
+        $photo = array(
+            'title' => $user->id,
+            'location' => $this->photoRepository->uploadImage($request['image_path'], $user)
+        );
+
+        $photo = $this->photoRepository->createForUser($photo, $user);
+
+        unset($request['image_path']);
+        $request['photo_id'] = $photo->id;
+
+        if ($this->userRepository->update($user->id, $request) == false) {
+        \App::abort(500);
+        }
+
+        return response()->json(['error' => false,
+            'result' => $this->userRepository->get($user->id)]);
+    }
+
     public function destroy() // DELETE
     {
         $user = $this->authUser;

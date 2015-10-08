@@ -22,6 +22,8 @@ Route::controller('vet/search', 'VetSearchController', array(
 Route::group(['middleware' => 'auth.apiUser'], function () {
     Route::post('user/logout', ['as' => 'api.user.logout', 'uses' => 'AuthController@postLogout']); // Done
     Route::resource('user', 'UserController', ['only' => ['show', 'update', 'destroy']]); // Done
+    Route::post('user/photo', ['as' => 'api.user.photo', 'uses' => 'UserController@postPhoto']); // Done
+    Route::post('animal/{animal_id}/photo', ['as' => 'api.animal.{animal_id}.photo', 'uses' => 'AnimalController@postPhoto']); // Done
     Route::resource('animal', 'AnimalController'); // Done
     Route::resource('device', 'DeviceController'); // Done
     Route::resource('photo', 'PhotoController'); // Done
