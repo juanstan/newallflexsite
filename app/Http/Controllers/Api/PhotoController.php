@@ -31,23 +31,25 @@ class PhotoController extends Controller
                 ->withInput();
         }
 
+        $user = $this->authUser;
         $request = Request::all();
 
-        dd($request);
+        $photo = array(
+            'title' => $user->id,
+            'location' => $this->photoRepository->uploadImage($request['image_path'], $user)
+        );
 
-        $photo = \DB::transaction(function() use($request)
-        {
-            $input = array_filter(Request::only(['title']) + [
-                    'location' => $this->photoRepository->uploadImage(Request::file('image_path'), $this->authUser)
-                ]);
+        $photo = $this->photoRepository->createForUser($photo, $user);
 
-            $photo = $this->photoRepository->createForUser($input, $this->authUser);
-            return $photo;
+        dd($photo);
 
-        });
+        if ($photo == null) {
+            \App::abort(500);
+        }
 
         return response()->json(['error' => false, 'result' => $photo], 201)
             ->header('Location', URL::route('api.photo.show', [$photo->id]));
+
     }
 
 
