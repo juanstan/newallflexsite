@@ -4,6 +4,7 @@ use Auth;
 use Input;
 use Lang;
 use URL;
+use Request;
 
 use App\Models\Entities\Animal;
 use App\Models\Entities\User;
