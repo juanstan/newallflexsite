@@ -38,7 +38,7 @@ class PhotoController extends Controller
         $photo = \DB::transaction(function() use($request)
         {
             $input = array_filter(Request::only(['title']) + [
-                    'location' => $this->photoRepository->uploadImage($request->file('image_path'), $this->user)
+                    'location' => $this->photoRepository->uploadImage(Request::file('image_path'), $this->user)
                 ]);
 
             $photo = $this->photoRepository->createForUser($input, $this->user);
