@@ -33,8 +33,6 @@ class PhotoController extends Controller
 
         $request = Request::all();
 
-        dd($request);
-
         $photo = \DB::transaction(function() use($request)
         {
             $input = array_filter(Request::only(['title']) + [
