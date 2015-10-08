@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="a034c456-ea4b-43de-8129-1cfef07c0b7d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Models/Repositories/PhotoRepository.php" afterPath="$PROJECT_DIR$/app/Models/Repositories/PhotoRepository.php" />
     </list>
     <ignored path="allflex-web.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -83,14 +83,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="PhotoController.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="PhotoController.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.44444445">
+            <state vertical-scroll-proportion="-12.16">
               <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
               <folding>
                 <element signature="e#43#52#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="PhotoRepository.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/Models/Repositories/PhotoRepository.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.5131579">
+              <caret line="220" column="0" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -181,9 +191,9 @@
         <option value="$PROJECT_DIR$/app/Http/Controllers/User/DashboardController.php" />
         <option value="$PROJECT_DIR$/app/Models/Repositories/UserRepository.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/User/ExternalController.php" />
-        <option value="$PROJECT_DIR$/app/Models/Repositories/PhotoRepository.php" />
         <option value="$PROJECT_DIR$/app/Http/api_routes.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php" />
+        <option value="$PROJECT_DIR$/app/Models/Repositories/PhotoRepository.php" />
       </list>
     </option>
   </component>
@@ -929,21 +939,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/Models/Repositories/PhotoRepository.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="62" column="20" selection-start-line="62" selection-start-column="20" selection-end-line="62" selection-end-column="20" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/Api/PhotoController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44444445">
+        <state vertical-scroll-proportion="-12.16">
           <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
           <folding>
             <element signature="e#43#52#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/Models/Repositories/PhotoRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5131579">
+          <caret line="220" column="0" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
