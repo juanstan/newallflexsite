@@ -49,31 +49,5 @@ class ExternalController extends Controller
         return Response::json(['error' => false, 'result' => ['token' => $token, 'user' => $user]]);
     }
 
-    /**
-     * @param $provider
-     * @return mixed
-     */
-    public function getRedirect($provider)
-    {
-        Config::set('services.'.$provider.'.redirect', url('api/auth/'.$provider.'/callback'));
-        return Socialite::driver($provider)->redirect();
-    }
-
-    /**
-     * @param $provider
-     * @return mixed
-     */
-    public function getCallback($provider)
-    {
-        Config::set('services.'.$provider.'.redirect', url('api/auth/'.$provider.'/callback'));
-        $userData = Socialite::driver($provider)->user();
-        return Response::json($userData);
-        dd();
-        $user = $this->userRepository->findByProviderOrCreate($userData, $provider);
-        $this->photoRepository->findProfilePictureOrCreate($userData->avatar, $user);
-        $token = Token::generate($user);
-        $user->tokens()->save($token);
-        return Response::json(['error' => false, 'result' => ['token' => $token, 'user' => $user]]);
-    }
 
 }
