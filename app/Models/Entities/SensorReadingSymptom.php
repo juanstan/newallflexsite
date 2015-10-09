@@ -23,11 +23,11 @@ class SensorReadingSymptom extends \Eloquent implements AuthenticatableContract,
     
     public function sensorReading()
     {
-        return $this->belongsTo('\App\Models\Entities\SensorReading', 'reading_id');
+        return $this->belongsTo(SensorReading::class, 'reading_id');
     }
     
     public function symptom()
     {
-        return $this->belongsTo('\App\Models\Entities\Symptom');
+        return $this->belongsTo(Symptom::class);
     }
 }

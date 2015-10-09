@@ -1,6 +1,6 @@
 <?php namespace App\Models\Repositories;
 
-interface AnimalRequestRepositoryInterface extends AbstractRepositoryInterface
+interface PetRequestRepositoryInterface extends AbstractRepositoryInterface
 {
     /**
     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
@@ -18,15 +18,15 @@ interface AnimalRequestRepositoryInterface extends AbstractRepositoryInterface
 
     public function setUser($user);
 
-    public function getByAnimalId($animalId);
+    public function getByPetId($petId);
 
-    public function removeByAnimalId($animalId);
+    public function removeByPetId($petId);
 
     public function getByUserId($userId);
 
     public function getAllByUserId($userId);
 
-    public function getByVetAndAnimalId($vetId, $animalId);
+    public function getByVetAndPetId($vetId, $petId);
 
     public function removeByVetAndUserId($vetId, $userId);
 

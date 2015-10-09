@@ -17,37 +17,37 @@ class SensorReading extends \Eloquent implements AuthenticatableContract, CanRes
     ];
 
     protected $fillable = [
-        'animal_id',
+        'pet_id',
         'microchip_id',
         'device_id',
         'temperature',
         'reading_time',
         'average',
-        'animal_id'
+        'pet_id'
     ];
     
-    public function animal()
+    public function pet()
     {
-        return $this->belongsTo('App\Models\Entities\Animal', 'animal_id');
+        return $this->belongsTo(Pet::class, 'pet_id');
     }
 
     public function vet()
     {
-        return $this->belongsTo('App\Models\Entities\Vet', 'animal_id');
+        return $this->belongsTo(Vet::class, 'pet_id');
     }
 
     public function vets()
     {
-        return $this->belongsToMany('App\Models\Entities\Vet', 'vet_readings', 'reading_id', 'vet_id');
+        return $this->belongsToMany(Vet::class, 'vet_readings', 'reading_id', 'vet_id');
     }
     
     public function device()
     {
-        return $this->belongsTo('App\Models\Entities\Device', 'device_id');
+        return $this->belongsTo(Device::class, 'device_id');
     }
     
     public function sensorReadingSymptoms()
     {
-        return $this->hasMany('App\Models\Entities\SensorReadingSymptom', 'reading_id');
+        return $this->hasMany(SensorReadingSymptom::class, 'reading_id');
     }
 }

@@ -2,16 +2,16 @@
 
 namespace App\Providers;
 
-use App\Models\Repositories\AnimalConditionRepository;
-use App\Models\Repositories\AnimalConditionRepositoryInterface;
-use App\Models\Repositories\AnimalReadingRepository;
-use App\Models\Repositories\AnimalReadingRepositoryInterface;
-use App\Models\Repositories\AnimalReadingSymptomRepository;
-use App\Models\Repositories\AnimalReadingSymptomRepositoryInterface;
-use App\Models\Repositories\AnimalRepository;
-use App\Models\Repositories\AnimalRepositoryInterface;
-use App\Models\Repositories\AnimalRequestRepository;
-use App\Models\Repositories\AnimalRequestRepositoryInterface;
+use App\Models\Repositories\PetConditionRepository;
+use App\Models\Repositories\PetConditionRepositoryInterface;
+use App\Models\Repositories\PetReadingRepository;
+use App\Models\Repositories\PetReadingRepositoryInterface;
+use App\Models\Repositories\PetReadingSymptomRepository;
+use App\Models\Repositories\PetReadingSymptomRepositoryInterface;
+use App\Models\Repositories\PetRepository;
+use App\Models\Repositories\PetRepositoryInterface;
+use App\Models\Repositories\PetRequestRepository;
+use App\Models\Repositories\PetRequestRepositoryInterface;
 use App\Models\Repositories\DeviceRepository;
 use App\Models\Repositories\DeviceRepositoryInterface;
 use App\Models\Repositories\HelpRepository;
@@ -42,11 +42,11 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(AnimalConditionRepositoryInterface::class, AnimalConditionRepository::class);
-        $this->app->bind(AnimalReadingRepositoryInterface::class, AnimalReadingRepository::class);
-        $this->app->bind(AnimalReadingSymptomRepositoryInterface::class, AnimalReadingSymptomRepository::class);
-        $this->app->bind(AnimalRepositoryInterface::class, AnimalRepository::class);
-        $this->app->bind(AnimalRequestRepositoryInterface::class, AnimalRequestRepository::class);
+        $this->app->bind(PetConditionRepositoryInterface::class, PetConditionRepository::class);
+        $this->app->bind(PetReadingRepositoryInterface::class, PetReadingRepository::class);
+        $this->app->bind(PetReadingSymptomRepositoryInterface::class, PetReadingSymptomRepository::class);
+        $this->app->bind(PetRepositoryInterface::class, PetRepository::class);
+        $this->app->bind(PetRequestRepositoryInterface::class, PetRequestRepository::class);
         $this->app->bind(DeviceRepositoryInterface::class, DeviceRepository::class);
         $this->app->bind(HelpRepositoryInterface::class, HelpRepository::class);
         $this->app->bind(PhotoRepositoryInterface::class, PhotoRepository::class);

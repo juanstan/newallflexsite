@@ -5,13 +5,13 @@ use View;
 use Input;
 use Lang;
 
-use App\Models\Entities\Animal;
+use App\Models\Entities\Pet;
 use App\Models\Entities\Vet;
-use App\Models\Repositories\AnimalRepositoryInterface;
-use App\Models\Repositories\AnimalReadingRepositoryInterface;
-use App\Models\Repositories\AnimalReadingSymptomRepositoryInterface;
+use App\Models\Repositories\PetRepositoryInterface;
+use App\Models\Repositories\PetReadingRepositoryInterface;
+use App\Models\Repositories\PetReadingSymptomRepositoryInterface;
 use App\Models\Repositories\VetRepositoryInterface;
-use App\Models\Repositories\AnimalRequestRepository;
+use App\Models\Repositories\PetRequestRepository;
 use App\Models\Repositories\SymptomRepository;
 use App\Models\Repositories\HelpRepository;
 use App\Http\Controllers\Controller;
@@ -19,29 +19,29 @@ use App\Http\Controllers\Controller;
 class DashboardController extends Controller {
 
     protected $vetRepository;
-    protected $animalRepository;
-    protected $animalReadingRepository;
-    protected $animalReadingSymptomRepository;
-    protected $animalRequestRepository;
+    protected $petRepository;
+    protected $petReadingRepository;
+    protected $petReadingSymptomRepository;
+    protected $petRequestRepository;
     protected $symptomRepository;
     protected $helpRepository;
 
     public function __construct(
         VetRepositoryInterface $vetRepository, 
-        AnimalRepositoryInterface $animalRepository, 
-        AnimalReadingRepositoryInterface $animalReadingRepository, 
-        AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository,
-        AnimalRequestRepository $animalRequestRepository,
+        PetRepositoryInterface $petRepository,
+        PetReadingRepositoryInterface $petReadingRepository,
+        PetReadingSymptomRepositoryInterface $petReadingSymptomRepository,
+        PetRequestRepository $petRequestRepository,
         SymptomRepository $symptomRepository,
         HelpRepository $helpRepository
     )
     {
         $this->authVet = Auth::vet()->get();
         $this->vetRepository = $vetRepository;
-        $this->animalReadingRepository = $animalReadingRepository;
-        $this->animalRepository = $animalRepository;
-        $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
-        $this->animalRequestRepository = $animalRequestRepository;
+        $this->petReadingRepository = $petReadingRepository;
+        $this->petRepository = $petRepository;
+        $this->petReadingSymptomRepository = $petReadingSymptomRepository;
+        $this->petRequestRepository = $petRequestRepository;
         $this->symptomRepository = $symptomRepository;
         $this->helpRepository = $helpRepository;
         $this->middleware('vetAuth',
@@ -64,12 +64,12 @@ class DashboardController extends Controller {
     }
 
     public function getIndex() {
-            $this->animalRepository->setUser($this->authVet);
+            $this->petRepository->setUser($this->authVet);
             $id = $this->authVet->id;
             $symptoms = $this->symptomRepository->all();
-            $requests = $this->animalRequestRepository->getAllByVetId($id);
+            $requests = $this->petRequestRepository->getAllByVetId($id);
             $vet = $this->authVet;
-            $pets = $this->animalRepository->all();
+            $pets = $this->petRepository->all();
             if ($this->authVet->confirmed != null) {
                 return View::make('vet.dashboard')
                     ->with(array(
@@ -121,12 +121,12 @@ class DashboardController extends Controller {
             ->with('message', Lang::get('general.Verification email sent'));
     }
 
-    public function getPet($animalId) {
-        $this->animalRepository->setUser($this->authVet);
+    public function getPet($petId) {
+        $this->petRepository->setUser($this->authVet);
         $vetid = $this->authVet->id;
         $symptoms = $this->symptomRepository->all();
-        $pet = $this->animalRepository->get($animalId);
-        if($this->animalRequestRepository->getApprovedByVetAndAnimalId($vetid, $animalId))
+        $pet = $this->petRepository->get($petId);
+        if($this->petRequestRepository->getApprovedByVetAndPetId($vetid, $petId))
         {
             return View::make('vet.information')
                 ->with(array(
@@ -149,8 +149,8 @@ class DashboardController extends Controller {
 
     public function postResetAverageTemperature($id)
     {
-        $animal = $this->sensorReadingRepository->getByAnimalId($id);
-        if ($this->sensorReadingRepository->update($animal->id, array('average' => 0)))
+        $pet = $this->sensorReadingRepository->getByPetId($id);
+        if ($this->sensorReadingRepository->update($pet->id, array('average' => 0)))
         {
             return redirect()->route('user.dashboard')
                 ->with('success', Lang::get('general.Average temperature reset'));
@@ -260,14 +260,14 @@ class DashboardController extends Controller {
     {
         $input = Input::all();
         $vet = $this->authVet->id;
-        $readingValidator = $this->animalReadingRepository->getReadingUploadValidator($input);
+        $readingValidator = $this->petReadingRepository->getReadingUploadValidator($input);
         if ($readingValidator->fails()) {
             return redirect()->back()
                 ->withErrors($readingValidator)
                 ->withInput();
         }
 
-        if($this->animalReadingRepository->readingUpload($input, $vet))
+        if($this->petReadingRepository->readingUpload($input, $vet))
         {
             return redirect()->route('vet.dashboard');
         }

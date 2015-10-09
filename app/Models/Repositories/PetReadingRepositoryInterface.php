@@ -1,6 +1,6 @@
 <?php namespace App\Models\Repositories;
 
-interface AnimalReadingRepositoryInterface extends AbstractRepositoryInterface
+interface PetReadingRepositoryInterface extends AbstractRepositoryInterface
 {
 
     public function getReadingUploadValidator($input);

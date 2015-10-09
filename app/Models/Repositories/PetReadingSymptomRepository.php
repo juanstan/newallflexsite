@@ -4,7 +4,7 @@ use App\Models\Entities\SensorReading;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class AnimalReadingSymptomRepository extends AbstractRepository implements AnimalReadingSymptomRepositoryInterface
+class PetReadingSymptomRepository extends AbstractRepository implements PetReadingSymptomRepositoryInterface
 {
     protected $classname = 'App\Models\Entities\SensorReadingSymptom';
     

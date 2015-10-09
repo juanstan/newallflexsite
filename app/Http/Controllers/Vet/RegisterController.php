@@ -3,12 +3,12 @@
 use Auth;
 use Input;
 
-use App\Models\Entities\Animal;
+use App\Models\Entities\Pet;
 use App\Models\Entities\User;
 use App\Models\Entities\Vet;
-use App\Models\Repositories\AnimalRepositoryInterface;
-use App\Models\Repositories\AnimalReadingRepositoryInterface;
-use App\Models\Repositories\AnimalReadingSymptomRepositoryInterface;
+use App\Models\Repositories\PetRepositoryInterface;
+use App\Models\Repositories\PetReadingRepositoryInterface;
+use App\Models\Repositories\PetReadingSymptomRepositoryInterface;
 use App\Models\Repositories\VetRepositoryInterface;
 use App\Http\Controllers\Controller;
 
@@ -16,17 +16,17 @@ class RegisterController extends Controller {
     
     protected $vetRepository;
     protected $authVet;
-    protected $animalRepository;
-    protected $animalReadingRepository;
-    protected $animalReadingSymptomRepository;
+    protected $petRepository;
+    protected $petReadingRepository;
+    protected $petReadingSymptomRepository;
 
-	public function __construct(VetRepositoryInterface $vetRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
+	public function __construct(VetRepositoryInterface $vetRepository, PetRepositoryInterface $petRepository, PetReadingRepositoryInterface $petReadingRepository, PetReadingSymptomRepositoryInterface $petReadingSymptomRepository)
 	{
         $this->authVet = Auth::vet()->get();
         $this->vetRepository = $vetRepository;
-        $this->animalReadingRepository = $animalReadingRepository;
-        $this->animalRepository = $animalRepository;
-        $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
+        $this->petReadingRepository = $petReadingRepository;
+        $this->petRepository = $petRepository;
+        $this->petReadingSymptomRepository = $petReadingSymptomRepository;
         $this->middleware('vetAuth', array('only'=>array('getAbout', 'postAbout', 'getAddress', 'postAddress')));
 	}
     

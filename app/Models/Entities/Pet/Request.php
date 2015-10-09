@@ -1,4 +1,4 @@
-<?php namespace App\Models\Entities\Animal;
+<?php namespace App\Models\Entities\Pet;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -17,11 +17,11 @@ class Request extends \Eloquent {
     protected $fillable = [
         'vet_id',
         'user_id',
-        'animal_id',
+        'pet_id',
         'approved',
     ];
 
-	protected $table = 'animal_requests';
+	protected $table = 'pet_requests';
     
     public function user()
     {
@@ -33,14 +33,14 @@ class Request extends \Eloquent {
         return $this->belongsTo(Vet::class, 'vet_id');
     }
     
-    public function animal()
+    public function pet()
     {
-        return $this->belongsTo(Animal::class, 'animal_id');
+        return $this->belongsTo(Pet::class, 'pet_id');
     }
     
      public function request()
     {
-        return $this->belongsToMany(Animal::class, Vet::class, 'animal_id', 'vet_id');
+        return $this->belongsToMany(Pet::class, Vet::class, 'pet_id', 'vet_id');
     }
     
     

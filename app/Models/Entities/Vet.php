@@ -47,32 +47,32 @@ class Vet extends \Eloquent implements AuthenticatableContract, CanResetPassword
     
     public function tokens()
     {
-        return $this->hasMany('App\Models\Entities\Vet\Token');
+        return $this->hasMany(Token::class);
     }
     
     public function requests()
     {
-        return $this->hasMany('App\Models\Entities\Animal\Request', 'vet_id');
+        return $this->hasMany(Request::class, 'vet_id');
     }
     
-    public function requestedAnimals()
+    public function requestedPet()
     {
-        return $this->belongsToMany('App\Models\Entities\Animal', 'animal_requests')->withTimestamps();
+        return $this->belongsToMany(Pet::class, 'pet_requests')->withTimestamps();
     }
 
-    public function animals()
+    public function pets()
     {
-        return $this->requestedAnimals()->wherePivot('approved', '=', '1');
+        return $this->requestedPets()->wherePivot('approved', '=', '1');
     }
 
     public function sensorReadings()
     {
-        return $this->belongsToMany('App\Models\Entities\SensorReading', 'vet_readings', 'vet_id', 'reading_id');
+        return $this->belongsToMany(SensorReading::class, 'vet_readings', 'vet_id', 'reading_id');
     }
     
     public function device()
     {
-        return $this->belongsToMany('App\Models\Entities\Device', 'device_vets')->withTimestamps();
+        return $this->belongsToMany(Device::class, 'device_vets')->withTimestamps();
     }
     
 }

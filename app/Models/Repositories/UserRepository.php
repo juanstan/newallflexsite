@@ -1,8 +1,8 @@
 <?php namespace App\Models\Repositories;
 
 use App\Models\Entities\User;
-use App\Models\Entities\Animal;
-use App\Models\Entities\Animal\Request;
+use App\Models\Entities\Pet;
+use App\Models\Entities\Pet\Request;
 use App\Models\Entities\SensorReading;
 use App\Models\Entities\SensorReadingSymptom;
 use Validator;
@@ -234,17 +234,17 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 	public function delete($id)
 	{
 		Request::where('user_id', '=', $id)->delete();
-		$animals = Animal::where('user_id', '=', $id)->get();
-		foreach ($animals as $animal) {
-			$animal_id = $animal->id;
-			$sensor_readings = SensorReading::where('animal_id', '=', $animal_id)->get();
+		$pets = Pet::where('user_id', '=', $id)->get();
+		foreach ($pets as $pet) {
+			$pet_id = $pet->id;
+			$sensor_readings = SensorReading::where('pet_id', '=', $pet_id)->get();
 			foreach ($sensor_readings as $sensor_reading) {
 				$sensor_reading_id = $sensor_reading->id;
 				SensorReadingSymptom::where('reading_id', '=', $sensor_reading_id)->delete();
 			}
-			SensorReading::where('animal_id', '=', $animal_id)->delete();
+			SensorReading::where('pet_id', '=', $pet_id)->delete();
 		}
-		Animal::where('user_id', '=', $id)->delete();
+		Pet::where('user_id', '=', $id)->delete();
 		$object = $this->get($id);
 		$object->delete();
 	}

@@ -15,7 +15,7 @@ Route::controller('register/vet', 'VetRegisterController',
         'getAdd'=>'user.register.vet.add',
         'getAddVet'=>'user.register.vet.addVet',
     ));
-Route::controller('register/reading', 'AnimalReadingRegisterController',
+Route::controller('register/reading', 'PetReadingRegisterController',
     array(
         'getIndex'=>'user.register.reading',
         'postReadingUpload'=>'user.register.reading.readingUpload',

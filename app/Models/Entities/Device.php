@@ -1,5 +1,6 @@
 <?php namespace App\Models\Entities;
 
+use App\User;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
@@ -28,17 +29,17 @@ class Device extends \Eloquent implements AuthenticatableContract, CanResetPassw
     
     public function user()
     {
-        return $this->belongsToMany('App\Models\Entities\User', 'device_users')->withTimestamps();
+        return $this->belongsToMany(User::class, 'device_users')->withTimestamps();
     }
     
     public function vet()
     {
-        return $this->belongsToMany('App\Models\Entities\Vet', 'device_vets')->withTimestamps();
+        return $this->belongsToMany(Vet::class, 'device_vets')->withTimestamps();
     }
     
     public function sensorReading()
     {
-        return $this->hasMany('App\Models\Entities\SensorReading', 'device_id');
+        return $this->hasMany(SensorReading::class, 'device_id');
     }
 
 }

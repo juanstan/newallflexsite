@@ -64,9 +64,9 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function animals()
+    public function pets()
     {
-        return $this->hasMany(Animal::class);
+        return $this->hasMany(Pet::class);
     }
 
     /**
@@ -82,7 +82,7 @@ class User extends \Eloquent implements AuthenticatableContract, CanResetPasswor
      */
     public function device()
     {
-        return $this->belongsToMany('App\Models\Entities\Device', 'device_users')->withTimestamps();
+        return $this->belongsToMany(Device::class, 'device_users')->withTimestamps();
     }
 
 }

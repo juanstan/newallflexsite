@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Animal extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract {
+class Pet extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract {
 
 	use Authenticatable, CanResetPassword, SoftDeletes;
 
@@ -41,7 +41,7 @@ class Animal extends \Eloquent implements AuthenticatableContract, CanResetPassw
      */
     public function vet()
     {
-        return $this->belongsToMany(Vet::class, 'animal_requests');
+        return $this->belongsToMany(Vet::class, 'pet_requests');
     }
 
     /**
@@ -49,7 +49,7 @@ class Animal extends \Eloquent implements AuthenticatableContract, CanResetPassw
      */
     public function sensorReadings()
     {
-        return $this->hasMany(SensorReading::class, 'animal_id');
+        return $this->hasMany(SensorReading::class, 'pet_id');
     }
 
     /**
@@ -63,9 +63,9 @@ class Animal extends \Eloquent implements AuthenticatableContract, CanResetPassw
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function animalConditions()
+    public function petConditions()
     {
-        return $this->hasMany(AnimalCondition::class, 'animal_id');
+        return $this->hasMany(PetCondition::class, 'pet_id');
     }
 
     /**
@@ -81,6 +81,6 @@ class Animal extends \Eloquent implements AuthenticatableContract, CanResetPassw
      */
     public function photos()
     {
-        return $this->belongsToMany(Photo::class, 'animal_photos')->withTimestamps();
+        return $this->belongsToMany(Photo::class, 'pet_photos')->withTimestamps();
     }
 }

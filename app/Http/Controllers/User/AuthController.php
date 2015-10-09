@@ -6,11 +6,11 @@ use Input;
 use Session;
 use Lang;
 
-use App\Models\Entities\Animal;
+use App\Models\Entities\Pet;
 use App\Models\Entities\User;
-use App\Models\Repositories\AnimalRepositoryInterface;
-use App\Models\Repositories\AnimalReadingRepositoryInterface;
-use App\Models\Repositories\AnimalReadingSymptomRepositoryInterface;
+use App\Models\Repositories\PetRepositoryInterface;
+use App\Models\Repositories\PetReadingRepositoryInterface;
+use App\Models\Repositories\PetReadingSymptomRepositoryInterface;
 use App\Models\Repositories\UserRepositoryInterface;
 use App\Http\Controllers\Controller;
 
@@ -18,17 +18,17 @@ class AuthController extends Controller
 {
 
     protected $userRepository;
-    protected $animalRepository;
-    protected $animalReadingRepository;
-    protected $animalReadingSymptomRepository;
+    protected $petRepository;
+    protected $petReadingRepository;
+    protected $petReadingSymptomRepository;
 
-    public function __construct(UserRepositoryInterface $userRepository, AnimalRepositoryInterface $animalRepository, AnimalReadingRepositoryInterface $animalReadingRepository, AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository)
+    public function __construct(UserRepositoryInterface $userRepository, PetRepositoryInterface $petRepository, PetReadingRepositoryInterface $petReadingRepository, PetReadingSymptomRepositoryInterface $petReadingSymptomRepository)
     {
         $this->authUser = Auth::user()->get();
         $this->userRepository = $userRepository;
-        $this->animalReadingRepository = $animalReadingRepository;
-        $this->animalRepository = $animalRepository;
-        $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
+        $this->petReadingRepository = $petReadingRepository;
+        $this->petRepository = $petRepository;
+        $this->petReadingSymptomRepository = $petReadingSymptomRepository;
         $this->middleware('auth.user',
             array('only' =>
                 array(
@@ -74,7 +74,7 @@ class AuthController extends Controller
 
     public function getResendConfirmation()
     {
-        $this->animalRepository->setUser($this->authUser);
+        $this->petRepository->setUser($this->authUser);
         \Mail::send('emails.user-verify', array('confirmation_code' => $this->authUser->confirmation_code), function ($message) {
             $message->to($this->authUser->email, 'New user')
                 ->subject('Verify your email address');

@@ -120,14 +120,14 @@
                         <div class="slider-content recent-slider top-buffer" >
                             @foreach($requests as $request)
                                 @if($request->approved == 1)
-                                    @foreach ($request->animal->sensorReadings as $sensorReading)
+                                    @foreach ($request->pet->sensorReadings as $sensorReading)
                                     <div class="row small-top-buffer" >
                                         <div class="col-md-12 " >
                                             <div class="col-md-2 col-xs-4" >
-                                                {!! HTML::image(isset($request->animal->image_path) ? $request->animal->image_path : '/images/pet-image.png', $request->animal->name, array('class' => 'img-responsive img-circle', 'width' => '80%')) !!}
+                                                {!! HTML::image(isset($request->pet->image_path) ? $request->pet->image_path : '/images/pet-image.png', $request->pet->name, array('class' => 'img-responsive img-circle', 'width' => '80%')) !!}
                                             </div>
                                             <div class="col-md-5 left-none" >
-                                                <h3 class="small-top-buffer bottom-none">{!! $request->animal->name !!}</h3><p class="blue" >@if(date("d/m/y",strtotime($sensorReading->created_at)) == date("d/m/y"))
+                                                <h3 class="small-top-buffer bottom-none">{!! $request->pet->name !!}</h3><p class="blue" >@if(date("d/m/y",strtotime($sensorReading->created_at)) == date("d/m/y"))
                                     {!! Lang::get('general.today at') !!} {!! date("h.ia",strtotime($sensorReading->created_at)) !!}
                                 @else
                                     {!! date("d/m/y",strtotime($sensorReading->created_at)) !!} {!! Lang::get('general.at') !!} {!! date("h.ia",strtotime($sensorReading->created_at)) !!}
@@ -175,7 +175,7 @@
                                 @foreach($requests as $request)
                                     @if($request->approved == 1)
                                         <?php
-                                        $petsByName[strtolower($request->animal->name[0])][]=$request->animal;
+                                        $petsByName[strtolower($request->pet->name[0])][]=$request->pet;
                                         ?>
                                     @endif
                                 @endforeach

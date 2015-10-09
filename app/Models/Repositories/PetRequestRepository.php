@@ -2,9 +2,9 @@
 
 use Validator;
 
-class AnimalRequestRepository extends AbstractRepository implements AnimalRequestRepositoryInterface
+class PetRequestRepository extends AbstractRepository implements PetRequestRepositoryInterface
 {
-    protected $classname = 'App\Models\Entities\Animal\Request';
+    protected $classname = 'App\Models\Entities\Pet\Request';
 
     protected $repository;
 
@@ -20,14 +20,14 @@ class AnimalRequestRepository extends AbstractRepository implements AnimalReques
         return $this;
     }
 
-    public function getByAnimalId($animalId)
+    public function getByPetId($petId)
     {
-        return $this->query()->where('animal_id', '=', $animalId)->first();
+        return $this->query()->where('pet_id', '=', $petId)->first();
     }
 
-    public function removeByAnimalId($animalId)
+    public function removeByPetId($petId)
     {
-        $this->query()->where('animal_id', '=', $animalId)->delete();
+        $this->query()->where('pet_id', '=', $petId)->delete();
     }
 
     public function getByUserId($userId)
@@ -45,14 +45,14 @@ class AnimalRequestRepository extends AbstractRepository implements AnimalReques
         return $this->query()->where('vet_id', '=', $vetId)->get();
     }
 
-    public function getByVetAndAnimalId($vetId, $animalId)
+    public function getByVetAndPetId($vetId, $petId)
     {
-        return $this->query()->where('vet_id', '=', $vetId)->where('animal_id', $animalId)->first();
+        return $this->query()->where('vet_id', '=', $vetId)->where('pet_id', $petId)->first();
     }
 
-    public function getApprovedByVetAndAnimalId($vetId, $animalId)
+    public function getApprovedByVetAndPetId($vetId, $petId)
     {
-        return $this->query()->where('vet_id', '=', $vetId)->where('animal_id', $animalId)->where('approved', '=', 1)->get();
+        return $this->query()->where('vet_id', '=', $vetId)->where('pet_id', $petId)->where('approved', '=', 1)->get();
     }
 
     public function removeByVetAndUserId($vetId, $userId)

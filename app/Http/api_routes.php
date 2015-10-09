@@ -20,24 +20,24 @@ Route::controller('vet/search', 'VetSearchController', array(
 Route::group(['middleware' => 'auth.apiUser'], function () {
     Route::post('user/logout', ['as' => 'api.user.logout', 'uses' => 'AuthController@postLogout']); // Done
     Route::resource('user', 'UserController', ['only' => ['show', 'update', 'destroy']]); // Done
-    Route::resource('animal', 'AnimalController'); // Done
+    Route::resource('pet', 'PetController'); // Done
     Route::resource('device', 'DeviceController'); // Done
     Route::resource('photo', 'PhotoController'); // Done
-    Route::resource('request', 'AnimalRequestController');
+    Route::resource('request', 'PetRequestController');
     Route::post('user/photo', ['as' => 'api.user.photo', 'uses' => 'UserController@postPhoto']); // Done
-    Route::resource('animal/{animal_id}/condition', 'AnimalConditionController');  // Done
-    Route::resource('animal/{animal_id}/reading', 'AnimalReadingController'); //  Done
-    Route::post('animal/{animal_id}/photo', ['as' => 'api.animal.{animal_id}.photo', 'uses' => 'AnimalController@postPhoto']); // Done
-    Route::post('animal/{animal_id}/reading/assign', ['as' => 'api.animal.{animal_id}.reading.assign', 'uses' => 'AnimalReadingController@postAssign']); // Done
-    Route::resource('animal/{animal_id}/reading/{reading_id}/symptom', 'AnimalReadingSymptomController'); // Done
+    Route::resource('pet/{pet_id}/condition', 'PetConditionController');  // Done
+    Route::resource('pet/{pet_id}/reading', 'PetReadingController'); //  Done
+    Route::post('pet/{pet_id}/photo', ['as' => 'api.pet.{pet_id}.photo', 'uses' => 'PetController@postPhoto']); // Done
+    Route::post('pet/{pet_id}/reading/assign', ['as' => 'api.pet.{pet_id}.reading.assign', 'uses' => 'PetReadingController@postAssign']); // Done
+    Route::resource('pet/{pet_id}/reading/{reading_id}/symptom', 'PetReadingSymptomController'); // Done
 
 });
 
 Route::group(['middleware' => 'auth.apiVet'], function () {
     Route::post('vet/logout', ['as' => 'api.vet.logout', 'uses' => 'VetAuthController@postLogout']); //
-    Route::resource('vet/animal', 'AnimalController', ['only' => ['show', 'index']]); // View all vet animals
-    Route::resource('vet/animal.reading', 'AnimalReadingController', ['only' => ['show', 'update', 'index']]);
-    Route::resource('vet/animal.reading.symptom', 'AnimalReadingSymptomController'); //  done
+    Route::resource('vet/pet', 'PetController', ['only' => ['show', 'index']]); // View all vet pets
+    Route::resource('vet/pet.reading', 'PetReadingController', ['only' => ['show', 'update', 'index']]);
+    Route::resource('vet/pet.reading.symptom', 'PetReadingSymptomController'); //  done
     Route::resource('vet', 'VetController', ['only' => ['update', 'destroy']]); //
 });
 

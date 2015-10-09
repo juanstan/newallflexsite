@@ -6,7 +6,7 @@ use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class AnimalCondition extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract {
+class PetCondition extends \Eloquent implements AuthenticatableContract, CanResetPasswordContract {
 
 	use Authenticatable, CanResetPassword, SoftDeletes;
 
@@ -17,7 +17,7 @@ class AnimalCondition extends \Eloquent implements AuthenticatableContract, CanR
     ];
 
     protected $fillable = [
-        'animal_id',
+        'pet_id',
         'condition_id'     
     ];
 
@@ -26,7 +26,7 @@ class AnimalCondition extends \Eloquent implements AuthenticatableContract, CanR
 	 *
 	 * @var string
 	 */
-	protected $table = 'animal_conditions';
+	protected $table = 'pet_conditions';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -34,14 +34,14 @@ class AnimalCondition extends \Eloquent implements AuthenticatableContract, CanR
 	 * @var array
 	 */
     
-    public function animal()
+    public function pet()
     {
-        return $this->belongsTo('App\Models\Entities\Animal', 'animal_id');
+        return $this->belongsTo(Pet::class, 'pet_id');
     }
 
     public function condition()
     {
-        return $this->belongsTo('App\Models\Entities\Condition');
+        return $this->belongsTo(Condition::class);
     }
 
 }

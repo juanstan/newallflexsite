@@ -1,6 +1,6 @@
 <?php  namespace App\Http\Controllers\Vet;
 
-class AnimalReadingRegisterController extends \App\Http\Controllers\Controller {
+class PetReadingRegisterController extends \App\Http\Controllers\Controller {
     
     public function getIndex()
     { 

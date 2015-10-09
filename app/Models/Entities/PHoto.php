@@ -29,9 +29,9 @@ class Photo extends \Eloquent implements AuthenticatableContract, CanResetPasswo
         return $this->belongsTo(User::class, 'uploading_user_id');
     }
     
-    public function Animals()
+    public function Pet()
     {
-        return $this->belongsToMany(Animal::class, 'animal_photos')->withTimestamps();
+        return $this->belongsToMany(Pet::class, 'pet_photos')->withTimestamps();
     }
 
 }

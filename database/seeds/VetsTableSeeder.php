@@ -868,7 +868,7 @@ class VetsTableSeeder extends Seeder {
 			34 => 
 			array (
 				'id' => 37,
-				'company_name' => 'Animal Ark Vets',
+				'company_name' => 'Pet Ark Vets',
 				'contact_name' => 'Vet McVetison',
 				'email' => 'mcvetison@iownallthevets.com',
 				'fax' => '012345678910',
@@ -893,7 +893,7 @@ class VetsTableSeeder extends Seeder {
 			35 => 
 			array (
 				'id' => 38,
-				'company_name' => 'Animal Care Extraordinaire',
+				'company_name' => 'Pet Care Extraordinaire',
 				'contact_name' => 'Vet McVetison',
 				'email' => 'mcvetison@iownallthevets.com',
 				'fax' => '012345678910',
@@ -918,7 +918,7 @@ class VetsTableSeeder extends Seeder {
 			36 => 
 			array (
 				'id' => 39,
-				'company_name' => 'Animal Choice Ltd',
+				'company_name' => 'Pet Choice Ltd',
 				'contact_name' => 'Vet McVetison',
 				'email' => 'mcvetison@iownallthevets.com',
 				'fax' => '012345678910',
@@ -943,7 +943,7 @@ class VetsTableSeeder extends Seeder {
 			37 => 
 			array (
 				'id' => 40,
-				'company_name' => 'Animal Dispensaries',
+				'company_name' => 'Pet Dispensaries',
 				'contact_name' => 'Vet McVetison',
 				'email' => 'mcvetison@iownallthevets.com',
 				'fax' => '012345678910',
@@ -968,7 +968,7 @@ class VetsTableSeeder extends Seeder {
 			38 => 
 			array (
 				'id' => 41,
-				'company_name' => 'Animal Health Centre Ltd',
+				'company_name' => 'Pet Health Centre Ltd',
 				'contact_name' => 'Vet McVetison',
 				'email' => 'mcvetison@iownallthevets.com',
 				'fax' => '012345678910',
@@ -993,7 +993,7 @@ class VetsTableSeeder extends Seeder {
 			39 => 
 			array (
 				'id' => 42,
-				'company_name' => 'Animal House Vets',
+				'company_name' => 'Pet House Vets',
 				'contact_name' => 'Vet McVetison',
 				'email' => 'mcvetison@iownallthevets.com',
 				'fax' => '012345678910',
@@ -1018,7 +1018,7 @@ class VetsTableSeeder extends Seeder {
 			40 => 
 			array (
 				'id' => 43,
-				'company_name' => 'Animal House Vets',
+				'company_name' => 'Pet House Vets',
 				'contact_name' => 'Vet McVetison',
 				'email' => 'mcvetison@iownallthevets.com',
 				'fax' => '012345678910',
@@ -1043,7 +1043,7 @@ class VetsTableSeeder extends Seeder {
 			41 => 
 			array (
 				'id' => 44,
-				'company_name' => 'Animal Veterinary Services',
+				'company_name' => 'Pet Veterinary Services',
 				'contact_name' => 'Vet McVetison',
 				'email' => 'mcvetison@iownallthevets.com',
 				'fax' => '012345678910',
@@ -1593,7 +1593,7 @@ class VetsTableSeeder extends Seeder {
 			63 => 
 			array (
 				'id' => 70,
-				'company_name' => 'Arvonia Animal Hosptial',
+				'company_name' => 'Arvonia Pet Hosptial',
 				'contact_name' => 'Vet McVetison',
 				'email' => 'mcvetison@iownallthevets.com',
 				'fax' => '012345678910',
@@ -2618,7 +2618,7 @@ class VetsTableSeeder extends Seeder {
 			104 => 
 			array (
 				'id' => 118,
-				'company_name' => 'Beeston Animal Health',
+				'company_name' => 'Beeston Pet Health',
 				'contact_name' => 'Vet McVetison',
 				'email' => 'mcvetison@iownallthevets.com',
 				'fax' => '012345678910',
@@ -4793,7 +4793,7 @@ class VetsTableSeeder extends Seeder {
 			191 => 
 			array (
 				'id' => 216,
-				'company_name' => 'Celia Hammond Animal Trust',
+				'company_name' => 'Celia Hammond Pet Trust',
 				'contact_name' => 'Vet McVetison',
 				'email' => 'mcvetison@iownallthevets.com',
 				'fax' => '012345678910',

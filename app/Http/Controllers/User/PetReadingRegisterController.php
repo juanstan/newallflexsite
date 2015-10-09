@@ -6,30 +6,30 @@ use File;
 use Lang;
 use Auth;
 
-use App\Models\Entities\Animal;
+use App\Models\Entities\Pet;
 use App\Models\Entities\SensorReading;
-use App\Models\Repositories\AnimalReadingRepositoryInterface;
-use App\Models\Repositories\AnimalRepositoryInterface;
+use App\Models\Repositories\PetReadingRepositoryInterface;
+use App\Models\Repositories\PetRepositoryInterface;
 use App\Http\Controllers\Controller;
 
-class AnimalReadingRegisterController extends Controller
+class PetReadingRegisterController extends Controller
 {
 
     protected $authUser;
-    protected $animalReadingRepository;
-    protected $animalRepository;
+    protected $petReadingRepository;
+    protected $petRepository;
 
-    public function __construct(AnimalReadingRepositoryInterface $animalReadingRepository, AnimalRepositoryInterface $animalRepository)
+    public function __construct(PetReadingRepositoryInterface $petReadingRepository, PetRepositoryInterface $petRepository)
     {
         $this->authUser = Auth::user()->get();
-        $this->animalReadingRepository = $animalReadingRepository;
-        $this->animalRepository = $animalRepository;
+        $this->petReadingRepository = $petReadingRepository;
+        $this->petRepository = $petRepository;
         $this->middleware('auth.user', array('only' => array('getIndex', 'postAssign', 'postFinish', 'getAssign', 'postAssign')));
     }
 
     public function getIndex()
     {
-        return View::make('usersignup.animalReadingUpload');
+        return View::make('usersignup.petReadingUpload');
     }
 
     public function postReadingUpload()
@@ -37,14 +37,14 @@ class AnimalReadingRegisterController extends Controller
         $input = Input::all();
         $user = $this->authUser;
 
-        $readingValidator = $this->animalReadingRepository->getReadingUploadValidator($input);
+        $readingValidator = $this->petReadingRepository->getReadingUploadValidator($input);
         if ($readingValidator->fails()) {
             return redirect()->back()
                 ->withErrors($readingValidator)
                 ->withInput();
         }
 
-        if($this->animalReadingRepository->readingUpload($input, $user))
+        if($this->petReadingRepository->readingUpload($input, $user))
         {
             return redirect()->route('user.register.reading.assign');
         }
@@ -59,8 +59,8 @@ class AnimalReadingRegisterController extends Controller
         if (\Agent::isMobile()) {
             return redirect()->route('user.dashboard');
         }
-        $this->animalRepository->setUser($this->authUser);
-        $pets = $this->animalRepository->all();
+        $this->petRepository->setUser($this->authUser);
+        $pets = $this->petRepository->all();
         return View::make('usersignup.petAssign')
             ->with(
                 array('pets' => $pets
@@ -70,10 +70,10 @@ class AnimalReadingRegisterController extends Controller
     public function postAssign($id)
     {
         $input = Input::get('pet_id');
-        $query = Animal::where('id', '=', $id)->first();
-        if (Animal::where('id', $input)->update(array('microchip_number' => $query->microchip_number))) {
-            Animal::where('id', '=', $id)->delete();
-            SensorReading::where('animal_id', '=', $id)->update(array('animal_id' => $input));
+        $query = Pet::where('id', '=', $id)->first();
+        if (Pet::where('id', $input)->update(array('microchip_number' => $query->microchip_number))) {
+            Pet::where('id', '=', $id)->delete();
+            SensorReading::where('pet_id', '=', $id)->update(array('pet_id' => $input));
         }
         return redirect()->route('user.register.reading.assign')
             ->with('success', Lang::get('general.Pet microchip number assigned'));

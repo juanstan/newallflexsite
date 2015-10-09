@@ -1,6 +1,6 @@
 <?php namespace App\Models\Repositories;
 
-use App\Models\Entities\AnimalCondition;
+use App\Models\Entities\PetCondition;
 use App\Models\Entities\Condition;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -11,7 +11,7 @@ class SensorReadingSymptomRepository extends AbstractRepository implements Senso
     
     protected $repository;
     
-    protected $animal;
+    protected $pet;
     
     public function __construct(UserRepositoryInterface $repository)
     {

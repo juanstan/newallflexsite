@@ -6,37 +6,37 @@ use URL;
 use Request;
 
 use App\Models\Entities\User;
-use App\Models\Entities\Animal;
-use App\Models\Repositories\AnimalRepository;
-use App\Models\Repositories\AnimalRequestRepository;
+use App\Models\Entities\Pet;
+use App\Models\Repositories\PetRepository;
+use App\Models\Repositories\PetRequestRepository;
 use App\Models\Repositories\BreedRepository;
 use App\Models\Repositories\PhotoRepository;
 use App\Http\Controllers\Controller;
 
-class AnimalController extends Controller
+class PetController extends Controller
 {
 
     protected $authUser;
-    protected $animalRepository;
-    protected $animalRequestRepository;
+    protected $petRepository;
+    protected $petRequestRepository;
     protected $breedRepository;
     protected $photoRepository;
 
-    public function __construct(AnimalRepository $animalRepository, AnimalRequestRepository $animalRequestRepository, BreedRepository $breedRepository, PhotoRepository $photoRepository)
+    public function __construct(PetRepository $petRepository, PetRequestRepository $petRequestRepository, BreedRepository $breedRepository, PhotoRepository $photoRepository)
     {
         $this->authUser = Auth::user()->get();
-        $this->animalRepository = $animalRepository;
-        $this->animalRequestRepository = $animalRequestRepository;
+        $this->petRepository = $petRepository;
+        $this->petRequestRepository = $petRequestRepository;
         $this->breedRepository = $breedRepository;
         $this->photoRepository = $photoRepository;
     }
 
     public function index()
     {
-        $this->animalRepository->setUser($this->authUser);
+        $this->petRepository->setUser($this->authUser);
 
         return response()->json(['error' => false,
-            'result' => $this->animalRepository->all()]);
+            'result' => $this->petRepository->all()]);
     }
 
     public function store() // POST
@@ -44,7 +44,7 @@ class AnimalController extends Controller
         $input = Input::all();
         $user = $this->authUser;
 
-        $this->animalRepository->setUser($user);
+        $this->petRepository->setUser($user);
 
         if($user->weight_units == 1) {
             $input['weight'] = $input['weight'] * 0.453592;
@@ -64,7 +64,7 @@ class AnimalController extends Controller
         }
 
 
-        $validator = $this->animalRepository->getCreateValidator($input);
+        $validator = $this->petRepository->getCreateValidator($input);
 
         if($validator->fails())
         {
@@ -73,29 +73,29 @@ class AnimalController extends Controller
                 ->withInput();
         }
 
-        $animal = $this->animalRepository->create($input);
+        $pet = $this->petRepository->create($input);
 
-        if ($animal == null) {
+        if ($pet == null) {
             \App::abort(500);
         }
 
-        return response()->json(['error' => false, 'result' => $animal], 201)
-            ->header('Location', URL::route('api.animal.show', [$animal->id]));
+        return response()->json(['error' => false, 'result' => $pet], 201)
+            ->header('Location', URL::route('api.pet.show', [$pet->id]));
     }
 
     public function show($id) // GET
     {
-        $this->animalRepository->setUser($this->authUser);
+        $this->petRepository->setUser($this->authUser);
 
         return response()->json(['error' => false,
-            'result' => $this->animalRepository->get($id)]);
+            'result' => $this->petRepository->get($id)]);
     }
 
     public function update($id) // PUT
     {
         $user = $this->authUser;
         $input = Input::all();
-        $this->animalRepository->setUser($user);
+        $this->petRepository->setUser($user);
 
         if(isset($input['breed_id'])) {
             $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
@@ -108,34 +108,34 @@ class AnimalController extends Controller
         if($user->weight_units == 1) {
             $input['weight'] = round($input['weight'] * 0.453592, 1);
         }
-        $validator = $this->animalRepository->getUpdateValidator($input);
+        $validator = $this->petRepository->getUpdateValidator($input);
         if ($validator->fails()) {
             return redirect()->route('user.dashboard')->withInput()
                 ->withErrors($validator);
         }
-        if ($this->animalRepository->update($id, $input) == false) {
+        if ($this->petRepository->update($id, $input) == false) {
             \App::abort(500);
         }
-        $animal = $this->animalRepository->get($id);
+        $pet = $this->petRepository->get($id);
         $userId = $user->id;
-        if ($animal->vet_id != null) {
+        if ($pet->vet_id != null) {
             $data = array(
-                'vet_id' => $animal->vet_id,
+                'vet_id' => $pet->vet_id,
                 'user_id' => $userId,
-                'animal_id' => $animal->id,
+                'pet_id' => $pet->id,
                 'approved' => 1
             );
-            $this->animalRequestRepository->create($data);
+            $this->petRequestRepository->create($data);
         }
 
         return response()->json(['error' => false,
-            'result' => $this->animalRepository->get($id)]);
+            'result' => $this->petRepository->get($id)]);
     }
 
-    public function postPhoto($animal_id)
+    public function postPhoto($pet_id)
     {
         $user = $this->authUser;
-        $this->animalRepository->setUser($user);
+        $this->petRepository->setUser($user);
         $validator = $this->photoRepository->getCreateValidator(Input::all());
 
         if($validator->fails())
@@ -158,19 +158,19 @@ class AnimalController extends Controller
         unset($request['image_path']);
         $request['photo_id'] = $photo->id;
 
-        if ($this->animalRepository->update($animal_id, $request) == false) {
+        if ($this->petRepository->update($pet_id, $request) == false) {
             \App::abort(500);
         }
 
         return response()->json(['error' => false,
-            'result' => $this->animalRepository->get($animal_id)]);
+            'result' => $this->petRepository->get($pet_id)]);
     }
 
     public function destroy($id) // DELETE
     {
-        $this->animalRepository->setUser($this->authUser);
+        $this->petRepository->setUser($this->authUser);
 
-        $this->animalRepository->delete($id);
+        $this->petRepository->delete($id);
         return response()->json(['error' => false, 'result' => 'Item removed']);
     }
 

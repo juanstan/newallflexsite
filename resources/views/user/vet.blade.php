@@ -49,7 +49,7 @@
                                 </div>
                                 @foreach ($requests as $petRequest)
                                     @foreach ($pets as $pet)
-                                        @if($petRequest->animal_id == $pet->id && $petRequest->vet_id == $vet->id && $petRequest->approved == 1)
+                                        @if($petRequest->pet_id == $pet->id && $petRequest->vet_id == $vet->id && $petRequest->approved == 1)
                                         <a href="{!! URL::route('user.dashboard.deactivatePet', $petRequest->id) !!}" >
                                             <div class="col-sm-3 text-center small-padding request-pet" >
                                                 {!! HTML::image('/images/deleted.png', '', array('class' => 'deactive hidden img-responsive img-circle', 'width' => '100%')) !!}
@@ -57,7 +57,7 @@
                                                 <h4>{!! $pet->name !!}</h4>
                                             </div>
                                         </a>
-                                        @elseif($petRequest->animal_id == $pet->id && $petRequest->vet_id == $vet->id && $petRequest->approved == 0)
+                                        @elseif($petRequest->pet_id == $pet->id && $petRequest->vet_id == $vet->id && $petRequest->approved == 0)
                                         <a href="{!! URL::route('user.dashboard.activatePet', $petRequest->id) !!}" >
                                             <div class="col-sm-3 text-center small-padding relative" >
                                                 {!! HTML::image('/images/deleted.png', '', array('class' => 'deactive img-responsive img-circle', 'width' => '100%')) !!}

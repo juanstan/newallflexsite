@@ -1,7 +1,7 @@
 <?php namespace App\Models\Entities\Vet;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use App\Models\Entities\Vet;
 
 class Token extends \Eloquent {
 
@@ -16,7 +16,7 @@ class Token extends \Eloquent {
     protected $fillable = ['vet_id', 'token', 'expires_at'];
     protected $visible = ['token', 'expires_at', 'created_at'];
 
-    static public function generate(\App\Models\Entities\Vet $vet, Carbon $dt = null)
+    static public function generate(Vet $vet, Carbon $dt = null)
     {
         if($dt == null)
         {
@@ -30,6 +30,6 @@ class Token extends \Eloquent {
 
     public function vet()
     {
-        return $this->belongsTo('\App\Models\Entities\Vet');
+        return $this->belongsTo(Vet::class);
     }
 }

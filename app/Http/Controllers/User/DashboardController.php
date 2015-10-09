@@ -5,13 +5,13 @@ use Input;
 use Lang;
 use Auth;
 
-use App\Models\Entities\Animal;
+use App\Models\Entities\Pet;
 use App\Models\Entities\User;
 use App\Models\Entities\Vet;
 
-use App\Models\Repositories\AnimalRepository;
-use App\Models\Repositories\AnimalReadingRepository;
-use App\Models\Repositories\AnimalReadingSymptomRepository;
+use App\Models\Repositories\PetRepository;
+use App\Models\Repositories\PetReadingRepository;
+use App\Models\Repositories\PetReadingSymptomRepository;
 use App\Models\Repositories\UserRepository;
 use App\Models\Repositories\VetRepository;
 use App\Models\Repositories\PhotoRepository;
@@ -20,9 +20,9 @@ use App\Models\Repositories\ConditionRepository;
 use App\Models\Repositories\BreedRepository;
 use App\Models\Repositories\HelpRepository;
 use App\Models\Repositories\SensorReadingRepository;
-use App\Models\Repositories\AnimalConditionRepository;
+use App\Models\Repositories\PetConditionRepository;
 use App\Models\Repositories\SensorReadingSymptomRepository;
-use App\Models\Repositories\AnimalRequestRepository;
+use App\Models\Repositories\PetRequestRepository;
 
 use App\Http\Controllers\Controller;
 
@@ -30,53 +30,53 @@ class DashboardController extends Controller
 {
 
     protected $userRepository;
-    protected $animalRepository;
-    protected $animalReadingRepository;
-    protected $animalReadingSymptomRepository;
+    protected $petRepository;
+    protected $petReadingRepository;
+    protected $petReadingSymptomRepository;
     protected $photoRepository;
     protected $symptomRepository;
     protected $conditionRepository;
     protected $breedRepository;
     protected $helpRepository;
     protected $sensorReadingRepository;
-    protected $animalConditionRepository;
+    protected $petConditionRepository;
     protected $sensorReadingSymptomRepository;
-    protected $animalRequestRepository;
+    protected $petRequestRepository;
 
     public function __construct(
         UserRepository $userRepository,
         VetRepository $vetRepository,
-        AnimalRepository $animalRepository,
-        AnimalReadingRepository $animalReadingRepository,
-        AnimalReadingSymptomRepository
-        $animalReadingSymptomRepository,
+        PetRepository $petRepository,
+        PetReadingRepository $petReadingRepository,
+        PetReadingSymptomRepository
+        $petReadingSymptomRepository,
         PhotoRepository $photoRepository,
         SymptomRepository $symptomRepository,
         ConditionRepository $conditionRepository,
         BreedRepository $breedRepository,
         HelpRepository $helpRepository,
         SensorReadingRepository $sensorReadingRepository,
-        AnimalConditionRepository $animalConditionRepository,
+        PetConditionRepository $petConditionRepository,
         SensorReadingSymptomRepository $sensorReadingSymptomRepository,
-        AnimalRequestRepository $animalRequestRepository
+        PetRequestRepository $petRequestRepository
     )
 
     {
         $this->authUser = Auth::user()->get();
         $this->userRepository = $userRepository;
         $this->vetRepository = $vetRepository;
-        $this->animalReadingRepository = $animalReadingRepository;
-        $this->animalRepository = $animalRepository;
-        $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
+        $this->petReadingRepository = $petReadingRepository;
+        $this->petRepository = $petRepository;
+        $this->petReadingSymptomRepository = $petReadingSymptomRepository;
         $this->photoRepository = $photoRepository;
         $this->symptomRepository = $symptomRepository;
         $this->conditionRepository = $conditionRepository;
         $this->breedRepository = $breedRepository;
         $this->helpRepository = $helpRepository;
         $this->sensorReadingRepository = $sensorReadingRepository;
-        $this->animalConditionRepository = $animalConditionRepository;
+        $this->petConditionRepository = $petConditionRepository;
         $this->sensorReadingSymptomRepository = $sensorReadingSymptomRepository;
-        $this->animalRequestRepository = $animalRequestRepository;
+        $this->petRequestRepository = $petRequestRepository;
 
         $this->middleware('auth.user',
             array('only' =>
@@ -101,16 +101,22 @@ class DashboardController extends Controller
     public function getIndex()
     {
         $user = $this->authUser;
-        $this->animalRepository->setUser($user);
+        $this->petRepository->setUser($user);
         $symptoms = $this->symptomRepository->all();
         $conditions = $this->conditionRepository->all();
-        $animals = $this->animalRepository->all();
+        $pets = $this->petRepository->all();
+        if($pets->isEmpty())
+        {
+            return redirect()->route('user.register.pet')
+                ->with('success', Lang::get('general.Your accont has been created successfully'));
+        }
+
         $breed = $this->breedRepository->all()->lists('name', 'id');
 
         if ($this->authUser->confirmed != null) {
             return View::make('user.dashboard')->with(
                 array(
-                    'animals' => $animals,
+                    'pets' => $pets,
                     'conditions' => $conditions,
                     'symptoms' => $symptoms,
                     'breed' => $breed,
@@ -121,7 +127,7 @@ class DashboardController extends Controller
                 ->with(
                     array(
                         'not-verified' => '',
-                        'animals' => $animals,
+                        'pets' => $pets,
                         'conditions' => $conditions,
                         'symptoms' => $symptoms,
                         'breed' => $breed,
@@ -166,8 +172,8 @@ class DashboardController extends Controller
 
     public function postResetAverageTemperature($id)
     {
-        $animal = $this->sensorReadingRepository->getByAnimalId($id);
-        if ($this->sensorReadingRepository->update($animal->id, array('average' => 0))) {
+        $pet = $this->sensorReadingRepository->getByPetId($id);
+        if ($this->sensorReadingRepository->update($pet->id, array('average' => 0))) {
             return redirect()->route('user.dashboard')
                 ->with('success', Lang::get('general.Average temperature reset'));
         }
@@ -247,7 +253,7 @@ class DashboardController extends Controller
     {
         $user = $this->authUser;
         $input = Input::all();
-        $this->animalRepository->setUser($user);
+        $this->petRepository->setUser($user);
         $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
         if($breed)
         {
@@ -260,35 +266,35 @@ class DashboardController extends Controller
         if($user->weight_units == 1) {
             $input['weight'] = round($input['weight'] * 0.453592, 1);
         }
-        $validator = $this->animalRepository->getUpdateValidator($input);
+        $validator = $this->petRepository->getUpdateValidator($input);
         if ($validator->fails()) {
             return redirect()->route('user.dashboard')->withInput()
                 ->withErrors($validator);
         }
-        if ($this->animalRepository->update($id, $input) == false) {
+        if ($this->petRepository->update($id, $input) == false) {
             \App::abort(500);
         }
-        $animal = $this->animalRepository->get($id);
+        $pet = $this->petRepository->get($id);
         $userId = $user->id;
-        if ($animal->vet_id != null) {
+        if ($pet->vet_id != null) {
             $data = array(
-                'vet_id' => $animal->vet_id,
+                'vet_id' => $pet->vet_id,
                 'user_id' => $userId,
-                'animal_id' => $animal->id,
+                'pet_id' => $pet->id,
                 'approved' => 1
             );
-            $this->animalRequestRepository->create($data);
+            $this->petRequestRepository->create($data);
         }
         return redirect()->route('user.dashboard')
             ->with('success', Lang::get('general.Pet updated'));
     }
 
-    public function postAddConditions($animalId)
+    public function postAddConditions($petId)
     {
-        $this->animalRepository->setUser($this->authUser);
+        $this->petRepository->setUser($this->authUser);
         $conditions = Input::get('conditions');
         if (is_array($conditions)) {
-            $this->animalConditionRepository->removeAndUpdateConditions($animalId, $conditions);
+            $this->petConditionRepository->removeAndUpdateConditions($petId, $conditions);
             return redirect()->route('user.dashboard')
                 ->with('message', Lang::get('general.Conditions updated'));
         }
@@ -297,7 +303,7 @@ class DashboardController extends Controller
 
     public function postAddSymptoms($readingId)
     {
-        $this->animalRepository->setUser($this->authUser);
+        $this->petRepository->setUser($this->authUser);
         $symptoms = Input::get('symptoms');
         if (is_array($symptoms)) {
             $this->sensorReadingSymptomRepository->removeAndUpdateSymptoms($readingId, $symptoms);
@@ -322,7 +328,7 @@ class DashboardController extends Controller
     {
         $input = Input::all();
         $user = $this->authUser;
-        $this->animalRepository->setUser($user);
+        $this->petRepository->setUser($user);
         $imageValidator = $this->photoRepository->getCreateValidator($input);
         if($imageValidator->fails())
         {
@@ -338,7 +344,7 @@ class DashboardController extends Controller
         unset($input['image_path']);
         $input['photo_id'] = $photoId->id;
 
-        $this->animalRepository->update($id, $input);
+        $this->petRepository->update($id, $input);
 
         return redirect()->route('user.dashboard')
             ->with('success', Lang::get('general.Pet updated'));
@@ -351,7 +357,7 @@ class DashboardController extends Controller
         $user = $this->authUser;
         $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
 
-        $this->animalRepository->setUser($user);
+        $this->petRepository->setUser($user);
 
         if($user->weight_units == 1) {
             $input['weight'] = $input['weight'] * 0.453592;
@@ -366,7 +372,7 @@ class DashboardController extends Controller
             $input['breed_id'] = $breed->id;
         }
 
-        $validator = $this->animalRepository->getCreateValidator($input);
+        $validator = $this->petRepository->getCreateValidator($input);
 
         if($validator->fails())
         {
@@ -394,21 +400,21 @@ class DashboardController extends Controller
 
         }
 
-        $animal = $this->animalRepository->create($input);
+        $pet = $this->petRepository->create($input);
 
-        if ($animal == null) {
+        if ($pet == null) {
             \App::abort(500);
         }
 
         return redirect()->route('user.dashboard');
     }
 
-    public function getRemovePet($animalId)
+    public function getRemovePet($petId)
     {
-        $this->animalRepository->setUser($this->authUser);
-        $this->animalRepository->delete($animalId);
-        $this->animalRequestRepository->removeByAnimalId($animalId);
-        $this->sensorReadingRepository->removeByAnimalId($animalId);
+        $this->petRepository->setUser($this->authUser);
+        $this->petRepository->delete($petId);
+        $this->petRequestRepository->removeByPetId($petId);
+        $this->sensorReadingRepository->removeByPetId($petId);
         return redirect()->route('user.dashboard')
             ->with('message', Lang::get('general.Pet deleted'));
     }
@@ -418,14 +424,14 @@ class DashboardController extends Controller
         $input = Input::all();
         $user = $this->authUser;
 
-        $readingValidator = $this->animalReadingRepository->getReadingUploadValidator($input);
+        $readingValidator = $this->petReadingRepository->getReadingUploadValidator($input);
         if ($readingValidator->fails()) {
             return redirect()->back()
                 ->withErrors($readingValidator)
                 ->withInput();
         }
 
-        if($this->animalReadingRepository->readingUpload($input, $user))
+        if($this->petReadingRepository->readingUpload($input, $user))
         {
             return redirect()->route('user.dashboard');
         }
@@ -438,18 +444,18 @@ class DashboardController extends Controller
     public function getVet()
     {
         $user = $this->authUser;
-        $this->animalRepository->setUser($this->authUser);
-        $requests = $this->animalRequestRepository->getAllByUserId($user->id);
-        $animals = $this->animalRepository->all();
+        $this->petRepository->setUser($this->authUser);
+        $requests = $this->petRequestRepository->getAllByUserId($user->id);
+        $pets = $this->petRepository->all();
         $vets = $this->vetRepository->all();
-        if($this->authUser->animals->isEmpty()) {
+        if($this->authUser->pets->isEmpty()) {
             return redirect()->route('user.dashboard')
                 ->with('error', Lang::get('general.You must create a pet before you can perform this function.'));
         }
         return View::make('user.vet')
             ->with(
                 array(
-                    'pets' => $animals,
+                    'pets' => $pets,
                     'vets' => $vets,
                     'requests' => $requests
                 ));
@@ -506,17 +512,17 @@ class DashboardController extends Controller
     public function getAddVet($vetId)
     {
         $userid = $this->authUser->id;
-        $this->animalRepository->setUser($this->authUser);
-        $animals = $this->animalRepository->all();
-        foreach ($animals as $animal) {
-            if ($this->animalRequestRepository->getByVetAndAnimalId($vetId, $animal->id) == null) {
+        $this->petRepository->setUser($this->authUser);
+        $pets = $this->petRepository->all();
+        foreach ($pets as $pet) {
+            if ($this->petRequestRepository->getByVetAndPetId($vetId, $pet->id) == null) {
                 $data = array(
                     'vet_id' => $vetId,
                     'user_id' => $userid,
-                    'animal_id' => $animal->id,
+                    'pet_id' => $pet->id,
                     'approved' => 1
                 );
-                $this->animalRequestRepository->create($data);
+                $this->petRequestRepository->create($data);
             }
             else {
                 continue;
@@ -530,7 +536,7 @@ class DashboardController extends Controller
     public function getRemoveVet($vetId)
     {
         $user = $this->authUser;
-        if ($this->animalRequestRepository->removeByVetAndUserId($vetId, $user->id)) {
+        if ($this->petRequestRepository->removeByVetAndUserId($vetId, $user->id)) {
             return redirect()->route('user.dashboard.vet')
                 ->with('success', Lang::get('general.Vet removed'));
         }
@@ -540,7 +546,7 @@ class DashboardController extends Controller
 
     public function getActivatepet($id)
     {
-        if ($this->animalRequestRepository->update($id, array('approved' => 1))) {
+        if ($this->petRequestRepository->update($id, array('approved' => 1))) {
             return redirect()->route('user.dashboard.vet')
                 ->with('success', Lang::get('general.Pet activated'));
         }
@@ -550,23 +556,23 @@ class DashboardController extends Controller
 
     public function getDeactivatepet($id)
     {
-        if ($this->animalRequestRepository->update($id, array('approved' => 0))) {
+        if ($this->petRequestRepository->update($id, array('approved' => 0))) {
             return redirect()->route('user.dashboard.vet')->with('success', Lang::get('general.Pet deactivated'));
         }
         return redirect()->route('user.dashboard.vet')
             ->with('error', Lang::get('general.There was a problem with your request'));
     }
 
-    public function postAssign($animalId)
+    public function postAssign($petId)
     {
         $newPetId = Input::get('pet-id');
-        $query = $this->animalRepository->get($animalId);
+        $query = $this->petRepository->get($petId);
         $data['microchip_number'] = $query->microchip_number;
 
-        if ($this->animalRepository->update($newPetId, $data)) {
-            $this->animalRepository->delete($animalId);
-            $sensorReading = $this->sensorReadingRepository->getByAnimalId($animalId);
-            $this->sensorReadingRepository->update($sensorReading->id, array('animal_id' => $newPetId));
+        if ($this->petRepository->update($newPetId, $data)) {
+            $this->petRepository->delete($petId);
+            $sensorReading = $this->sensorReadingRepository->getByPetId($petId);
+            $this->sensorReadingRepository->update($sensorReading->id, array('pet_id' => $newPetId));
         }
         return redirect()->route('user.dashboard')
             ->with('success', Lang::get('general.Pet microchip number assigned'));

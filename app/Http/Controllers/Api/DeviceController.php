@@ -40,14 +40,14 @@ class DeviceController extends Controller
                 'errors' => $validator->messages()], 400);
         }
 
-        $animal = $this->deviceRepository->create($input);
+        $pet = $this->deviceRepository->create($input);
 
-        if ($animal == null) {
+        if ($pet == null) {
             \App::abort(500);
         }
 
-        return response()->json(['error' => false, 'result' => $animal], 201)
-            ->header('Location', URL::route('api.device.show', [$animal->id]));
+        return response()->json(['error' => false, 'result' => $pet], 201)
+            ->header('Location', URL::route('api.device.show', [$pet->id]));
     }
 
     public function show($id) // GET

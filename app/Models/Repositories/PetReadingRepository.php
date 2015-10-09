@@ -1,17 +1,17 @@
 <?php namespace App\Models\Repositories;
 
 use App\Models\Entities\User;
-use App\Models\Entities\Animal;
+use App\Models\Entities\Pet;
 use App\Models\Entities\SensorReading;
 use League\Csv\Reader;
 
-class AnimalReadingRepository extends AbstractRepository implements AnimalReadingRepositoryInterface
+class PetReadingRepository extends AbstractRepository implements PetReadingRepositoryInterface
 {
     protected $classname = 'App\Models\Entities\SensorReading';
 
     protected $repository;
     
-    protected $animal;
+    protected $pet;
     
     public function __construct(UserRepositoryInterface $repository)
     {
@@ -20,9 +20,9 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
 
     public function all()
     {             
-        if($this->animal)
+        if($this->pet)
         {
-            return $this->animal->sensorReadings()->orderBy('reading_time')->get();
+            return $this->pet->sensorReadings()->orderBy('reading_time')->get();
         }
 
         return parent::all();
@@ -33,7 +33,7 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
     {
         if($id)
         {
-            return $this->animal ? $this->animal->sensorReadings()->findOrFail($id) : parent::get($id);
+            return $this->pet ? $this->pet->sensorReadings()->findOrFail($id) : parent::get($id);
         }
 
     }
@@ -85,21 +85,21 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
             $data = $csv->query();
             foreach ($data as $lineIndex => $row) {
                 $profile = SensorReading::where('microchip_id', '=', decoded_microchip_id($row[1]))->first();
-                $animal = Animal::where(['microchip_number' => decoded_microchip_id($row[1])])->first();
+                $pet = Pet::where(['microchip_number' => decoded_microchip_id($row[1])])->first();
 
-                if (empty($animal)) {
-                    $animal = new animal();
-                    $animal->microchip_number = decoded_microchip_id($row[1]);
-                    $animal->user_id = $user->id;
+                if (empty($pet)) {
+                    $pet = new pet();
+                    $pet->microchip_number = decoded_microchip_id($row[1]);
+                    $pet->user_id = $user->id;
 
-                    $animal->save();
+                    $pet->save();
                 }
                 if (empty($profile)) {
                     $reading = new SensorReading();
                     $reading->microchip_id = decoded_microchip_id($row[1]);
                     $reading->temperature = reading_temperature($row[2]);
                     $reading->device_id = $reading_device_id;
-                    $reading->animal_id = $animal->id;
+                    $reading->pet_id = $pet->id;
                     $reading->average = 1;
                     $reading->reading_time = reading_timestamp($device_current_time_epoch, $row[3]);
 
@@ -126,7 +126,7 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
 
             $reading = parent::create($input);
 
-            $reading->animal()->associate($this->animal);
+            $reading->pet()->associate($this->pet);
 
             $reading->save();
 
@@ -151,9 +151,9 @@ class AnimalReadingRepository extends AbstractRepository implements AnimalReadin
         ]);
     }
     
-    public function setAnimal($animal)
+    public function setPet($pet)
     {
-        $this->animal = $animal;
+        $this->pet = $pet;
 
         return $this;
     }

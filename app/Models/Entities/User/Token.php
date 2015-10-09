@@ -1,11 +1,7 @@
 <?php namespace App\Models\Entities\User;
 
 use Carbon\Carbon;
-use Illuminate\Auth\Authenticatable;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-use Illuminate\Database\Eloquent\Model as Eloquent;
+use App\Models\Entities\User;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Token extends \Eloquent {
@@ -21,7 +17,7 @@ class Token extends \Eloquent {
     protected $fillable = ['user_id', 'token', 'expires_at'];
     protected $visible = ['token', 'expires_at', 'created_at'];
 
-    static public function generate(\App\Models\Entities\User $user, Carbon $dt = null)
+    static public function generate(User $user, Carbon $dt = null)
     {
         if($dt == null)
         {
@@ -35,6 +31,6 @@ class Token extends \Eloquent {
 
     public function user()
     {
-        return $this->belongsTo('\App\Models\Entities\User');
+        return $this->belongsTo(User::class);
     }
 }

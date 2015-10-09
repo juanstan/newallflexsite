@@ -1,6 +1,6 @@
 <?php namespace App\Models\Repositories;
 
-interface AnimalConditionRepositoryInterface extends AbstractRepositoryInterface
+interface PetConditionRepositoryInterface extends AbstractRepositoryInterface
 {
     /**
     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
@@ -16,7 +16,7 @@ interface AnimalConditionRepositoryInterface extends AbstractRepositoryInterface
     * @return \Entities\User
     */
 
-    public function removeAndUpdateConditions($animalId, $conditions);
+    public function removeAndUpdateConditions($petId, $conditions);
     
 }
 

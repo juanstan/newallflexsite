@@ -2,16 +2,16 @@
 
 namespace App\Providers;
 
-use App\Models\Repositories\AnimalConditionRepository;
-use App\Models\Repositories\AnimalConditionRepositoryInterface;
-use App\Models\Repositories\AnimalReadingRepository;
-use App\Models\Repositories\AnimalReadingRepositoryInterface;
-use App\Models\Repositories\AnimalReadingSymptomRepository;
-use App\Models\Repositories\AnimalReadingSymptomRepositoryInterface;
-use App\Models\Repositories\AnimalRepository;
-use App\Models\Repositories\AnimalRepositoryInterface;
-use App\Models\Repositories\AnimalRequestRepository;
-use App\Models\Repositories\AnimalRequestRepositoryInterface;
+use App\Models\Repositories\PetConditionRepository;
+use App\Models\Repositories\PetConditionRepositoryInterface;
+use App\Models\Repositories\PetReadingRepository;
+use App\Models\Repositories\PetReadingRepositoryInterface;
+use App\Models\Repositories\PetReadingSymptomRepository;
+use App\Models\Repositories\PetReadingSymptomRepositoryInterface;
+use App\Models\Repositories\PetRepository;
+use App\Models\Repositories\PetRepositoryInterface;
+use App\Models\Repositories\PetRequestRepository;
+use App\Models\Repositories\PetRequestRepositoryInterface;
 use App\Models\Repositories\DeviceRepository;
 use App\Models\Repositories\DeviceRepositoryInterface;
 use App\Models\Repositories\HelpRepository;

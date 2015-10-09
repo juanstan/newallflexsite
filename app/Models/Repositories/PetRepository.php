@@ -1,11 +1,11 @@
 <?php namespace App\Models\Repositories;
 
-use App\Models\Entities\Animal;
+use App\Models\Entities\Pet;
 use Validator;
 
-class AnimalRepository extends AbstractRepository implements AnimalRepositoryInterface
+class PetRepository extends AbstractRepository implements PetRepositoryInterface
 {
-    protected $classname = 'App\Models\Entities\Animal';
+    protected $classname = 'App\Models\Entities\Pet';
     
     protected $userRepositoryInterface;
 
@@ -19,7 +19,7 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
     {
         if($this->user)
         {
-            return $this->user->animals()->get();
+            return $this->user->pets()->get();
         }
 
         return parent::all();
@@ -29,7 +29,7 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
     {
         if($id)
         {
-            return $this->user ? $this->user->animals()->findOrFail($id) : parent::get($id);
+            return $this->user ? $this->user->pets()->findOrFail($id) : parent::get($id);
         }
 
     }
@@ -60,16 +60,16 @@ class AnimalRepository extends AbstractRepository implements AnimalRepositoryInt
     public function create($input)
     {
 
-        $animal = parent::create($input);
+        $pet = parent::create($input);
 
         if($this->user)
         {
             // set access
-            $animal->user()->associate($this->user);
-            $animal->save();
+            $pet->user()->associate($this->user);
+            $pet->save();
         }
 
-        return $animal;
+        return $pet;
     }
 }
 

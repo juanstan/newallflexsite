@@ -1,7 +1,7 @@
 <?php namespace App\Models\Repositories;
 
 use App\Models\Entities\User;
-use App\Models\Entities\Animal;
+use App\Models\Entities\Pet;
 use App\Models\Entities\Photo;
 use Carbon\Carbon;
 use Validator;
@@ -24,12 +24,12 @@ class PhotoRepository extends AbstractRepository implements PhotoRepositoryInter
         return $this;
     }
     /**
-     * @param Pet $animal
+     * @param Pet $pet
      * @return object[]
      */
-    public function allForAnimal($animal)
+    public function allForPet($pet)
     {
-        return $animal->photos()->with('animals')->get();
+        return $pet->photos()->with('pets')->get();
     }
 
     /**
@@ -38,20 +38,20 @@ class PhotoRepository extends AbstractRepository implements PhotoRepositoryInter
      */
     public function allForUser($user)
     {
-        return $user->uploadedPhotos()->with('animals')->get();
+        return $user->uploadedPhotos()->with('pets')->get();
     }
 
     /**
      * @param Photo $photo
-     * @param Pet $animal
+     * @param Pet $pet
      * @param array $data
      * @return void
      */
-    public function attachToAnimal($photo, $animal, $data = [])
+    public function attachToPet($photo, $pet, $data = [])
     {
-        if($photo->pets()->find($animal->id) == null)
+        if($photo->pets()->find($pet->id) == null)
         {
-            $photo->pets()->attach($animal, $data);
+            $photo->pets()->attach($pet, $data);
         }
     }
 
@@ -132,12 +132,12 @@ class PhotoRepository extends AbstractRepository implements PhotoRepositoryInter
 
     /**
      * @param Photo $photo
-     * @param Pet $animal
+     * @param Pet $pet
      * @return void
      */
-    public function detachFromAnimal($photo, $animal)
+    public function detachFromPet($photo, $pet)
     {
-        $photo->animals()->detach($animal);
+        $photo->pets()->detach($pet);
     }
 
     /**
@@ -152,22 +152,22 @@ class PhotoRepository extends AbstractRepository implements PhotoRepositoryInter
 
     /**
      * @param int $id
-     * @param Pet $animal
+     * @param Pet $pet
      * @return Photo
      */
-    public function getForAnimal($id, $animal)
+    public function getForPet($id, $pet)
     {
-        return $animal->photos()->with('animals')->findOrFail($id);
+        return $pet->photos()->with('pets')->findOrFail($id);
     }
 
     /**
      * @param int $id
-     * @param Pet $animal
+     * @param Pet $pet
      * @return Photo
      */
-    public function getForAnimalPlain($id, $animal)
+    public function getForPetPlain($id, $pet)
     {
-        return $animal->photos()->findOrFail($id);
+        return $pet->photos()->findOrFail($id);
     }
 
     /**
@@ -177,7 +177,7 @@ class PhotoRepository extends AbstractRepository implements PhotoRepositoryInter
      */
     public function getForUser($id, $user)
     {
-        return $user->uploadedPhotos()->with('animals')->findOrFail($id);
+        return $user->uploadedPhotos()->with('pets')->findOrFail($id);
     }
 
     /**

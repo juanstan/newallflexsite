@@ -8,8 +8,8 @@ use App\Models\Entities\Vet;
 use App\Models\Entities\User;
 use App\Models\Repositories\VetRepository;
 use App\Models\Repositories\UserRepository;
-use App\Models\Repositories\AnimalRepository;
-use App\Models\Repositories\AnimalRequestRepository;
+use App\Models\Repositories\PetRepository;
+use App\Models\Repositories\PetRequestRepository;
 use App\Http\Controllers\Controller;
 
 class VetRegisterController extends Controller
@@ -18,16 +18,16 @@ class VetRegisterController extends Controller
     protected $authUser;
     protected $userRepository;
     protected $vetRepository;
-    protected $animalRepository;
-    protected $animalRequestRepository;
+    protected $petRepository;
+    protected $petRequestRepository;
 
-    public function __construct(UserRepository $userRepository, AnimalRepository $animalRepository, VetRepository $vetRepository, AnimalRequestRepository $animalRequestRepository)
+    public function __construct(UserRepository $userRepository, PetRepository $petRepository, VetRepository $vetRepository, PetRequestRepository $petRequestRepository)
     {
         $this->authUser = Auth::user()->get();
-        $this->animalRepository = $animalRepository;
+        $this->petRepository = $petRepository;
         $this->vetRepository = $vetRepository;
         $this->userRepository = $userRepository;
-        $this->animalRequestRepository = $animalRequestRepository;
+        $this->petRequestRepository = $petRequestRepository;
         $this->middleware('auth.user', array('only' => array('getIndex', 'getAdd', 'getAddVet')));
     }
 
@@ -50,18 +50,18 @@ class VetRegisterController extends Controller
     public function getAddVet($vetId)
     {
         $user = $this->authUser;
-        $this->animalRepository->setUser($user);
-        $animals = $this->animalRepository->all();
-        foreach ($animals as $animal) {
-            if ($this->animalRequestRepository->getByVetAndAnimalId($vetId, $animal->id) == null)
+        $this->petRepository->setUser($user);
+        $pets = $this->petRepository->all();
+        foreach ($pets as $pet) {
+            if ($this->petRequestRepository->getByVetAndPetId($vetId, $pet->id) == null)
             {
                 $data = array(
                     'vet_id' => $vetId,
                     'user_id' => $user->id,
-                    'animal_id' => $animal->id,
+                    'pet_id' => $pet->id,
                     'approved' => 1
                 );
-                $this->animalRequestRepository->create($data);
+                $this->petRequestRepository->create($data);
             }
             else {
                 continue;

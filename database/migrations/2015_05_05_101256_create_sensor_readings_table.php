@@ -20,7 +20,7 @@ class CreateSensorReadingsTable extends Migration {
 			$table->double('temperature', 15, 8)->nullable();
 			$table->dateTime('reading_time')->nullable();
 			$table->integer('device_id')->nullable();
-			$table->integer('animal_id')->nullable();
+			$table->integer('pet_id')->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

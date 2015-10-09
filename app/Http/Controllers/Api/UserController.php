@@ -6,7 +6,7 @@ use Lang;
 use URL;
 use Request;
 
-use App\Models\Entities\Animal;
+use App\Models\Entities\Pet;
 use App\Models\Entities\User;
 use App\Models\Repositories\UserRepository;
 use App\Models\Repositories\PhotoRepository;

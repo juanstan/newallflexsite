@@ -10,28 +10,28 @@ $temperaturePref = $user->units;
         {!! Form::close() !!}
     </div>
 </div>
-@foreach ($animals as $animal)
-    @if ($animal->name == null)
+@foreach ($pets as $pet)
+    @if ($pet->name == null)
         <div class="row col-md-11 float-none top-buffer col-centered desktop" >
             <div class="alert alert-grey alert-dismissible" role="alert">
                 <button type="button" class="close small-top-buffer" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="inline-block small-top-buffer">{!! Lang::get('general.1 unknown microchip found, would you like to create a new pet?') !!}</h4>
-                    {!! Form::open(array('route' => array('user.dashboard.assign', $animal->id), 'method' => 'post', 'class' => 'pull-right')) !!}
+                    {!! Form::open(array('route' => array('user.dashboard.assign', $pet->id), 'method' => 'post', 'class' => 'pull-right')) !!}
                         <div class="btn-group btn-input clearfix pull-right">
                             <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown">
                                 <span data-bind="label">{!! Lang::get('general.Choose pet') !!}</span> <span class="caret"></span>
                                 <input type="text" class="hidden" name="pet-id" value="" />
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                @foreach ($animals as $animal)
-                                    @if ($animal->microchip_number == null)
-                                        <li data-id="{!! $animal->id !!}" ><a href="#">
+                                @foreach ($pets as $pet)
+                                    @if ($pet->microchip_number == null)
+                                        <li data-id="{!! $pet->id !!}" ><a href="#">
                                                 <div class="row" >
                                                     <div class="col-md-3 small-padding" >
-                                                        {!! HTML::image(isset($animal->photo_id) ? $animal->photo->location : '/images/pet-image.png', $animal->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
+                                                        {!! HTML::image(isset($pet->photo_id) ? $pet->photo->location : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
                                                     </div>
                                                     <div class="col-md-9" >
-                                                        <h4>{!! $animal->name !!}</h4>
+                                                        <h4>{!! $pet->name !!}</h4>
                                                     </div>
                                                 </div>
                                             </a>
@@ -41,57 +41,57 @@ $temperaturePref = $user->units;
                             </ul>
                         </div>
                     {!! Form::close() !!}
-                <a href="#edit{!! $animal->id !!}" data-toggle="pill" >
-                    <button data-toggle="collapse" data-target="#pet-photo{!! $animal->id !!}" class="btn btn-file btn-lg pull-right" type="button">{!! Lang::get('general.Create') !!}</button>
+                <a href="#edit{!! $pet->id !!}" data-toggle="pill" >
+                    <button data-toggle="collapse" data-target="#pet-photo{!! $pet->id !!}" class="btn btn-file btn-lg pull-right" type="button">{!! Lang::get('general.Create') !!}</button>
                 </a>
             </div>
         </div>
     @endif
 @endforeach
 <div class="row col-md-12 col-centered float-none top-buffer" >
-    @foreach ($animals as $animal)
+    @foreach ($pets as $pet)
         <div class="col-md-4" >
             <div class="top-buffer mobile" ></div>
             <div class="row" >
                 <div class="col-md-12" >
                     <div class="col-xs-3" >
-                        {!! HTML::image(isset($animal->photo_id) ? $animal->photo->location : '/images/pet-image.png', $animal->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
+                        {!! HTML::image(isset($pet->photo_id) ? $pet->photo->location : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
                     </div>
                     <div class="tab-content ">
-                        <div class="col-xs-9 active tab-pane fade in small-padding" id="pet-name{!! $animal->id !!}" >
-                            <h3 class="top-none bottom-none text-left">{!! isset($animal->name) ? $animal->name : 'Unknown' !!}</h3>
-                            <h4 class="top-none text-left">{!! isset($animal->microchip_number) ? $animal->microchip_number : Null !!}</h4>
+                        <div class="col-xs-9 active tab-pane fade in small-padding" id="pet-name{!! $pet->id !!}" >
+                            <h3 class="top-none bottom-none text-left">{!! isset($pet->name) ? $pet->name : 'Unknown' !!}</h3>
+                            <h4 class="top-none text-left">{!! isset($pet->microchip_number) ? $pet->microchip_number : Null !!}</h4>
                         </div>
-                        <div class="col-xs-9 tab-pane fade in small-padding top-buffer" id="pet-photo{!! $animal->id !!}" >
-                            {!! Form::open(array('files'=> 'true', 'route' => array('user.dashboard.updatePetPhoto', $animal->id), 'method' => 'post')) !!}
-                            <p class="pointer" onclick="$('#ufile{!! $animal->id !!}').click()" ><i class="fa fa-camera"></i> {!! Lang::get('general.Change photo') !!}</p>
-                                <input class="hide" id="ufile{!! $animal->id !!}" onchange="this.form.submit()"  name="image_path" type="file">
+                        <div class="col-xs-9 tab-pane fade in small-padding top-buffer" id="pet-photo{!! $pet->id !!}" >
+                            {!! Form::open(array('files'=> 'true', 'route' => array('user.dashboard.updatePetPhoto', $pet->id), 'method' => 'post')) !!}
+                            <p class="pointer" onclick="$('#ufile{!! $pet->id !!}').click()" ><i class="fa fa-camera"></i> {!! Lang::get('general.Change photo') !!}</p>
+                                <input class="hide" id="ufile{!! $pet->id !!}" onchange="this.form.submit()"  name="image_path" type="file">
                             {!! Form::close() !!}
                         </div>
                     </div>
                 </div>
             </div>
             <div class="jumbotron dashboard top-buffer" >
-                <div class="vet-overlay collapse fade" id="pet-delete{!! $animal->id !!}" >
+                <div class="vet-overlay collapse fade" id="pet-delete{!! $pet->id !!}" >
                     <div class="col-md-12 text-center" >
                     <h3>{!! Lang::get('general.Are you sure you want to remove this pet?') !!}</h3>
                         <div class="col-md-10 float-none col-centered top-buffer" >
                             <div class="col-md-6 small-padding" >
-                                <a href="#" data-toggle="collapse" data-target="#pet-delete{!! $animal->id !!}" >
+                                <a href="#" data-toggle="collapse" data-target="#pet-delete{!! $pet->id !!}" >
                                     {!! Form::button(Lang::get('general.No, cancel'), array('class' => 'btn-block btn btn-file btn-md')) !!}
                                 </a>
                             </div>
                             <div class="top-buffer mobile" ></div>
                             <div class="col-md-6 small-padding" >
-                                <a href="{!! URL::route('user.dashboard.removePet', $animal->id) !!}" >
+                                <a href="{!! URL::route('user.dashboard.removePet', $pet->id) !!}" >
                                     {!! Form::button(Lang::get('general.Yes, remove'), array('class' => 'btn-block btn btn-danger btn-md')) !!}
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="collapse vet-overlay fade" id="symptom-list{!! $animal->id !!}" >
-                @foreach ($animal->sensorReadings->slice(0, 1) as $sensorReading)
+                <div class="collapse vet-overlay fade" id="symptom-list{!! $pet->id !!}" >
+                @foreach ($pet->sensorReadings->slice(0, 1) as $sensorReading)
                     {!! Form::open(array('files'=> 'true', 'route' => array('user.dashboard.addSymptoms', $sensorReading->id), 'method' => 'post')) !!}
                         <div class="col-md-12 top-buffer" >
                             <div class="col-md-8" >
@@ -104,8 +104,8 @@ $temperaturePref = $user->units;
                         </div>
                         <div class="col-md-12" >
                             <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
-                                @if( $animal->sensorReadings->count() )
-                                    @foreach ($animal->sensorReadings as $sensorReading)
+                                @if( $pet->sensorReadings->count() )
+                                    @foreach ($pet->sensorReadings as $sensorReading)
                                         @foreach ($sensorReading->sensorReadingSymptoms as $sensorReadingSymptom)
                                             <?php $symptomItems[] = $sensorReadingSymptom->symptom->name; ?>
                                         @endforeach
@@ -123,8 +123,8 @@ $temperaturePref = $user->units;
                     {!! Form::close() !!}
                 @endforeach
                 </div>
-                <div class="collapse vet-overlay fade" id="condition-list{!! $animal->id !!}" >
-                    {!! Form::open(array('files'=> 'true', 'route' => array('user.dashboard.addConditions', $animal->id), 'method' => 'post')) !!}
+                <div class="collapse vet-overlay fade" id="condition-list{!! $pet->id !!}" >
+                    {!! Form::open(array('files'=> 'true', 'route' => array('user.dashboard.addConditions', $pet->id), 'method' => 'post')) !!}
                         <div class="col-md-12 top-buffer" >
                             <div class="col-md-8" >
                                 <h3 class="top-none">{!! Lang::get('general.Add conditions') !!}</h3>
@@ -137,9 +137,9 @@ $temperaturePref = $user->units;
                         </div>
                         <div class="col-md-12" >
                             <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
-                                @if( $animal->animalConditions->count() )
-                                    @foreach ($animal->animalConditions as $animalCondition)
-                                            <?php $conditionItems[] = $animalCondition->condition->name; ?>
+                                @if( $pet->petConditions->count() )
+                                    @foreach ($pet->petConditions as $petCondition)
+                                            <?php $conditionItems[] = $petCondition->condition->name; ?>
                                     @endforeach
                                 @endif
                                 @foreach ($conditions as $condition)
@@ -156,16 +156,16 @@ $temperaturePref = $user->units;
                 <div class="row" >
                     <div class="col-md-12" >
                         <ul class="nav mobile-nav nav-pills text-left">
-                            <li class="active"><a href="#latest{!! $animal->id !!}" data-toggle="pill" data-target="#pet-name{!! $animal->id !!}, #latest{!! $animal->id !!}, #pet-photo-hide{!! $animal->id !!}" >{!! Lang::get('general.Latest') !!}</a></li>
-                            <li class="report-toggle" ><a href="#reports{!! $animal->id !!}" data-toggle="pill" data-target="#pet-name{!! $animal->id !!}, #reports{!! $animal->id !!}, #image_path-hide{!! $animal->id !!}">{!! Lang::get('general.Reports') !!}</a></li>
-                            <li class="pull-right" ><a href="#edit{!! $animal->id !!}" data-toggle="pill" data-target="#pet-photo{!! $animal->id !!}, #edit{!! $animal->id !!}"  >{!! ($animal->name == NULL ? Lang::get('general.<i class="fa fa-cog"></i> Edit') : Lang::get('general.<i class="fa fa-cog"></i> Edit') ); !!}</a></li>
+                            <li class="active"><a href="#latest{!! $pet->id !!}" data-toggle="pill" data-target="#pet-name{!! $pet->id !!}, #latest{!! $pet->id !!}, #pet-photo-hide{!! $pet->id !!}" >{!! Lang::get('general.Latest') !!}</a></li>
+                            <li class="report-toggle" ><a href="#reports{!! $pet->id !!}" data-toggle="pill" data-target="#pet-name{!! $pet->id !!}, #reports{!! $pet->id !!}, #image_path-hide{!! $pet->id !!}">{!! Lang::get('general.Reports') !!}</a></li>
+                            <li class="pull-right" ><a href="#edit{!! $pet->id !!}" data-toggle="pill" data-target="#pet-photo{!! $pet->id !!}, #edit{!! $pet->id !!}"  >{!! ($pet->name == NULL ? Lang::get('general.<i class="fa fa-cog"></i> Edit') : Lang::get('general.<i class="fa fa-cog"></i> Edit') ); !!}</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="tab-content ">
-                    <div class="tab-pane latest-list-wrap active fade in" id="latest{!! $animal->id !!}">
+                    <div class="tab-pane latest-list-wrap active fade in" id="latest{!! $pet->id !!}">
                         <div class="row col-sm-8 col-md-12 col-centered float-none top-buffer" >
-                            @foreach ($animal->sensorReadings as $sensorReading)
+                            @foreach ($pet->sensorReadings as $sensorReading)
                                 @if ($sensorReading->average == 1)
                                     <?php $allReadingTemps[] = $sensorReading->temperature; ?>
                                 @endif
@@ -177,8 +177,8 @@ $temperaturePref = $user->units;
                                     $readingAverage = $readingSum/$readingCount;
                                 ?>
                             @endif
-                            @if( $animal->sensorReadings->count() )
-                                @foreach ($animal->sensorReadings->slice(0, 1) as $sensorReading)
+                            @if( $pet->sensorReadings->count() )
+                                @foreach ($pet->sensorReadings->slice(0, 1) as $sensorReading)
                                     <div class="circle circle-border"  style="border-color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}">
                                         <div class="small-circle circle-solid" style="background-color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}" >
                                             <div class="circle-inner">
@@ -225,13 +225,13 @@ $temperaturePref = $user->units;
                             <div class="row text-center" >
                                 <div class="col-md-11 col-centered float-none" >
                                     <h3>{!! Lang::get('general.Symptoms' ) !!}</h3>
-                                    @if( $animal->sensorReadings->count() )
-                                        @foreach ($animal->sensorReadings->slice(0, 1) as $sensorReading)
+                                    @if( $pet->sensorReadings->count() )
+                                        @foreach ($pet->sensorReadings->slice(0, 1) as $sensorReading)
                                             <ul class="nav nav-pills text-center symptom-pills">
                                                 @foreach ($sensorReading->sensorReadingSymptoms as $sensorReadingSymptom)
                                                 <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="{!! URL::route('user.dashboard.symptomRemove', $sensorReadingSymptom->reading_id . '/' . $sensorReadingSymptom->symptom_id) !!}"><span>{!! $sensorReadingSymptom->symptom->name !!}</span></a></li>
                                                 @endforeach
-                                                <li role="presentation" class="symptom-pill small-top-buffer active" ><a href="#" data-toggle="collapse" data-target="#symptom-list{!! $animal->id !!}" >{!! Lang::get('general.+ Add') !!}</a></li>
+                                                <li role="presentation" class="symptom-pill small-top-buffer active" ><a href="#" data-toggle="collapse" data-target="#symptom-list{!! $pet->id !!}" >{!! Lang::get('general.+ Add') !!}</a></li>
                                             </ul>
                                         @endforeach
                                     @else
@@ -244,8 +244,8 @@ $temperaturePref = $user->units;
                                     <div class="col-md-4" >
                                         <h4>{!! Lang::get('general.Previous Readings') !!}</h4>
                                     </div>
-                                    @if( $animal->sensorReadings->count() )
-                                        @foreach ($animal->sensorReadings->slice(0, 4) as $sensorReading)
+                                    @if( $pet->sensorReadings->count() )
+                                        @foreach ($pet->sensorReadings->slice(0, 4) as $sensorReading)
                                             <div class="col-md-2 col-xs-3 small-padding" >
                                                 <div class="circle circle-small-border" style="border-color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}" >
                                                      <div class="circle-inner">
@@ -266,16 +266,16 @@ $temperaturePref = $user->units;
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane fade in" id="reports{!! $animal->id !!}">
+                    <div class="tab-pane fade in" id="reports{!! $pet->id !!}">
                         <div class="row top-buffer dash-scrollable col-md-12 col-centered" >
-                            @if( $animal->sensorReadings->count() )
-                                @foreach ($animal->sensorReadings->slice(0, 1) as $sensorReading)
+                            @if( $pet->sensorReadings->count() )
+                                @foreach ($pet->sensorReadings->slice(0, 1) as $sensorReading)
                                     <div class="row hero-banner" >
                                         <div class="col-xs-9 " >
                                             @if(!empty($allReadingTemps))
-                                                <h4 class="top-buffer" style="color: white;">{!! isset($animal->name) ? $animal->name : 'Unknown'; !!}{!! Lang::get('general.&#39; temperature is usually around') !!} {!! getTemperatureColor($readingAverage, $temperaturePref)['temp'] !!}&#176;</h4>
+                                                <h4 class="top-buffer" style="color: white;">{!! isset($pet->name) ? $pet->name : 'Unknown'; !!}{!! Lang::get('general.&#39; temperature is usually around') !!} {!! getTemperatureColor($readingAverage, $temperaturePref)['temp'] !!}&#176;</h4>
                                             @else
-                                                <h4 class="top-buffer" style="color: white;">{!! Lang::get('general.There is not average temperature for') !!} {!! isset($animal->name) ? $animal->name : 'Unknown'; !!} {!! Lang::get('general.yet') !!}</h4>
+                                                <h4 class="top-buffer" style="color: white;">{!! Lang::get('general.There is not average temperature for') !!} {!! isset($pet->name) ? $pet->name : 'Unknown'; !!} {!! Lang::get('general.yet') !!}</h4>
                                             @endif
                                         </div>
                                         <div class="col-xs-3 col-sm-2 col-md-3 small-padding" >
@@ -302,7 +302,7 @@ $temperaturePref = $user->units;
                             @else
                                 <div class="row hero-banner" >
                                     <div class="col-xs-9" >
-                                        <h4 class="top-buffer" style="color: white;">{!! Lang::get('general.No readings have been uploaded for') !!} {!! isset($animal->name) ? $animal->name : 'Unknown'; !!} {!! Lang::get('general.yet') !!}.</h4>
+                                        <h4 class="top-buffer" style="color: white;">{!! Lang::get('general.No readings have been uploaded for') !!} {!! isset($pet->name) ? $pet->name : 'Unknown'; !!} {!! Lang::get('general.yet') !!}.</h4>
                                     </div>
                                     <div class="col-xs-3 col-sm-2 col-md-3 small-padding" >
                                         <div class="circle small-top-buffer circle-small-border" style="border-color: white;">
@@ -315,15 +315,15 @@ $temperaturePref = $user->units;
                                     </div>
                                 </div>
                             @endif
-                            @if(count($animal->sensorReadings))
+                            @if(count($pet->sensorReadings))
                             <div class="row top-buffer" >
-                                <div class="graph-container col-centered" style="width:95%; height:150px;" data-data='{!! $animal->sensorReadings !!}' ></div>
+                                <div class="graph-container col-centered" style="width:95%; height:150px;" data-data='{!! $pet->sensorReadings !!}' ></div>
                             </div>
                             @endif
                             <div class="row" >
-                            @if( $animal->sensorReadings->count() )
+                            @if( $pet->sensorReadings->count() )
                                 <?php $previousTemp = 0; ?>
-                                @foreach ($animal->sensorReadings->slice(0, 4) as $sensorReading)
+                                @foreach ($pet->sensorReadings->slice(0, 4) as $sensorReading)
                                 <div class="row text-left col-md-12" >
                                     <div class="col-md-12" >
                                         <h4>{!! date("d/m/y",strtotime($sensorReading->reading_time)) !!}</h4>
@@ -365,22 +365,22 @@ $temperaturePref = $user->units;
                             </div>
                         </div>
                     </div>
-                    <div  class="tab-pane fade in" id="edit{!! $animal->id !!}">
+                    <div  class="tab-pane fade in" id="edit{!! $pet->id !!}">
                         <div class="form-horizontal float-none top-buffer col-md-12 col-centered">
-                            {!! Form::open(array('route' => array('user.dashboard.updatePet', $animal->id), 'method' => 'post', 'id' => 'petSettingsForm' . $animal->id )) !!}
+                            {!! Form::open(array('route' => array('user.dashboard.updatePet', $pet->id), 'method' => 'post', 'id' => 'petSettingsForm' . $pet->id )) !!}
                             <div class="form-group">
                                 {!! Form::label('name', Lang::get('general.Name'), array('class' => 'col-sm-2 control-label')) !!}
                                 <div class="col-sm-10">
-                                    {!! Form::text('name', $animal->name, array('class' => 'form-control text-left')) !!}
+                                    {!! Form::text('name', $pet->name, array('class' => 'form-control text-left')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                 {!! Form::label('breed', Lang::get('general.Breed'), array('class' => 'col-sm-2 control-label')) !!}
                                 <div class="col-sm-10">
-                                    @if($animal->breed_id != '')
-                                        {!! Form::text('breed_id', $animal->breed->name, array('class' => 'form-control text-left breed-list', 'id' => 'breedList' . $animal->id )) !!}
+                                    @if($pet->breed_id != '')
+                                        {!! Form::text('breed_id', $pet->breed->name, array('class' => 'form-control text-left breed-list', 'id' => 'breedList' . $pet->id )) !!}
                                     @else
-                                        {!! Form::text('breed_id', $animal->breed_wildcard, array('class' => 'form-control text-left breed-list', 'id' => 'breedList' . $animal->id )) !!}
+                                        {!! Form::text('breed_id', $pet->breed_wildcard, array('class' => 'form-control text-left breed-list', 'id' => 'breedList' . $pet->id )) !!}
                                     @endif
                                 </div>
                             </div>
@@ -390,9 +390,9 @@ $temperaturePref = $user->units;
                                     <div class="col-sm-8">
                                         <div class="input-group">
                                             @if($user->weight_units == 0)
-                                                {!! Form::text('weight', $animal->weight, array('class' => 'form-control text-left')) !!}
+                                                {!! Form::text('weight', $pet->weight, array('class' => 'form-control text-left')) !!}
                                             @else
-                                                {!! Form::text('weight', round($animal->weight * 2.20462, 1), array('class' => 'form-control text-left')) !!}
+                                                {!! Form::text('weight', round($pet->weight * 2.20462, 1), array('class' => 'form-control text-left')) !!}
                                             @endif
                                             <div class="input-group-addon">@if($user->weight_units == 0) {!! Lang::get('general.kg') !!} @else {!! Lang::get('general.lbs') !!} @endif</div>
                                         </div>
@@ -402,28 +402,28 @@ $temperaturePref = $user->units;
                             <div class="form-group">
                                     {!! Form::label('age', Lang::get('general.Date of birth'), array('class' => 'col-sm-5 control-label')) !!}
                                 <div class="col-sm-7">
-                                    {!! Form::input('date', 'date_of_birth', isset($animal->date_of_birth)?$animal->date_of_birth:'', array('class' => 'form-control text-left')) !!}
+                                    {!! Form::input('date', 'date_of_birth', isset($pet->date_of_birth)?$pet->date_of_birth:'', array('class' => 'form-control text-left')) !!}
                                 </div>
                             </div>
                             <div class="form-group">
                                     {!! Form::label('gender', Lang::get('general.Gender'), array('class' => 'col-sm-3 control-label')) !!}
                                 <div class="col-sm-9">
                                     <div class="radio-pill-buttons">
-                                        <label><input type="radio" @if($animal->gender == 1) checked @endif name="gender" value="1"><span class="pointer" >{!! Lang::get('general.Male') !!}</span></label>
-                                        <label><input type="radio" @if($animal->gender == 0) checked @endif name="gender" value="0"><span class="pointer" >{!! Lang::get('general.Female') !!}</span></label>
+                                        <label><input type="radio" @if($pet->gender == 1) checked @endif name="gender" value="1"><span class="pointer" >{!! Lang::get('general.Male') !!}</span></label>
+                                        <label><input type="radio" @if($pet->gender == 0) checked @endif name="gender" value="0"><span class="pointer" >{!! Lang::get('general.Female') !!}</span></label>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                     {!! Form::label('Known conditions', Lang::get('general.Known conditions'), array('class' => 'col-sm-7 control-label')) !!}
                                 <div class="col-sm-5">
-                                    <a href="#" data-toggle="collapse" data-target="#condition-list{!! $animal->id !!}" >
+                                    <a href="#" data-toggle="collapse" data-target="#condition-list{!! $pet->id !!}" >
                                         {!! Form::button(Lang::get('general.Manage <i class="fa fa-angle-right small-left-buffer"></i>'), array('class' => 'btn btn-file btn-block btn-md')) !!}
                                     </a>
                                 </div>
                             </div>
                             {!! Form::close() !!}
-                            {!! Form::open(array('route' => array('user.dashboard.resetAverageTemperature', $animal->id), 'method' => 'post')) !!}
+                            {!! Form::open(array('route' => array('user.dashboard.resetAverageTemperature', $pet->id), 'method' => 'post')) !!}
                             <div class="form-group">
                                     {!! Form::label('Average temperature', Lang::get('general.Average temperature'), array('class' => 'col-sm-7 control-label')) !!}
                                 <div class="col-sm-5">
@@ -433,11 +433,11 @@ $temperaturePref = $user->units;
                             {!! Form::close() !!}
                             <div class="form-group">
                                 <div class="col-md-5" >
-                                    <a href="#" data-toggle="collapse" data-target="#pet-delete{!! $animal->id !!}" >{!! Form::button(Lang::get('general.Remove'), array('class' => 'btn btn-file btn-block btn-md border-none')) !!}</a>
+                                    <a href="#" data-toggle="collapse" data-target="#pet-delete{!! $pet->id !!}" >{!! Form::button(Lang::get('general.Remove'), array('class' => 'btn btn-file btn-block btn-md border-none')) !!}</a>
                                 </div>
                                 <div class="top-buffer mobile" ></div>
                                 <div class="col-md-7" >
-                                    {!! Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-block btn-default btn-md', 'form' => 'petSettingsForm' . $animal->id)) !!}
+                                    {!! Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-block btn-default btn-md', 'form' => 'petSettingsForm' . $pet->id)) !!}
                                 </div>
                             </div>
                         </div>

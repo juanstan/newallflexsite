@@ -1,6 +1,6 @@
 <?php namespace App\Models\Repositories;
 
-interface AnimalReadingSymptomRepositoryInterface extends AbstractRepositoryInterface
+interface PetRepositoryInterface extends AbstractRepositoryInterface
 {
     /**
     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
@@ -15,6 +15,8 @@ interface AnimalReadingSymptomRepositoryInterface extends AbstractRepositoryInte
     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
     * @return \Entities\User
     */
+    
+    public function setUser($user);
     
 }
 

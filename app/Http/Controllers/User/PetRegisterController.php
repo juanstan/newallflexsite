@@ -7,8 +7,8 @@ use Redirect;
 use Image;
 use File;
 
-use App\Models\Entities\Animal;
-use App\Models\Repositories\AnimalRepository;
+use App\Models\Entities\Pet;
+use App\Models\Repositories\PetRepository;
 use App\Models\Repositories\PhotoRepository;
 use App\Models\Repositories\BreedRepository;
 use App\Http\Controllers\Controller;
@@ -17,14 +17,14 @@ class PetRegisterController extends Controller
 {
 
     protected $authUser;
-    protected $animalRepository;
+    protected $petRepository;
     protected $photoRepository;
     protected $breedRepository;
 
-    public function __construct(AnimalRepository $animalRepository, PhotoRepository $photoRepository, BreedRepository $breedRepository)
+    public function __construct(PetRepository $petRepository, PhotoRepository $photoRepository, BreedRepository $breedRepository)
     {
         $this->authUser = Auth::user()->get();
-        $this->animalRepository = $animalRepository;
+        $this->petRepository = $petRepository;
         $this->photoRepository = $photoRepository;
         $this->breedRepository = $breedRepository;
         $this->middleware('auth.user', array('only' => array('getIndex', 'getNew', 'postNew')));
@@ -32,8 +32,8 @@ class PetRegisterController extends Controller
 
     public function getIndex()
     {
-        $this->animalRepository->setUser($this->authUser);
-        $pets = $this->animalRepository->all();
+        $this->petRepository->setUser($this->authUser);
+        $pets = $this->petRepository->all();
         return View::make('usersignup.petList')
             ->with(array(
                 'pets' => $pets
@@ -74,7 +74,7 @@ class PetRegisterController extends Controller
         $user = $this->authUser;
         $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
 
-        $this->animalRepository->setUser($user);
+        $this->petRepository->setUser($user);
 
         if($user->weight_units == 1) {
             $input['weight'] = $input['weight'] * 0.453592;
@@ -89,7 +89,7 @@ class PetRegisterController extends Controller
             $input['breed_id'] = $breed->id;
         }
 
-        $validator = $this->animalRepository->getCreateValidator($input);
+        $validator = $this->petRepository->getCreateValidator($input);
 
         if($validator->fails())
         {
@@ -117,9 +117,9 @@ class PetRegisterController extends Controller
 
         }
 
-        $animal = $this->animalRepository->create($input);
+        $pet = $this->petRepository->create($input);
 
-        if ($animal == null) {
+        if ($pet == null) {
             \App::abort(500);
         }
 

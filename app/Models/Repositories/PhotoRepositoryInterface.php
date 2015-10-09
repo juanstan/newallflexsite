@@ -1,6 +1,6 @@
 <?php namespace App\Models\Repositories;
 
-use App\Models\Entities\Animal;
+use App\Models\Entities\Pet;
 use App\Models\Entities\Photo;
 use App\Models\Entities\User;
 
@@ -14,10 +14,10 @@ interface PhotoRepositoryInterface extends AbstractRepositoryInterface
 
     /**
      * @param object|Photo $photo
-     * @param object|Pet $animal
+     * @param object|Pet $pet
      * @param array $data
      */
-    public function attachToAnimal($photo, $animal, $data = []);
+    public function attachToPet($photo, $pet, $data = []);
 
     /**
      * @param array $input
@@ -34,23 +34,23 @@ interface PhotoRepositoryInterface extends AbstractRepositoryInterface
 
     /**
      * @param object|Photo $photo
-     * @param object|Pet $animal
+     * @param object|Pet $pet
      */
-    public function detachFromAnimal($photo, $animal);
+    public function detachFromPet($photo, $pet);
 
     /**
      * @param int $id
-     * @param object|Pet $animal
+     * @param object|Pet $pet
      * @return object|Photo
      */
-    public function getForAnimal($id, $animal);
+    public function getForPet($id, $pet);
 
     /**
      * @param int $id
-     * @param Pet $animal
+     * @param Pet $pet
      * @return Photo
      */
-    public function getForAnimalPlain($id, $animal);
+    public function getForPetPlain($id, $pet);
 
     /**
      * @param int $id

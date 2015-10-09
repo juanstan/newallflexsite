@@ -1,6 +1,6 @@
 <?php
 
-Route::controller('register/reading', 'AnimalReadingRegisterController',
+Route::controller('register/reading', 'PetReadingRegisterController',
     array(
         'getIndex'=>'vet.register.reading'
     ));

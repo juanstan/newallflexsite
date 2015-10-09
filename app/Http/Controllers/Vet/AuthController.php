@@ -5,37 +5,37 @@ use View;
 use Input;
 use Lang;
 
-use App\Models\Entities\Animal;
+use App\Models\Entities\Pet;
 use App\Models\Entities\User;
 use App\Models\Entities\Vet;
-use App\Models\Repositories\AnimalRepositoryInterface;
-use App\Models\Repositories\AnimalReadingRepositoryInterface;
-use App\Models\Repositories\AnimalReadingSymptomRepositoryInterface;
+use App\Models\Repositories\PetRepositoryInterface;
+use App\Models\Repositories\PetReadingRepositoryInterface;
+use App\Models\Repositories\PetReadingSymptomRepositoryInterface;
 use App\Models\Repositories\VetRepositoryInterface;
-use App\Models\Repositories\AnimalRequestRepository;
+use App\Models\Repositories\PetRequestRepository;
 use App\Http\Controllers\Controller;
 
 class AuthController extends Controller {
 
 	protected $vetRepository;
-    protected $animalRepository;
-    protected $animalReadingRepository;
-    protected $animalReadingSymptomRepository;
-    protected $animalRequestRepository;
+    protected $petRepository;
+    protected $petReadingRepository;
+    protected $petReadingSymptomRepository;
+    protected $petRequestRepository;
 
 	public function __construct(VetRepositoryInterface $vetRepository, 
-                                AnimalRepositoryInterface $animalRepository, 
-                                AnimalReadingRepositoryInterface $animalReadingRepository, 
-                                AnimalReadingSymptomRepositoryInterface $animalReadingSymptomRepository,
-                                AnimalRequestRepository $animalRequestRepository
+                                PetRepositoryInterface $petRepository,
+                                PetReadingRepositoryInterface $petReadingRepository,
+                                PetReadingSymptomRepositoryInterface $petReadingSymptomRepository,
+                                PetRequestRepository $petRequestRepository
     )
         
 	{
         $this->authVet = Auth::vet()->get();
 		$this->vetRepository = $vetRepository;
-        $this->animalReadingRepository = $animalReadingRepository;
-        $this->animalRepository = $animalRepository;
-        $this->animalReadingSymptomRepository = $animalReadingSymptomRepository;
+        $this->petReadingRepository = $petReadingRepository;
+        $this->petRepository = $petRepository;
+        $this->petReadingSymptomRepository = $petReadingSymptomRepository;
         $this->middleware('vetAuth', array('only'=>array('getLogout')));
 	}
     
@@ -87,7 +87,7 @@ class AuthController extends Controller {
     }
 
     public function getResendConfirmation() {
-        $this->animalRepository->setUser($this->authVet);
+        $this->petRepository->setUser($this->authVet);
         \Mail::send('emails.vet-verify', array('confirmation_code' => $this->authVet->confirmation_code), function($message) {
             $message->to($this->authVet->email, 'New vetRepository')
                 ->subject('Verify your email address');
@@ -159,7 +159,7 @@ class AuthController extends Controller {
 
     public function getDelete() {
         $id =  $this->authVet->id;
-        $this->animalRequestRepository->removeByVetId($id);
+        $this->petRequestRepository->removeByVetId($id);
         \DB::table('vet_readings')->where('vet_id', '=', $id)->delete();
         $this->authVet->delete();
         return redirect()->route('vet')

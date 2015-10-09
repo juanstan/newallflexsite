@@ -6,16 +6,16 @@ class SensorReadingRepository extends AbstractRepository implements SymptomRepos
 {
 	protected $classname = 'App\Models\Entities\SensorReading';
 
-	public function removeByAnimalId($animalId)
+	public function removeByPetId($petId)
 	{
-		$this->query()->where('animal_id', '=', $animalId)->delete();
+		$this->query()->where('pet_id', '=', $petId)->delete();
 	}
 
-	public function getByAnimalId($id)
+	public function getByPetId($id)
 	{
 
 		return $this->query()
-				->where('animal_id', '=', $id)
+				->where('pet_id', '=', $id)
 				->firstOrFail();
 
 	}
