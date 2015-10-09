@@ -36,8 +36,8 @@ Route::group(['middleware' => 'auth.apiUser'], function () {
 Route::group(['middleware' => 'auth.apiVet'], function () {
     Route::post('vet/logout', ['as' => 'api.vet.logout', 'uses' => 'VetAuthController@postLogout']); //
     Route::resource('vet/pet', 'PetController', ['only' => ['show', 'index']]); // View all vet pets
-    Route::resource('vet/pet.reading', 'PetReadingController', ['only' => ['show', 'update', 'index']]);
-    Route::resource('vet/pet.reading.symptom', 'PetReadingSymptomController'); //  done
+    Route::resource('vet/pet/reading', 'PetReadingController', ['only' => ['show', 'update', 'index']]);
+    Route::resource('vet/pet/reading/symptom', 'PetReadingSymptomController'); //  done
     Route::resource('vet', 'VetController', ['only' => ['update', 'destroy']]); //
 });
 

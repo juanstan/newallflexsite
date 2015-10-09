@@ -43,7 +43,7 @@ class ExternalController extends Controller
     {
         $userData = json_decode(Request::getContent());
         $user = $this->userRepository->findByProviderOrCreateApi($userData, $provider);
-        //$this->photoRepository->findProfilePictureOrCreate($userData->avatar, $user);
+        $this->photoRepository->findProfilePictureOrCreate($userData->avatar, $user);
         $token = Token::generate($user);
         $user->tokens()->save($token);
         return Response::json(['error' => false, 'result' => ['token' => $token, 'user' => $user]]);
