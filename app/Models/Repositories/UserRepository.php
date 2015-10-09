@@ -59,7 +59,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 					$user = [
 							'first_name' => $userData->first_name,
 							'last_name' => $userData->last_name,
-							'email' => $userData->email,
+							'email' => isset($userData->email) ? $userData->email : NULL,
 							'provider' => $provider,
 							'provider_id' => $userData->id,
 							'units' => 0,
@@ -71,7 +71,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 					$user = [
 							'first_name' => $name[0],
 							'last_name' => end($name),
-							'email' => $userData->email,
+							'email' => isset($userData->email) ? $userData->email : NULL,
 							'provider' => $provider,
 							'provider_id' => $userData->id,
 							'units' => 0,
@@ -95,7 +95,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 		switch($user->provider) {
 			case 'facebook':
 				$socialData = [
-						'email' => $userData->email,
+						'email' => isset($userData->email) ? $userData->email : NULL,
 						'first_name' => $userData->first_name,
 						'last_name' => $userData->last_name,
 				];
@@ -103,7 +103,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 			case 'twitter':
 				$name = explode(' ', $userData->name);
 				$socialData = [
-						'email' => $userData->email,
+						'email' => isset($userData->email) ? $userData->email : NULL,
 						'first_name' => array_shift($name),
 						'last_name' => implode(' ', $name),
 				];
