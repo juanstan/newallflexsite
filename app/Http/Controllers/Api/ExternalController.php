@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use Auth;
+use Request;
 use Validator;
 use Input;
 use Lang;
@@ -40,7 +41,7 @@ class ExternalController extends Controller
      */
     public function postLogin($provider)
     {
-        $userData = Input::all();
+        $userData = json_decode(Request::getContent());
         $user = $this->userRepository->findByProviderOrCreate($userData, $provider);
         $this->photoRepository->findProfilePictureOrCreate($userData->avatar, $user);
         $token = Token::generate($user);
@@ -66,6 +67,8 @@ class ExternalController extends Controller
     {
         Config::set('services.'.$provider.'.redirect', url('api/auth/'.$provider.'/callback'));
         $userData = Socialite::driver($provider)->user();
+        return Response::json($userData);
+        dd();
         $user = $this->userRepository->findByProviderOrCreate($userData, $provider);
         $this->photoRepository->findProfilePictureOrCreate($userData->avatar, $user);
         $token = Token::generate($user);

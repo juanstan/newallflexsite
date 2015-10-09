@@ -46,7 +46,6 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 	public function findByProviderOrCreate($userData, $provider)
 	{
 		$user = $this->query()->withTrashed()->where('provider_id', '=', $userData->id)->first();
-
 		if ($user != NULL && $user->trashed())
 		{
 			$user->restore();
@@ -96,8 +95,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 			case 'facebook':
 				$socialData = [
 						'email' => $userData->email,
-						'first_name' => $userData->user['first_name'],
-						'last_name' => $userData->user['last_name'],
+						'first_name' => $userData->user->first_name,
+						'last_name' => $userData->user->last_name,
 				];
 				break;
 			case 'twitter':
