@@ -34,7 +34,11 @@ class ExternalController extends Controller
         $this->photoRepository = $photoRepository;
     }
 
-    public function postRedirect($provider)
+    /**
+     * @param $provider
+     * @return mixed
+     */
+    public function postLogin($provider)
     {
         $userData = Input::all();
         $user = $this->userRepository->findByProviderOrCreate($userData, $provider);
@@ -42,8 +46,16 @@ class ExternalController extends Controller
         $token = Token::generate($user);
         $user->tokens()->save($token);
         return Response::json(['error' => false, 'result' => ['token' => $token, 'user' => $user]]);
-//        Config::set('services.'.$provider.'.redirect', url('api/auth/'.$provider.'/callback'));
-//        return Socialite::driver($provider)->redirect();
+    }
+
+    /**
+     * @param $provider
+     * @return mixed
+     */
+    public function getRedirect($provider)
+    {
+        Config::set('services.'.$provider.'.redirect', url('api/auth/'.$provider.'/callback'));
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
