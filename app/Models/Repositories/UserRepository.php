@@ -43,9 +43,94 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 	 * @param $provider
 	 * @return User|\Illuminate\Database\Eloquent\Model|null
 	 */
+	public function findByProviderOrCreateApi($userData, $provider)
+	{
+		$user = $this->query()->withTrashed()->where('provider_id', '=', $userData->id)->first();
+
+		if ($user != NULL && $user->trashed())
+		{
+			$user->restore();
+		}
+
+		if($user == NULL)
+		{
+			switch($provider) {
+				case 'facebook':
+					$user = [
+							'first_name' => $userData->first_name,
+							'last_name' => $userData->last_name,
+							'email' => $userData->email,
+							'provider' => $provider,
+							'provider_id' => $userData->id,
+							'units' => 0,
+							'weight_units' => 0,
+					];
+					break;
+				case 'twitter':
+					$name = explode(" ", $userData->name);
+					$user = [
+							'first_name' => $name[0],
+							'last_name' => end($name),
+							'email' => $userData->email,
+							'provider' => $provider,
+							'provider_id' => $userData->id,
+							'units' => 0,
+							'weight_units' => 0,
+					];
+					break;
+			}
+
+			$user = $this->create($user);
+		}
+		$this->checkIfProviderNeedsUpdatingApi($userData, $user);
+		return $user;
+	}
+
+	/**
+	 * @param object $userData
+	 * @param User $user
+	 */
+	public function checkIfProviderNeedsUpdatingApi($userData, $user)
+	{
+		switch($user->provider) {
+			case 'facebook':
+				$socialData = [
+						'email' => $userData->email,
+						'first_name' => $userData->first_name,
+						'last_name' => $userData->last_name,
+				];
+				break;
+			case 'twitter':
+				$name = explode(' ', $userData->name);
+				$socialData = [
+						'email' => $userData->email,
+						'first_name' => array_shift($name),
+						'last_name' => implode(' ', $name),
+				];
+				break;
+		}
+
+		$dbData = [
+				'email' => $user->email,
+				'first_name' => $user->first_name,
+				'last_name' => $user->last_name,
+		];
+
+		if (!empty(array_diff($socialData, $dbData)))
+		{
+			$this->update($user->id, $socialData);
+		}
+	}
+
+	/**
+	 * @param $userData
+	 * @param $provider
+	 * @return User|\Illuminate\Database\Eloquent\Model|null
+	 */
 	public function findByProviderOrCreate($userData, $provider)
 	{
 		$user = $this->query()->withTrashed()->where('provider_id', '=', $userData->id)->first();
+
 		if ($user != NULL && $user->trashed())
 		{
 			$user->restore();
@@ -95,8 +180,8 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 			case 'facebook':
 				$socialData = [
 						'email' => $userData->email,
-						'first_name' => $userData->user->first_name,
-						'last_name' => $userData->user->last_name,
+						'first_name' => $userData->user['first_name'],
+						'last_name' => $userData->user['last_name'],
 				];
 				break;
 			case 'twitter':

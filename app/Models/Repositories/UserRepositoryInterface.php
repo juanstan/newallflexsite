@@ -3,6 +3,10 @@
 interface UserRepositoryInterface extends AbstractRepositoryInterface
 {
 
+    public function findByProviderOrCreateApi($userData, $provider);
+
+    public function checkIfProviderNeedsUpdatingApi($userData, $user);
+
     public function findByProviderOrCreate($userData, $provider);
 
     public function checkIfProviderNeedsUpdating($userData, $user);
