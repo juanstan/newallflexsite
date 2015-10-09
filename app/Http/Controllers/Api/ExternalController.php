@@ -34,10 +34,16 @@ class ExternalController extends Controller
         $this->photoRepository = $photoRepository;
     }
 
-    public function getRedirect($provider)
+    public function postRedirect($provider)
     {
-        Config::set('services.'.$provider.'.redirect', url('api/auth/'.$provider.'/callback'));
-        return Socialite::driver($provider)->redirect();
+        $userData = Input::all();
+        $user = $this->userRepository->findByProviderOrCreate($userData, $provider);
+        $this->photoRepository->findProfilePictureOrCreate($userData->avatar, $user);
+        $token = Token::generate($user);
+        $user->tokens()->save($token);
+        return Response::json(['error' => false, 'result' => ['token' => $token, 'user' => $user]]);
+//        Config::set('services.'.$provider.'.redirect', url('api/auth/'.$provider.'/callback'));
+//        return Socialite::driver($provider)->redirect();
     }
 
     /**

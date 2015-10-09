@@ -1,6 +1,6 @@
 <?php
 
-Route::get('auth/{provider}/redirect', ['as' => 'api.auth.external.redirect', 'uses' => 'ExternalController@getRedirect']);
+Route::get('auth/{provider}/redirect', ['as' => 'api.auth.external.redirect', 'uses' => 'ExternalController@postRedirect']);
 Route::get('auth/{provider}/callback', ['as' => 'api.auth.external.callback', 'uses' => 'ExternalController@getCallback']);
 
 Route::post('user/login', ['as' => 'api.user.login', 'uses' => 'AuthController@postLogin']); // Done
