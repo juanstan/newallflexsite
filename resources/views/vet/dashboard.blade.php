@@ -6,15 +6,8 @@
     ?>
     <div class="row col-md-11 float-none col-centered collapse-group" >
         <div class="collapse" id="file-upload">
-
             {!! Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) !!}
             {!! Form::close() !!}
-
-            {!! Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.readingUpload', 'method' => 'post')) !!}
-            {!! Form::file('file') !!}
-            {!! Form::submit() !!}
-            {!! Form::close() !!}
-
         </div>
     </div>
     <div class="row col-centered float-none" >
@@ -109,7 +102,6 @@
                     <div class="col-md-7 col-xs-12" >
                         <ul class="nav nav-pills mobile desktop top-buffer text-right">
                             <li class="active"><a href="#recent" data-toggle="pill" data-target="" >{!! Lang::get('general.Recent') !!}</a></li>
-                            {!!--<li class="" ><a href="#customer" data-toggle="pill" data-target="">Customer</a></li>--!!}
                             <li class="" ><a href="#pets" data-toggle="pill" data-target="">{!! Lang::get('general.Pets') !!}</a></li>
                             <li class="" ><a href="#recent" data-toggle="pill" data-target=""><i class="fa fa-search"></i> {!! Lang::get('general.Search') !!}</a></li>
                         </ul>

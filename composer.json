@@ -35,7 +35,8 @@
             "app/Console/Commands"
         ],
         "psr-4": {
-            "App\\": "app/"
+            "App\\": "app/",
+            "Ollieread\\" : "vendor/ollieread/multiauth/src/Ollieread"
         }
     },
     "autoload-dev": {

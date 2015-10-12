@@ -39,12 +39,18 @@
         </div>
     </body>
   <script>
-      $(function() {
-          var url = window.location.pathname;
-          var page = url.substr(url.lastIndexOf('/') + 1);
-          target = $('#menu a[href*="' + page + '"]');
-          $(target).parent('li').addClass('active');
-      });
+      function readURL(input) {
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+              reader.onload = function (e) {
+                  $('.image-placeholder')
+                          .attr('src', e.target.result)
+                          .width(100)
+                          .height(100);
+              };
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
   </script>
     <!-- Javascript -->
   @include('layouts/core/javascript')

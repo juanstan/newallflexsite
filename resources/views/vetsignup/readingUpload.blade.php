@@ -10,15 +10,11 @@
             <p>{!! Lang::get('general.Easily pair the reader via Bluetooth on your mobile') !!}</p>
             <div class="col-md-12 text-center vcenterwrap" >
                 <div class="col-md-6 vcenter">
-
                     {!! HTML::image('images/phones.png', 'a Logo', array('width' => '100%')) !!}
-
                 </div>
                 <div class="col-md-6 vcenter">
-
                     {!! HTML::image('images/app-store.svg', 'a Logo', array('width' => '100%', 'class' => 'col-xs-6 col-md-12 small-padding')) !!}
                     {!! HTML::image('images/play-store.png', 'a Logo', array('width' => '100%', 'class' => 'col-xs-6 col-md-12 small-padding')) !!}
-
                 </div>
             </div>
         </div>
@@ -51,10 +47,14 @@
             </div>
         </div>
     </div>
-
     <div class="row desktop" >
         <div class="col-md-11 col-centered float-none" >
             {!! Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) !!}
+            {!! Form::close() !!}
+            {!! Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.readingUpload', 'method' => 'post')) !!}
+            {!! Form::file('file') !!}
+            {!! Form::submit('') !!}
+
             {!! Form::close() !!}
         </div>
     </div>

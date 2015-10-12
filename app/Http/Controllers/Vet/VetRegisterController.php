@@ -13,7 +13,7 @@ class VetRegisterController extends \App\Http\Controllers\Controller {
 	{
 		$this->authVet = \Auth::vet()->get();
         $this->vetRepository = $vetRepository;
-        $this->middleware('vetAuth', array('only'=>array('getIndex', 'getAdd')));
+        $this->middleware('auth.vet', array('only'=>array('getIndex', 'getAdd')));
 	}
 
     public function getIndex()

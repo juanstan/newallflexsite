@@ -28,7 +28,7 @@ class CreateVetsTable extends Migration {
 			$table->string('units')->nullable();
 			$table->string('latitude')->nullable();
 			$table->string('longitude')->nullable();
-			$table->string('image_path')->nullable();
+			$table->string('photo_id')->nullable();
 			$table->string('password')->nullable();
 			$table->timestamps();
 			$table->integer('access')->default(0);

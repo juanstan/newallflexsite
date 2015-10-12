@@ -2,14 +2,16 @@
 
 use Auth;
 use Input;
+use View;
 
 use App\Models\Entities\Pet;
 use App\Models\Entities\User;
 use App\Models\Entities\Vet;
-use App\Models\Repositories\PetRepositoryInterface;
-use App\Models\Repositories\PetReadingRepositoryInterface;
-use App\Models\Repositories\PetReadingSymptomRepositoryInterface;
-use App\Models\Repositories\VetRepositoryInterface;
+use App\Models\Repositories\PetRepository;
+use App\Models\Repositories\PetReadingRepository;
+use App\Models\Repositories\PetReadingSymptomRepository;
+use App\Models\Repositories\VetRepository;
+use App\Models\Repositories\PhotoRepository;
 use App\Http\Controllers\Controller;
 
 class RegisterController extends Controller {
@@ -19,21 +21,38 @@ class RegisterController extends Controller {
     protected $petRepository;
     protected $petReadingRepository;
     protected $petReadingSymptomRepository;
+    protected $photoRepository;
 
-	public function __construct(VetRepositoryInterface $vetRepository, PetRepositoryInterface $petRepository, PetReadingRepositoryInterface $petReadingRepository, PetReadingSymptomRepositoryInterface $petReadingSymptomRepository)
+	public function __construct(
+        VetRepository $vetRepository,
+        PetRepository $petRepository,
+        PetReadingRepository $petReadingRepository,
+        PetReadingSymptomRepository $petReadingSymptomRepository,
+        PhotoRepository $photoRepository
+    )
+
 	{
         $this->authVet = Auth::vet()->get();
         $this->vetRepository = $vetRepository;
         $this->petReadingRepository = $petReadingRepository;
         $this->petRepository = $petRepository;
         $this->petReadingSymptomRepository = $petReadingSymptomRepository;
-        $this->middleware('vetAuth', array('only'=>array('getAbout', 'postAbout', 'getAddress', 'postAddress')));
+        $this->photoRepository = $photoRepository;
+        $this->middleware('auth.vet',
+            array('only'=>
+                array(
+                    'getAbout',
+                    'postAbout',
+                    'getAddress',
+                    'postAddress'
+                )
+            ));
 	}
     
     public function getAbout()
     {
         $vet = $this->authVet;
-        return View::make('vetsignup.stage1')
+        return View::make('vetsignup.vetRegister')
             ->with(array(
                 'vet' => $vet
             ));
@@ -43,42 +62,38 @@ class RegisterController extends Controller {
     {
 
         $input = Input::all();
-        $id =  $this->authVet->id;
-        $validator = $this->vetRepository->getUpdateValidator($input, $id);
-
+        $vet =  $this->authVet;
+        $validator = $this->vetRepository->getUpdateValidator($input, $vet->id);
         if($validator->fails())
         {
-            return redirect()->route('vet.register.about')
+            return redirect()->back()
                 ->withErrors($validator)
                 ->withInput(Input::except('password'));
         }
 
-        if (Input::hasFile('image_path')){
-            $destinationPath = 'uploads/vets/'.$id;
-            if(!\File::exists($destinationPath)) {
-                \File::makeDirectory($destinationPath);
+        if (Input::hasFile('image_path')) {
+
+            $imageValidator = $this->photoRepository->getCreateValidator($input);
+
+            if ($imageValidator->fails()) {
+                return redirect()->back()
+                    ->withErrors($imageValidator)
+                    ->withInput();
             }
 
-            $extension = Input::file('image_path')->getClientOriginalExtension();
-            $fileName = rand(11111,99999).'.'.$extension;
+            $photo = array(
+                'title' => $vet->id,
+                'location' => $this->photoRepository->uploadVetImage($input['image_path'], $vet)
+            );
 
-            $height = \Image::make(Input::file('image_path'))->height();
-            $width = \Image::make(Input::file('image_path'))->width();
+            $photoId = $this->photoRepository->createForVet($photo, $vet);
 
-            if($width > $height) {
-                \Image::make(Input::file('image_path'))->crop($height, $height)->save($destinationPath.'/'.$fileName);
-            }
-            else {
-                \Image::make(Input::file('image_path'))->crop($width, $width)->save($destinationPath.'/'.$fileName);
-            }
-
-            $image_path = '/uploads/vets/'.$id.'/'.$fileName;
-
-            $input = array_merge($input, array('image_path' => $image_path));
+            unset($input['image_path']);
+            $input['photo_id'] = $photoId->id;
 
         }
 
-        if($this->vetRepository->update($this->authVet->id, $input) == false)
+        if($this->vetRepository->update($vet->id, $input) == false)
         {
             \App::abort(500);
         }
@@ -88,25 +103,25 @@ class RegisterController extends Controller {
 
     public function getAddress()
     {
-        return View::make('vetsignup.stage2');
+        $vet = $this->authVet;
+        return View::make('vetsignup.addressRegister')
+            ->with(array(
+                'vet' => $vet
+            ));
     }
 
     public function postAddress() // POST
     {
-
         $input = Input::all();
         $id =  $this->authVet->id;
         $validator = $this->vetRepository->getUpdateValidator($input, $id);
-
         if($validator->fails())
         {
             return redirect()->route('vet.register.about')
                 ->withErrors($validator)
                 ->withInput(Input::except('password'));
         }
-
-        $address = Input::get('address_1') . ' ' . Input::get('address_2') . ' ' . Input::get('city') . ' ' . Input::get('county') . ' ' . Input::get('zip');
-
+        $address = $input['address_1'] . ' ' . $input['address_2'] . ' ' . $input['city'] . ' ' . $input['county'] . ' ' . $input['zip'];
         $data_arr = geocode($address);
 
         if($data_arr) {

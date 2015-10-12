@@ -36,7 +36,12 @@ class AuthController extends Controller {
         $this->petReadingRepository = $petReadingRepository;
         $this->petRepository = $petRepository;
         $this->petReadingSymptomRepository = $petReadingSymptomRepository;
-        $this->middleware('vetAuth', array('only'=>array('getLogout')));
+        $this->middleware('auth.vet',
+            array('only'=>
+                array(
+                    'getLogout'
+                )
+            ));
 	}
     
     public function getIndex() {

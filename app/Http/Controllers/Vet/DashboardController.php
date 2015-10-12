@@ -44,7 +44,7 @@ class DashboardController extends Controller {
         $this->petRequestRepository = $petRequestRepository;
         $this->symptomRepository = $symptomRepository;
         $this->helpRepository = $helpRepository;
-        $this->middleware('vetAuth',
+        $this->middleware('auth.vet',
             array('only'=>
                 array(
                     'getIndex',
@@ -64,31 +64,30 @@ class DashboardController extends Controller {
     }
 
     public function getIndex() {
-            $this->petRepository->setUser($this->authVet);
-            $id = $this->authVet->id;
-            $symptoms = $this->symptomRepository->all();
-            $requests = $this->petRequestRepository->getAllByVetId($id);
-            $vet = $this->authVet;
-            $pets = $this->petRepository->all();
-            if ($this->authVet->confirmed != null) {
-                return View::make('vet.dashboard')
-                    ->with(array(
-                        'pets' => $pets, 
-                        'symptoms' => $symptoms, 
-                        'requests' => $requests, 
-                        'vet' => $vet
-                    ));
-            }
-            else {
-                return View::make('vet.dashboard')
-                    ->with(array(
-                        'not-verified' => '', 
-                        'pets' => $pets, 
-                        'symptoms' => $symptoms, 
-                        'requests' => $requests, 
-                        'vet' => $vet
-                    ));
-            }
+        $vet = $this->authVet;
+        $this->petRepository->setUser($vet);
+        $symptoms = $this->symptomRepository->all();
+        $requests = $this->petRequestRepository->getAllByVetId($vet->id);
+        $pets = $this->petRepository->all();
+        if ($vet->confirmed != null) {
+            return View::make('vet.dashboard')
+                ->with(array(
+                    'pets' => $pets,
+                    'symptoms' => $symptoms,
+                    'requests' => $requests,
+                    'vet' => $vet
+                ));
+        }
+        else {
+            return View::make('vet.dashboard')
+                ->with(array(
+                    'not-verified' => '',
+                    'pets' => $pets,
+                    'symptoms' => $symptoms,
+                    'requests' => $requests,
+                    'vet' => $vet
+                ));
+        }
     }
 
     public function getHelp() {
@@ -259,7 +258,7 @@ class DashboardController extends Controller {
     public function postReadingUpload()
     {
         $input = Input::all();
-        $vet = $this->authVet->id;
+        $vet = $this->authVet;
         $readingValidator = $this->petReadingRepository->getReadingUploadValidator($input);
         if ($readingValidator->fails()) {
             return redirect()->back()
@@ -267,7 +266,7 @@ class DashboardController extends Controller {
                 ->withInput();
         }
 
-        if($this->petReadingRepository->readingUpload($input, $vet))
+        if($this->petReadingRepository->readingUploadVet($input, $vet))
         {
             return redirect()->route('vet.dashboard');
         }

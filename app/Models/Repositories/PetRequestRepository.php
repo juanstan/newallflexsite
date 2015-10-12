@@ -72,7 +72,6 @@ class PetRequestRepository extends AbstractRepository implements PetRequestRepos
         ]);
     }
 
-
     public function getUpdateValidator($input)
     {
         return Validator::make($input,

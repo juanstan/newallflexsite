@@ -69,7 +69,6 @@ class RouteServiceProvider extends ServiceProvider
             }
         });
 
-
         Route::filter('auth.basic', function()
         {
             return Auth::basic();

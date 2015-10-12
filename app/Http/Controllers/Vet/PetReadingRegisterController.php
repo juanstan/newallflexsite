@@ -1,10 +1,14 @@
 <?php  namespace App\Http\Controllers\Vet;
 
-class PetReadingRegisterController extends \App\Http\Controllers\Controller {
+use View;
+
+use App\Http\Controllers\Controller;
+
+class PetReadingRegisterController extends Controller {
     
     public function getIndex()
     { 
-        return \View::make('vetsignup.stage3');
+        return View::make('vetsignup.readingUpload');
     }
 
 

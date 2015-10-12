@@ -35,7 +35,7 @@ class Vet extends \Eloquent implements AuthenticatableContract, CanResetPassword
         'units',
         'latitude',
         'longitude',
-        'image_path',
+        'photo_id',
         'password',
         'confirmation_code'
     ];
