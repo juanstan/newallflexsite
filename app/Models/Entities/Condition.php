@@ -1,6 +1,8 @@
 <?php namespace App\Models\Entities;
 
-class Condition extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+
+class Condition extends Model {
 
     protected $fillable = [
         'name',

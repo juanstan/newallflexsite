@@ -1,6 +1,8 @@
 <?php namespace App\Models\Entities;
 
-class Breed extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+
+class Breed extends Model {
 
     protected $fillable = [
         'name',

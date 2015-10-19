@@ -1,5 +1,6 @@
 <?php namespace App\Http\Middleware;
 
+use App\Models\Entities\Vet\Token;
 use Auth;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
@@ -31,24 +32,24 @@ class AuthenticateApiVet {
      */
     public function handle($request, Closure $next)
     {
-        $str_token = Request::header('X-Authorization');
+        $str_token = $request->header('X-Authorization') ?: $request->get('token');
         if($str_token == null)
         {
-            return Response::json(['error' => true, 'errors' => ['Authorization' => [Lang::get('error.auth.header-missing')]]], 400);
+            return response()->json(['error' => true, 'errors' => ['Authorization' => [\Lang::get('error.auth.header-missing')]]], 400);
         }
         else
         {
-            $token = Entities\Vet\Token::with('vet')
+            $token = Token::with('vet')
                 ->where('token', '=', $str_token)
                 ->first();
 
-            if($token == null || $token->expires_at->lt(\Carbon\Carbon::now()))
+            if($token == null || $token->expires_at->lt(Carbon::now()))
             {
-                return Response::json(['error' => true, 'errors' => ['Authorization' => [Lang::get('error.auth.invalid-key')]]], 401);
+                return response()->json(['error' => true, 'errors' => ['Authorization' => [\Lang::get('error.auth.invalid-key')]]], 401);
             }
 
-            Auth::setUser($token->vet);
-            $token->expires_at = \Carbon\Carbon::parse(Entities\Vet\Token::TOKEN_EXPIRY);
+            \Auth::user()->login($token->vet);
+            $token->expires_at = Carbon::parse(Token::TOKEN_EXPIRY);
             $token->save();
         }
 
