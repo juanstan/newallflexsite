@@ -6,13 +6,14 @@ use Validator;
 class PetRepository extends AbstractRepository implements PetRepositoryInterface
 {
     protected $classname = 'App\Models\Entities\Pet';
-    
-    protected $userRepositoryInterface;
+
+    protected $user;
+
+    protected $userRepository;
 
     public function __construct(UserRepositoryInterface $userRepositoryInterface)
     {
-        $this->user = $userRepositoryInterface;
-
+        $this->userRepository = $userRepositoryInterface;
     }
 
     public function all()
@@ -31,7 +32,6 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
         {
             return $this->user ? $this->user->pets()->findOrFail($id) : parent::get($id);
         }
-
     }
 
     public function getCreateValidator($input)
@@ -52,14 +52,13 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
 
     public function setUser($user)
     {
-        $this->user = is_numeric($user) ? $this->repository->get($user) : $user;
+        $this->user = is_numeric($user) ? $this->userRepository->get($user) : $user;
 
         return $this;
     }
 
     public function create($input)
     {
-
         $pet = parent::create($input);
 
         if($this->user)
