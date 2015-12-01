@@ -60,7 +60,7 @@ class Handler extends ExceptionHandler {
                     $code = $e->getStatusCode();
                 }
 
-                $data = ['error' => ['http' => ['error.http.' . $code]]];
+                $data = ['error' => true, 'errors' => ['http' => ['error.http.' . $code]]];
 
                 if(app('app')->environment('production') == false)
                 {
