@@ -42,7 +42,7 @@ class Handler extends ExceptionHandler {
 		{
             if($this->isModelNotFoundException($e))
             {
-                $data = ['error' => ['model' => ['error.model.404']]];
+                $data = ['error' => true, 'errors' => ['model' => ['error.model.404']]];
 
                 if(app('app')->environment('production') == false)
                 {
