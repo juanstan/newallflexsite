@@ -6,7 +6,6 @@ use Lang;
 use URL;
 
 use App\Models\Entities\Pet;
-use App\Models\Entities\SensorReading;
 use App\Models\Repositories\PetReadingRepositoryInterface;
 use App\Models\Repositories\PetRepositoryInterface;
 use App\Http\Controllers\Controller;
@@ -122,9 +121,11 @@ class PetReadingController extends Controller
         $query = $this->petRepository->get($pet_id);
         $data['microchip_number'] = $query->microchip_number;
         if ($this->petRepository->update($newPetId, $data)) {
+
+            // reassign readings
+            $this->petReadingRepository->reassignReadings($pet_id, $newPetId);
+
             $this->petRepository->delete($pet_id);
-            $sensorReading = $this->sensorReadingRepository->getByPetId($pet_id);
-            $this->sensorReadingRepository->update($sensorReading->id, array('pet_id' => $newPetId));
         }
         return response()->json(['error' => false,
             'result' => Lang::get('general.Pet microchip number assigned')]);
