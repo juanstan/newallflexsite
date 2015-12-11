@@ -38,7 +38,10 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
     {
         return Validator::make($input,
         [
-
+            'name' 			=> ['sometimes','required'],
+            'date_of_birth' => ['sometimes','required','date'],
+            'weight'     	=> ['sometimes','required'],
+            'gender'		=> ['sometimes','required']
         ]);
     }
 
