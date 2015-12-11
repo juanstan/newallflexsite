@@ -41,12 +41,14 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 	{
 		return \Validator::make($input,
 		[
-            'email' => ['sometimes','required','email','unique:vets,email,'.$id],
-			'first_name'    => ['sometimes','required'],
-			'last_name'     => ['sometimes','required'],
-            'old_password'      => ['min:6'],
-            'password'      => ['min:6','confirmed','different:old_password'],
-            'password_confirmation' => ['min:6'],
+            'email' 					=> ['sometimes','required','email','unique:vets,email,'.$id],
+			'first_name'    			=> ['sometimes','required'],
+			'last_name'     			=> ['sometimes','required'],
+			'zip'						=> ['sometimes','required'],
+			'address_1'					=> ['sometimes','required'],
+			'old_password'  			=> ['min:6'],
+            'password'      			=> ['min:6','confirmed','different:old_password'],
+            'password_confirmation' 	=> ['min:6'],
 		]);
 	}
 }
