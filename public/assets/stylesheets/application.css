@@ -6275,4 +6275,7 @@ input[type="radio"] {
 .nav {
   display: block; }
 
+.collapse-group {
+  padding-bottom: 2em; }
+
 /*# sourceMappingURL=application.css.map */

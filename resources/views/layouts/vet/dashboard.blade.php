@@ -60,16 +60,6 @@
 
 
           });
-          var md = new Dropzone(".dropzone", {
-
-          });
-          md.on("complete", function (file) {
-              if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-                  window.setTimeout(function(){window.location.reload()}, 3000);
-              }
-
-
-          });
         </script>
     
 </html>

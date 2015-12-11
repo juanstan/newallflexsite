@@ -4,12 +4,6 @@
     <?php
     $temperaturePref = \Auth::vet()->get()->units;
     ?>
-    <div class="row col-md-11 float-none col-centered collapse-group" >
-        <div class="collapse" id="file-upload">
-            {!! Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) !!}
-            {!! Form::close() !!}
-        </div>
-    </div>
     <div class="row col-centered float-none" >
         <div class="col-md-4" >
             @if($vet->sensorReadings->count())

@@ -15,7 +15,6 @@
 
         <ul class="nav desktop mobile navbar-nav navbar-left">
             <li>{!! HTML::linkroute('vet.dashboard', Lang::get('general.Overview')) !!}</li>
-
             <li class="desktop" ><a href="#upload" id="upload-toggle" data-toggle="collapse" data-target="#file-upload"><i class="fa fa-cloud-upload"></i> {!! Lang::get('general.Upload') !!}</a></li>
         </ul>
         <ul class="nav desktop mobile navbar-nav navbar-right">
@@ -25,3 +24,10 @@
         </ul>
     </div><!-- /.navbar-collapse -->
 </nav>
+
+<div class="row col-md-11 float-none col-centered collapse-group" >
+    <div class="collapse" id="file-upload">
+        {!! Form::open(array('files'=> 'true', 'route' => 'user.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) !!}
+        {!! Form::close() !!}
+    </div>
+</div>

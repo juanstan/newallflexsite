@@ -35,7 +35,7 @@ module.exports = function(grunt) {
       js: {
         files: [
           './bower_components/jquery/dist/jquery.js',
-          './bower_components/bootstrap-sass-official/vendor/assets/javascripts/bootstrap.js',
+          './bower_components/bootstrap-sass-official/assets/javascripts/bootstrap.js',
           './resources/assets/javascripts/*.js'
           ],
         tasks: ['concat:js', 'uglify:js']

@@ -38,20 +38,13 @@ Route::get('/', function () {
 });
 
 Route::group(['prefix' => 'user', 'namespace' => 'User'], function () {
-
     include 'user_routes.php';
-
 });
 
 Route::group(['prefix' => 'vet', 'namespace' => 'Vet'], function () {
-
     include 'vet_routes.php';
-
 });
 
-
 Route::group(['prefix' => 'api', 'namespace' => 'Api'], function () {
-
     include 'api_routes.php';
-
 });

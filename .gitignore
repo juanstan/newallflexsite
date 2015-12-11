@@ -5,3 +5,4 @@ Homestead.yaml
 .idea/*
 .phpstorm.meta.php
 _ide_helper.php
+.sass-cache/
