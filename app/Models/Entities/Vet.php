@@ -56,7 +56,7 @@ class Vet extends Model implements AuthenticatableContract, CanResetPasswordCont
         return $this->hasMany(Request::class, 'vet_id');
     }
     
-    public function requestedPet()
+    public function requestedPets()
     {
         return $this->belongsToMany(Pet::class, 'pet_requests')->withTimestamps();
     }
