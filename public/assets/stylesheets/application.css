@@ -5647,6 +5647,9 @@ body {
 .inline-block {
   display: inline-block !important; }
 
+.bottom2 {
+  margin-bottom: 1em; }
+
 .dash-scrollable {
   max-height: 430px;
   overflow-y: auto;
@@ -6277,5 +6280,8 @@ input[type="radio"] {
 
 .collapse-group {
   padding-bottom: 2em; }
+
+.pet-name-dropdown h4 {
+  line-height: 1.5em; }
 
 /*# sourceMappingURL=application.css.map */
