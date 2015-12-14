@@ -5647,6 +5647,21 @@ body {
 .npaddingleft {
   padding-left: 0; }
 
+.npaddingright {
+  padding-right: 0; }
+
+.paddingheight5px {
+  padding-top: 5px;
+  padding-bottom: 5px; }
+
+.browse-tag {
+  margin: 0.7em;
+  display: block; }
+
+.removemarginlaterals15 {
+  margin-left: -15px;
+  margin-right: -15px; }
+
 .inline-block {
   display: inline-block !important; }
 

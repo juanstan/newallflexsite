@@ -24,7 +24,7 @@
                         {!! Form::button(Lang::get('general.Browse'), array('class' => 'btn btn-file pull-left', 'onclick' => '$("#ufile").click()' )) !!}
                         {!! Form::file('image_path', array('class' => 'hide', 'id'=>'ufile')) !!}
                     @endif
-                    <small class="small-left-buffer">{!! Lang::get('general.JPEG or PNG 4mb file limit') !!}</small>
+                    <small class="small-left-buffer browse-tag">{!! Lang::get('general.JPEG or PNG 4mb file limit') !!}</small>
                 </div>
             </div>
             <div class="form-group">
@@ -49,19 +49,19 @@
             <div class="form-group">
                 {!! Form::label('old_password', Lang::get('general.Password'), array('class' => 'col-sm-4 control-label')) !!}
                 <div class="col-sm-8">
-                    {!! Form::password('old_password', array('class' => 'small-top-buffer form-control text-left')) !!}
+                    {!! Form::password('old_password', array('class' => 'form-control text-left')) !!}
                 </div>
             </div>
             <div class="form-group">
                 {!! Form::label('password', Lang::get('general.New password'), array('class' => 'col-sm-4 control-label')) !!}
                 <div class="col-sm-8">
-                    {!! Form::password('password', array('class' => 'small-top-buffer form-control text-left')) !!}
+                    {!! Form::password('password', array('class' => 'form-control text-left')) !!}
                 </div>
             </div>
             <div class="form-group">
                 {!! Form::label('password_confirmation', Lang::get('general.Retype password'), array('class' => 'col-sm-4 control-label')) !!}
                 <div class="col-sm-8">
-                    {!! Form::password('password_confirmation', array('class' => 'small-top-buffer form-control text-left')) !!}
+                    {!! Form::password('password_confirmation', array('class' => 'form-control text-left')) !!}
                 </div>
             </div>
             @endif
@@ -99,22 +99,25 @@
     <div class="jumbotron text-center" >
         <div class="col-md-12 text-left" >
             <div class="top-buffer mobile" ></div>
-            <h2 class="top-none">{!! Lang::get('general.Can&#39;t find your vet in our database?') !!}</h2>
-            <p>{!! Lang::get('general.Fill out your vet&#39;s email below and we will send them an invitation') !!}</p>
+            <h2 class="top-none removemarginlaterals15">{!! Lang::get('general.Can&#39;t find your vet in our database?') !!}</h2>
+            <p class="removemarginlaterals15">{!! Lang::get('general.Fill out your vet&#39;s email below and we will send them an invitation') !!}</p>
         </div>
-        <div class="form-horizontal">
+        <div class="form-horizontal col-md-12">
             {!! Form::open(array('route' => 'user.dashboard.invite', 'method' => 'post' )) !!}
             <div class="form-group">
-                {!! Form::label('email', Lang::get('general.Email address'), array('class' => 'col-sm-4 control-label')) !!}
-                <div class="col-sm-5">
+                <div class="col-sm-3 npaddingleft npaddingright">
+                {!! Form::label('email', Lang::get('general.Email address'), array('class' => 'col-sm-12 control-label npaddingleft npaddingright')) !!}
+                </div>
+                <div class="col-sm-6 npaddingleft">
                     {!! Form::email('email', '', array('class' => 'form-control text-left')) !!}
                 </div>
                 <div class="top-buffer mobile" ></div>
                 <div class="col-sm-3">
-                    {!! Form::submit(Lang::get('general.Submit'), array('class' => 'btn btn-default btn-lg pull-right')) !!}
+                    {!! Form::submit(Lang::get('general.Submit'), array('class' => 'btn btn-default btn-lg pull-right paddingheight5px')) !!}
                 </div>
             </div>
         </div>
+        <div class="clearfix"></div>
     </div>
 </div>
 @stop
