@@ -26,11 +26,11 @@ $temperaturePref = $user->units;
                                 @foreach ($pets as $pet)
                                     @if ($pet->microchip_number == null)
                                         <li data-id="{!! $pet->id !!}" ><a href="#">
-                                                <div class="row" >
+                                                <div class="row choose-pet" >
                                                     <div class="col-md-3 small-padding" >
                                                         {!! HTML::image(isset($pet->photo_id) ? $pet->photo->location : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
                                                     </div>
-                                                    <div class="col-md-9" >
+                                                    <div class="col-md-9 pet-name-dropdown" >
                                                         <h4>{!! $pet->name !!}</h4>
                                                     </div>
                                                 </div>
