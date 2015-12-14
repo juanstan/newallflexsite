@@ -28,8 +28,14 @@
 body
     font-family: $font-stack
 
+.npaddingleft
+    padding-left: 0
+
 .inline-block
     display: inline-block !important
+
+.bottom2
+    margin-bottom: 1em
 
 .dash-scrollable
     max-height: 430px
@@ -355,6 +361,9 @@ label
     padding: 10px
     position: relative
     min-height: 500px
+    .assigned-title-wrapper
+        h4
+            color: #7596a1
 
 .ellipsis
     overflow: hidden
@@ -394,6 +403,11 @@ label
     &:hover, &:focus
         color: $secondary-color
         background-color: #fff !important
+
+
+.dropdown-menu
+    .choose-pet
+        padding-top: 0.5em
 
 .btn.top-right
     position: absolute
@@ -742,5 +756,11 @@ input[type="radio"]
 .collapse-group
     padding-bottom: 2em
 
+.pet-name-dropdown
+    h4
+        line-height: 1.5em
 
 
+.dashboard
+    .pet-name
+        font-size: 16px

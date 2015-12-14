@@ -5644,6 +5644,9 @@ button.close {
 body {
   font-family: "HelveticaNeueLT-Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 
+.npaddingleft {
+  padding-left: 0; }
+
 .inline-block {
   display: inline-block !important; }
 
@@ -5932,6 +5935,8 @@ label {
   padding: 10px;
   position: relative;
   min-height: 500px; }
+  .jumbotron.dashboard .assigned-title-wrapper h4 {
+    color: #7596a1; }
 
 .ellipsis {
   overflow: hidden;
@@ -5969,6 +5974,9 @@ label {
   .dropdown-toggle:hover, .dropdown-toggle:focus {
     color: #71787f;
     background-color: #fff !important; }
+
+.dropdown-menu .choose-pet {
+  padding-top: 0.5em; }
 
 .btn.top-right {
   position: absolute;
@@ -6283,5 +6291,8 @@ input[type="radio"] {
 
 .pet-name-dropdown h4 {
   line-height: 1.5em; }
+
+.dashboard .pet-name {
+  font-size: 16px; }
 
 /*# sourceMappingURL=application.css.map */

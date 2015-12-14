@@ -25,6 +25,7 @@ return array (
   'Address line 2' => 'Address line 2',
   'Already have an account?' => 'Already have an account?',
   'Approved pets' => 'Approved pets',
+  'Assigned pets' => 'Assigned pets',
   'Are you sure you want to remove this pet?' => 'Are you sure you want to remove this pet?',
   'Are you sure you want to remove this vet?' => 'Are you sure you want to remove this vet?',
   'Average temperature' => 'Average temperature',

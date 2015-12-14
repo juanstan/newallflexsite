@@ -44,8 +44,8 @@
                                     @if($vet->latitude != null)
                                         <iframe width="100%" height="150" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q={!! $vet->latitude !!}%20{!! $vet->longitude !!}&key=AIzaSyD6-_l8AQw9Hyc_Cpi-HX2uZm2MiQuKH3I"></iframe>
                                     @endif
-                                <div class="col-md-12 float-none text-left" >
-                                    <h3 class="bottom-none" >{!! Lang::get('general.Approved pets') !!}</h3>
+                                <div class="col-md-12 float-none text-left assigned-title-wrapper npaddingleft" >
+                                    <h4>{!! Lang::get('general.Assigned pets') !!}</h4>
                                 </div>
                                 @foreach ($requests as $petRequest)
                                     @foreach ($pets as $pet)
@@ -53,8 +53,8 @@
                                         <a href="{!! URL::route('user.dashboard.deactivatePet', $petRequest->id) !!}" >
                                             <div class="col-sm-3 text-center small-padding request-pet" >
                                                 {!! HTML::image('/images/deleted.png', '', array('class' => 'deactive hidden img-responsive img-circle', 'width' => '100%')) !!}
-                                                {!! HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
-                                                <h4>{!! $pet->name !!}</h4>
+                                                {!! HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image-approved.png', $pet->name, array('class' => 'img-responsive', 'width' => '100%')) !!}
+                                                <h4 class="pet-name">{!! $pet->name !!}</h4>
                                             </div>
                                         </a>
                                         @elseif($petRequest->pet_id == $pet->id && $petRequest->vet_id == $vet->id && $petRequest->approved == 0)
@@ -62,7 +62,7 @@
                                             <div class="col-sm-3 text-center small-padding relative" >
                                                 {!! HTML::image('/images/deleted.png', '', array('class' => 'deactive img-responsive img-circle', 'width' => '100%')) !!}
                                                 {!! HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
-                                                <h4>{!! $pet->name !!}</h4>
+                                                <h4 class="pet-name">{!! $pet->name !!}</h4>
                                             </div>
                                         </a>
                                         @endif
