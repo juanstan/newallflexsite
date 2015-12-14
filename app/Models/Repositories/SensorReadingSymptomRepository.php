@@ -2,6 +2,7 @@
 
 use App\Models\Entities\PetCondition;
 use App\Models\Entities\Condition;
+use App\Models\Entities\SensorReadingSymptom;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -53,7 +54,7 @@ class SensorReadingSymptomRepository extends AbstractRepository implements Senso
 
     public function removeSymptomById($readingId, $symptomId)
     {
-        return $this->query()->where(['reading_id', '=', $readingId, 'symptom_id' => $symptomId])->delete();
+        return $this->query()->where(['reading_id'=> $readingId, 'symptom_id' => $symptomId])->delete();
     }
    
 }

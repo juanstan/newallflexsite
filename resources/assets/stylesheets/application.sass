@@ -38,9 +38,16 @@ body
     padding-top: $paddingheight5px
     padding-bottom: $paddingheight5px
 
+.margintop0-25
+    margin-top: 0.25em
+
 .browse-tag
     margin: 0.7em
     display: block
+
+.color73
+    color: #737373 !important
+
 
 .removemarginlaterals15
     margin-left: $removemarginlaterals15
@@ -357,7 +364,7 @@ label
     background-color: #fff
 
 .navbar-collapse
-    padding: 10px 40px
+    padding: 15px 40px
 
 .navbar-default 
     .navbar-nav
@@ -403,7 +410,7 @@ label
 
     .dropdown-menu
         border-radius: 4px !important
-        margin-top: 5px
+        margin-top: 31px
         right: 0 !important
         left: inherit
 
@@ -414,6 +421,7 @@ label
     padding: 7px 12px !important
     background-color: #fff
     border-radius: 4px 4px 4px 4px !important
+    height: 3.2em
 
     &:hover, &:focus
         color: $secondary-color
@@ -538,12 +546,23 @@ label
 
     p
         letter-spacing: normal
-        margin-top: -18%
+        float: left
+        margin-top: -2.5em
+        width: 100%
 
-    span
+    span.tempsymbol
         font-size: 0.6em
         vertical-align: top
         margin-left: 0.1em
+        float: left
+        margin-top: -0.25em
+
+    .temp
+        letter-spacing: -0.03em
+        font-weight: lighter
+        font-size: 1em
+        float: left
+        margin-left: 0.38em
 
 .small-score-text 
     margin: auto
@@ -572,6 +591,13 @@ label
 .prev-reading
     font-size: 1.2em !important
 
+.noreadingyet
+    background: url("/images/noreadings.png") no-repeat
+    padding: 0.65em
+    h4
+        color: #888
+
+    
 .float-none
     float: none !important
 
@@ -740,6 +766,12 @@ input[type="radio"]
 
 .symptom-pill
     width: 100%
+    display: inline
+    a
+        padding: 7px 15px
+
+.symtom-pill
+    padding: 0 36%
 
 .pill-remove
     &:hover a:before

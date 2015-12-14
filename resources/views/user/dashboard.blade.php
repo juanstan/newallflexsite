@@ -15,7 +15,7 @@ $temperaturePref = $user->units;
         <div class="row col-md-11 float-none top-buffer col-centered desktop" >
             <div class="alert alert-grey alert-dismissible" role="alert">
                 <button type="button" class="close small-top-buffer" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="inline-block small-top-buffer">{!! Lang::get('general.1 unknown microchip found, would you like to create a new pet?') !!}</h4>
+                <h4 class="inline-block small-top-buffer color73">{!! Lang::get('general.1 unknown microchip found, would you like to create a new pet?') !!}</h4>
                     {!! Form::open(array('route' => array('user.dashboard.assign', $pet->id), 'method' => 'post', 'class' => 'pull-right')) !!}
                         <div class="btn-group btn-input clearfix pull-right">
                             <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown">
@@ -58,8 +58,8 @@ $temperaturePref = $user->units;
                         {!! HTML::image(isset($pet->photo_id) ? $pet->photo->location : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
                     </div>
                     <div class="tab-content ">
-                        <div class="col-xs-9 active tab-pane fade in small-padding" id="pet-name{!! $pet->id !!}" >
-                            <h3 class="top-none bottom-none text-left">{!! isset($pet->name) ? $pet->name : 'Unknown' !!}</h3>
+                        <div class="col-xs-9 active tab-pane fade in small-padding margintop0-25" id="pet-name{!! $pet->id !!}" >
+                            <h3 class="top-none bottom-none text-left color73">{!! isset($pet->name) ? $pet->name : 'Unknown' !!}</h3>
                             <h4 class="top-none text-left">{!! isset($pet->microchip_number) ? $pet->microchip_number : Null !!}</h4>
                         </div>
                         <div class="col-xs-9 tab-pane fade in small-padding top-buffer" id="pet-photo{!! $pet->id !!}" >
@@ -185,7 +185,7 @@ $temperaturePref = $user->units;
                                                 <div class="small-score-text">
                                                     <p>{!! Lang::get('general.Avg') !!}.</p>
                                                     @if(!empty($allReadingTemps))
-                                                        {!! getTemperatureColor($readingAverage, $temperaturePref)['temp'] !!}<span>&#176;</span>
+                                                        {!! getTemperatureColor($readingAverage, $temperaturePref)['temp'] !!}<span  class="tempsymbol">&#176;</span>
                                                     @else
                                                        --.-<span>&#176;</span>
                                                     @endif
@@ -194,12 +194,15 @@ $temperaturePref = $user->units;
                                         </div>
                                         <div class="circle-inner">
                                              <div class="score-text" style="color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}" >
-                                                    {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] !!}<span>&#176;</span>
-                                                 <p>@if(date("d/m/y",strtotime($sensorReading->reading_time)) == date("d/m/y"))
+                                                 <span class="temp">{!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] !!}</span><span  class="tempsymbol">&#176;</span>
+                                                 <div class="clearfix"></div>
+                                                 <p>
+                                                     @if(date("d/m/y",strtotime($sensorReading->reading_time)) == date("d/m/y"))
                                                      {!! Lang::get('general.today at') !!} {!! date("h.ia",strtotime($sensorReading->reading_time)) !!}
-                                                 @else
-                                                    {!! date("d/m/y",strtotime($sensorReading->reading_time)) !!} {!! Lang::get('general.at') !!} {!! date("h.ia",strtotime($sensorReading->reading_time)) !!}
-                                                 @endif</p>
+                                                     @else
+                                                        {!! date("d/m/y",strtotime($sensorReading->reading_time)) !!} {!! Lang::get('general.at') !!} {!! date("h.ia",strtotime($sensorReading->reading_time)) !!}
+                                                     @endif
+                                                 </p>
                                              </div>
                                         </div>
                                     </div>
@@ -216,8 +219,8 @@ $temperaturePref = $user->units;
                                 </div>
                                 <div class="circle-inner">
                                     <div class="score-text" >
-                                        --.-<span>&#176;</span>
-                                        <p>{!! Lang::get('general.No readings available') !!}</p>
+                                        <span class="temp">--.-</span><span class="tempsymbol">&#176;</span>
+                                        <p>{!! Lang::get('general.No readings') !!}</p>
                                     </div>
                                 </div>
                             </div>
@@ -231,7 +234,9 @@ $temperaturePref = $user->units;
                                                 @foreach ($sensorReading->sensorReadingSymptoms as $sensorReadingSymptom)
                                                 <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="{!! URL::route('user.dashboard.symptomRemove', $sensorReadingSymptom->reading_id . '/' . $sensorReadingSymptom->symptom_id) !!}"><span>{!! $sensorReadingSymptom->symptom->name !!}</span></a></li>
                                                 @endforeach
-                                                <li role="presentation" class="symptom-pill small-top-buffer active" ><a href="#" data-toggle="collapse" data-target="#symptom-list{!! $pet->id !!}" >{!! Lang::get('general.+ Add') !!}</a></li>
+                                            </ul>
+                                            <ul class="nav nav-pills text-center symptom-pills">
+                                                <li role="presentation" class="symptom-pill-add small-top-buffer active" ><a href="#" data-toggle="collapse" data-target="#symptom-list{!! $pet->id !!}" >{!! Lang::get('general.+ Add') !!}</a></li>
                                             </ul>
                                         @endforeach
                                     @else
@@ -258,8 +263,8 @@ $temperaturePref = $user->units;
                                             </div>
                                         @endforeach
                                     @else
-                                        <div class="col-md-8 small-padding" >
-                                            <h4>{!! Lang::get('general.No Previous Readings Available') !!}</h4>
+                                        <div class="col-md-8 small-padding noreadingyet" >
+                                            <h4>{!! Lang::get('general.No readings yet') !!}</h4>
                                         </div>
                                     @endif
                                 </div>
