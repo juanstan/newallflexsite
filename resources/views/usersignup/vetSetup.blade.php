@@ -8,10 +8,10 @@
         <div class="col-md-12 col-centered float-none" >
             <div class="form-horizontal top-buffer">
                 <div class="row col-centered float-none top-buffer vcenterwrap" >
-                    <div class="col-md-4 desktop vcenter right-none left-none" >
-                        {!! HTML::image('images/vet-stock.png', 'Springer', array('class' => '', 'width' => '100%')) !!}
+                    <div class="col-md-5 desktop vcenter right-none left-none" >
+                        {!! HTML::image('images/vet-image-with-dog.png', 'Springer', array('class' => '', 'width' => '100%')) !!}
                     </div>
-                    <div class="col-md-8 vcenter" >
+                    <div class="col-md-7 vcenter" >
                         <h2 class="top-none text-left text-center-xs">{!! Lang::get('general.Connect with your vet') !!}</h2>
                         <div class="row" >
                             <div class="col-md-12 text-left" >
