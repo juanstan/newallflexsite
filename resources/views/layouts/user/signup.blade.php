@@ -24,7 +24,7 @@
             <div class="row large-top-buffer" >
                 <div class="col-md-9 col-centered float-none" >
                     <div class="jumbotron text-center" >
-                                {!! HTML::image('images/logo-pet.png', 'a Logo', array('class' => 'signup-logo')) !!}
+                                {!! HTML::image('images/suresenselogo.png', 'a Logo', array('class' => 'signup-logo')) !!}
                         <ul id="menu" class="nav nav-tabs nav-justified">
                             <li class="h2">{!! HTML::linkroute('user.register.about', Lang::get('general.About you')) !!}</li>
                             <li class="h2">{!! HTML::linkroute('user.register.pet', Lang::get('general.Your pets')) !!}</li>

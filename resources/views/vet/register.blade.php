@@ -4,7 +4,7 @@
     <div class="row large-top-buffer" >
         <div class="col-md-6 col-centered float-none" >
             <div class="jumbotron text-center" >
-                {!! HTML::image('images/logo-vet.png', 'a Logo', array('class' => 'signup-logo')) !!}
+                {!! HTML::image('images/suresensevetconnectlogo.png', 'a Logo', array('class' => 'signup-logo')) !!}
                 <h2>{!! Lang::get('general.Sign up to Vet Connect') !!}</h2>
                 <ul class="nav mobile desktop nav-pills top-buffer">
                     <li>{!! HTML::linkRoute('user', Lang::get('general.Pet owner')) !!}</li>

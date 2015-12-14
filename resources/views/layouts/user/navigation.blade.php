@@ -9,7 +9,7 @@
         </button>
 
     </div>
-    <div class="navbar-brand">{!! HTML::image('images/logo-pet.png', 'Logo', array('width' => '60px')) !!}</div>
+    <div class="navbar-brand">{!! HTML::image('images/suresense-logo.png', 'Logo', array('width' => '197px')) !!}</div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="navigationbar">
 

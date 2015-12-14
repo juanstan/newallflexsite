@@ -23,8 +23,7 @@ class SensorReading extends Model implements AuthenticatableContract, CanResetPa
         'device_id',
         'temperature',
         'reading_time',
-        'average',
-        'pet_id'
+        'average'
     ];
     
     public function pet()

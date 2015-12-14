@@ -4,7 +4,7 @@
     <div class="row large-top-buffer" >
         <div class="col-md-6 col-centered float-none" >
             <div class="jumbotron text-center" >
-                {!! HTML::image('images/logo-pet.png', 'a Logo', array('class' => 'signup-logo')) !!}
+                {!! HTML::image('images/suresenselogo.png', 'a Logo', array('class' => 'signup-logo')) !!}
                 <h2>{!! Lang::get('general.Sign up to PetConnect') !!}</h2>
 
                 <ul class="nav mobile desktop nav-pills top-buffer">
