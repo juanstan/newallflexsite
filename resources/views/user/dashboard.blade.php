@@ -49,7 +49,13 @@ $temperaturePref = $user->units;
     @endif
 @endforeach
 <div class="row col-md-12 col-centered float-none top-buffer" >
-    @foreach ($pets as $pet)
+    <div class="row">
+    @foreach ($pets as $k=>$pet)
+        <!--Grouping Pets in different rows -->
+        @if (!fmod($k,3))
+            </div><div class="row">
+        @endif
+
         <div class="col-md-4" >
             <div class="top-buffer mobile" ></div>
             <div class="row" >
@@ -539,6 +545,7 @@ $temperaturePref = $user->units;
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 </div>

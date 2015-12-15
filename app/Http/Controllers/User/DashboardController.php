@@ -5,6 +5,8 @@ use Input;
 use Lang;
 use Auth;
 
+use Carbon\Carbon;
+
 use App\Models\Entities\Pet;
 use App\Models\Entities\User;
 use App\Models\Entities\Vet;
@@ -402,12 +404,51 @@ class DashboardController extends Controller
 
         $pet = $this->petRepository->create($input);
 
+        //We need to assign this new pet to all user vets
+        $this->assignPetToMyVets($pet->id);
+
         if ($pet == null) {
             \App::abort(500);
         }
 
         return redirect()->route('user.dashboard');
     }
+
+
+    /*
+     * Function to assign a pet to all Vet (for the loggedin user)
+     *
+     * @paran int $iPetID   The pet ID
+     *
+     * @return  void
+     */
+    private function assignPetToMyVets($iPetID)
+    {
+        $user = $this->authUser;
+        $vets=[];
+
+        foreach ($this->petRequestRepository->getAllByUserId($user->id) as $petRequest){
+            if (in_array($petRequest->vet_id,  $vets)){
+                continue;
+
+            } else {
+                $this->petRequestRepository->create(
+                    array(
+                        'vet_id'        =>  $petRequest->vet_id,
+                        'user_id'       =>  $user->id,
+                        'pet_id'        =>  $iPetID,
+                        'created_at'    =>  Carbon::now()
+                    )
+                );
+
+                array_push($vets, $petRequest->vet_id);
+
+            }
+
+        }
+
+    }
+
 
     public function getRemovePet($petId)
     {

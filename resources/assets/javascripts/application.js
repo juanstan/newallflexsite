@@ -208,6 +208,5 @@ var options = {
         var chart1 = new Highcharts.Chart(chart1Options);
     });
 });
-$( document ).ready(function() {
 
-});
+$( document ).ready(function() {});

@@ -48,8 +48,7 @@
               reader.onload = function (e) {
                   $('.image-placeholder')
                           .attr('src', e.target.result)
-                          .width(100)
-                          .height(100);
+                          .width(100);
               };
               reader.readAsDataURL(input.files[0]);
           }
