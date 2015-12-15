@@ -482,9 +482,9 @@ $temperaturePref = $user->units;
                     <div class="row" >
                         <div class="col-md-12" >
                             <ul class="nav nav-pills text-left">
-                                <li class="disabled"><a href="#latest" data-toggle="pill" data-target="" >{!! Lang::get('general.Latest') !!}</a></li>
-                                <li class="disabled" ><a href="#reports" data-toggle="pill" data-target="">{!! Lang::get('general.Reports') !!}</a></li>
-                                <li class="pull-right active" ><a href="#edit" data-toggle="pill" data-target=""><i class="fa fa-plus"></i> {!! Lang::get('general.<i class="fa fa-cog"></i> Edit') !!}</a></li>
+                                <li class="disabled"><a href="#latest" data-target="" >{!! Lang::get('general.Latest') !!}</a></li>
+                                <li class="disabled" ><a href="#reports" data-target="">{!! Lang::get('general.Reports') !!}</a></li>
+                                <li class="disabled pull-right active" ><a href="#edit" data-target=""><i class="fa fa-plus"></i> {!! Lang::get('general.<i class="fa fa-cog"></i> Edit') !!}</a></li>
                             </ul>
                         </div>
                     </div>
