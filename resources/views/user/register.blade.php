@@ -13,7 +13,7 @@
                 </ul>
                     {!! Form::open(array('route' => 'user.create', 'method' => 'post', 'class' => 'top-buffer')) !!}
 
-                    {!!  Form::text('email', Input::old('email'), array('class' => 'form-control', 'placeholder' => 'Email address')) !!}
+                    {!! Form::text('email', Input::old('email'), array('class' => 'form-control', 'placeholder' => 'Email address')) !!}
 
                     {!! Form::password('password', array('class' => 'small-top-buffer form-control', 'placeholder' => 'Create Password')) !!}
 

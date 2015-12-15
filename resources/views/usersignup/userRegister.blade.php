@@ -10,7 +10,7 @@
             {!! Form::open(array('files'=> 'true', 'route' => 'user.register.about', 'method' => 'post' )) !!}
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8 text-left">
-                        {!! HTML::image(isset($user->photo_id)?$user->photo->location:'/images/grey-circle.png', '', array('class' => 'image-placeholder img-responsive img-centered img-circle')) !!}
+                        {!! HTML::image(isset($user->photo_id) ? $user->photo->location:'/images/grey-circle.png', '', array('class' => 'image-placeholder img-responsive img-centered img-circle', 'width' => '100px')) !!}
                     </div>
                 </div>
                 <div class="form-group">
