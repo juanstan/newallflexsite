@@ -28,13 +28,13 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 	{
 		return Validator::make($input,
 		[
-			'first_name'    => [],
-			'last_name'     => [],
-			'email' => ['required','email','unique:users'],
-            'telephone' => [],
-            'password'      => ['required','min:6','confirmed'],
+			'first_name'    		=> [],
+			'last_name'     		=> [],
+			'email' 				=> ['required','email','unique:users,deleted_at,NULL'],
+            'telephone' 			=> [],
+            'password'      		=> ['required','min:6','confirmed'],
             'password_confirmation' => ['required','min:6'],
-            'access' => [],
+            'access' 				=> [],
 		]);
 	}
 
@@ -219,7 +219,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 	{
 		return Validator::make($input,
 		[
-			'email' 				=>	['sometimes','required','email','unique:users,email,'.$id],
+			'email' 				=>	['sometimes','required','email','unique:users,email,'.$id.',id,deleted_at,NULL'],
 			'first_name'			=>	['sometimes','required'],
 			'last_name'				=>	['sometimes','required'],
 			'telephone'				=>	['sometimes','required'],
