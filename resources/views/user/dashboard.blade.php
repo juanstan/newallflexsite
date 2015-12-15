@@ -451,6 +451,7 @@ $temperaturePref = $user->units;
             </div>
         </div>
     @endforeach
+
     <div class="col-md-4" >
         <div class="tab-content ">
             <div  class="tab-pane active fade in" id="newPet">
@@ -539,6 +540,7 @@ $temperaturePref = $user->units;
             </div>
         </div>
     </div>
+
 </div>
 <div class="large-top-buffer" ></div>
 @stop

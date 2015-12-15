@@ -40,6 +40,20 @@ class PetRequestRepository extends AbstractRepository implements PetRequestRepos
         return $this->query()->where('user_id', '=', $userId)->get();
     }
 
+    public function getAllVetsByPet($petId)
+    {
+        return $this->query()->where('pet_id', '=', $petId)->get();
+    }
+
+    public function getVetsByPets($pets)
+    {
+        return $this->query()
+            ->whereIn('pet_id', $pets)
+            ->groupby('vet_id')
+            ->get();
+    }
+
+
     public function getAllByVetId($vetId)
     {
         return $this->query()->where('vet_id', '=', $vetId)->get();

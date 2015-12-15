@@ -12,6 +12,15 @@
                         {!! HTML::image('images/vet-image-with-dog.png', 'Springer', array('class' => '', 'width' => '100%')) !!}
                     </div>
                     <div class="col-md-7 vcenter" >
+                        <div class="row">
+                            <div class="col-md-12 list-vets">
+                                <ul class="nav nav-pills nav-stacked">
+                                    @foreach($vets as $vet)
+                                        <li>{{$vet->contact_name}} ({{$vet->company_name}})</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        </div>
                         <h2 class="top-none text-left text-center-xs">{!! Lang::get('general.Connect with your vet') !!}</h2>
                         <div class="row" >
                             <div class="col-md-12 text-left" >

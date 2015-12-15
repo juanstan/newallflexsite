@@ -33,7 +33,18 @@ class VetRegisterController extends Controller
 
     public function getIndex()
     {
-        return View::make('usersignup.vetSetup');
+        $user = $this->authUser;
+        $this->petRepository->setUser($user);
+        $pets = $this->petRepository->all()->lists('id')->toArray();
+        $aPetRequestLits = $this->petRequestRepository->getVetsByPets($pets)->toArray();
+
+        $aVets = [];
+        foreach($aPetRequestLits as $iPetRequestInfo) {
+            $aVets[] = $this->vetRepository->getVetDetails($iPetRequestInfo['vet_id']);
+
+        }
+
+        return View::make('usersignup.vetSetup', array('vets'=>$aVets));
     }
 
 
