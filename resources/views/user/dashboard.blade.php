@@ -491,10 +491,12 @@ $temperaturePref = $user->units;
                     <div class="form-horizontal float-none  top-buffer col-md-12 col-centered">
                         {!! Form::open(array('files'=> 'true', 'route' => 'user.dashboard.createPet', 'method' => 'post')) !!}
                         <div class="form-group">
-                            {!! Form::label('image_path', Lang::get('general.Add photo'), array('class' => 'col-sm-3 right-none control-label')) !!}
-                            <div class="col-sm-9 text-left">
+                            <div class="col-sm-3 text-left">
+                                {!! HTML::image('/images/pet-image.png', '', array('class' => 'image-placeholder img-responsive img-circle', 'width' => '100%')) !!}
+                            </div>
+                            <div class="col-sm-6 text-left">
                                 {!! Form::button(Lang::get('general.Browse'), array('class' => 'btn btn-file pull-left', 'onclick' => '$("#ufile").click()' )) !!}
-                                {!! Form::file('image_path', array('class' => 'hide', 'id'=>'ufile')) !!}
+                                {!! Form::file('image_path', array('class' => 'hide', 'id'=>'ufile', 'onchange' => 'readURL(this);')) !!}
                             </div>
                         </div>
                         <div class="form-group">
