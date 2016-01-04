@@ -56,10 +56,10 @@ $temperaturePref = $user->units;
             </div><div class="row">
         @endif
 
-        <div class="col-md-4" >
+        <div class="col-xs-12 col-sm-6 col-md-4" >
             <div class="top-buffer mobile" ></div>
             <div class="row" >
-                <div class="col-md-12" >
+                <div class="col-xs-12" >
                     <div class="col-xs-3" >
                         {!! HTML::image(isset($pet->photo_id) ? $pet->photo->location : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
                     </div>
@@ -79,16 +79,16 @@ $temperaturePref = $user->units;
             </div>
             <div class="jumbotron dashboard top-buffer" >
                 <div class="vet-overlay collapse fade" id="pet-delete{!! $pet->id !!}" >
-                    <div class="col-md-12 text-center" >
+                    <div class="col-xs-12 text-center" >
                     <h3>{!! Lang::get('general.Are you sure you want to remove this pet?') !!}</h3>
-                        <div class="col-md-10 float-none col-centered top-buffer" >
-                            <div class="col-md-6 small-padding" >
+                        <div class="col-xs-10 float-none col-centered top-buffer" >
+                            <div class="col-xs-6 small-padding" >
                                 <a href="#" data-toggle="collapse" data-target="#pet-delete{!! $pet->id !!}" >
                                     {!! Form::button(Lang::get('general.No, cancel'), array('class' => 'btn-block btn btn-file btn-md')) !!}
                                 </a>
                             </div>
                             <div class="top-buffer mobile" ></div>
-                            <div class="col-md-6 small-padding" >
+                            <div class="col-xs-6 small-padding" >
                                 <a href="{!! URL::route('user.dashboard.removePet', $pet->id) !!}" >
                                     {!! Form::button(Lang::get('general.Yes, remove'), array('class' => 'btn-block btn btn-danger btn-md')) !!}
                                 </a>
@@ -99,17 +99,17 @@ $temperaturePref = $user->units;
                 <div class="collapse vet-overlay fade" id="symptom-list{!! $pet->id !!}" >
                 @foreach ($pet->sensorReadings->slice(0, 1) as $sensorReading)
                     {!! Form::open(array('files'=> 'true', 'route' => array('user.dashboard.addSymptoms', $sensorReading->id), 'method' => 'post')) !!}
-                        <div class="col-md-12 top-buffer" >
-                            <div class="col-md-8" >
+                        <div class="col-xs-12 top-buffer" >
+                            <div class="col-xs-8" >
                                 <h3 class="top-none">{!! Lang::get('general.Add symptoms') !!}</h3>
                                 <p>{!! Lang::get('general.Select all that apply') !!}</p>
                             </div>
-                            <div class="col-md-4 text-right" >
+                            <div class="col-xs-4 text-right" >
                                 {!! Form::submit(Lang::get('general.Done'), array('class' => 'submit-text')) !!}
                             </div>
                         </div>
-                        <div class="col-md-12" >
-                            <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
+                        <div class="col-xs-12" >
+                            <div class="symptoms-wrapper">
                                 @if( $pet->sensorReadings->count() )
                                     @foreach ($pet->sensorReadings as $sensorReading)
                                         @foreach ($sensorReading->sensorReadingSymptoms as $sensorReadingSymptom)
@@ -118,9 +118,10 @@ $temperaturePref = $user->units;
                                     @endforeach
                                 @endif
                                 @foreach ($symptoms as $symptom)
-                                    <div class="col-md-6 top-buffer small-padding" >
-                                        <label class="btn btn-primary btn-block @if( !empty($symptomItems) && in_array($symptom->name, $symptomItems)) active  @endif">
-                                        <input type="checkbox" name="symptoms[]" @if( !empty($symptomItems) && in_array($symptom->name, $symptomItems)) checked @endif value="{!! $symptom->id !!}" autocomplete="off"> {!! $symptom->name !!}
+                                    <div class="symptom">
+                                        <input type="checkbox" id="{{$symptom->name}}" name="symptoms[]" @if( !empty($symptomItems) && in_array($symptom->name, $symptomItems)) checked @endif value="{!! $symptom->id !!}" autocomplete="off">
+                                        <label for="{{$symptom->name}}" class="@if( !empty($symptomItems) && in_array($symptom->name, $symptomItems)) active  @endif">
+                                            <span class="choice-text"> {!! $symptom->name !!} </span>
                                         </label>
                                     </div>
                                 @endforeach
@@ -131,17 +132,17 @@ $temperaturePref = $user->units;
                 </div>
                 <div class="collapse vet-overlay fade" id="condition-list{!! $pet->id !!}" >
                     {!! Form::open(array('files'=> 'true', 'route' => array('user.dashboard.addConditions', $pet->id), 'method' => 'post')) !!}
-                        <div class="col-md-12 top-buffer" >
-                            <div class="col-md-8" >
+                        <div class="col-xs-12 top-buffer" >
+                            <div class="col-xs-8" >
                                 <h3 class="top-none">{!! Lang::get('general.Add conditions') !!}</h3>
                                 <p>{!! Lang::get('general.Select all that apply') !!}</p>
                             </div>
 
-                            <div class="col-md-4 text-right" >
+                            <div class="col-xs-4 text-right" >
                                 {!! Form::submit(Lang::get('general.Done'), array('class' => 'submit-text')) !!}
                             </div>
                         </div>
-                        <div class="col-md-12" >
+                        <div class="col-xs-12" >
                             <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
                                 @if( $pet->petConditions->count() )
                                     @foreach ($pet->petConditions as $petCondition)
@@ -149,7 +150,7 @@ $temperaturePref = $user->units;
                                     @endforeach
                                 @endif
                                 @foreach ($conditions as $condition)
-                                    <div class="col-md-6 top-buffer small-padding" >
+                                    <div class="col-xs-6 top-buffer small-padding" >
                                         <label class="btn btn-primary btn-block @if( !empty($conditionItems) && in_array($condition->name, $conditionItems)) active  @endif">
                                             <input type="checkbox" name="conditions[]" @if( !empty($conditionItems) && in_array($condition->name, $conditionItems)) checked @endif value="{!! $condition->id !!}" autocomplete="off"> {!! $condition->name !!}
                                         </label>
@@ -160,7 +161,7 @@ $temperaturePref = $user->units;
                     {!! Form::close() !!}
                 </div>
                 <div class="row" >
-                    <div class="col-md-12" >
+                    <div class="col-xs-12" >
                         <ul class="nav mobile-nav nav-pills text-left">
                             <li class="active"><a href="#latest{!! $pet->id !!}" data-toggle="pill" data-target="#pet-name{!! $pet->id !!}, #latest{!! $pet->id !!}, #pet-photo-hide{!! $pet->id !!}" >{!! Lang::get('general.Latest') !!}</a></li>
                             <li class="report-toggle" ><a href="#reports{!! $pet->id !!}" data-toggle="pill" data-target="#pet-name{!! $pet->id !!}, #reports{!! $pet->id !!}, #image_path-hide{!! $pet->id !!}">{!! Lang::get('general.Reports') !!}</a></li>
@@ -170,7 +171,7 @@ $temperaturePref = $user->units;
                 </div>
                 <div class="tab-content ">
                     <div class="tab-pane latest-list-wrap active fade in" id="latest{!! $pet->id !!}">
-                        <div class="row col-sm-8 col-md-12 col-centered float-none top-buffer" >
+                        <div class="row col-xs-12 col-centered float-none top-buffer" >
                             @foreach ($pet->sensorReadings as $sensorReading)
                                 @if ($sensorReading->average == 1)
                                     <?php $allReadingTemps[] = $sensorReading->temperature; ?>
@@ -232,7 +233,7 @@ $temperaturePref = $user->units;
                             </div>
                             @endif
                             <div class="row text-center" >
-                                <div class="col-md-11 col-centered float-none" >
+                                <div class="col-xs-11 col-centered float-none" >
                                     <h3>{!! Lang::get('general.Symptoms' ) !!}</h3>
                                     @if( $pet->sensorReadings->count() )
                                         @foreach ($pet->sensorReadings->slice(0, 1) as $sensorReading)
@@ -251,13 +252,13 @@ $temperaturePref = $user->units;
                                 </div>
                             </div>
                             <div class="row text-center top-buffer " >
-                                <div class="col-md-12 col-xs-10 col-centered float-none">
-                                    <div class="col-md-4" >
+                                <div class="col-xs-12 col-xs-10 col-centered float-none">
+                                    <div class="col-xs-4" >
                                         <h4>{!! Lang::get('general.Previous Readings') !!}</h4>
                                     </div>
                                     @if( $pet->sensorReadings->count() )
                                         @foreach ($pet->sensorReadings->slice(0, 4) as $sensorReading)
-                                            <div class="col-md-2 col-xs-3 small-padding" >
+                                            <div class="col-xs-2 small-padding" >
                                                 <div class="circle circle-small-border" style="border-color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}" >
                                                      <div class="circle-inner">
                                                          <div class="small-score-text prev-reading" style="color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}">
@@ -269,7 +270,7 @@ $temperaturePref = $user->units;
                                             </div>
                                         @endforeach
                                     @else
-                                        <div class="col-md-8 small-padding noreadingyet" >
+                                        <div class="col-xs-8 small-padding noreadingyet" >
                                             <h4>{!! Lang::get('general.No readings yet') !!}</h4>
                                         </div>
                                     @endif
@@ -289,7 +290,7 @@ $temperaturePref = $user->units;
                                                 <h4 class="top-buffer" style="color: white;">{!! Lang::get('general.There is not average temperature for') !!} {!! isset($pet->name) ? $pet->name : 'Unknown'; !!} {!! Lang::get('general.yet') !!}</h4>
                                             @endif
                                         </div>
-                                        <div class="col-xs-3 col-sm-2 col-md-3 small-padding" >
+                                        <div class="col-xs-2 small-padding" >
                                             @if(!empty($allReadingTemps))
                                                 <div class="circle small-top-buffer circle-small-border" style="border-color: white;">
                                                     <div class="circle-inner">
@@ -315,7 +316,7 @@ $temperaturePref = $user->units;
                                     <div class="col-xs-9" >
                                         <h4 class="top-buffer" style="color: white;">{!! Lang::get('general.No readings have been uploaded for') !!} {!! isset($pet->name) ? $pet->name : 'Unknown'; !!} {!! Lang::get('general.yet') !!}.</h4>
                                     </div>
-                                    <div class="col-xs-3 col-sm-2 col-md-3 small-padding" >
+                                    <div class="col-xs-2 col-md-3 small-padding" >
                                         <div class="circle small-top-buffer circle-small-border" style="border-color: white;">
                                             <div class="circle-inner">
                                                 <div class="small-score-text" style="color: white;">
@@ -335,13 +336,13 @@ $temperaturePref = $user->units;
                             @if( $pet->sensorReadings->count() )
                                 <?php $previousTemp = 0; ?>
                                 @foreach ($pet->sensorReadings->slice(0, 4) as $sensorReading)
-                                <div class="row text-left col-md-12" >
-                                    <div class="col-md-12" >
+                                <div class="row text-left col-xs-12" >
+                                    <div class="col-xs-12" >
                                         <h4>{!! date("d/m/y",strtotime($sensorReading->reading_time)) !!}</h4>
                                     </div>
                                 </div>
-                                <div class="row text-left col-md-12" >
-                                    <div class="col-xs-3 col-sm-2 small-padding" >
+                                <div class="row text-left col-xs-12" >
+                                    <div class="col-xs-2 small-padding" >
                                         <div class="circle circle-small-border" style="border-color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}">
                                              <div class="circle-inner">
                                                  <div class="small-score-text prev-reading" style="color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}">
@@ -369,7 +370,7 @@ $temperaturePref = $user->units;
                                 <?php $previousTemp = round($sensorReading->temperature,1); ?>
                                 @endforeach
                             @else
-                                <div class="col-md-8 small-padding" >
+                                <div class="col-xs-8 small-padding" >
                                     <h4>{!! Lang::get('general.No Previous Readings Available') !!}</h4>
                                 </div>
                             @endif
@@ -395,10 +396,10 @@ $temperaturePref = $user->units;
                                     @endif
                                 </div>
                             </div>
-                            <div class="col-md-12 small-padding" >
+                            <div class="col-xs-12 small-padding" >
                                 <div class="form-group">
                                     {!! Form::label('weight', Lang::get('general.Weight'), array('class' => 'col-sm-4 control-label')) !!}
-                                    <div class="col-sm-8">
+                                    <div class="col-xs-8">
                                         <div class="input-group">
                                             @if($user->weight_units == 0)
                                                 {!! Form::text('weight', $pet->weight, array('class' => 'form-control text-left')) !!}
@@ -418,7 +419,7 @@ $temperaturePref = $user->units;
                             </div>
                             <div class="form-group">
                                     {!! Form::label('gender', Lang::get('general.Gender'), array('class' => 'col-sm-3 control-label')) !!}
-                                <div class="col-sm-9">
+                                <div class="col-xs-9">
                                     <div class="radio-pill-buttons">
                                         <label><input type="radio" @if($pet->gender == 1) checked @endif name="gender" value="1"><span class="pointer" >{!! Lang::get('general.Male') !!}</span></label>
                                         <label><input type="radio" @if($pet->gender == 0) checked @endif name="gender" value="0"><span class="pointer" >{!! Lang::get('general.Female') !!}</span></label>
@@ -427,7 +428,7 @@ $temperaturePref = $user->units;
                             </div>
                             <div class="form-group">
                                     {!! Form::label('Known conditions', Lang::get('general.Known conditions'), array('class' => 'col-sm-7 control-label')) !!}
-                                <div class="col-sm-5">
+                                <div class="col-xs-5">
                                     <a href="#" data-toggle="collapse" data-target="#condition-list{!! $pet->id !!}" >
                                         {!! Form::button(Lang::get('general.Manage <i class="fa fa-angle-right small-left-buffer"></i>'), array('class' => 'btn btn-file btn-block btn-md')) !!}
                                     </a>
@@ -437,17 +438,17 @@ $temperaturePref = $user->units;
                             {!! Form::open(array('route' => array('user.dashboard.resetAverageTemperature', $pet->id), 'method' => 'post')) !!}
                             <div class="form-group">
                                     {!! Form::label('Average temperature', Lang::get('general.Average temperature'), array('class' => 'col-sm-7 control-label')) !!}
-                                <div class="col-sm-5">
+                                <div class="col-xs-5">
                                     {!! Form::button(Lang::get('general.<i class="fa fa-refresh"></i> Reset'), array('class' => 'btn btn-file btn-block btn-md', 'type' => 'submit')) !!}
                                 </div>
                             </div>
                             {!! Form::close() !!}
                             <div class="form-group">
-                                <div class="col-md-5" >
+                                <div class="col-xs-5" >
                                     <a href="#" data-toggle="collapse" data-target="#pet-delete{!! $pet->id !!}" >{!! Form::button(Lang::get('general.Remove'), array('class' => 'btn btn-file btn-block btn-md border-none')) !!}</a>
                                 </div>
                                 <div class="top-buffer mobile" ></div>
-                                <div class="col-md-7" >
+                                <div class="col-xs-7" >
                                     {!! Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-block btn-default btn-md', 'form' => 'petSettingsForm' . $pet->id)) !!}
                                 </div>
                             </div>
@@ -458,12 +459,12 @@ $temperaturePref = $user->units;
         </div>
     @endforeach
 
-    <div class="col-md-4" >
+    <div class="col-md-4 col-sm-6 col-xs-12" >
         <div class="tab-content ">
             <div  class="tab-pane active fade in" id="newPet">
                 <div class="jumbotron dashboard add-new-pet large-top-buffer" >
                     <div class="row" >
-                        <div class="col-md-12 text-center" >
+                        <div class="col-xs-12 text-center" >
                             <a href="#newPetDetails" data-toggle="pill" data-target="" >
                                 <h2>
                                     <span class="fa-stack">
@@ -480,7 +481,7 @@ $temperaturePref = $user->units;
             <div  class="tab-pane fade in" id="newPetDetails">
                 <div class="jumbotron dashboard large-top-buffer" >
                     <div class="row" >
-                        <div class="col-md-12" >
+                        <div class="col-xs-12" >
                             <ul class="nav nav-pills text-left">
                                 <li class="disabled"><a href="#latest" data-target="" >{!! Lang::get('general.Latest') !!}</a></li>
                                 <li class="disabled" ><a href="#reports" data-target="">{!! Lang::get('general.Reports') !!}</a></li>
@@ -491,30 +492,30 @@ $temperaturePref = $user->units;
                     <div class="form-horizontal float-none  top-buffer col-md-12 col-centered">
                         {!! Form::open(array('files'=> 'true', 'route' => 'user.dashboard.createPet', 'method' => 'post')) !!}
                         <div class="form-group">
-                            <div class="col-sm-3 text-left">
+                            <div class="col-xs-3 text-left">
                                 {!! HTML::image('/images/pet-image.png', '', array('class' => 'image-placeholder img-responsive img-circle', 'width' => '100%')) !!}
                             </div>
-                            <div class="col-sm-6 text-left">
+                            <div class="col-xs-6 text-left">
                                 {!! Form::button(Lang::get('general.Browse'), array('class' => 'btn btn-file pull-left', 'onclick' => '$("#ufile").click()' )) !!}
                                 {!! Form::file('image_path', array('class' => 'hide', 'id'=>'ufile', 'onchange' => 'readURL(this);')) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             {!! Form::label('name', Lang::get('general.Name'), array('class' => 'col-sm-3 control-label')) !!}
-                            <div class="col-sm-9">
+                            <div class="col-xs-9">
                                 {!! Form::text('name', '', array('class' => 'form-control text-left')) !!}
                             </div>
                         </div>
                         <div class="form-group">
                             {!! Form::label('breed', Lang::get('general.Breed'), array('class' => 'col-sm-3 control-label')) !!}
-                            <div class="col-sm-9">
+                            <div class="col-xs-9">
                                 {!! Form::text('breed_id', '', array('class' => 'form-control text-left breed-list')) !!}
                             </div>
                         </div>
-                        <div class="col-md-12 small-padding" >
+                        <div class="col-xs-12 small-padding" >
                             <div class="form-group">
-                                {!! Form::label('weight', Lang::get('general.Weight'), array('class' => 'col-sm-4 control-label')) !!}
-                                <div class="col-sm-8">
+                                {!! Form::label('weight', Lang::get('general.Weight'), array('class' => 'col-xs-4 control-label')) !!}
+                                <div class="col-xs-8">
                                     <div class="input-group">
                                         {!! Form::text('weight', '', array('class' => 'form-control text-left')) !!}
                                         <div class="input-group-addon">{!! Lang::get('general.kg') !!}</div>
@@ -523,14 +524,14 @@ $temperaturePref = $user->units;
                             </div>
                         </div>
                         <div class="form-group">
-                            {!! Form::label('age', Lang::get('general.Date of birth'), array('class' => 'col-sm-5 control-label')) !!}
-                            <div class="col-sm-7">
+                            {!! Form::label('age', Lang::get('general.Date of birth'), array('class' => 'col-xs-5 control-label')) !!}
+                            <div class="col-xs-7">
                                 {!! Form::input('date', 'date_of_birth', '', array('class' => 'form-control text-left')) !!}
                             </div>
                         </div>
                         <div class="form-group">
-                            {!! Form::label('gender', Lang::get('general.Gender'), array('class' => 'col-sm-3 control-label')) !!}
-                            <div class="col-sm-9">
+                            {!! Form::label('gender', Lang::get('general.Gender'), array('class' => 'col-xs-3 control-label')) !!}
+                            <div class="col-xs-9">
                                 <div class="radio-pill-buttons">
                                     <label><input type="radio" name="gender" value="1"><span class="pointer" >{!! Lang::get('general.Male') !!}</span></label>
                                     <label><input type="radio" name="gender" value="0"><span class="pointer" >{!! Lang::get('general.Female') !!}</span></label>
@@ -538,7 +539,7 @@ $temperaturePref = $user->units;
                             </div>
                         </div>
                         <div class="form-group">
-                            <div class="col-md-12" >
+                            <div class="col-xs-12" >
                                 {!! Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-block btn-default btn-md')) !!}
                             </div>
                             {!! Form::close() !!}

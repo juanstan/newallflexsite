@@ -5848,7 +5848,32 @@ a {
     .nav-pills li a {
       color: #71787f;
       font-family: Helvetica;
-      border-radius: 20px; }
+      border-radius: 20px;
+      padding: 3px 15px; }
+
+.symptoms-wrapper {
+  overflow-y: scroll;
+  height: 29em; }
+  .symptoms-wrapper .symptom {
+    border-bottom: 1px solid #d4d6d8; }
+  .symptoms-wrapper input[type='checkbox'] {
+    /* Hide the input, but have it still be clickable */
+    opacity: 0;
+    float: left;
+    width: 18px; }
+  .symptoms-wrapper input[type='checkbox'] + label {
+    margin: 0;
+    clear: none;
+    /* Left padding makes room for image */
+    padding: 5px 0 4px 24px;
+    /* Make look clickable because they are */
+    cursor: pointer;
+    background: url(/images/option-unselected.gif) left center no-repeat; }
+  .symptoms-wrapper input[type='checkbox']:checked + label {
+    background-image: url(/images/option-selected.gif);
+    font-weight: bolder; }
+  .symptoms-wrapper label {
+    width: 75%; }
 
 .signup-logo {
   margin-top: -120px;
@@ -5931,9 +5956,6 @@ label {
   margin: auto; }
   .navbar-brand > img {
     display: initial; }
-
-.nav-pills > li > a {
-  padding: 3px 15px; }
 
 .navbar {
   min-height: 80px;
@@ -6120,7 +6142,7 @@ label {
   .score-text .temp {
     letter-spacing: -0.03em;
     font-weight: lighter;
-    font-size: 1em;
+    font-size: 92px;
     float: left;
     margin-left: 0.38em; }
 
@@ -6345,5 +6367,12 @@ input[type="radio"] {
   .list-vets ul li {
     width: 100% !important;
     text-align: left; }
+
+.container-vet-pill {
+  overflow: hidden; }
+  .container-vet-pill .vet-content {
+    height: 507px;
+    overflow-x: hidden;
+    overflow-y: auto; }
 
 /*# sourceMappingURL=application.css.map */
