@@ -42,6 +42,17 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 
   <script>
+
+      //Disabling the auto detect mecanishim
+      Dropzone.autoDiscover = false;
+      var md = new Dropzone("#uploadReading");
+      md.on("complete", function (file) {
+          if (this.getAcceptedFiles().length > 0) {
+            $('button.btn-skip').hide();
+            $('button.btn-next').removeClass('hidden');
+          }
+      });
+
       function readURL(input) {
           if (input.files && input.files[0]) {
               var reader = new FileReader();

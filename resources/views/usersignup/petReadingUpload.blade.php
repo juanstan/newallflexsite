@@ -26,7 +26,7 @@
         </div>
         <div class="col-sm-6 desktop">
             <h3 class="blue" >{!! Lang::get('general.Upload readings via USB') !!}</h3>
-            {!! Form::open(array('files'=> 'true', 'route' => 'user.register.reading.readingUpload', 'class'=>'dropzone', 'method' => 'post')) !!}
+            {!! Form::open(array('files'=> 'true', 'route' => 'user.register.reading.readingUpload', 'class'=>'dropzone', 'id'=>'uploadReading', 'method' => 'post')) !!}
             {!! Form::close() !!}
             <div class="row text-center top-buffer" >
                 <p>{!! Lang::get('general.Upload instructions') !!}</p>
@@ -45,7 +45,8 @@
                 <div class="col-sm-12">
                     
                     <a href="{!! URL::route('user.register.vet') !!}" >{!! Form::button(Lang::get('general.Back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) !!}</a>
-                    <a href="{!! URL::route('user.register.reading.assign') !!}" >{!! Form::button(Lang::get('general.Next'), array('class' => 'btn btn-default btn-lg pull-right')) !!}</a>
+                    <a href="{!! URL::route('user.register.reading.finish') !!}" >{!! Form::button(Lang::get('general.No thanks, skip'), array('class' => 'btn-skip btn btn-default btn-lg pull-right')) !!}</a>
+                    <a href="{!! URL::route('user.register.reading.assign') !!}" >{!! Form::button(Lang::get('general.Next'), array('class' => 'hidden btn-next btn btn-default btn-lg pull-right')) !!}</a>
 
                 </div>
             </div>

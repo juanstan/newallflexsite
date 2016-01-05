@@ -49,8 +49,8 @@
                     {!! Form::label('units', Lang::get('general.Temperature unit type'), array('class' => 'col-sm-4 control-label')) !!}
                     <div class="col-sm-8">
                         <div class="radio-pill-buttons">
-                            <label><input type="radio" @if($user->units == 0) checked @endif name="units" value="0"><span class="pointer" >{!! Lang::get('general.Celcius') !!}</span></label>
-                            <label><input type="radio" @if($user->units == 1) checked @endif name="units" value="1"><span class="pointer" >{!! Lang::get('general.Fahrenheit') !!}</span></label>
+                            <label><input type="radio" @if($user->units == 0) checked @endif name="units" value="0"><span class="pointer">{!! Lang::get('general.Celcius') !!}</span></label>
+                            <label><input type="radio" @if($user->units == 1) checked @endif name="units" value="1"><span class="pointer">{!! Lang::get('general.Fahrenheit') !!}</span></label>
                         </div>
                     </div>
                 </div>
@@ -61,7 +61,6 @@
                             <label><input type="radio" @if($user->weight_units == 0) checked @endif name="weight_units" value="0"><span class="pointer" >{!! Lang::get('general.Kilograms') !!}</span></label>
                             <label><input type="radio" @if($user->weight_units == 1) checked @endif name="weight_units" value="1"><span class="pointer" >{!! Lang::get('general.Pounds') !!}</span></label>
                         </div>
-
                     </div>
                 </div>
             </div>
