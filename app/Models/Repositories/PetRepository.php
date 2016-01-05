@@ -73,6 +73,21 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
 
         return $pet;
     }
+
+
+    public function petsSet() {
+        if($this->user) {
+            return $this->user->pets()->whereNotNull('name')->get();
+        }
+
+    }
+
+    public function microchipUnassigned() {
+        if($this->user) {
+            return $this->user->pets()->setMicrochip()->whereNull('name')->get();
+        }
+    }
+
 }
 
 ?>

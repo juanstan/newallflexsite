@@ -106,36 +106,45 @@ class DashboardController extends Controller
         $this->petRepository->setUser($user);
         $symptoms = $this->symptomRepository->all();
         $conditions = $this->conditionRepository->all();
-        $pets = $this->petRepository->all();
+        //$pets = $this->petRepository->all();
+
+        $pets = $this->petRepository->petsSet();
+        $microchips = $this->petRepository->microchipUnassigned();
+
         if($pets->isEmpty())
         {
             return redirect()->route('user.register.pet')
-                ->with('success', Lang::get('general.Your accont has been created successfully'));
+                ->with('success', Lang::get('general.Your account has been created successfully'));
         }
 
         $breed = $this->breedRepository->all()->lists('name', 'id');
 
         if ($this->authUser->confirmed != null) {
-            return View::make('user.dashboard')->with(
-                array(
-                    'pets' => $pets,
-                    'conditions' => $conditions,
-                    'symptoms' => $symptoms,
-                    'breed' => $breed,
-                    'user' => $user
-                ));
+            return View::make('user.dashboard')
+                ->with(
+                    array(
+                        'pets' => $pets,
+                        'microchips' => $microchips,
+                        'conditions' => $conditions,
+                        'symptoms' => $symptoms,
+                        'breed' => $breed,
+                        'user' => $user
+                    )
+                );
         } else {
             return View::make('user.dashboard')
                 ->with(
                     array(
                         'not-verified' => '',
                         'pets' => $pets,
+                        'microchips' => $microchips,
                         'conditions' => $conditions,
                         'symptoms' => $symptoms,
                         'breed' => $breed,
                         'user' => $user
                     ));
         }
+
     }
 
     public function getHelp()
@@ -165,9 +174,10 @@ class DashboardController extends Controller
                 'confirmation_code' => $this->authUser->confirmation_code
             ),
             function ($message) {
-                $message->to(Input::get('email'))
+                $message->from('j.acevedo@sureflap.co.uk','SureFlap')->to(Input::get('email'))
                     ->subject($this->authUser->name, 'has invited you to use All Flex');
-            });
+            }
+        );
         return redirect()->route('user.dashboard')
             ->with('message', Lang::get('general.Verification email sent'));
     }
@@ -606,6 +616,7 @@ class DashboardController extends Controller
 
     public function postAssign($petId)
     {
+        $this->petRepository->setUser($this->authUser);
         $newPetId = Input::get('pet-id');
         $query = $this->petRepository->get($petId);
         $data['microchip_number'] = $query->microchip_number;

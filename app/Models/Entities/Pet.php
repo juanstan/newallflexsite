@@ -84,4 +84,18 @@ class Pet extends Model implements AuthenticatableContract, CanResetPasswordCont
     {
         return $this->belongsToMany(Photo::class, 'pet_photos')->withTimestamps();
     }
+
+    /*
+     * querying only the pets with a microchip already set
+     *
+     * @param $query
+     *
+     * @return \Illuminate\Database\Eloquent
+     *
+     */
+    public function scopeSetMicrochip($query)
+    {
+        return $query->whereNotNull('microchip_number');
+    }
+
 }

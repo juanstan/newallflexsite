@@ -10,43 +10,41 @@ $temperaturePref = $user->units;
         {!! Form::close() !!}
     </div>
 </div>
-@foreach ($pets as $pet)
-    @if ($pet->name == null)
-        <div class="row col-md-11 float-none top-buffer col-centered desktop" >
-            <div class="alert alert-grey alert-dismissible" role="alert">
-                <button type="button" class="close small-top-buffer" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="inline-block small-top-buffer color73">{!! Lang::get('general.1 unknown microchip found, would you like to create a new pet?') !!}</h4>
-                    {!! Form::open(array('route' => array('user.dashboard.assign', $pet->id), 'method' => 'post', 'class' => 'pull-right')) !!}
-                        <div class="btn-group btn-input clearfix pull-right">
-                            <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown">
-                                <span data-bind="label">{!! Lang::get('general.Choose pet') !!}</span> <span class="caret"></span>
-                                <input type="text" class="hidden" name="pet-id" value="" />
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                @foreach ($pets as $pet)
-                                    @if ($pet->microchip_number == null)
-                                        <li data-id="{!! $pet->id !!}" ><a href="#">
-                                                <div class="row choose-pet" >
-                                                    <div class="col-md-3 small-padding" >
-                                                        {!! HTML::image(isset($pet->photo_id) ? $pet->photo->location : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
-                                                    </div>
-                                                    <div class="col-md-9 pet-name-dropdown" >
-                                                        <h4>{!! $pet->name !!}</h4>
-                                                    </div>
+@foreach ($microchips as $microchip)
+    <div class="row col-md-11 float-none top-buffer col-centered desktop" >
+        <div class="alert alert-grey alert-dismissible" role="alert">
+            <button type="button" class="close small-top-buffer" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="inline-block small-top-buffer color73">{!! Lang::get('general.1 unknown microchip found, would you like to create a new pet?') !!}</h4>
+                {!! Form::open(array('route' => array('user.dashboard.assign', $microchip->id), 'method' => 'post', 'class' => 'pull-right')) !!}
+                    <div class="btn-group btn-input clearfix pull-right">
+                        <button type="button" class="btn btn-default dropdown-toggle form-control" data-toggle="dropdown">
+                            <span data-bind="label">{!! Lang::get('general.Choose pet') !!}</span> <span class="caret"></span>
+                            <input type="text" class="hidden" name="pet-id" value="" />
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            @foreach ($pets as $pet)
+                                @if ($pet->microchip_number == null)
+                                    <li data-id="{!! $pet->id !!}" ><a href="#">
+                                            <div class="row choose-pet" >
+                                                <div class="col-md-3 small-padding" >
+                                                    {!! HTML::image(isset($pet->photo_id) ? $pet->photo->location : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
                                                 </div>
-                                            </a>
-                                        </li>
-                                    @endif
-                                @endforeach
-                            </ul>
-                        </div>
-                    {!! Form::close() !!}
-                <a href="#edit{!! $pet->id !!}" data-toggle="pill" >
-                    <button data-toggle="collapse" data-target="#pet-photo{!! $pet->id !!}" class="btn btn-file btn-lg pull-right" type="button">{!! Lang::get('general.Create') !!}</button>
-                </a>
-            </div>
+                                                <div class="col-md-9 pet-name-dropdown" >
+                                                    <h4>{!! $pet->name !!}</h4>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                @endif
+                            @endforeach
+                        </ul>
+                    </div>
+                {!! Form::close() !!}
+            <a href="#edit{!! $microchip->id !!}" data-toggle="pill" >
+                <button data-toggle="collapse" data-target="#pet-photo{!! $microchip->id !!}" class="btn btn-file btn-lg pull-right" type="button">{!! Lang::get('general.Create') !!}</button>
+            </a>
         </div>
-    @endif
+    </div>
 @endforeach
 <div class="row col-md-12 col-centered float-none top-buffer" >
     <div class="row">
@@ -189,7 +187,7 @@ $temperaturePref = $user->units;
                                     <div class="circle circle-border"  style="border-color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}">
                                         <div class="small-circle circle-solid" style="background-color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}" >
                                             <div class="circle-inner">
-                                                <div class="small-score-text">
+                                                <div class="small-score-text center-block">
                                                     <p>{!! Lang::get('general.Avg') !!}.</p>
                                                     @if(!empty($allReadingTemps))
                                                         {!! getTemperatureColor($readingAverage, $temperaturePref)['temp'] !!}<span  class="tempsymbol">&#176;</span>
@@ -200,8 +198,9 @@ $temperaturePref = $user->units;
                                             </div>
                                         </div>
                                         <div class="circle-inner">
-                                             <div class="score-text" style="color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}" >
-                                                 <span class="temp">{!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] !!}</span><span  class="tempsymbol">&#176;</span>
+                                             <div class="score-text center-block" style="color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}" >
+                                                 <span class="temp">{!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] !!}</span>
+                                                 <span  class="tempsymbol">&#176;</span>
                                                  <div class="clearfix"></div>
                                                  <p>
                                                      @if(date("d/m/y",strtotime($sensorReading->reading_time)) == date("d/m/y"))
@@ -218,14 +217,14 @@ $temperaturePref = $user->units;
                             <div class="circle circle-border" >
                                 <div class="small-circle circle-solid" >
                                     <div class="circle-inner">
-                                        <div class="small-score-text">
+                                        <div class="small-score-text center-block">
                                             <p>Avg.</p>
                                             --.-<span>&#176;</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="circle-inner">
-                                    <div class="score-text" >
+                                    <div class="score-text center-block" >
                                         <span class="temp">--.-</span><span class="tempsymbol">&#176;</span>
                                         <p>{!! Lang::get('general.No readings') !!}</p>
                                     </div>
@@ -285,16 +284,16 @@ $temperaturePref = $user->units;
                                     <div class="row hero-banner" >
                                         <div class="col-xs-9 " >
                                             @if(!empty($allReadingTemps))
-                                                <h4 class="top-buffer" style="color: white;">{!! isset($pet->name) ? $pet->name : 'Unknown'; !!}{!! Lang::get('general.&#39; temperature is usually around') !!} {!! getTemperatureColor($readingAverage, $temperaturePref)['temp'] !!}&#176;</h4>
+                                                <h4 class="top-buffer" style="color: white;">{!! isset($pet->name) ? $pet->name : 'Unknown' !!}{!! Lang::get('general.&#39; temperature is usually around') !!} {!! getTemperatureColor($readingAverage, $temperaturePref)['temp'] !!}&#176;</h4>
                                             @else
-                                                <h4 class="top-buffer" style="color: white;">{!! Lang::get('general.There is not average temperature for') !!} {!! isset($pet->name) ? $pet->name : 'Unknown'; !!} {!! Lang::get('general.yet') !!}</h4>
+                                                <h4 class="top-buffer" style="color: white;">{!! Lang::get('general.There is not average temperature for') !!} {!! isset($pet->name) ? $pet->name : 'Unknown' !!} {!! Lang::get('general.yet') !!}</h4>
                                             @endif
                                         </div>
                                         <div class="col-xs-2 small-padding" >
                                             @if(!empty($allReadingTemps))
                                                 <div class="circle small-top-buffer circle-small-border" style="border-color: white;">
                                                     <div class="circle-inner">
-                                                        <div class="small-score-text" style="color: white;">
+                                                        <div class="small-score-text margintop0-25" style="color: white;">
                                                             {!! getTemperatureColor($readingAverage, $temperaturePref)['temp'] !!}<span>&#176;</span>
                                                         </div>
                                                     </div>
