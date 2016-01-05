@@ -6048,15 +6048,19 @@ label {
   background-color: transparent;
   border: 2px solid #c0c0c0;
   min-height: 500px;
-  background-color: transparent; }
+  background-color: transparent;
+  padding: 0; }
   .jumbotron.add-new-pet .col-md-12 {
     margin-top: 40%; }
-
-.jumbotron.add-new-vet {
-  border: 2px solid #c0c0c0;
-  min-height: 620px; }
-  .jumbotron.add-new-vet .col-md-12 {
-    margin-top: 40%; }
+  .jumbotron.add-new-pet a {
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: absolute;
+    text-align: center;
+    left: 0; }
+  .jumbotron.add-new-pet a:hover {
+    background-color: #FFF; }
 
 .nav.symptom-pills > li.active > a {
   border: 1px solid #c0c0c0;

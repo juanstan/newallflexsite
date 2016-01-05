@@ -463,19 +463,15 @@ $temperaturePref = $user->units;
         <div class="tab-content ">
             <div  class="tab-pane active fade in" id="newPet">
                 <div class="jumbotron dashboard add-new-pet large-top-buffer" >
-                    <div class="row" >
-                        <div class="col-xs-12 text-center" >
-                            <a href="#newPetDetails" data-toggle="pill" data-target="" >
-                                <h2>
-                                    <span class="fa-stack">
-                                        <i class="fa fa-circle-thin fa-stack-2x"></i>
-                                        <i class="fa fa-plus fa-stack-1x"></i>
-                                    </span>
-                                </h2>
-                                <h3 class="top-none" >{!! Lang::get('general.New pet') !!}</h3>
-                            </a>
-                        </div>
-                    </div>
+                    <a href="#newPetDetails" data-toggle="pill" data-target="" >
+                        <h2>
+                            <span class="fa-stack">
+                                <i class="fa fa-circle-thin fa-stack-2x"></i>
+                                <i class="fa fa-plus fa-stack-1x"></i>
+                            </span>
+                        </h2>
+                        <h3 class="top-none" >{!! Lang::get('general.New pet') !!}</h3>
+                    </a>
                 </div>
             </div>
             <div  class="tab-pane fade in" id="newPetDetails">
