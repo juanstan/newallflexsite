@@ -44,13 +44,35 @@ class PetReadingRegisterController extends Controller
                 ->withInput();
         }
 
-        if($this->petReadingRepository->readingUpload($input, $user))
-        {
-            return redirect()->route('user.register.reading.assign');
+
+        try {
+            if ($this->petReadingRepository->readingUpload($input, $user)) {
+                return response()->json([
+                    'status'=>'success',
+                    'message' => ''
+                ]);
+            }
+
+            return response()->json([
+                'status'=>'error',
+                'message', \Lang::get('general.Uploaded file is not valid')
+            ]);
+
+        }catch (\Exception $e) {
+            if ($e->getCode()===111) {
+                return response()->json([
+                    'status'=>'error',
+                    'message' => \Lang::get('general.Microchip has been already registered')
+                ]);
+            }
+
+            return response()->json([
+                'status'=>'error',
+                'message' => $e->getMessage()
+            ]);
+
         }
 
-        return redirect()->route('register.reading')
-            ->with('error', \Lang::get('general.Uploaded file is not valid'));
 
     }
 
@@ -89,6 +111,24 @@ class PetReadingRegisterController extends Controller
 //                ->subject('Verify your email address');
 //        });
         return redirect()->route('user.dashboard');
+    }
+
+    /*
+     * Function to show simply the Reading instructions for a specific controller
+     *
+     * @param string $so Operative System
+     *
+     * return @view
+     */
+
+    public function getInstructions($so)
+    {
+        if (in_array($so, array('windows', 'mac'))) {
+            return View::make("usersignup.{$so}intructions");
+        }
+
+        return redirect()->route('user.register.reading');
+
     }
 
 }

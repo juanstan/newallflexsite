@@ -22,6 +22,7 @@ Route::controller('register/reading', 'PetReadingRegisterController',
         'getAssign'=>'user.register.reading.assign',
         'postAssign'=>'user.register.reading.assign',
         'getFinish'=>'user.register.reading.finish',
+        'getInstructions'=>'user.register.reading.instructions'
     ));
 Route::controller('register', 'RegisterController',
     array(
