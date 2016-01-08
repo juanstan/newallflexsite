@@ -6,6 +6,60 @@
             <h3>{!! Lang::get('general.Readings') !!}</h3>
         </div>
     </div>
+
+
+    <div class="row" >
+        <div class="col-xs-12 col-md-6 text-left">
+            <h3 class="blue" >{!! Lang::get('general.Sync via Bluetooth') !!}</h3>
+            <p>{!! Lang::get('general.Easily pair the reader via Bluetooth on your mobile') !!}</p>
+            <div class="col-md-12 text-center vcenterwrap" >
+                <div class="col-md-6 vcenter">
+                    {!! HTML::image('images/phones.png', 'a Logo', array('width' => '100%')) !!}
+                </div>
+                <div class="col-md-6 vcenter">
+                    {!! HTML::image('images/app-store.svg', 'a Logo', array('width' => '100%', 'class' => 'col-xs-6 col-md-12 small-padding')) !!}
+                    {!! HTML::image('images/play-store.png', 'a Logo', array('width' => '100%', 'class' => 'col-xs-6 col-md-12 small-padding')) !!}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6 desktop">
+            <h3 class="blue" >{!! Lang::get('general.Upload readings via USB') !!}</h3>
+            {!! Form::open(array('files'=> 'true', 'route' => 'vet.dashboard.readingUpload', 'class'=>'dropzone', 'id'=>'uploadReading', 'method' => 'post')) !!}
+            {!! Form::close() !!}
+            <div class="row text-center top-buffer" >
+                <p>{!! Lang::get('general.Upload instructions') !!}</p>
+                <div class="col-sm-6 text-right">
+                    <a href="{!! URL::route('vet.register.reading.instructions', 'windows') !!}" >
+                        <p><i class="fa fa-windows"></i> {!! Lang::get('general.Windows') !!}</p>
+                    </a>
+                </div>
+                <div class="col-sm-6 text-left">
+                    <a href="{!! URL::route('vet.register.reading.instructions', 'mac') !!}" >
+                        <p><i class="fa fa-apple"></i> {!! Lang::get('general.Mac') !!}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row top-buffer" >
+        <div class="col-md-12 col-centered" >
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <a href="{!! URL::route('vet.register.address') !!}" >{!! Form::button(Lang::get('general.Back'), array('class' => 'btn btn-file btn-lg pull-left border-none')) !!}</a>
+                    <a href="{!! URL::route('vet.dashboard') !!}" >{!! Form::button(Lang::get('general.Next'), array('class' => 'btn btn-default btn-lg pull-right border-none')) !!}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="top-buffer mobile" ></div>
+
+
+
+
+
+<!--
+
     <div class="row" >
         <div class="col-sm-10  col-sm-offset-1 text-left">
             <h3 class="blue" >{!! Lang::get('general.Sync via Bluetooth') !!}</h3>
@@ -59,15 +113,5 @@
             {!! Form::submit('Submit') !!}
             {!! Form::close() !!}
         </div>
-    </div>
-    <div class="row top-buffer" >
-        <div class="col-md-12 col-centered" >
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <a href="{!! URL::route('vet.dashboard') !!}" >{!! Form::button(Lang::get('general.Next'), array('class' => 'btn btn-default btn-lg pull-right border-none')) !!}</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="top-buffer mobile" ></div>
+    </div>-->
 @stop

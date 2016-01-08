@@ -2,7 +2,8 @@
 
 Route::controller('register/reading', 'PetReadingRegisterController',
     array(
-        'getIndex'=>'vet.register.reading'
+        'getIndex'=>'vet.register.reading',
+        'getInstructions'=>'vet.register.reading.instructions'
     ));
 Route::controller('register', 'RegisterController',
     array(
