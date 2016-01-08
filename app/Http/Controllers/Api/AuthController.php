@@ -20,24 +20,37 @@ class AuthController extends Controller
     public function postLogin()
     {
         $input = Input::all();
+
         $validator = $this->userRepository->getLoginValidator($input);
 
         if ($validator->fails()) {
             return response()->json(['error' => true, 'errors' => $validator->messages()]);
         }
 
-        $user = $this->userRepository->getByEmailForLogin($input['email']);
+        $userData = array(
+            'email' => $input['email'],
+            'password' => $input['password']
+        );
 
-        if ($user->tokens) {
-            foreach ($user->tokens as $token) {
-                $token->delete();
+        if (Auth::user()->attempt($userData)) {
+            $user = $this->userRepository->getByEmailForLogin($input['email']);
+
+            if ($user->tokens) {
+                foreach ($user->tokens as $token) {
+                    $token->delete();
+                }
             }
+
+            $token = Token::generate($user);
+            $user->tokens()->save($token);
+
+            return response()->json(['error' => false, 'result' => ['token' => $token, 'user' => $user]]);
+
+        } else {
+            return response()->json(['error' => true, 'result' => 'User details are incorrect']);
+
         }
 
-        $token = Token::generate($user);
-        $user->tokens()->save($token);
-
-        return response()->json(['error' => false, 'result' => ['token' => $token, 'user' => $user]]);
     }
 
     public function postLogout()
