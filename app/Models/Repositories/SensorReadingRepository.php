@@ -1,10 +1,16 @@
 <?php namespace App\Models\Repositories;
 
 use Validator;
+use App\Models\Entities\SensorReading;
 
 class SensorReadingRepository extends AbstractRepository implements SymptomRepositoryInterface
 {
-	protected $classname = 'App\Models\Entities\SensorReading';
+	//protected $classname = 'App\Models\Entities\SensorReading';
+	protected $model;
+
+	public function __construct(SensorReading $model){
+		$this->model = $model;
+	}
 
 	public function removeByPetId($petId)
 	{
@@ -16,7 +22,7 @@ class SensorReadingRepository extends AbstractRepository implements SymptomRepos
 
 		return $this->query()
 				->where('pet_id', '=', $id)
-				->firstOrFail();
+				->first();
 
 	}
 

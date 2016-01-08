@@ -10,18 +10,31 @@ use Hash;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
-	protected $classname = 'App\Models\Entities\User';
+	//protected $classname = 'App\Models\Entities\User';
+
+	protected $model;
+
+
+	public function __construct(User $model)
+	{
+		$this->model = $model;
+	}
+
 
 	public function getByEmailForLogin($email_address)
 	{
-		return User::with('tokens')
+		return $this->model->with('tokens')
 			->where('email', '=', $email_address)
 			->firstOrFail();
+		/*return User::with('tokens')
+			->where('email', '=', $email_address)
+			->firstOrFail();*/
 	}
 
 	public function getUserDetails($id)
 	{
-		return User::findOrFail($id);
+		$this->model->findOrFail($id);
+		//return User::findOrFail($id);
 	}
 
 	public function getCreateValidator($input)

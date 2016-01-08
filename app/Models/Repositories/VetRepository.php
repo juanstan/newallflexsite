@@ -4,18 +4,29 @@ use App\Models\Entities\Vet;
 
 class VetRepository extends AbstractRepository implements VetRepositoryInterface
 {
-	protected $classname = 'App\Models\Entities\Vet';
+	//protected $classname = 'App\Models\Entities\Vet';
+	protected $model;
+
+
+	public function __construct(Vet $model)
+	{
+		$this->model = $model;
+	}
 
 	public function getByEmailForLogin($email)
 	{
-		return Vet::with('tokens')
+		return $this->model->with('tokens')
 			->where('email', '=', $email)
 			->firstOrFail();
+		/*return Vet::with('tokens')
+			->where('email', '=', $email)
+			->firstOrFail();*/
 	}
 
 	public function getVetDetails($id)
 	{
-		return Vet::findOrFail($id);
+		return $this->model->findOrFail($id);
+		//return Vet::findOrFail($id);
 	}
 
 	public function getCreateValidator($input)

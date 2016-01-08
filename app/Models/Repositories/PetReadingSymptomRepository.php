@@ -1,20 +1,21 @@
 <?php namespace App\Models\Repositories;
 
 use App\Models\Entities\SensorReading;
+use App\Models\Entities\SensorReadingSymptom;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PetReadingSymptomRepository extends AbstractRepository implements PetReadingSymptomRepositoryInterface
 {
-    protected $classname = 'App\Models\Entities\SensorReadingSymptom';
-    
-    protected $repository;
-        
+    //protected $classname = 'App\Models\Entities\SensorReadingSymptom';
+    protected $model;
+    protected $userRepo;
     protected $sensorReadings;
-    
-    public function __construct(UserRepositoryInterface $repository)
+
+    public function __construct(SensorReadingSymptom $model, UserRepositoryInterface $user)
     {
-        $this->repository = $repository;
+        $this->userRepo = $user;
+        $this->model = $model;
     }
     
     public function all()

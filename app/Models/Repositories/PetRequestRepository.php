@@ -1,21 +1,23 @@
 <?php namespace App\Models\Repositories;
 
 use Validator;
+use App\Models\Entities\Pet\Request;
 
 class PetRequestRepository extends AbstractRepository implements PetRequestRepositoryInterface
 {
-    protected $classname = 'App\Models\Entities\Pet\Request';
+    //protected $classname = 'App\Models\Entities\Pet\Request';
+    protected $model;
+    protected $user;
 
-    protected $repository;
-
-    public function __construct(UserRepositoryInterface $userRepositoryInterface)
+    public function __construct(Request $model, UserRepositoryInterface $user)
     {
-        $this->user = $userRepositoryInterface;
+        $this->userRepo = $user;
+        $this->model = $model;
     }
 
     public function setUser($user)
     {
-        $this->user = is_numeric($user) ? $this->repository->get($user) : $user;
+        $this->user = is_numeric($user) ? $this->userRepo->get($user) : $user;
 
         return $this;
     }

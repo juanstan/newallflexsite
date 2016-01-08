@@ -10,16 +10,19 @@ use Image;
 class PhotoRepository extends AbstractRepository implements PhotoRepositoryInterface
 {
 
-    protected $classname = 'App\Models\Entities\Photo';
+    //protected $classname = 'App\Models\Entities\Photo';
+    protected $model;
+    protected $userRepo;
 
-    public function __construct(UserRepositoryInterface $userRepositoryInterface)
+    public function __construct(Photo $model, UserRepositoryInterface $user)
     {
-        $this->user = $userRepositoryInterface;
+        $this->model = $model;
+        $this->userRepo = $user;
     }
 
     public function setUser($user)
     {
-        $this->user = is_numeric($user) ? $this->repository->get($user) : $user;
+        $this->user = is_numeric($user) ? $this->userRepo->get($user) : $user;
 
         return $this;
     }

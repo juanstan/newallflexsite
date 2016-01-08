@@ -1,10 +1,18 @@
 <?php namespace App\Models\Repositories;
 
 use Validator;
+use App\Models\Entities\Breed;
 
 class BreedRepository extends AbstractRepository implements SymptomRepositoryInterface
 {
-	protected $classname = 'App\Models\Entities\Breed';
+	//protected $classname = 'App\Models\Entities\Breed';
+
+	protected $model;
+
+	public function __construct(Breed $model)
+	{
+		$this->model = $model;
+	}
 
 	public function getBreedIdByName($breedName)
 	{

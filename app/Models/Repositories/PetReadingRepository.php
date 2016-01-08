@@ -10,15 +10,12 @@ use League\Csv\Reader;
 
 class PetReadingRepository extends AbstractRepository implements PetReadingRepositoryInterface
 {
-    protected $classname = 'App\Models\Entities\SensorReading';
-
-    protected $repository;
-
+    protected $model;
     protected $pet;
 
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(SensorReading $model)
     {
-        $this->repository = $repository;
+        $this->model = $model;
     }
 
     public function all()
@@ -176,17 +173,29 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
 
         $csv->setOffset(1);
         $data = $csv->query();
+
         foreach ($data as $lineIndex => $row) {
             $profile = SensorReading::where('microchip_id', '=', decoded_microchip_id($row[1]))->first();
-            $pet = Pet::where(['microchip_number' => decoded_microchip_id($row[1])])->first();
+            $petOwner = $user->pets()->checkMicrochip(decoded_microchip_id($row[1]))->first();
+            $pet = Pet::checkMicrochip(decoded_microchip_id($row[1]))->first();
 
-            if (empty($pet)) {
+            if (!$petOwner && $pet) {
+                throw new \Exception('The microchip has been already selected', 111);
+                return false;
+            }
+
+            if (!$petOwner && !$pet) {
+                //Saving the pet
                 $pet = new pet();
                 $pet->microchip_number = decoded_microchip_id($row[1]);
                 $pet->user_id = $user->id;
-
                 $pet->save();
+
+            }elseif($petOwner) {
+                $pet = $petOwner;
+
             }
+
             if (empty($profile)) {
                 $reading = new SensorReading();
                 $reading->microchip_id = decoded_microchip_id($row[1]);
@@ -195,7 +204,6 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
                 $reading->pet_id = $pet->id;
                 $reading->average = 1;
                 $reading->reading_time = reading_timestamp($device_current_time_epoch, $row[3]);
-
                 $reading->save();
             }
 

@@ -5,7 +5,16 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DeviceRepository extends AbstractRepository implements DeviceRepositoryInterface
 {
-	protected $classname = 'App\Models\Entities\Device';
+	//protected $classname = 'App\Models\Entities\Device';
+
+	protected $model;
+	protected $user;
+
+	public function __construct(Device $model, UserRepositoryInterface $user)
+	{
+		$this->model = $model;
+		$this->user = $user;
+	}
 
 	public function getCreateValidator($input)
 	{
@@ -38,7 +47,7 @@ class DeviceRepository extends AbstractRepository implements DeviceRepositoryInt
     
     public function setUser($user)
     {
-        $this->user = is_numeric($user) ? $this->repository->get($user) : $user;
+        $this->user = is_numeric($user) ? $this->user->get($user) : $user;
 
         return $this;
     }
@@ -46,7 +55,9 @@ class DeviceRepository extends AbstractRepository implements DeviceRepositoryInt
     public function create($input)
     {
 
-        $device = parent::create($input);
+        //$device = parent::create($input);
+		$device = $this->model($input);
+
         if($device->user->find($this->user) == null)
         {
             $device->user()->attach($this->user);

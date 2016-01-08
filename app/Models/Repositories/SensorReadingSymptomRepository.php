@@ -8,15 +8,15 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SensorReadingSymptomRepository extends AbstractRepository implements SensorReadingSymptomRepositoryInterface
 {
-    protected $classname = 'App\Models\Entities\SensorReadingSymptom';
-    
-    protected $repository;
-    
+    //protected $classname = 'App\Models\Entities\SensorReadingSymptom';
+    protected $model;
+    protected $userRepo;
     protected $pet;
     
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(SensorReadingSymptom $model, UserRepositoryInterface $user)
     {
-        $this->repository = $repository;
+        $this->model = $model;
+        $this->userRep = $user;
     }
 
     public function getCreateValidator($input)

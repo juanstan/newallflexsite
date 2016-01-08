@@ -6,15 +6,15 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PetConditionRepository extends AbstractRepository implements PetConditionRepositoryInterface
 {
-    protected $classname = 'App\Models\Entities\PetCondition';
-    
-    protected $repository;
-    
+    //protected $classname = 'App\Models\Entities\PetCondition';
+    protected $model;
+    protected $userRepo;
     protected $pet;
     
-    public function __construct(UserRepositoryInterface $repository)
+    public function __construct(PetCondition $model, UserRepositoryInterface $user)
     {
-        $this->repository = $repository;
+        $this->userRepo = $user;
+        $this->model = $model;
     }
 
     public function getCreateValidator($input)

@@ -5,15 +5,15 @@ use Validator;
 
 class PetRepository extends AbstractRepository implements PetRepositoryInterface
 {
-    protected $classname = 'App\Models\Entities\Pet';
-
+    //protected $classname = 'App\Models\Entities\Pet';
+    protected $model;
     protected $user;
-
     protected $userRepository;
 
-    public function __construct(UserRepositoryInterface $userRepositoryInterface)
+    public function __construct(Pet $model, UserRepositoryInterface $user)
     {
-        $this->userRepository = $userRepositoryInterface;
+        $this->userRepository = $user;
+        $this->model = $model;
     }
 
     public function all()
