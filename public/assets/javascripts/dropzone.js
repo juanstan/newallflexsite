@@ -138,7 +138,7 @@
       addRemoveLinks: false,
       previewsContainer: null,
       capture: null,
-      dictDefaultMessage: "<h3>Drag and drop the [filetype] file here</h3><p>Or <span class='blue'>click here</span> to browse to the file</p>",
+      dictDefaultMessage: "<h3>Drag and drop the .csv file here</h3><p>Or <span class='blue'>click here</span> to browse to the file</p>",
       dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
       dictFallbackText: "Please use the fallback form below to upload your files like in the olden days.",
       dictFileTooBig: "File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",
