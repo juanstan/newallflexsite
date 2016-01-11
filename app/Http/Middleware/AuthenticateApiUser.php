@@ -34,6 +34,7 @@ class AuthenticateApiUser {
     public function handle($request, Closure $next)
     {
         $str_token = $request->header('X-Authorization') ?: $request->get('token');
+
         if($str_token == null)
         {
             return response()->json(['error' => true, 'errors' => ['Authorization' => [\Lang::get('error.auth.header-missing')]]], 400);

@@ -106,15 +106,13 @@ class DashboardController extends Controller
         $this->petRepository->setUser($user);
         $symptoms = $this->symptomRepository->all();
         $conditions = $this->conditionRepository->all();
-        //$pets = $this->petRepository->all();
-
         $pets = $this->petRepository->petsSet();
         $microchips = $this->petRepository->microchipUnassigned();
 
         if($pets->isEmpty())
         {
             return redirect()->route('user.register.pet')
-                ->with('success', Lang::get('general.Your account has been created successfully'));
+                ->with('error', \Lang::get('general.Your account has been created although no a pet has been assigned'));
         }
 
         $breed = $this->breedRepository->all()->lists('name', 'id');
@@ -482,13 +480,35 @@ class DashboardController extends Controller
                 ->withInput();
         }
 
-        if($this->petReadingRepository->readingUpload($input, $user))
-        {
-            return redirect()->route('user.dashboard');
+        try {
+            if($this->petReadingRepository->readingUpload($input, $user))
+            {
+                //return redirect()->route('user.dashboard');
+                return response()->json([
+                    'status'=>'success',
+                    'message' => \Lang::get('general.Microchip has been added')
+                ]);
+            }
+
+            return redirect()->route('register.reading')
+                ->with('error', Lang::get('general.Uploaded file is not valid'));
+
+        }catch (\Exception $e) {
+            if ($e->getCode()===111) {
+                return response()->json([
+                    'status'=>'error',
+                    'message' => \Lang::get('general.Microchip has been already registered')
+                ]);
+            }
+
+            return response()->json([
+                'status'=>'error',
+                'message' => $e->getMessage()
+            ]);
+
         }
 
-        return redirect()->route('register.reading')
-            ->with('error', Lang::get('general.Uploaded file is not valid'));
+
 
     }
 
@@ -624,10 +644,14 @@ class DashboardController extends Controller
         if ($this->petRepository->update($newPetId, $data)) {
             $this->petRepository->delete($petId);
             $sensorReading = $this->sensorReadingRepository->getByPetId($petId);
-            $this->sensorReadingRepository->update($sensorReading->id, array('pet_id' => $newPetId));
+            if (!empty($sensorReading)) {
+                $this->sensorReadingRepository->update($sensorReading->id, array('pet_id' => $newPetId));
+            }
         }
+
         return redirect()->route('user.dashboard')
             ->with('success', Lang::get('general.Pet microchip number assigned'));
+
     }
 
 }

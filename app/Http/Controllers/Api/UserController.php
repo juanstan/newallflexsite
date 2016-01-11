@@ -49,8 +49,10 @@ class UserController extends Controller
 
     public function show($id) // GET
     {
+        if ($this->authUser->id != $id) {
+            return response()->json(['error' => true, 'message' => Lang::get('error.http.403')], 403);
+        }
 
-        if ($this->authUser->id != $id) return response()->json(['error' => true, 'message' => Lang::get('error.http.403')], 403);
         return response()->json(['error' => false,
             'result' => $this->userRepository->getUserDetails($id)]);
     }

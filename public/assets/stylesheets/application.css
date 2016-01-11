@@ -5655,7 +5655,10 @@ body {
   padding-bottom: 5px; }
 
 .margintop0-25 {
-  margin-top: 0.25em; }
+  margin-top: 0.25em !important; }
+
+.nomargin {
+  margin: 0 !important; }
 
 .browse-tag {
   margin: 0.7em;
@@ -6121,47 +6124,38 @@ label {
 
 .score-text {
   color: #40c8c6;
-  margin: auto;
   font-family: "HelveticaNeueLT-Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  height: 1em;
   line-height: 1em;
   font-size: 6.5em;
-  letter-spacing: -0.1em; }
+  letter-spacing: -0.1em;
+  margin-top: 0.4em; }
+  .score-text .degree-wrapper {
+    display: block;
+    text-align: center; }
   .score-text p {
     letter-spacing: normal;
-    float: left;
     margin-top: -2.5em;
     width: 100%; }
-  .score-text span.tempsymbol {
-    font-size: 0.6em;
-    vertical-align: top;
-    margin-left: 0.1em;
-    float: left;
-    margin-top: -0.25em; }
   .score-text .temp {
     letter-spacing: -0.03em;
     font-weight: lighter;
-    font-size: 92px;
-    float: left;
-    margin-left: 0.38em; }
+    font-size: 86px; }
+  .score-text span.tempsymbol {
+    font-size: 0.6em;
+    vertical-align: top;
+    margin-left: -0.12em;
+    top: 13%;
+    position: absolute; }
 
 .small-score-text {
   margin: auto;
   color: #fff;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
   height: 1em;
   line-height: 1em;
   font-size: 1.4em;
-  letter-spacing: -0.04em; }
+  letter-spacing: -0.04em;
+  text-align: center;
+  margin-top: 0.5em; }
   .small-score-text p {
     letter-spacing: normal;
     margin-top: -18%;
@@ -6378,5 +6372,42 @@ input[type="radio"] {
     height: 507px;
     overflow-x: hidden;
     overflow-y: auto; }
+
+.toplinkgoback {
+  color: #40c8c6;
+  font-size: 1.5em;
+  margin-bottom: 0.5em; }
+
+.header-instructions {
+  color: #7596a1;
+  font-size: 2em;
+  margin-bottom: 1em; }
+
+.steps-instructions {
+  margin: auto; }
+  .steps-instructions img {
+    margin: auto;
+    display: block;
+    align-content: center; }
+  .steps-instructions .stepnumber {
+    display: block;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    background-color: #40c8c6;
+    width: 40px;
+    height: 40px;
+    color: white;
+    text-align: center;
+    padding-top: 8px;
+    margin: 20px auto 15px auto;
+    font-size: 1.25em;
+    font-weight: bolder; }
+  .steps-instructions .step-description {
+    color: #7596a1;
+    font-size: 1.25em;
+    text-align: center;
+    display: block;
+    margin-bottom: 1.25em; }
 
 /*# sourceMappingURL=application.css.map */

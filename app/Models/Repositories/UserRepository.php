@@ -33,8 +33,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
 	public function getUserDetails($id)
 	{
-		$this->model->findOrFail($id);
-		//return User::findOrFail($id);
+		return $this->model->findOrFail($id);
 	}
 
 	public function getCreateValidator($input)

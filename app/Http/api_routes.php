@@ -2,7 +2,6 @@
 
 Route::post('auth/{provider}/login', ['as' => 'api.auth.external.login', 'uses' => 'ExternalController@postLogin']);
 Route::post('user/login', ['as' => 'api.user.login', 'uses' => 'AuthController@postLogin']); // Done
-
 Route::resource('user', 'UserController', ['only' => ['store']]); // Done
 Route::post('vet/login', ['as' => 'api.vet.login', 'uses' => 'VetAuthController@postLogin']); // Done
 Route::resource('vet', 'VetController', ['only' => ['store', 'index', 'show']]); // Done
@@ -17,6 +16,7 @@ Route::controller('vet/search', 'VetSearchController', array(
     'getLocation'=>'api.vet.search.location',
     'postName'=>'api.vet.search.name',
 ));
+
 Route::group(['middleware' => 'auth.apiUser'], function () {
     Route::post('user/logout', ['as' => 'api.user.logout', 'uses' => 'AuthController@postLogout']); // Done
     Route::resource('user', 'UserController', ['only' => ['show', 'update', 'destroy']]); // Done
@@ -30,7 +30,6 @@ Route::group(['middleware' => 'auth.apiUser'], function () {
     Route::post('pet/{pet_id}/photo', ['as' => 'api.pet.{pet_id}.photo', 'uses' => 'PetController@postPhoto']); // Done
     Route::post('pet/{pet_id}/reading/assign', ['as' => 'api.pet.{pet_id}.reading.assign', 'uses' => 'PetReadingController@postAssign']); // Done
     Route::resource('pet/{pet_id}/reading/{reading_id}/symptom', 'PetReadingSymptomController'); // Done
-
 });
 
 Route::group(['middleware' => 'auth.apiVet'], function () {

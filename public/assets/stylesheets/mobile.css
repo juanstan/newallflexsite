@@ -59,8 +59,8 @@ h4, .h4 {
   font-size: 5em; }
 
 .score-text p {
-  font-size: 0.13em;
-  margin-top: -20%; }
+  font-size: 14px;
+  margin-top: -10%; }
 
 .jumbotron.dashboard {
   min-height: inherit;

@@ -25,12 +25,6 @@
                 <div class="col-md-9 col-centered float-none" >
                     <div class="jumbotron text-center" >
                         {!! HTML::image('images/suresenselogo.png', 'a Logo', array('class' => 'signup-logo')) !!}
-                        <ul id="menu" class="nav nav-tabs nav-justified">
-                            <li class="h2">{!! HTML::linkroute('user.register.about', Lang::get('general.About you')) !!}</li>
-                            <li class="h2">{!! HTML::linkroute('user.register.pet', Lang::get('general.Your pets')) !!}</li>
-                            <li class="h2">{!! HTML::linkroute('user.register.vet', Lang::get('general.Your vets')) !!}</li>
-                            <li class="h2">{!! HTML::linkroute('user.register.reading', Lang::get('general.Your readings')) !!}</li>
-                        </ul>
                         @yield('content')
                     </div>
                 </div>

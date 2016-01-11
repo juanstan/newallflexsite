@@ -74,15 +74,53 @@ $(function(){ // this will be called when the DOM is ready
     });
 });
 
-var md = new Dropzone(".dropzone", {
+//Disabling the auto detect mecanishim
+Dropzone.autoDiscover = false;
 
-});
-md.on("complete", function (file) {
-    if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-        window.setTimeout(function(){window.location.reload()}, 3000);
-    }
+if (document.querySelector('.dropzone') !== null) {
+    var md = new Dropzone(".dropzone",
+            {
+                maxFiles: 1,
+                maxThumbnailFilesize: 1,
+                success: function (file, response) {
+                    if (response.status == 'error') { // succeeded
+                        // below is from the source code too
+                        var node, _i, _len, _ref, _results;
+                        var message = response.message // modify it to your error message
+                        file.previewElement.classList.add("dz-error");
+                        _ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
+                        _results = [];
+                        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                            node = _ref[_i];
+                            _results.push(node.textContent = message);
+                        }
+                        return _results;
+                    }
+                }
+            });
 
-});
+    md.on("maxfilesexceeded", function (file) {
+        this.removeAllFiles();
+        this.addFile(file);
+    });
+
+    md.on("complete", function (file) {
+        var self = this;
+        if (
+                self.getAcceptedFiles().length > 0
+                && typeof file.xhr !== "undefined"
+                && JSON.parse(file.xhr.response).status == 'success'
+        ) {
+            window.location.reload();
+        } else {
+            $(file.previewElement).on('click', function () {
+                self.removeAllFiles();
+                $('button.btn-skip').show();
+                $('button.btn-next').hide();
+            })
+        }
+    });
+}
 
 function readURL(input) {
     if (input.files && input.files[0]) {

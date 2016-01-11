@@ -25,15 +25,10 @@ class PetConditionController extends Controller
 
     public function index($pet_id)
     {
-
         $this->petRepository->setUser($this->authUser);
 
-        $pet = $this->petRepository->get($pet_id);
-
-        $this->petConditionRepository->setPet($pet);
-
         return response()->json(['error' => false,
-            'result' => $this->petConditionRepository->all()]);
+            'result' => $this->petRepository->get($pet_id)->petConditions()->get()]);
 
     }
 
@@ -46,15 +41,12 @@ class PetConditionController extends Controller
     {
 
         $this->petRepository->setUser($this->authUser);
-
         $pet = $this->petRepository->get($pet_id);
-
         $this->petConditionRepository->setPet($pet);
 
         $input = Input::all();
         $input['pet_id'] = $pet_id;
         $validator = $this->petConditionRepository->getCreateValidator($input);
-
 
         if ($validator->fails()) {
             return response()->json(['error' => true,
