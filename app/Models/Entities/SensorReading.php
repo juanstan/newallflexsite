@@ -48,11 +48,11 @@ class SensorReading extends Model implements AuthenticatableContract, CanResetPa
 
     public function symptoms()
     {
-        return $this->belongsToMany(Symptom::class, 'sensor_reading_symptoms', 'reading_id', 'symptom_id');
+        return $this->belongsToMany(Symptom::class, 'sensor_reading_symptom', 'reading_id', 'symptom_id');
     }
     
-    public function sensorReadingSymptoms()
+    /*public function sensorReadingSymptoms()
     {
         return $this->hasMany(SensorReadingSymptom::class, 'reading_id');
-    }
+    }*/
 }

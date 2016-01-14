@@ -12,13 +12,14 @@ class CreateSensorReadingSymptomsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('sensor_reading_symptoms', function(Blueprint $table)
+		Schema::create('sensor_reading_symptom', function(Blueprint $table)
 		{
-			$table->integer('id', true);
-			$table->integer('reading_id')->nullable();
-			$table->integer('symptom_id')->nullable();
+			$table->integer('reading_id')->unsigned()->index();
+			$table->foreign('reading_id')->references('id')->on('sensor_readings')->onDelete('cascade');
+			$table->integer('symptom_id')->unsigned()->index();
+			$table->foreign('symptom_id')->references('id')->on('symptoms')->onDelete('cascade');
+			$table->primary(array('reading_id','symptom_id'));
 			$table->timestamps();
-			$table->softDeletes();
 		});
 	}
 
@@ -30,7 +31,7 @@ class CreateSensorReadingSymptomsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('sensor_reading_symptoms');
+		Schema::drop('sensor_reading_symptom');
 	}
 
 }

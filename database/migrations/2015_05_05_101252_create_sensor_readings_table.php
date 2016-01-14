@@ -14,7 +14,7 @@ class CreateSensorReadingsTable extends Migration {
 	{
 		Schema::create('sensor_readings', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->integer('id', true, true);
 			$table->integer('average')->nullable()->default(1);
 			$table->string('microchip_id')->nullable();
 			$table->double('temperature', 15, 8)->nullable();

@@ -23,7 +23,7 @@ class CreateDeviceVetsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('device_vets');
+
 	}
 
 }
