@@ -3,7 +3,7 @@
 use Validator;
 use App\Models\Entities\Breed;
 
-class BreedRepository extends AbstractRepository implements SymptomRepositoryInterface
+class BreedRepository extends AbstractRepository implements BreedRepositoryInterface
 {
 	//protected $classname = 'App\Models\Entities\Breed';
 

@@ -4,12 +4,14 @@ Route::post('auth/{provider}/login', ['as' => 'api.auth.external.login', 'uses' 
 Route::post('user/login', ['as' => 'api.user.login', 'uses' => 'AuthController@postLogin']); // Done
 Route::resource('user', 'UserController', ['only' => ['store']]); // Done
 Route::post('vet/login', ['as' => 'api.vet.login', 'uses' => 'VetAuthController@postLogin']); // Done
-Route::resource('vet', 'VetController', ['only' => ['store', 'index', 'show']]); // Done
+Route::resource('vet', 'VetController', ['only' => ['store', 'index']]); // Done
+Route::get('vet/{vet}', ['as' => 'api.vet.show', 'uses' => 'VetController@show'])->where('vet', '[0-9]+'); // Done
 Route::post('password/reset', ['as' => 'api.password.reset', 'uses' => 'PasswordController@postRequest']); // Done
 Route::resource('password', 'PasswordController', ['only' => ['store', 'index', 'show']]); // Done
 Route::resource('symptoms', 'SymptomController'); // Done
 Route::resource('breeds', 'BreedController'); // Done
 Route::resource('conditions', 'ConditionController'); // Done
+
 Route::controller('vet/search', 'VetSearchController', array(
     'getAll'=>'api.vet.search.all',
     'postLocation'=>'api.vet.search.location',
@@ -35,9 +37,9 @@ Route::group(['middleware' => 'auth.apiUser'], function () {
 Route::group(['middleware' => 'auth.apiVet'], function () {
     Route::post('vet/logout', ['as' => 'api.vet.logout', 'uses' => 'VetAuthController@postLogout']); //
     Route::resource('vet/pet', 'PetController', ['only' => ['show', 'index']]); // View all vet pets
-    Route::resource('vet/pet/reading', 'PetReadingController', ['only' => ['show', 'update', 'index']]);
-    Route::resource('vet/pet/reading/symptom', 'PetReadingSymptomController'); //  done
+    Route::resource('vet/pet/{pet}/reading', 'PetReadingController', ['only' => ['show', 'update', 'index']]);
     Route::resource('vet', 'VetController', ['only' => ['update', 'destroy']]); //
+    Route::resource('vet/pet/{pet}/reading/{reading}/symptom', 'SymptomController'); //  done
 });
 
 Route::any('{url?}', function () {

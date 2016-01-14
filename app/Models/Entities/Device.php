@@ -9,10 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class Device extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
 	use Authenticatable, CanResetPassword;
-    
-    protected $hidden = [
-        'deleted_at'
-    ];
 
     protected $fillable = [
         'serial_id',
@@ -29,7 +25,7 @@ class Device extends Model implements AuthenticatableContract, CanResetPasswordC
     
     public function user()
     {
-        return $this->belongsToMany(User::class, 'device_users')->withTimestamps();
+        return $this->belongsToMany(User::class, 'device_user')->withTimestamps();
     }
     
     public function vet()

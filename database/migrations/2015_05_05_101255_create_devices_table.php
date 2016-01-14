@@ -14,7 +14,7 @@ class CreateDevicesTable extends Migration {
 	{
 		Schema::create('devices', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->integer('id', true, true);
 			$table->string('serial_id')->nullable();
 			$table->string('device')->nullable();
 			$table->string('name')->nullable();
@@ -25,6 +25,16 @@ class CreateDevicesTable extends Migration {
 			$table->string('field_3')->nullable();
 			$table->string('field_4')->nullable();
 		});
+
+		Schema::create('device_user', function(Blueprint $table)
+		{
+			$table->integer('user_id')->unsigned()->index();
+			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+			$table->integer('device_id')->unsigned()->index();
+			$table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
+			$table->timestamps();
+		});
+
 	}
 
 
@@ -36,6 +46,7 @@ class CreateDevicesTable extends Migration {
 	public function down()
 	{
 		Schema::drop('devices');
+		Schema::drop('device_users');
 	}
 
 }

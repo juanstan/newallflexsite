@@ -6,6 +6,7 @@ use URL;
 use Request;
 
 use App\Models\Entities\User;
+use App\Models\Entities\Vet;
 use App\Models\Entities\Pet;
 use App\Models\Repositories\PetRepository;
 use App\Models\Repositories\PetRequestRepository;

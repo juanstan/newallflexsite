@@ -6,6 +6,8 @@ interface SymptomRepositoryInterface extends AbstractRepositoryInterface
 
     public function getUpdateValidator($input);
 
+    public function getAssignedReadingById($input);
+
 }
 
 ?>

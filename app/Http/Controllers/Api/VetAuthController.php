@@ -26,30 +26,29 @@ class VetAuthController extends Controller
             return response()->json(['error' => true, 'errors' => $validator->messages()]);
         }
 
-        if (Auth::validate($input) == false) {
-            return response()->json(['error' => true, 'errors' => ['password' => ['The password is incorrect']]]);
-        }
+        if (Auth::vet()->attempt($input)) {
+            $vet = $this->vetRepository->getByEmailForLogin($input['email']);
 
-        $vet = $this->vetRepository->getByEmailForLogin($input['email']);
-
-        if ($vet->tokens) {
-            foreach ($vet->tokens as $token) {
-                $token->delete();
+            if ($vet->tokens) {
+                foreach ($vet->tokens as $token) {
+                    $token->delete();
+                }
             }
+
+            $token = Token::generate($vet);
+            $vet->tokens()->save($token);
+
+            return response()->json(['error' => false, 'result' => ['token' => $token, 'vet' => $vet]]);
         }
 
-        $token = Token::generate($vet);
-        $vet->tokens()->save($token);
-
-        return response()->json(['error' => false, 'result' => ['token' => $token, 'vet' => $vet]]);
+        return response()->json(['error' => true, 'result' => 'Vet details are incorrect']);
     }
 
     public function postLogout()
     {
-        if (Auth::check()) {
-            $vet = Auth::vet();
-
-            foreach ($vet->tokens as $token) {
+        if (Auth::vet()->check()) {
+            $vet = Auth::vet()->get();
+            foreach ($vet->tokens() as $token) {
                 $token->delete();
             }
 

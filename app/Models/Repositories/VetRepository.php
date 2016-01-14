@@ -4,7 +4,6 @@ use App\Models\Entities\Vet;
 
 class VetRepository extends AbstractRepository implements VetRepositoryInterface
 {
-	//protected $classname = 'App\Models\Entities\Vet';
 	protected $model;
 
 
@@ -18,23 +17,21 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 		return $this->model->with('tokens')
 			->where('email', '=', $email)
 			->firstOrFail();
-		/*return Vet::with('tokens')
-			->where('email', '=', $email)
-			->firstOrFail();*/
+
 	}
 
 	public function getVetDetails($id)
 	{
 		return $this->model->findOrFail($id);
-		//return Vet::findOrFail($id);
+
 	}
 
 	public function getCreateValidator($input)
 	{
 		return \Validator::make($input,
 		[
-			'email'    => ['required','unique:vets'],
-            'password'      => ['required','min:6','confirmed'],
+			'email' 				=> ['required','email','unique:vets,email,NULL,id,deleted_at,NULL'],
+            'password'      		=> ['required','min:6','confirmed'],
             'password_confirmation' => ['required','min:6']
 		]);
 	}

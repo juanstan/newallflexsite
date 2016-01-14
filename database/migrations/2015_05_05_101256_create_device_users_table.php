@@ -12,13 +12,8 @@ class CreateDeviceUsersTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('device_users', function(Blueprint $table)
-		{
-			$table->integer('id', true);
-			$table->integer('user_id')->nullable();
-			$table->integer('device_id')->nullable();
-			$table->timestamps();
-		});
+
+
 	}
 
 
@@ -29,7 +24,7 @@ class CreateDeviceUsersTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('device_users');
+
 	}
 
 }

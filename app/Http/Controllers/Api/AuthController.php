@@ -27,12 +27,7 @@ class AuthController extends Controller
             return response()->json(['error' => true, 'errors' => $validator->messages()]);
         }
 
-        $userData = array(
-            'email' => $input['email'],
-            'password' => $input['password']
-        );
-
-        if (Auth::user()->attempt($userData)) {
+        if (Auth::user()->attempt($input)) {
             $user = $this->userRepository->getByEmailForLogin($input['email']);
 
             if ($user->tokens) {
@@ -46,17 +41,18 @@ class AuthController extends Controller
 
             return response()->json(['error' => false, 'result' => ['token' => $token, 'user' => $user]]);
 
-        } else {
-            return response()->json(['error' => true, 'result' => 'User details are incorrect']);
-
         }
+
+        return response()->json(['error' => true, 'result' => 'User details are incorrect']);
+
+
 
     }
 
     public function postLogout()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
+        if (Auth::user()->check()) {
+            $user = Auth::user()->get();
 
             foreach ($user->tokens as $token) {
                 $token->delete();

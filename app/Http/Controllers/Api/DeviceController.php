@@ -40,14 +40,14 @@ class DeviceController extends Controller
                 'errors' => $validator->messages()], 400);
         }
 
-        $pet = $this->deviceRepository->create($input);
+        $device = $this->deviceRepository->create($input);
 
-        if ($pet == null) {
+        if ($device == null) {
             \App::abort(500);
         }
 
-        return response()->json(['error' => false, 'result' => $pet], 201)
-            ->header('Location', URL::route('api.device.show', [$pet->id]));
+        return response()->json(['error' => false, 'result' => $device], 201)
+            ->header('Location', URL::route('api.device.show', [$device->id]));
     }
 
     public function show($id) // GET
@@ -76,6 +76,17 @@ class DeviceController extends Controller
 
         return response()->json(['error' => false,
             'result' => $this->deviceRepository->get($id)]);
+    }
+
+
+    public function destroy($id) {
+
+        $this->deviceRepository->setUser($this->authUser);
+        $this->deviceRepository->destroy($id);
+
+        return response()->json(['error' => false,
+            'message' => 'The device has been removed']);
+
     }
 
 }

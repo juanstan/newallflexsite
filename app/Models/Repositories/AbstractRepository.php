@@ -4,17 +4,14 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class AbstractRepository
 {
-	//protected $classname = 'Model';
 
 	public function all()
 	{
-		//return call_user_func_array([$this->classname, 'all'], []);
 		return $this->model->all();
 	}
 
 	public function create($input)
 	{
-		//return call_user_func_array([$this->classname, 'create'], [$input]);
 		return $this->model->create($input);
 	}
 
@@ -26,7 +23,6 @@ abstract class AbstractRepository
 
 	public function get($id)
 	{
-		//return call_user_func_array([$this->classname, 'findOrFail'], [$id]);
 		return $this->model->findOrFail($id);
 	}
 
@@ -39,8 +35,6 @@ abstract class AbstractRepository
 	*/
 	public function query()
 	{
-		/*$class = $this->classname;
-		return (new $class)->newQuery();*/
 		return $this->model->newQuery();
 	}
 

@@ -3,7 +3,7 @@
 use Validator;
 use App\Models\Entities\SensorReading;
 
-class SensorReadingRepository extends AbstractRepository implements SymptomRepositoryInterface
+class SensorReadingRepository extends AbstractRepository implements SensorReadingRepositoryInterface
 {
 	//protected $classname = 'App\Models\Entities\SensorReading';
 	protected $model;
@@ -42,6 +42,7 @@ class SensorReadingRepository extends AbstractRepository implements SymptomRepos
 
 				]);
 	}
+
 
 }
 

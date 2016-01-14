@@ -2,10 +2,13 @@
 
 use Carbon\Carbon;
 use App\Models\Entities\Vet;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+
 
 class Token extends \Eloquent {
 
-    use SoftDeletingTrait;
+    use SoftDeletes;
 
     const TOKEN_EXPIRY = 'now + 1week';
 

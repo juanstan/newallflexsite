@@ -5,7 +5,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DeviceRepository extends AbstractRepository implements DeviceRepositoryInterface
 {
-	//protected $classname = 'App\Models\Entities\Device';
 
 	protected $model;
 	protected $user;
@@ -64,7 +63,17 @@ class DeviceRepository extends AbstractRepository implements DeviceRepositoryInt
 
         return $device;
     
-    } 
+    }
+
+
+	public function destroy($device_id) {
+		if($this->user)
+		{
+			return $this->user->device()->findOrFail($device_id)->delete();
+		}
+
+	}
+
 }
 
 ?>
