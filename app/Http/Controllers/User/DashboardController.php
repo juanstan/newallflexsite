@@ -116,32 +116,13 @@ class DashboardController extends Controller
         }
 
         $breed = $this->breedRepository->all()->lists('name', 'id');
+        $data = array('pets','microchips','conditions','symptoms','breed','user');
 
         if ($this->authUser->confirmed != null) {
-            return View::make('user.dashboard')
-                ->with(
-                    array(
-                        'pets' => $pets,
-                        'microchips' => $microchips,
-                        'conditions' => $conditions,
-                        'symptoms' => $symptoms,
-                        'breed' => $breed,
-                        'user' => $user
-                    )
-                );
-        } else {
-            return View::make('user.dashboard')
-                ->with(
-                    array(
-                        'not-verified' => '',
-                        'pets' => $pets,
-                        'microchips' => $microchips,
-                        'conditions' => $conditions,
-                        'symptoms' => $symptoms,
-                        'breed' => $breed,
-                        'user' => $user
-                    ));
+            array_push($data, ['not-verified' => '']);
         }
+
+        return View::make('user.dashboard')->with(compact($data));
 
     }
 
@@ -315,11 +296,13 @@ class DashboardController extends Controller
     {
         $this->petRepository->setUser($this->authUser);
         $symptoms = Input::get('symptoms');
+
         if (is_array($symptoms)) {
-            $this->sensorReadingSymptomRepository->removeAndUpdateSymptoms($readingId, $symptoms);
+            $this->sensorReadingRepository->synchroniseSymptoms($readingId, $symptoms);
             return redirect()->route('user.dashboard')
                 ->with('message', Lang::get('general.Symptoms updated'));
         }
+
         return redirect()->route('user.dashboard');
     }
 

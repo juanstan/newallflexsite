@@ -110,8 +110,8 @@ $temperaturePref = $user->units;
                             <div class="symptoms-wrapper">
                                 @if( $pet->sensorReadings->count() )
                                     @foreach ($pet->sensorReadings as $sensorReading)
-                                        @foreach ($sensorReading->sensorReadingSymptoms as $sensorReadingSymptom)
-                                            <?php $symptomItems[] = $sensorReadingSymptom->symptom->name; ?>
+                                        @foreach ($sensorReading->symptoms as $sensorReadingSymptom)
+                                            <?php $symptomItems[] = $sensorReadingSymptom->name; ?>
                                         @endforeach
                                     @endforeach
                                 @endif
@@ -237,8 +237,8 @@ $temperaturePref = $user->units;
                                     @if( $pet->sensorReadings->count() )
                                         @foreach ($pet->sensorReadings->slice(0, 1) as $sensorReading)
                                             <ul class="nav nav-pills text-center symptom-pills">
-                                                @foreach ($sensorReading->sensorReadingSymptoms as $sensorReadingSymptom)
-                                                <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="{!! URL::route('user.dashboard.symptomRemove', $sensorReadingSymptom->reading_id . '/' . $sensorReadingSymptom->symptom_id) !!}"><span>{!! $sensorReadingSymptom->symptom->name !!}</span></a></li>
+                                                @foreach ($sensorReading->symptoms as $sensorReadingSymptom)
+                                                <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="{!! URL::route('user.dashboard.symptomRemove', $sensorReadingSymptom->reading_id . '/' . $sensorReadingSymptom->symptom_id) !!}"><span>{!! $sensorReadingSymptom->name !!}</span></a></li>
                                                 @endforeach
                                             </ul>
                                             <ul class="nav nav-pills text-center symptom-pills">
@@ -351,10 +351,10 @@ $temperaturePref = $user->units;
                                         </div>
                                     </div>
                                     <div class="col-xs-7 text-left" >
-                                        @if( $sensorReading->sensorReadingSymptoms->count() )
+                                        @if( $sensorReading->symptoms->count() )
                                             <ul class="nav nav-pills text-center symptom-pills">
-                                                @foreach ($sensorReading->sensorReadingSymptoms as $sensorReadingSymptom)
-                                                    <li role="presentation" class="full-width small-top-buffer active"><a class="" href="#"><small>{!! $sensorReadingSymptom->symptom->name !!}</small></a></li>
+                                                @foreach ($sensorReading->symptoms as $sensorReadingSymptom)
+                                                    <li role="presentation" class="full-width small-top-buffer active"><a class="" href="#"><small>{!! $sensorReadingSymptom->name !!}</small></a></li>
                                                 @endforeach
                                             </ul>
                                         @else

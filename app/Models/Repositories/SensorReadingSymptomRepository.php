@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class SensorReadingSymptomRepository extends AbstractRepository implements SensorReadingSymptomRepositoryInterface
 {
-    //protected $classname = 'App\Models\Entities\SensorReadingSymptom';
     protected $model;
     protected $userRepo;
     protected $pet;

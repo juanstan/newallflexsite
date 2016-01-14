@@ -5,7 +5,6 @@ use App\Models\Entities\SensorReading;
 
 class SensorReadingRepository extends AbstractRepository implements SensorReadingRepositoryInterface
 {
-	//protected $classname = 'App\Models\Entities\SensorReading';
 	protected $model;
 
 	public function __construct(SensorReading $model){
@@ -41,6 +40,12 @@ class SensorReadingRepository extends AbstractRepository implements SensorReadin
 				[
 
 				]);
+	}
+
+
+	public function synchroniseSymptoms($readingId, $symptoms) {
+		$this->get($readingId)->symptoms()->sync($symptoms);
+
 	}
 
 
