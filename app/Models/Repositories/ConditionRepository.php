@@ -3,7 +3,7 @@
 use Validator;
 use App\Models\Entities\Condition;
 
-class ConditionRepository extends AbstractRepository implements SymptomRepositoryInterface
+class ConditionRepository extends AbstractRepository implements ConditionRepositoryInterface
 {
 	//protected $classname = 'App\Models\Entities\Condition';
 

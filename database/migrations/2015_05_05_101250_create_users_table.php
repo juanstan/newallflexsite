@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration {
 			$table->string('email')->nullable();
 			$table->string('provider')->nullable();
 			$table->string('provider_id')->unique()->nullable();
-			$table->integer('photo_id')->unsigned()->index();
+			$table->integer('photo_id')->nullable()->unsigned()->index();
 			$table->string('telephone')->nullable();
 			$table->integer('units')->nullable();
 			$table->integer('weight_units')->nullable();

@@ -12,14 +12,7 @@ class CreateDeviceVetsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('device_vets', function(Blueprint $table)
-		{
-			$table->integer('id', true);
-			$table->integer('vet_id')->nullable();
-			$table->integer('device_id')->nullable();
-			$table->dateTime('created_at')->nullable();
-			$table->time('updated_at')->nullable();
-		});
+
 	}
 
 

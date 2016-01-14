@@ -17,8 +17,8 @@ class CreatePhotosTable extends Migration
             $table->integer('id', true, true);
             $table->string('title')->nullable();
             $table->text('location', 65535)->nullable();
-            $table->integer('uploading_user_id')->unsigned()->index();
-            $table->integer('uploading_vet_id')->unsigned()->index();
+            $table->integer('uploading_user_id')->nullable()->unsigned()->index();
+            $table->integer('uploading_vet_id')->nullable()->unsigned()->index();
             $table->timestamps();
             $table->softDeletes();
         });

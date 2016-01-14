@@ -14,7 +14,7 @@ class CreateVetsTable extends Migration {
 	{
 		Schema::create('vets', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->integer('id', true, true);
 			$table->string('company_name')->nullable();
 			$table->string('contact_name')->nullable();
 			$table->string('email')->nullable();

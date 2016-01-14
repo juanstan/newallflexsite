@@ -35,6 +35,15 @@ class CreateDevicesTable extends Migration {
 			$table->timestamps();
 		});
 
+		Schema::create('device_vet', function(Blueprint $table)
+		{
+			$table->integer('vet_id')->unsigned()->index();
+			$table->foreign('vet_id')->references('id')->on('vets')->onDelete('cascade');
+			$table->integer('device_id')->unsigned()->index();
+			$table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
+			$table->timestamps();
+		});
+
 	}
 
 
@@ -46,7 +55,8 @@ class CreateDevicesTable extends Migration {
 	public function down()
 	{
 		Schema::drop('devices');
-		Schema::drop('device_users');
+		Schema::drop('device_user');
+		Schema::drop('device_vet');
 	}
 
 }
