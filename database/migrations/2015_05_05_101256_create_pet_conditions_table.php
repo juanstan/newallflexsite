@@ -12,13 +12,15 @@ class CreatePetConditionsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('pet_conditions', function(Blueprint $table)
+		Schema::create('condition_pet', function(Blueprint $table)
 		{
-			$table->integer('id', true);
-			$table->integer('pet_id')->nullable();
-			$table->integer('condition_id')->nullable();
+
+			$table->integer('pet_id')->unsigned()->index();
+			$table->foreign('pet_id')->references('id')->on('pets')->onDelete('cascade');
+			$table->integer('condition_id')->unsigned()->index();
+			$table->foreign('condition_id')->references('id')->on('conditions')->onDelete('cascade');
+			$table->primary(array('condition_id','pet_id'));
 			$table->timestamps();
-			$table->softDeletes();
 		});
 	}
 
@@ -30,7 +32,7 @@ class CreatePetConditionsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('pet_conditions');
+		Schema::drop('condition_pet');
 	}
 
 }

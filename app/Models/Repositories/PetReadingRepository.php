@@ -172,7 +172,7 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
         }
 
         $csv->setOffset(1);
-        $data = $csv->query();
+        $data = $csv->fetch();
 
         foreach ($data as $lineIndex => $row) {
             $profile = SensorReading::where('microchip_id', '=', decoded_microchip_id($row[1]))->first();

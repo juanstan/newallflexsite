@@ -14,7 +14,7 @@ class CreateConditionsTable extends Migration {
 	{
 		Schema::create('conditions', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->integer('id', true, true);
 			$table->string('name')->nullable();
 		});
 	}

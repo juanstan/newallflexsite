@@ -14,7 +14,7 @@ class CreatePetsTable extends Migration {
 	{
 		Schema::create('pets', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->integer('id', true, true);
 			$table->string('name')->nullable();
 			$table->string('microchip_number')->nullable();
 			$table->integer('breed_id')->nullable();

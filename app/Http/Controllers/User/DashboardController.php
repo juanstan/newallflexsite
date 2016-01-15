@@ -299,16 +299,20 @@ class DashboardController extends Controller
 
         if (is_array($symptoms)) {
             $this->sensorReadingRepository->synchroniseSymptoms($readingId, $symptoms);
-            return redirect()->route('user.dashboard')
-                ->with('message', Lang::get('general.Symptoms updated'));
+            $message = 'general.Symptoms updated';
+
+        } else {
+            $message = 'general.No symptoms has been added';
+
         }
 
-        return redirect()->route('user.dashboard');
+        return redirect()->route('user.dashboard')
+            ->with('message', Lang::get($message));
     }
 
     public function getSymptomRemove($readingId, $symptomId)
     {
-        if($this->sensorReadingSymptomRepository->removeSymptomById($readingId, $symptomId))
+        if ($this->sensorReadingRepository->removeSymptom($readingId, $symptomId))
         {
             return redirect()->route('user.dashboard')
                 ->with('success', Lang::get('general.Symptom removed'));
@@ -440,7 +444,6 @@ class DashboardController extends Controller
 
     }
 
-
     public function getRemovePet($petId)
     {
         $this->petRepository->setUser($this->authUser);
@@ -466,7 +469,6 @@ class DashboardController extends Controller
         try {
             if($this->petReadingRepository->readingUpload($input, $user))
             {
-                //return redirect()->route('user.dashboard');
                 return response()->json([
                     'status'=>'success',
                     'message' => \Lang::get('general.Microchip has been added')

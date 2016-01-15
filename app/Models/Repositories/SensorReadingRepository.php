@@ -49,6 +49,11 @@ class SensorReadingRepository extends AbstractRepository implements SensorReadin
 	}
 
 
+	public function removeSymptom($readingId, $symptom_id) {
+		return $this->get($readingId)->symptoms()->detach($symptom_id);
+
+	}
+
 }
 
 ?>

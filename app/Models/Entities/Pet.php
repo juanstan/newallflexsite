@@ -70,6 +70,14 @@ class Pet extends Model implements AuthenticatableContract, CanResetPasswordCont
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function conditions()
+    {
+        return $this->belongsToMany(Condition::class, 'condition_pet', 'pet_id')->withTimestamps();
+    }
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function photo()

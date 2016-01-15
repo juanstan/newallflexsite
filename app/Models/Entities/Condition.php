@@ -8,4 +8,12 @@ class Condition extends Model {
         'name',
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     */
+    public function pets()
+    {
+        return $this->belongsToMany(Pet::class, 'condition_pet', 'condition_id')->withTimestamps();
+    }
+
 }
