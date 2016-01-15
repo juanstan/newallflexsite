@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class VetReading extends Model implements AuthenticatableContract, CanResetPasswordContract {
+class ReadingVet extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
 	use Authenticatable, CanResetPassword;
 
@@ -21,7 +21,7 @@ class VetReading extends Model implements AuthenticatableContract, CanResetPassw
 	 *
 	 * @var string
 	 */
-	protected $table = 'vet_readings';
+	protected $table = 'reading_vet';
 
 	/**
 	 * The attributes excluded from the model's JSON form.

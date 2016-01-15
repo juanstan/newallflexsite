@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateVetReadingsTable extends Migration {
+class CreateReadingSymptomTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,12 +12,12 @@ class CreateVetReadingsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('vet_readings', function(Blueprint $table)
+		Schema::create('reading_symptom', function(Blueprint $table)
 		{
-			$table->integer('reading_id');
-			$table->integer('vet_id');
+			$table->integer('reading_id')->unsigned();
+			$table->integer('symptom_id')->unsigned();
+			$table->primary(array('reading_id','symptom_id'));
 			$table->timestamps();
-			$table->primary(['reading_id','vet_id']);
 		});
 	}
 
@@ -29,7 +29,7 @@ class CreateVetReadingsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('vet_readings');
+		Schema::drop('reading_symptom');
 	}
 
 }

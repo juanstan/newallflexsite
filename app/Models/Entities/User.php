@@ -57,10 +57,10 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function requests()
+    /*public function requests()
     {
         return $this->hasMany(Request::class);
-    }
+    }*/
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany

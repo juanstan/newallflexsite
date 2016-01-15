@@ -21,12 +21,7 @@ class Request extends \Eloquent {
         'approved',
     ];
 
-	protected $table = 'pet_requests';
-    
-    public function user()
-    {
-        return $this->belongsTo(User::class, 'user_id');
-    }
+	protected $table = 'pet_vet';
     
     public function vet()
     {

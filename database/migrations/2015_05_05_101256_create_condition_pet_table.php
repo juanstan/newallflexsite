@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreatePetConditionsTable extends Migration {
+class CreateConditionPetTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -15,10 +15,8 @@ class CreatePetConditionsTable extends Migration {
 		Schema::create('condition_pet', function(Blueprint $table)
 		{
 
-			$table->integer('pet_id')->unsigned()->index();
-			$table->foreign('pet_id')->references('id')->on('pets')->onDelete('cascade');
-			$table->integer('condition_id')->unsigned()->index();
-			$table->foreign('condition_id')->references('id')->on('conditions')->onDelete('cascade');
+			$table->integer('pet_id')->unsigned();
+			$table->integer('condition_id')->unsigned();
 			$table->primary(array('condition_id','pet_id'));
 			$table->timestamps();
 		});

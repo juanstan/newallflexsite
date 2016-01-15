@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateSensorReadingsTable extends Migration {
+class CreateReadingsTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,7 +12,7 @@ class CreateSensorReadingsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('sensor_readings', function(Blueprint $table)
+		Schema::create('readings', function(Blueprint $table)
 		{
 			$table->integer('id', true, true);
 			$table->integer('average')->nullable()->default(1);
@@ -34,7 +34,7 @@ class CreateSensorReadingsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('sensor_readings');
+		Schema::drop('readings');
 	}
 
 }

@@ -13,6 +13,14 @@ class CreateDeviceVetsTable extends Migration {
 	public function up()
 	{
 
+		Schema::create('device_vet', function(Blueprint $table)
+		{
+			$table->integer('vet_id')->unsigned();
+			$table->integer('device_id')->unsigned();
+			$table->primary(array('vet_id','device_id'));
+			$table->timestamps();
+		});
+
 	}
 
 
@@ -23,7 +31,7 @@ class CreateDeviceVetsTable extends Migration {
 	 */
 	public function down()
 	{
-
+		Schema::drop('device_vet');
 	}
 
 }

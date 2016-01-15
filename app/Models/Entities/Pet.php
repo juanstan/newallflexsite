@@ -42,7 +42,7 @@ class Pet extends Model implements AuthenticatableContract, CanResetPasswordCont
      */
     public function vet()
     {
-        return $this->belongsToMany(Vet::class, 'pet_requests');
+        return $this->belongsToMany(Vet::class, 'pet_vet');
     }
 
     /**
@@ -50,7 +50,7 @@ class Pet extends Model implements AuthenticatableContract, CanResetPasswordCont
      */
     public function sensorReadings()
     {
-        return $this->hasMany(SensorReading::class, 'pet_id');
+        return $this->hasMany(Reading::class, 'pet_id');
     }
 
     /**
@@ -59,14 +59,6 @@ class Pet extends Model implements AuthenticatableContract, CanResetPasswordCont
     public function breed()
     {
         return $this->belongsTo(Breed::class, 'breed_id');
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
-     */
-    public function petConditions()
-    {
-        return $this->hasMany(PetCondition::class, 'pet_id');
     }
 
     /**

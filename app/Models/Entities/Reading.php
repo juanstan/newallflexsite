@@ -31,14 +31,9 @@ class SensorReading extends Model implements AuthenticatableContract, CanResetPa
         return $this->belongsTo(Pet::class, 'pet_id');
     }
 
-    public function vet()
-    {
-        return $this->belongsTo(Vet::class, 'pet_id');
-    }
-
     public function vets()
     {
-        return $this->belongsToMany(Vet::class, 'vet_readings', 'reading_id', 'vet_id');
+        return $this->belongsToMany(Vet::class, 'vet_reading', 'reading_id', 'vet_id');
     }
     
     public function device()
@@ -48,11 +43,7 @@ class SensorReading extends Model implements AuthenticatableContract, CanResetPa
 
     public function symptoms()
     {
-        return $this->belongsToMany(Symptom::class, 'sensor_reading_symptom', 'reading_id', 'symptom_id');
+        return $this->belongsToMany(Symptom::class, 'reading_symptom', 'reading_id', 'symptom_id');
     }
-    
-    /*public function sensorReadingSymptoms()
-    {
-        return $this->hasMany(SensorReadingSymptom::class, 'reading_id');
-    }*/
+
 }

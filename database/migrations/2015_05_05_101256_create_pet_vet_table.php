@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreatePetRequestsTable extends Migration {
+class CreatePetVetTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,12 @@ class CreatePetRequestsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('pet_requests', function(Blueprint $table)
+		Schema::create('pet_vet', function(Blueprint $table)
 		{
-			$table->integer('id', true);
-			$table->integer('vet_id')->nullable();
-			$table->integer('user_id')->nullable();
-			$table->integer('pet_id')->nullable();
+			$table->integer('vet_id')->unsigned();
+			$table->integer('pet_id')->unsigned();
 			$table->integer('approved')->nullable()->default(1);
+			$table->primary(array('vet_id','pet_id'));
 			$table->timestamps();
 			$table->softDeletes();
 		});
@@ -32,7 +31,7 @@ class CreatePetRequestsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('pet_requests');
+		Schema::drop('pet_vet');
 	}
 
 }

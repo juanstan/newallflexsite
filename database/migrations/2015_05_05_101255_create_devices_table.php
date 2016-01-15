@@ -26,26 +26,6 @@ class CreateDevicesTable extends Migration {
 			$table->string('field_4')->nullable();
 		});
 
-		Schema::create('device_user', function(Blueprint $table)
-		{
-			$table->integer('user_id')->unsigned()->index();
-			$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-			$table->integer('device_id')->unsigned()->index();
-			$table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
-			$table->primary(array('user_id','device_id'));
-			$table->timestamps();
-		});
-
-		Schema::create('device_vet', function(Blueprint $table)
-		{
-			$table->integer('vet_id')->unsigned()->index();
-			$table->foreign('vet_id')->references('id')->on('vets')->onDelete('cascade');
-			$table->integer('device_id')->unsigned()->index();
-			$table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
-			$table->primary(array('vet_id','device_id'));
-			$table->timestamps();
-		});
-
 	}
 
 
@@ -57,8 +37,7 @@ class CreateDevicesTable extends Migration {
 	public function down()
 	{
 		Schema::drop('devices');
-		Schema::drop('device_user');
-		Schema::drop('device_vet');
+
 	}
 
 }
