@@ -1,6 +1,6 @@
 <?php namespace App\Models\Repositories;
 
-interface SensorReadingRepositoryInterface extends AbstractRepositoryInterface
+interface ReadingRepositoryInterface extends AbstractRepositoryInterface
 {
     public function getCreateValidator($input);
 

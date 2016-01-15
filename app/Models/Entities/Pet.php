@@ -42,13 +42,13 @@ class Pet extends Model implements AuthenticatableContract, CanResetPasswordCont
      */
     public function vet()
     {
-        return $this->belongsToMany(Vet::class, 'pet_vet');
+        return $this->belongsToMany(Vet::class, 'pet_vet', 'pet_id','vet_id')->withTimestamps();
     }
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
-    public function sensorReadings()
+    public function readings()
     {
         return $this->hasMany(Reading::class, 'pet_id');
     }

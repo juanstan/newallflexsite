@@ -7,7 +7,7 @@ use Lang;
 use Auth;
 
 use App\Models\Entities\Pet;
-use App\Models\Entities\SensorReading;
+use App\Models\Entities\Reading;
 use App\Models\Repositories\PetReadingRepositoryInterface;
 use App\Models\Repositories\PetRepositoryInterface;
 use App\Http\Controllers\Controller;
@@ -43,6 +43,8 @@ class PetReadingRegisterController extends Controller
                 ->withErrors($readingValidator)
                 ->withInput();
         }
+
+
 
 
         try {
@@ -91,12 +93,16 @@ class PetReadingRegisterController extends Controller
 
     public function postAssign($id)
     {
-        $input = Input::get('pet_id');
-        $query = Pet::where('id', '=', $id)->first();
-        if (Pet::where('id', $input)->update(array('microchip_number' => $query->microchip_number))) {
-            Pet::where('id', '=', $id)->delete();
-            SensorReading::where('pet_id', '=', $id)->update(array('pet_id' => $input));
+        $pet = $this->petRepository->get(Input::get('pet_id'));
+        $microchip = $this->petRepository->get($id);
+
+        if ($pet->update(array('microchip_number' => $microchip->microchip_number))) {
+            foreach($microchip->readings()->get as $reading) {
+                $pet->readings()->attach($reading);
+            }
+            $microchip->delete();
         }
+
         return redirect()->route('user.register.reading.assign')
             ->with('success', Lang::get('general.Pet microchip number assigned'));
 

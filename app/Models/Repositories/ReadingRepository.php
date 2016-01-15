@@ -1,13 +1,13 @@
 <?php namespace App\Models\Repositories;
 
 use Validator;
-use App\Models\Entities\SensorReading;
+use App\Models\Entities\Reading;
 
-class SensorReadingRepository extends AbstractRepository implements SensorReadingRepositoryInterface
+class ReadingRepository extends AbstractRepository implements ReadingRepositoryInterface
 {
 	protected $model;
 
-	public function __construct(SensorReading $model){
+	public function __construct(Reading $model){
 		$this->model = $model;
 	}
 

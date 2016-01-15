@@ -21,7 +21,7 @@ use App\Models\Repositories\SymptomRepository;
 use App\Models\Repositories\ConditionRepository;
 use App\Models\Repositories\BreedRepository;
 use App\Models\Repositories\HelpRepository;
-use App\Models\Repositories\SensorReadingRepository;
+use App\Models\Repositories\ReadingRepository;
 use App\Models\Repositories\PetConditionRepository;
 use App\Models\Repositories\SensorReadingSymptomRepository;
 use App\Models\Repositories\PetRequestRepository;
@@ -40,7 +40,7 @@ class DashboardController extends Controller
     protected $conditionRepository;
     protected $breedRepository;
     protected $helpRepository;
-    protected $sensorReadingRepository;
+    protected $readingRepository;
     protected $petConditionRepository;
     protected $sensorReadingSymptomRepository;
     protected $petRequestRepository;
@@ -50,14 +50,13 @@ class DashboardController extends Controller
         VetRepository $vetRepository,
         PetRepository $petRepository,
         PetReadingRepository $petReadingRepository,
-        PetReadingSymptomRepository
-        $petReadingSymptomRepository,
+        PetReadingSymptomRepository $petReadingSymptomRepository,
         PhotoRepository $photoRepository,
         SymptomRepository $symptomRepository,
         ConditionRepository $conditionRepository,
         BreedRepository $breedRepository,
         HelpRepository $helpRepository,
-        SensorReadingRepository $sensorReadingRepository,
+        ReadingRepository $readingRepository,
         PetConditionRepository $petConditionRepository,
         SensorReadingSymptomRepository $sensorReadingSymptomRepository,
         PetRequestRepository $petRequestRepository
@@ -75,7 +74,7 @@ class DashboardController extends Controller
         $this->conditionRepository = $conditionRepository;
         $this->breedRepository = $breedRepository;
         $this->helpRepository = $helpRepository;
-        $this->sensorReadingRepository = $sensorReadingRepository;
+        $this->readingRepository = $readingRepository;
         $this->petConditionRepository = $petConditionRepository;
         $this->sensorReadingSymptomRepository = $sensorReadingSymptomRepository;
         $this->petRequestRepository = $petRequestRepository;
@@ -129,11 +128,7 @@ class DashboardController extends Controller
     public function getHelp()
     {
         $help = $this->helpRepository->all();
-        return View::make('user.help')
-            ->with(
-                array(
-                    'help' => $help
-                ));
+        return View::make('user.help')->with(array('help' => $help));
     }
 
     public function getResult($id)
@@ -163,8 +158,8 @@ class DashboardController extends Controller
 
     public function postResetAverageTemperature($id)
     {
-        $pet = $this->sensorReadingRepository->getByPetId($id);
-        if ($this->sensorReadingRepository->update($pet->id, array('average' => 0))) {
+        $pet = $this->readingRepository->getByPetId($id);
+        if ($this->readingRepository->update($pet->id, array('average' => 0))) {
             return redirect()->route('user.dashboard')
                 ->with('success', Lang::get('general.Average temperature reset'));
         }
@@ -298,7 +293,7 @@ class DashboardController extends Controller
         $symptoms = Input::get('symptoms');
 
         if (is_array($symptoms)) {
-            $this->sensorReadingRepository->synchroniseSymptoms($readingId, $symptoms);
+            $this->readingRepository->synchroniseSymptoms($readingId, $symptoms);
             $message = 'general.Symptoms updated';
 
         } else {
@@ -312,7 +307,7 @@ class DashboardController extends Controller
 
     public function getSymptomRemove($readingId, $symptomId)
     {
-        if ($this->sensorReadingRepository->removeSymptom($readingId, $symptomId))
+        if ($this->readingRepository->removeSymptom($readingId, $symptomId))
         {
             return redirect()->route('user.dashboard')
                 ->with('success', Lang::get('general.Symptom removed'));
@@ -449,7 +444,7 @@ class DashboardController extends Controller
         $this->petRepository->setUser($this->authUser);
         $this->petRepository->delete($petId);
         $this->petRequestRepository->removeByPetId($petId);
-        $this->sensorReadingRepository->removeByPetId($petId);
+        $this->readingRepository->removeByPetId($petId);
         return redirect()->route('user.dashboard')
             ->with('message', Lang::get('general.Pet deleted'));
     }
@@ -499,23 +494,22 @@ class DashboardController extends Controller
 
     public function getVet()
     {
-        $user = $this->authUser;
         $this->petRepository->setUser($this->authUser);
-        $requests = $this->petRequestRepository->getAllByUserId($user->id);
-        $pets = $this->petRepository->all();
-        $vets = $this->vetRepository->all();
-        if($this->authUser->pets->isEmpty()) {
+        $pets = $this->petRepository->petsSet();
+        $vets = $this->petRepository->getVetAssignedMyPets($pets);
+
+        if($vets->isEmpty()) {
             return redirect()->route('user.dashboard')
                 ->with('error', Lang::get('general.You must create a pet before you can perform this function.'));
         }
-        return View::make('user.vet')
-            ->with(
-                array(
-                    'pets' => $pets,
-                    'vets' => $vets,
-                    'requests' => $requests
-                ));
+        return View::make('user.vet')->with(
+            array(
+                'vets' => $vets
+            )
+        );
+
     }
+
 
     public function getVetSearch()
     {
@@ -600,9 +594,9 @@ class DashboardController extends Controller
             ->with('error', Lang::get('general.There was a problem with your request'));
     }
 
-    public function getActivatepet($id)
+    public function getActivatepet($pet_id,$vet_id)
     {
-        if ($this->petRequestRepository->update($id, array('approved' => 1))) {
+        if ($this->petRepository->get($pet_id)->vet()->updateExistingPivot($vet_id, array('approved' => 1))){
             return redirect()->route('user.dashboard.vet')
                 ->with('success', Lang::get('general.Pet activated'));
         }
@@ -610,9 +604,9 @@ class DashboardController extends Controller
             ->with('error', Lang::get('general.There was a problem with your request'));
     }
 
-    public function getDeactivatepet($id)
+    public function getDeactivatepet($pet_id,$vet_id)
     {
-        if ($this->petRequestRepository->update($id, array('approved' => 0))) {
+        if ($this->petRepository->get($pet_id)->vet()->updateExistingPivot($vet_id, array('approved' => 0))){
             return redirect()->route('user.dashboard.vet')->with('success', Lang::get('general.Pet deactivated'));
         }
         return redirect()->route('user.dashboard.vet')
@@ -621,21 +615,16 @@ class DashboardController extends Controller
 
     public function postAssign($petId)
     {
-        $this->petRepository->setUser($this->authUser);
-        $newPetId = Input::get('pet-id');
-        $query = $this->petRepository->get($petId);
-        $data['microchip_number'] = $query->microchip_number;
+        $pet = $this->petRepository->get(Input::get('pet-id'));
+        $microchip = $this->petRepository->get($petId);
 
-        if ($this->petRepository->update($newPetId, $data)) {
-            $this->petRepository->delete($petId);
-            $sensorReading = $this->sensorReadingRepository->getByPetId($petId);
-            if (!empty($sensorReading)) {
-                $this->sensorReadingRepository->update($sensorReading->id, array('pet_id' => $newPetId));
-            }
+        if ($this->petRepository->assignMicrochipToPet($pet, $microchip)) {
+            return redirect()->route('user.dashboard')
+                ->with('success', Lang::get('general.Pet microchip number assigned'));
         }
 
         return redirect()->route('user.dashboard')
-            ->with('success', Lang::get('general.Pet microchip number assigned'));
+            ->with('error', Lang::get('general.Problem assigning microchip'));
 
     }
 

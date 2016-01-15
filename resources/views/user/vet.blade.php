@@ -5,79 +5,69 @@
         <?php $vetId = ''; ?>
         <div class="row container-vet-pill">
         @foreach ($vets as $vet)
-            @if($requests != NULL)
-                    @foreach ($requests as $request)
-                    @if($request->vet_id == $vet->id && $vet->id != $vetId)
-                        <div class="col-xs-12 col-sm-6 col-md-4" >
-                            <div class="jumbotron dashboard no-overflow text-center" >
-                                <div class="vet-overlay collapse fade" id="vet-delete{!! $vet->id !!}" >
-                                    <div class="col-xs-12" >
-                                        <h3>{!! Lang::get('general.Are you sure you want to remove this vet?') !!}</h3>
-                                        <div class="col-xs-10 float-none col-centered top-buffer" >
-                                            <div class="col-xs-6 small-padding" >
-                                                <a href="#" data-toggle="collapse" data-target="#vet-delete{!! $vet->id !!}" >
-                                                    {!! Form::button(Lang::get('general.No, cancel'), array('class' => 'btn-block btn btn-file btn-md')) !!}
-                                                </a>
-                                            </div>
-                                            <div class="col-xs-6 small-padding" >
-                                                <a href="{!! URL::route('user.dashboard.removeVet', $vet->id) !!}" >
-                                                    {!! Form::button(Lang::get('general.Yes, remove'), array('class' => 'btn-block btn btn-danger btn-md')) !!}
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
+            <div class="col-xs-12 col-sm-6 col-md-4" >
+                <div class="jumbotron dashboard no-overflow text-center" >
+                    <div class="vet-overlay collapse fade" id="vet-delete{!! $vet->id !!}" >
+                        <div class="col-xs-12" >
+                            <h3>{!! Lang::get('general.Are you sure you want to remove this vet?') !!}</h3>
+                            <div class="col-xs-10 float-none col-centered top-buffer" >
+                                <div class="col-xs-6 small-padding" >
+                                    <a href="#" data-toggle="collapse" data-target="#vet-delete{!! $vet->id !!}" >
+                                        {!! Form::button(Lang::get('general.No, cancel'), array('class' => 'btn-block btn btn-file btn-md')) !!}
+                                    </a>
                                 </div>
-                                <a href="#" data-toggle="collapse" data-target="#vet-delete{!! $vet->id !!}" >
-                                    {!! Form::button(Lang::get('general.Remove'), array('class' => 'btn btn-file top-right btn-md')) !!}
-                                </a>
-                                <div class="vet-bg-img" style="background-image: url('@if($vet->image_path != ''){!! $vet->image_path !!}@else{!! '/images/vet-image.png' !!}@endif');" >
-                                </div>
-                                <div class="col-xs-12 float-none vet-content" >
-                                    <h3>{!! $vet->company_name !!}</h3>
-                                    <address>
-                                        {!! $vet->address_1 !!}<br>
-                                        {!! isset($vet->address_2) ? $vet->address_2 . '<br>' : '' !!}
-                                        {!! $vet->city !!}<br>
-                                        {!! $vet->zip !!}<br><br>
-                                        {!! isset($vet->fax) ? 'Fax: ' . $vet->fax : '' !!}
-                                        {!! Lang::get('general.Email') !!}: <a href="" >{!! $vet->email !!}</a>
-                                    </address>
-                                    @if($vet->latitude != null)
-                                        <iframe width="100%" height="150" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q={!! $vet->latitude !!}%20{!! $vet->longitude !!}&key=AIzaSyD6-_l8AQw9Hyc_Cpi-HX2uZm2MiQuKH3I"></iframe>
-                                    @endif
-                                <div class="col-xs-12 float-none text-left assigned-title-wrapper npaddingleft" >
-                                    <h4>{!! Lang::get('general.Assigned pets') !!}</h4>
-                                </div>
-                                <div class="pets-list">
-                                @foreach ($requests as $petRequest)
-                                    @foreach ($pets as $pet)
-                                        @if($petRequest->pet_id == $pet->id && $petRequest->vet_id == $vet->id && $petRequest->approved == 1)
-                                        <a href="{!! URL::route('user.dashboard.deactivatePet', $petRequest->id) !!}" >
-                                            <div class="col-xs-3 text-center small-padding request-pet" >
-                                                {!! HTML::image('/images/deleted.png', '', array('class' => 'deactive hidden img-responsive img-circle', 'width' => '100%')) !!}
-                                                {!! HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image-approved.png', $pet->name, array('class' => 'img-responsive', 'width' => '100%')) !!}
-                                                <h4 class="pet-name">{!! $pet->name !!}</h4>
-                                            </div>
-                                        </a>
-                                        @elseif($petRequest->pet_id == $pet->id && $petRequest->vet_id == $vet->id && $petRequest->approved == 0)
-                                        <a href="{!! URL::route('user.dashboard.activatePet', $petRequest->id) !!}" >
-                                            <div class="col-xs-3 text-center small-padding relative" >
-                                                {!! HTML::image('/images/deleted.png', '', array('class' => 'deactive img-responsive img-circle', 'width' => '100%')) !!}
-                                                {!! HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
-                                                <h4 class="pet-name">{!! $pet->name !!}</h4>
-                                            </div>
-                                        </a>
-                                        @endif
-                                    @endforeach
-                                @endforeach
-                                </div>
+                                <div class="col-xs-6 small-padding" >
+                                    <a href="{!! URL::route('user.dashboard.removeVet', $vet->id) !!}" >
+                                        {!! Form::button(Lang::get('general.Yes, remove'), array('class' => 'btn-block btn btn-danger btn-md')) !!}
+                                    </a>
                                 </div>
                             </div>
                         </div>
-                        <?php  $vetId = $vet->id; ?>
-                    @endif
-                @endforeach
-            @endif
+                    </div>
+                    <a href="#" data-toggle="collapse" data-target="#vet-delete{!! $vet->id !!}" >
+                        {!! Form::button(Lang::get('general.Remove'), array('class' => 'btn btn-file top-right btn-md')) !!}
+                    </a>
+                    <div class="vet-bg-img" style="background-image: url('@if($vet->image_path != ''){!! $vet->image_path !!}@else{!! '/images/vet-image.png' !!}@endif');" >
+                    </div>
+                    <div class="col-xs-12 float-none vet-content" >
+                        <h3>{!! $vet->company_name !!}</h3>
+                        <address>
+                            {!! $vet->address_1 !!}<br>
+                            {!! isset($vet->address_2) ? $vet->address_2 . '<br>' : '' !!}
+                            {!! $vet->city !!}<br>
+                            {!! $vet->zip !!}<br><br>
+                            {!! isset($vet->fax) ? 'Fax: ' . $vet->fax : '' !!}
+                            {!! Lang::get('general.Email') !!}: <a href="" >{!! $vet->email !!}</a>
+                        </address>
+                        @if($vet->latitude != null)
+                            <iframe width="100%" height="150" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q={!! $vet->latitude !!}%20{!! $vet->longitude !!}&key=AIzaSyD6-_l8AQw9Hyc_Cpi-HX2uZm2MiQuKH3I"></iframe>
+                        @endif
+                        <div class="col-xs-12 float-none text-left assigned-title-wrapper npaddingleft" >
+                            <h4>{!! Lang::get('general.Assigned pets') !!}</h4>
+                        </div>
+                        <div class="pets-list">
+                            @foreach ($vet->pets()->wherePivot('approved','=',1)->get() as $pet)
+                               <a href="{!! URL::route('user.dashboard.deactivatePet', $pet->id.'/'.$vet->id) !!}" >
+                                    <div class="col-xs-3 text-center small-padding request-pet" >
+                                        {!! HTML::image('/images/deleted.png', '', array('class' => 'deactive hidden img-responsive img-circle', 'width' => '100%')) !!}
+                                        {!! HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image-approved.png', $pet->name, array('class' => 'img-responsive', 'width' => '100%')) !!}
+                                        <h4 class="pet-name">{!! $pet->name !!}</h4>
+                                    </div>
+                                </a>
+                            @endforeach
+                            @foreach ($vet->pets()->wherePivot('approved','=',0)->get() as $pet)
+                                <a href="{!! URL::route('user.dashboard.activatePet', $pet->id.'/'.$vet->id) !!}" >
+                                    <div class="col-xs-3 text-center small-padding relative" >
+                                        {!! HTML::image('/images/deleted.png', '', array('class' => 'deactive img-responsive img-circle', 'width' => '100%')) !!}
+                                        {!! HTML::image(isset($pet->image_path) ? $pet->image_path : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
+                                        <h4 class="pet-name">{!! $pet->name !!}</h4>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
         @endforeach
         <div class="col-xs-12 col-sm-6 col-md-4" >
             <div class="tab-content ">

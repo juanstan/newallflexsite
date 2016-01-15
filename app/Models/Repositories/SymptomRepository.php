@@ -11,7 +11,7 @@ class SymptomRepository extends AbstractRepository implements SymptomRepositoryI
 	protected $readingRepository;
 	protected $user;
 
-	public function __construct(Symptom $model, PetRepositoryInterface $pet, SensorReadingRepositoryInterface $reading)
+	public function __construct(Symptom $model, PetRepositoryInterface $pet, ReadingRepositoryInterface $reading)
 	{
 		$this->model = $model;
 		$this->petRepository = $pet;
@@ -69,7 +69,7 @@ class SymptomRepository extends AbstractRepository implements SymptomRepositoryI
 
 	public function getAssignedReadingById($input) {
 		try {
-			return $this->getPet($input['pet_id'])->sensorReadings()->findOrFail($input['reading_id']);
+			return $this->getPet($input['pet_id'])->readings()->findOrFail($input['reading_id']);
 
 		} catch(\Exception $e){
 			if ($e->getCode()===412) {

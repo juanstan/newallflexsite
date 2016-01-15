@@ -20,9 +20,9 @@ use App\Models\Repositories\UserRepository;
 use App\Models\Repositories\UserRepositoryInterface;
 use App\Models\Repositories\VetRepository;
 use App\Models\Repositories\VetRepositoryInterface;
-use App\Models\Repositories\SensorReadingRepository;
-use App\Models\Repositories\SensorReadingRepositoryInterface;
-use App\Repositories\PhotoRepository;
+use App\Models\Repositories\ReadingRepository;
+use App\Models\Repositories\ReadingRepositoryInterface;
+use App\Models\Repositories\PhotoRepository;
 use Illuminate\Support\ServiceProvider;
 
 class RepositoryServiceProvider extends ServiceProvider
@@ -54,6 +54,6 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(PhotoRepositoryInterface::class, PhotoRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
         $this->app->bind(VetRepositoryInterface::class, VetRepository::class);
-        $this->app->bind(SensorReadingRepositoryInterface::class, SensorReadingRepository::class);
+        $this->app->bind(ReadingRepositoryInterface::class, ReadingRepository::class);
     }
 }

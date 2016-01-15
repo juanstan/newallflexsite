@@ -95,8 +95,8 @@ $temperaturePref = $user->units;
                     </div>
                 </div>
                 <div class="collapse vet-overlay fade" id="symptom-list{!! $pet->id !!}" >
-                @foreach ($pet->sensorReadings->slice(0, 1) as $sensorReading)
-                    {!! Form::open(array('files'=> 'true', 'route' => array('user.dashboard.addSymptoms', $sensorReading->id), 'method' => 'post')) !!}
+                @foreach ($pet->readings->slice(0, 1) as $reading)
+                    {!! Form::open(array('files'=> 'true', 'route' => array('user.dashboard.addSymptoms', $reading->id), 'method' => 'post')) !!}
                         <div class="col-xs-12 top-buffer" >
                             <div class="col-xs-8" >
                                 <h3 class="top-none">{!! Lang::get('general.Add symptoms') !!}</h3>
@@ -108,10 +108,10 @@ $temperaturePref = $user->units;
                         </div>
                         <div class="col-xs-12" >
                             <div class="symptoms-wrapper">
-                                @if( $pet->sensorReadings->count() )
-                                    @foreach ($pet->sensorReadings as $sensorReading)
-                                        @foreach ($sensorReading->symptoms as $sensorReadingSymptom)
-                                            <?php $symptomItems[] = $sensorReadingSymptom->name; ?>
+                                @if( $pet->readings->count() )
+                                    @foreach ($pet->readings as $reading)
+                                        @foreach ($reading->symptoms as $readingSymptom)
+                                            <?php $symptomItems[] = $readingSymptom->name; ?>
                                         @endforeach
                                     @endforeach
                                 @endif
@@ -142,8 +142,8 @@ $temperaturePref = $user->units;
                         </div>
                         <div class="col-xs-12" >
                             <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
-                                @if( $pet->petConditions->count() )
-                                    @foreach ($pet->petConditions as $petCondition)
+                                @if( $pet->conditions->count() )
+                                    @foreach ($pet->conditions as $petCondition)
                                             <?php $conditionItems[] = $petCondition->condition->name; ?>
                                     @endforeach
                                 @endif
@@ -170,9 +170,9 @@ $temperaturePref = $user->units;
                 <div class="tab-content ">
                     <div class="tab-pane latest-list-wrap active fade in" id="latest{!! $pet->id !!}">
                         <div class="row col-xs-12 col-centered float-none top-buffer" >
-                            @foreach ($pet->sensorReadings as $sensorReading)
-                                @if ($sensorReading->average == 1)
-                                    <?php $allReadingTemps[] = $sensorReading->temperature; ?>
+                            @foreach ($pet->readings as $reading)
+                                @if ($reading->average == 1)
+                                    <?php $allReadingTemps[] = $reading->temperature; ?>
                                 @endif
                             @endforeach
                             @if(!empty($allReadingTemps))
@@ -182,10 +182,10 @@ $temperaturePref = $user->units;
                                     $readingAverage = $readingSum/$readingCount;
                                 ?>
                             @endif
-                            @if( $pet->sensorReadings->count() )
-                                @foreach ($pet->sensorReadings->slice(0, 1) as $sensorReading)
-                                    <div class="circle circle-border"  style="border-color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}">
-                                        <div class="small-circle circle-solid" style="background-color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}" >
+                            @if( $pet->readings->count() )
+                                @foreach ($pet->readings->slice(0, 1) as $reading)
+                                    <div class="circle circle-border"  style="border-color: {!! getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] !!}">
+                                        <div class="small-circle circle-solid" style="background-color: {!! getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] !!}" >
                                             <div class="circle-inner">
                                                 <div class="small-score-text center-block">
                                                     <p>{!! Lang::get('general.Avg') !!}.</p>
@@ -198,15 +198,15 @@ $temperaturePref = $user->units;
                                             </div>
                                         </div>
                                         <div class="circle-inner">
-                                             <div class="score-text center-block" style="color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}" >
-                                                 <span class="temp">{!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] !!}</span>
+                                             <div class="score-text center-block" style="color: {!! getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] !!}" >
+                                                 <span class="temp">{!! getTemperatureColor($reading->temperature, $temperaturePref)['temp'] !!}</span>
                                                  <span  class="tempsymbol">&#176;</span>
                                                  <div class="clearfix"></div>
                                                  <p>
-                                                     @if(date("d/m/y",strtotime($sensorReading->reading_time)) == date("d/m/y"))
-                                                     {!! Lang::get('general.today at') !!} {!! date("h.ia",strtotime($sensorReading->reading_time)) !!}
+                                                     @if(date("d/m/y",strtotime($reading->reading_time)) == date("d/m/y"))
+                                                     {!! Lang::get('general.today at') !!} {!! date("h.ia",strtotime($reading->reading_time)) !!}
                                                      @else
-                                                        {!! date("d/m/y",strtotime($sensorReading->reading_time)) !!} {!! Lang::get('general.at') !!} {!! date("h.ia",strtotime($sensorReading->reading_time)) !!}
+                                                        {!! date("d/m/y",strtotime($reading->reading_time)) !!} {!! Lang::get('general.at') !!} {!! date("h.ia",strtotime($reading->reading_time)) !!}
                                                      @endif
                                                  </p>
                                              </div>
@@ -234,11 +234,11 @@ $temperaturePref = $user->units;
                             <div class="row text-center" >
                                 <div class="col-xs-11 col-centered float-none" >
                                     <h3>{!! Lang::get('general.Symptoms' ) !!}</h3>
-                                    @if( $pet->sensorReadings->count() )
-                                        @foreach ($pet->sensorReadings->slice(0, 1) as $sensorReading)
+                                    @if( $pet->readings->count() )
+                                        @foreach ($pet->readings->slice(0, 1) as $reading)
                                             <ul class="nav nav-pills text-center symptom-pills">
-                                                @foreach ($sensorReading->symptoms as $sensorReadingSymptom)
-                                                <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="{!! URL::route('user.dashboard.symptomRemove', $sensorReading->id . '/' . $sensorReadingSymptom->id) !!}"><span>{!! $sensorReadingSymptom->name !!}</span></a></li>
+                                                @foreach ($reading->symptoms as $readingSymptom)
+                                                <li role="presentation" class="symptom-pill small-top-buffer pill-remove active"><a href="{!! URL::route('user.dashboard.symptomRemove', $reading->id . '/' . $readingSymptom->id) !!}"><span>{!! $readingSymptom->name !!}</span></a></li>
                                                 @endforeach
                                             </ul>
                                             <ul class="nav nav-pills text-center symptom-pills">
@@ -255,17 +255,17 @@ $temperaturePref = $user->units;
                                     <div class="col-xs-4" >
                                         <h4>{!! Lang::get('general.Previous Readings') !!}</h4>
                                     </div>
-                                    @if( $pet->sensorReadings->count() )
-                                        @foreach ($pet->sensorReadings->slice(0, 4) as $sensorReading)
+                                    @if( $pet->readings->count() )
+                                        @foreach ($pet->readings->slice(0, 4) as $reading)
                                             <div class="col-xs-2 small-padding" >
-                                                <div class="circle circle-small-border" style="border-color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}" >
+                                                <div class="circle circle-small-border" style="border-color: {!! getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] !!}" >
                                                      <div class="circle-inner">
-                                                         <div class="small-score-text prev-reading" style="color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}">
-                                                             {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] !!}<span>&#176;</span>
+                                                         <div class="small-score-text prev-reading" style="color: {!! getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] !!}">
+                                                             {!! getTemperatureColor($reading->temperature, $temperaturePref)['temp'] !!}<span>&#176;</span>
                                                          </div>
                                                      </div>
                                                 </div>
-                                                <small>{!! date("d/m/y",strtotime($sensorReading->reading_time)) !!}</small>
+                                                <small>{!! date("d/m/y",strtotime($reading->reading_time)) !!}</small>
                                             </div>
                                         @endforeach
                                     @else
@@ -279,8 +279,8 @@ $temperaturePref = $user->units;
                     </div>
                     <div class="tab-pane fade in" id="reports{!! $pet->id !!}">
                         <div class="row top-buffer dash-scrollable col-md-12 col-centered" >
-                            @if( $pet->sensorReadings->count() )
-                                @foreach ($pet->sensorReadings->slice(0, 1) as $sensorReading)
+                            @if( $pet->readings->count() )
+                                @foreach ($pet->readings->slice(0, 1) as $reading)
                                     <div class="row hero-banner" >
                                         <div class="col-xs-9 " >
                                             @if(!empty($allReadingTemps))
@@ -326,47 +326,47 @@ $temperaturePref = $user->units;
                                     </div>
                                 </div>
                             @endif
-                            @if(count($pet->sensorReadings))
+                            @if(count($pet->readings))
                             <div class="row top-buffer" >
-                                <div class="graph-container col-centered" style="width:95%; height:150px;" data-data='{!! $pet->sensorReadings !!}' ></div>
+                                <div class="graph-container col-centered" style="width:95%; height:150px;" data-data='{!! $pet->readings !!}' ></div>
                             </div>
                             @endif
                             <div class="row" >
-                            @if( $pet->sensorReadings->count() )
+                            @if( $pet->readings->count() )
                                 <?php $previousTemp = 0; ?>
-                                @foreach ($pet->sensorReadings->slice(0, 4) as $sensorReading)
+                                @foreach ($pet->readings->slice(0, 4) as $reading)
                                 <div class="row text-left col-xs-12" >
                                     <div class="col-xs-12" >
-                                        <h4>{!! date("d/m/y",strtotime($sensorReading->reading_time)) !!}</h4>
+                                        <h4>{!! date("d/m/y",strtotime($reading->reading_time)) !!}</h4>
                                     </div>
                                 </div>
                                 <div class="row text-left col-xs-12" >
                                     <div class="col-xs-2 small-padding" >
-                                        <div class="circle circle-small-border" style="border-color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}">
+                                        <div class="circle circle-small-border" style="border-color: {!! getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] !!}">
                                              <div class="circle-inner">
-                                                 <div class="small-score-text prev-reading" style="color: {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['tempcol'] !!}">
-                                                     {!! getTemperatureColor($sensorReading->temperature, $temperaturePref)['temp'] !!}<span>&#176;</span>
+                                                 <div class="small-score-text prev-reading" style="color: {!! getTemperatureColor($reading->temperature, $temperaturePref)['tempcol'] !!}">
+                                                     {!! getTemperatureColor($reading->temperature, $temperaturePref)['temp'] !!}<span>&#176;</span>
                                                  </div>
                                              </div>
                                         </div>
                                     </div>
                                     <div class="col-xs-7 text-left" >
-                                        @if( $sensorReading->symptoms->count() )
+                                        @if( $reading->symptoms->count() )
                                             <ul class="nav nav-pills text-center symptom-pills">
-                                                @foreach ($sensorReading->symptoms as $sensorReadingSymptom)
-                                                    <li role="presentation" class="full-width small-top-buffer active"><a class="" href="#"><small>{!! $sensorReadingSymptom->name !!}</small></a></li>
+                                                @foreach ($reading->symptoms as $readingSymptom)
+                                                    <li role="presentation" class="full-width small-top-buffer active"><a class="" href="#"><small>{!! $readingSymptom->name !!}</small></a></li>
                                                 @endforeach
                                             </ul>
                                         @else
                                             <small>{!! Lang::get('general.No symptoms added') !!}</small>
                                         @endif
-                                        <small>{!! date("h.ia",strtotime($sensorReading->reading_time)) !!}</small>
+                                        <small>{!! date("h.ia",strtotime($reading->reading_time)) !!}</small>
                                     </div>
                                     <div class="col-xs-1" >
-                                        <p>{!! round($sensorReading->temperature,1) - $previousTemp !!}<span>&#176;</span></p>
+                                        <p>{!! round($reading->temperature,1) - $previousTemp !!}<span>&#176;</span></p>
                                     </div>
                                 </div>
-                                <?php $previousTemp = round($sensorReading->temperature,1); ?>
+                                <?php $previousTemp = round($reading->temperature,1); ?>
                                 @endforeach
                             @else
                                 <div class="col-xs-8 small-padding" >

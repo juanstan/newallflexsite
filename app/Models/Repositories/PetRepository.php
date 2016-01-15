@@ -88,6 +88,60 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
         }
     }
 
+    public function assignVet($vet_id)
+    {
+        if ($this->user) {
+            foreach ($this->user->pets()->get() as $pet){
+                $pet->vet()->attach($vet_id);
+            }
+        }
+    }
+
+
+    /*
+     * Assigning a microchip (pet without name) to a Pet(pet with name) and modifying the reading record
+     *
+     * @param $pet PET  The pet
+     * @param $microchip PET  The pet
+     *
+     * @return bool
+     */
+    public function assignMicrochipToPet($pet, $microchip){
+        if ($pet->update(array('microchip_number' => $microchip->microchip_number))) {
+            foreach($microchip->readings()->get() as $reading) {
+                $reading->update(array('pet_id' => $pet->id));
+            }
+            $microchip->delete();
+        }
+
+        return true;
+
+    }
+
+    /*
+     *
+     * Retrieving the vets assigned to pets on current user
+     *
+     * @param $pets \Eloquent\Collection Pets on current user
+     *
+     * return \Eloquent\Collection Vets
+     *
+     */
+    public function getVetAssignedMyPets($pets){
+        $vets = false;
+        foreach($pets as $pet) {
+            if (!$vets){
+                $vets = $pet->vet()->get();
+            } else {
+                $vets = $vets->merge($pet->vet()->get());
+            }
+        }
+        return $vets;
+
+    }
+
+
+
 
 }
 

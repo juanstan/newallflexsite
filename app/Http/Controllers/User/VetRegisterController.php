@@ -62,22 +62,8 @@ class VetRegisterController extends Controller
     {
         $user = $this->authUser;
         $this->petRepository->setUser($user);
-        $pets = $this->petRepository->all();
-        foreach ($pets as $pet) {
-            if ($this->petRequestRepository->getByVetAndPetId($vetId, $pet->id) == null)
-            {
-                $data = array(
-                    'vet_id' => $vetId,
-                    'user_id' => $user->id,
-                    'pet_id' => $pet->id,
-                    'approved' => 1
-                );
-                $this->petRequestRepository->create($data);
-            }
-            else {
-                continue;
-            }
-        }
+        $this->petRepository->assignVet($vetId);
+
         return redirect()->route('user.register.vet')
             ->with('success', Lang::get('general.Vet added'));
     }

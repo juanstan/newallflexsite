@@ -29,9 +29,9 @@ class ReadingVet extends Model implements AuthenticatableContract, CanResetPassw
 	 * @var array
 	 */
     
-    public function sensorReading()
+    public function reading()
     {
-        return $this->belongsTo(SensorReading::class, 'reading_id');
+        return $this->belongsTo(Reading::class, 'reading_id');
     }
 
     public function vet()

@@ -3,8 +3,8 @@
 use App\Models\Entities\User;
 use App\Models\Entities\Pet;
 use App\Http\Controllers\Vet;
-use App\Models\Entities\SensorReading;
-use App\Models\Entities\VetReading;
+use App\Models\Entities\Reading;
+use App\Models\Entities\ReadingVet;
 use App\Models\Entities\Pet\Request;
 use League\Csv\Reader;
 
@@ -13,7 +13,7 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
     protected $model;
     protected $pet;
 
-    public function __construct(SensorReading $model)
+    public function __construct(Reading $model)
     {
         $this->model = $model;
     }
@@ -22,7 +22,7 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
     {
         if($this->pet)
         {
-            return $this->pet->sensorReadings()->orderBy('reading_time')->get();
+            return $this->pet->readings()->orderBy('reading_time')->get();
         }
 
         return parent::all();
@@ -33,7 +33,7 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
     {
         if($id)
         {
-            return $this->pet ? $this->pet->sensorReadings()->findOrFail($id) : parent::get($id);
+            return $this->pet ? $this->pet->readings()->findOrFail($id) : parent::get($id);
         }
 
     }
@@ -84,7 +84,7 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
         $csv->setOffset(1);
         $data = $csv->query();
         foreach ($data as $lineIndex => $row) {
-            $profile = SensorReading::where('microchip_id', '=', decoded_microchip_id($row[1]))->first();
+            $profile = Reading::where('microchip_id', '=', decoded_microchip_id($row[1]))->first();
             $pet = Pet::where(['microchip_number' => decoded_microchip_id($row[1])])->first();
 
             if (empty($pet)) {
@@ -95,7 +95,7 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
                 $pet->save();
             }
             if (empty($profile)) {
-                $reading = new SensorReading();
+                $reading = new Reading();
                 $reading->microchip_id = decoded_microchip_id($row[1]);
                 $reading->temperature = reading_temperature($row[2]);
                 $reading->device_id = $reading_device_id;
@@ -105,12 +105,12 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
 
                 $reading->save();
 
-                $vetReading = new VetReading();
+                $vetReading = new ReadingVet();
                 $vetReading->reading_id = $reading->id;
                 $vetReading->vet_id = $vet->id;
                 $vetReading->save();
 
-                $vetReading = new VetReading();
+                $vetReading = new ReadingVet();
                 $vetReading->reading_id = $reading->id;
                 $vetReading->vet_id = $vet->id;
                 $vetReading->save();
@@ -175,7 +175,7 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
         $data = $csv->fetch();
 
         foreach ($data as $lineIndex => $row) {
-            $profile = SensorReading::where('microchip_id', '=', decoded_microchip_id($row[1]))->first();
+            $profile = Reading::where('microchip_id', '=', decoded_microchip_id($row[1]))->first();
             $petOwner = $user->pets()->checkMicrochip(decoded_microchip_id($row[1]))->first();
             $pet = Pet::checkMicrochip(decoded_microchip_id($row[1]))->first();
 
@@ -197,7 +197,7 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
             }
 
             if (empty($profile)) {
-                $reading = new SensorReading();
+                $reading = new Reading();
                 $reading->microchip_id = decoded_microchip_id($row[1]);
                 $reading->temperature = reading_temperature($row[2]);
                 $reading->device_id = $reading_device_id;
