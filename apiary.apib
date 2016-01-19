@@ -1,0 +1,1367 @@
+FORMAT: 1A
+HOST: https://allflex.sureflap.com
+
+# SureSense App API
+The Allflex API will be the communication end point of the app.
+
+The purpose of the api is to:
+
+* Be the communication end point of the application.
+* Process app logins and generate/ authenticate  login tokens.
+* Accept sensor input through the app.
+* All download of historic sensor data.
+* Allow control  over shared data and have the ability to revoke access.
+
+_The API will be written in PHP using the Laravel Framework, conforming to RESTful standards_
+
+# Group Authentication
+
+## Security
+All requests submitted to the API require an `X-Authorization` header set.
+
+The authorisation token is a base64-encoded sha512 hashed password. 
+
+Example token: `$2y$10$Fxu/T7vBmNtEGNz3CVMIFO1aCSMzVxBMzDdpjSzBn4Y0dBXBDWCIW`
+
+Example failed auth attempt:
+        
+        {
+            "error": true,
+            "errors": {
+                "Authorization": [
+                    {
+                        0:  "error.auth.header-missing"
+                    }
+                ]
+            }
+        }
+
+Always use SSL. No exceptions. This way we are guaranteed that encrypted communications simplifies authentication efforts. 
+
+Attempts to use the non-ssl version will trigger a hard error.
+
+        {
+            "status": 400
+            "errors": [
+                {
+                    "code": 30000,
+                    "message": "Insecure connection"
+                }
+            ]
+        }
+        
+# Group User
+        
+## api.user.login [/api/user/login]
+### Attempt post user login [POST]
+
+You can use this method to authenticate a user with a valid email and password. This will in turn generate a token.
+
++ Request (application/json)
+
+    + Headers
+    
+    + Body
+            
+            {
+                "email_address": "a.hunter@sureflap.co.uk",
+                "password": "changeme"
+            }
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "token": [
+                        {
+                            "token": "$2y$10$1jI2k3fWpjFtyw03eklRn.hITTK.vgMdAVA3SObblqupGJDyxdpLi",
+                            "expires_at": "2015-02-24 10:09:47",
+                            "created_at": "2015-02-17 10:09:47"
+                        }
+                    ],
+                    "user": [
+                        {
+                            "id": "16",
+                            "first_name": "Bob",
+                            "last_name": "Hunter",
+                            "email_address": "a.hunter@sureflap.co.uk",
+                            "telephone": "07403243457",
+                            "image_path": null,
+                            "created_at": "2015-02-09 14:00:02",
+                            "updated_at": "2015-02-10 15:22:55"
+                        }
+                    ]
+                }
+            ]
+        }
+        
+## api.user.logout [/api/user/logout]
+### Attempt user logout [POST]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Response 201 (application/json)
+
+            {
+                "error": false,
+                "message": "You are now logged out"
+            }
+
+## api.user [/api/user]
+### Create a user account [POST]
+
+Get the basic information needed to create an account.
+
++ Request (application/json)
+            
+        {
+            "first_name": "John",
+            "last_name": "Doe",
+            "email_address": "j.doe@sureflap.com",
+            "telephone": "01223432654",
+            "image_path": "profile.jpg",
+            "password": "changme",
+        }
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "first_name": "John",
+                "last_name": "Doe",
+                "email_address": "j.doe@sureflap.co.uk",
+                "telephone": "01223 432654",
+                "updated_at": "2015-02-17 10:19:44",
+                "created_at": "2015-02-17 10:19:44",
+                "id": 15
+            }
+        }
+
+## api.user.{id} [/api/user/{id}]
+### Get information on user account [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+            
++ Parameters
+    + id
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 15,
+                "first_name": "John",
+                "last_name": "Doe",
+                "email_address": "j.doe@sureflap.co.uk",
+                "telephone": "01223 432654",
+                "image_path": null,
+                "created_at": "2015-02-17 10:19:44",
+                "updated_at": "2015-02-17 10:19:44"
+            }
+        }
+        
+### Update user account [PUT]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+            
+    + Body
+    
+            {
+                "email_address": "j.doe@sureflap.com"
+            }
+
++ Parameters
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 15,
+                "first_name": "John",
+                "last_name": "Doe",
+                "email_address": "j.doe@sureflap.com",
+                "telephone": "01223 432654",
+                "image_path": null,
+                "created_at": "2015-02-17 10:19:44",
+                "updated_at": "2015-02-17 11:18:19"
+            }
+        }
+        
+### Delete user account [DELETE]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false
+        }
+        
+## api.animal [/api/animal]
+
+### Get all animals on account [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "0": {
+                        "id": 13,
+                        "name": "Jerry",
+                        "microchip_number": "5746352413",
+                        "breed": "Chihuahua",
+                        "date_of_birth": "2012-12-12",
+                        "weight": 5,
+                        "size": "s",
+                        "gender": "Male",
+                        "image_path": "mydog.jpg",
+                        "user_id": 16
+                    },
+                    "1": {
+                        "id": 14,
+                        "name": "Milly",
+                        "microchip_number": "1234555555",
+                        "breed": "Chihuahua",
+                        "date_of_birth": "2012-12-13",
+                        "weight": 4.7,
+                        "size": "s",
+                        "gender": "Female",
+                        "image_path": "mydog2.jpg",
+                        "user_id": 16
+                    }
+                }
+            ]
+        }
+
+### Create a animal account [POST]
+
+Get the basic information needed to create an account.
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Request (application/json)
+            
+        {
+            "name": "Jerry",
+            "microchip_number": "5746352413",
+            "breed": "Chihuahua",
+            "date_of_birth": "2012-12-12",
+            "weight": 5,
+            "size": "s",
+            "gender": "Male",
+            "image_path": "mydog.jpg"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "name": "Jerry",
+                "microchip_number": "5746352413",
+                "breed": "Chihuahua",
+                "date_of_birth": "2012-12-12",
+                "weight": 5,
+                "size": "s",
+                "gender": "Male",
+                "image_path": "mydog.jpg",
+                "id": 13,
+                "user_id": 16,
+                "user": {
+                    "id": 16,
+                    "first_name": "Peter",
+                    "last_name": "Griffin",
+                    "email_address": "p.griffin@sureflap.co.uk",
+                    "telephone": "012234567890",
+                    "image_path": null,
+                    "created_at": "2015-02-17 14:12:10",
+                    "updated_at": "2015-02-17 14:12:10"
+                }
+            }
+        }
+
+## api.animal.{id} [/api/animal/{id}]
+        
+### Update animal on account [PUT]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+            
+    + Body
+    
+            {
+                "name": "Milly Mii"
+            }
+
++ Parameters
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 14,
+                "name": "Milly Mii",
+                "microchip_number": "1234555555",
+                "breed": "Chihuahua",
+                "date_of_birth": "2012-12-13",
+                "weight": 4.7,
+                "size": "s",
+                "gender": "Female",
+                "image_path": "mydog2.jpg",
+                "user_id": 16
+            }
+        }
+        
+### Delete animal [DELETE]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false
+        }
+        
+## api.device [/api/device]
+
+### Get all devices on account [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "2":  {
+                        "id": 3,
+                        "serial_id": "1234565",
+                        "device": "first edition",
+                        "name": null,
+                        "version": "1.0",
+                        "field_1": null,
+                        "field_2": null,
+                        "field_3": null,
+                        "field_4": null
+                    },
+                    "3":  {
+                        "id": 4,
+                        "serial_id": "1234565",
+                        "device": "first edition",
+                        "name": null,
+                        "version": "1.0",
+                        "field_1": "Data",
+                        "field_2": null,
+                        "field_3": null,
+                        "field_4": null
+                    }
+                }
+            ]
+        }
+
+### Create a device [POST]
+
+Get the basic information needed to create a device.
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Request (application/json)
+            
+        {
+            "serial_id": "1234565",
+            "device": "first edition",
+            "version": "1.0"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "serial_id": "1234565",
+                "device": "first edition",
+                "version": "1.0",
+                "id": 4,
+                "user": 0
+            }
+        }
+        
+## api.device.{id} [/api/device/{id}]
+
+### Update a device [PUT]
+
+Get the basic information needed to update a device.
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Request (application/json)
+            
+        {
+            "field_1": "Data"
+        }
+
++ Response 201 (application/json)
+        
+        {
+            "error": false,
+            "result": {
+                "id": 4,
+                "serial_id": "1234565",
+                "device": "first edition",
+                "name": null,
+                "version": "1.0",
+                "field_1": "Data",
+                "field_2": null,
+                "field_3": null,
+                "field_4": null
+            }
+        }
+        
+## api.animal.{animal_id}.condition [/api/animal/{animal_id}/condition]
+
+### Get all known conditions for animal [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "0":  {
+                        "id": 8,
+                        "animal_id": 14,
+                        "condition_id": 2
+                    },
+                    "1":  {
+                        "id": 9,
+                        "animal_id": 14,
+                        "condition_id": 1
+                    },
+                    "2":  {
+                        "id": 10,
+                        "animal_id": 14,
+                        "condition_id": 5
+                    }
+                }
+            ]
+        }
+
+### Add a condition to an animal [POST]
+
+Get the basic information needed to create an account.
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Request (application/json)
+            
+        {
+            "condition_id": 4
+        }
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "condition_id": 4,
+                "animal_id": 14,
+                "id": 8,
+                "animal": {
+                    "id": 14,
+                    "name": "Milly Mii",
+                    "microchip_number": "1234555555",
+                    "breed": "Chihuahua",
+                    "date_of_birth": "2012-12-13",
+                    "weight": 4.7,
+                    "size": "s",
+                    "gender": "Female",
+                    "image_path": "mydog2.jpg",
+                    "user_id": 16
+                }
+            }
+        }
+        
+## api.animal.{animal_id}.condition.{id} [/api/animal/{animal_id}/condition/{id}]
+        
+### Update animal condition [PUT]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+            
+    + Body
+    
+            {
+                "condition_id": 4
+            }
+
++ Parameters
+    + animal_id
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 9,
+                "animal_id": 14,
+                "condition_id": 4
+            }
+        }
+        
+### Delete animal condition [DELETE]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + animal_id
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false
+        }
+        
+## api.animal.{animal_id}.reading [/api/animal/{animal_id}/reading]
+
+### Get all readings for an animal [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "0":  {
+                        "id": 34,
+                        "animal_id": 14,
+                        "temperature": 37.5
+                    },
+                    "1":  {
+                        "id": 35,
+                        "animal_id": 14,
+                        "temperature": 37.7
+                    },
+                    "2":  {
+                        "id": 40,
+                        "animal_id": 14,
+                        "temperature": 37.6
+                    },
+                    "3":  {
+                        "id": 37,
+                        "animal_id": 14,
+                        "temperature": 37.5
+                    },
+                    "4":  {
+                        "id": 38,
+                        "animal_id": 14,
+                        "temperature": 37.6
+                    }
+                }
+            ]
+        }
+
+### Create new reading for an animal [POST]
+
+Get the basic information needed to create an account.
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Request (application/json)
+            
+        {
+            "temperature": 37.6
+        }
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "temperature": 37.6,
+                "animal_id": 14,
+                "id": 38,
+                "animal": {
+                    "id": 14,
+                    "name": "Milly Mii",
+                    "microchip_number": "1234555555",
+                    "breed": "Chihuahua",
+                    "date_of_birth": "2012-12-13",
+                    "weight": 4.7,
+                    "size": "s",
+                    "gender": "Female",
+                    "image_path": "mydog2.jpg",
+                    "user_id": 16
+                }
+            }
+        }
+        
+## api.animal.{animal_id}.reading.{id} [/api/animal/{animal_id}/reading/{id}]
+
+### Get animal reading by id [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + animal_id
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 40,
+                "animal_id": 14,
+                "temperature": 37.6
+            }
+        }
+        
+### Update animal condition [PUT]
+
+A user may not be able to update a reading if it is taken 30seconds + after creation
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+            
+    + Body
+    
+            {
+                "temperature": 37.6
+            }
+
++ Parameters
+    + animal_id
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 40,
+                "animal_id": 14,
+                "temperature": 37.6
+            }
+        }
+        
+## api.animal.{animal_id}.reading.{reading_id}.symptom [/api/animal/{animal_id}/reading/{reading_id}/symptom]
+
+### Get all symptoms of a reading [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "0":  {
+                        "id": 8,
+                        "reading_id": 40,
+                        "symptom_id": 3,
+                        "updated_at": "2015-02-18 11:49:36",
+                        "created_at": "2015-02-17 15:24:30"
+                    }
+                }
+            ]
+        }
+
+### Add a symptom to a reading [POST]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Request (application/json)
+            
+        {
+            "symptom_id": 5
+        }
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "symptom_id": "5",
+                "reading_id": 40,
+                "updated_at": "2015-02-17 15:24:30",
+                "created_at": "2015-02-17 15:24:30",
+                "id": 8,
+                "reading": {
+                    "id": 40,
+                    "animal_id": 14,
+                    "temperature": 37.6
+                }
+            }
+        }
+        
+## api.animal.{animal_id}.reading.{reading_id}.symptom.{id} [/api/animal/{animal_id}/reading/{reading_id}/symptom/{id}]
+
+### Get reading symptom by id [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + animal_id
+    + reading_id
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 8,
+                "reading_id": 40,
+                "symptom_id": 5,
+                "updated_at": "2015-02-17 15:24:30",
+                "created_at": "2015-02-17 15:24:30"
+            }
+        }
+        
+### Update reading symptom [PUT]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+            
+    + Body
+    
+            {
+                "symptom_id": 4
+            }
+
++ Parameters
+    + animal_id
+    + reading_id
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 8,
+                "reading_id": 40,
+                "symptom_id": 3,
+                "updated_at": "2015-02-18 11:49:36",
+                "created_at": "2015-02-17 15:24:30"
+            }
+        }
+        
+### Delete animal condition [DELETE]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + animal_id
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false
+        }
+        
+# Group Vet
+
+## api.vet [/api/vet]
+
+### Get all registered vet [GET]
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "0":  {
+                        "id": 4,
+                        "company_name": "local vet",
+                        "contact_name": "Axel Hunter",
+                        "email_address": "a.hunter@sureflap.co.uk",
+                        "telephone": "134578781234",
+                        "address_1": "340 main street",
+                        "address_2": "",
+                        "city": "Venice",
+                        "state": "CA",
+                        "county": "",
+                        "zip": "90291",
+                        "latitude": null,
+                        "longitude": null,
+                        "image_path": null,
+                        "created_at": "2015-02-10 14:29:36",
+                        "updated_at": "2015-02-10 14:29:36"
+                    },
+                    "1":  {
+                        "id": 6,
+                        "company_name": "Tatooine Veterinary",
+                        "contact_name": "Jeff Vader",
+                        "email_address": "j.vader@sureflap.co.uk",
+                        "telephone": "134578781234",
+                        "address_1": "341 main street",
+                        "address_2": "",
+                        "city": "Venice",
+                        "state": "CA",
+                        "county": "",
+                        "zip": "90291",
+                        "latitude": null,
+                        "longitude": null,
+                        "image_path": null,
+                        "created_at": "2015-02-10 15:08:43",
+                        "updated_at": "2015-02-19 12:13:54"
+                    },
+                    "2":  {
+                        "id": 7,
+                        "company_name": "Cambridge Veterinary",
+                        "contact_name": "Jenifer Flaps",
+                        "email_address": "jflaps@cveterinary.com",
+                        "telephone": "01223123098",
+                        "address_1": "15 High Street",
+                        "address_2": null,
+                        "city": "Cambridge",
+                        "state": null,
+                        "county": "Cambridgeshire",
+                        "zip": "CB3",
+                        "latitude": null,
+                        "longitude": null,
+                        "image_path": "vet_image.jpg",
+                        "created_at": "2015-02-19 09:51:49",
+                        "updated_at": "2015-02-19 09:51:49"
+                    }
+                }
+            ]
+        }
+
+### Create a vet account [POST]
+
+Get the basic information needed to create an account.
+
++ Request (application/json)
+            
+        {
+            "company_name": "Cambridge Veterinary",
+            "contact_name": "Jenifer Flaps",
+            "email_address": "jflaps@cveterinary.com",
+            "telephone": "01223123098",
+            "address_1": "15 High Street",
+            "city": "Cambridge",
+            "county": "Cambridgeshire",
+            "zip": "CB3",
+            "image_path": "vet_image.jpg",
+            "password": "changme"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "company_name": "Cambridge Veterinary",
+                "contact_name": "Jenifer Flaps",
+                "email_address": "jflaps@cveterinary.com",
+                "telephone": "01223123098",
+                "address_1": "15 High Street",
+                "city": "Cambridge",
+                "county": "Cambridgeshire",
+                "zip": "CB3",
+                "image_path": "vet_image.jpg",
+                "updated_at": "2015-02-19 09:51:49",
+                "created_at": "2015-02-19 09:51:49",
+                "id": 7
+            }
+        }
+
+## api.vet.{id} [/api/vet/{id}]
+
+### Get information on vet account [GET]
+            
++ Parameters
+    + id
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 6,
+                "company_name": "The other vet",
+                "contact_name": "Jeff Vader",
+                "email_address": "j.vader@sureflap.co.uk",
+                "telephone": "134578781234",
+                "address_1": "341 main street",
+                "address_2": "",
+                "city": "Venice",
+                "state": "CA",
+                "county": "",
+                "zip": "90291",
+                "latitude": null,
+                "longitude": null,
+                "image_path": null,
+                "created_at": "2015-02-10 15:08:43",
+                "updated_at": "2015-02-10 15:08:43"
+            }
+        }
+        
+### Update vet account [PUT]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+            
+    + Body
+    
+            {
+                "company_name": "Tatooine Veterinary"
+            }
+
++ Parameters
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 6,
+                "company_name": "Tatooine Veterinary",
+                "contact_name": "Jeff Vader",
+                "email_address": "j.vader@sureflap.co.uk",
+                "telephone": "134578781234",
+                "address_1": "341 main street",
+                "address_2": "",
+                "city": "Venice",
+                "state": "CA",
+                "county": "",
+                "zip": "90291",
+                "latitude": null,
+                "longitude": null,
+                "image_path": null,
+                "created_at": "2015-02-10 15:08:43",
+                "updated_at": "2015-02-19 12:13:54"
+            }
+        }
+        
+### Delete vet account [DELETE]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false
+        }
+        
+
+## api.vet.login [/api/vet/login]
+
+### Attempt vet login [POST]
+
+You can use this method to authenticate a user with a valid email and password. This will in turn generate a token.
+
++ Request (application/json)
+
+    + Headers
+    
+    + Body
+            
+            {
+                "email_address": "j.vader@sureflap.co.uk",
+                "password": "changeme"
+            }
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "token": {
+                    "token": "$2y$10$veM/K8hP0pAxHEf4Ov9rGepvgGb0VyZJJF4xeRpbhF6VK/rZhmEqe",
+                    "expires_at": "2015-02-26 09:39:53",
+                    "created_at": "2015-02-19 09:39:53"
+                },
+                "user": {
+                    "id": 6,
+                    "company_name": "The other vet",
+                    "contact_name": "Jeff Vader",
+                    "email_address": "j.vader@sureflap.co.uk",
+                    "telephone": "134578781234",
+                    "address_1": "341 main street",
+                    "address_2": "",
+                    "city": "Venice",
+                    "state": "CA",
+                    "county": "",
+                    "zip": "90291",
+                    "latitude": null,
+                    "longitude": null,
+                    "image_path": null,
+                    "created_at": "2015-02-10 15:08:43",
+                    "updated_at": "2015-02-10 15:08:43"
+                }
+            }
+        }
+        
+## api.vet.logout [/api/vet/logout]
+
+### Attempt vet logout [POST]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Response 201 (application/json)
+
+            {
+                "error": false,
+                "message": "You are now logged out"
+            }
+        
+## api.vet.animal [/api/vet/animal]
+
+### Get all animals on account [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "0":  {
+                        "id": 9,
+                        "name": "Robyn",
+                        "microchip_number": "123456",
+                        "breed": "Great Dane",
+                        "date_of_birth": null,
+                        "weight": 50,
+                        "size": "M",
+                        "gender": "Male",
+                        "image_path": null,
+                        "user_id": 14,
+                        "pivot": {
+                            "vet_id": 4,
+                            "animal_id": 9,
+                            "created_at": "2015-02-16 11:12:46",
+                            "updated_at": "2015-02-16 11:12:46"
+                        }
+                    },
+                    "1":  {
+                        "id": 14,
+                        "name": "Milly Mii",
+                        "microchip_number": "1234555555",
+                        "breed": "Chihuahua",
+                        "date_of_birth": "2012-12-13",
+                        "weight": 4.7,
+                        "size": "s",
+                        "gender": "Female",
+                        "image_path": "mydog2.jpg",
+                        "user_id": 16,
+                        "pivot": {
+                            "vet_id": 4,
+                            "animal_id": 14,
+                            "created_at": "2015-02-18 16:16:07",
+                            "updated_at": "2015-02-18 16:20:51"
+                        }
+                    }
+                }
+            ]
+        }
+
+## api.vet.animal.{id} [/api/vet/animal/{id}]
+        
+### Get animal on account [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 14,
+                "name": "Milly Mii",
+                "microchip_number": "1234555555",
+                "breed": "Chihuahua",
+                "date_of_birth": "2012-12-13",
+                "weight": 4.7,
+                "size": "s",
+                "gender": "Female",
+                "image_path": "mydog2.jpg",
+                "user_id": 16,
+                "vet_id": 4,
+                "animal_id": 14,
+                "approved": 1,
+                "request_type": 1,
+                "request_reason": "Vet checkup",
+                "response_reason": "approved",
+                "expiry_type": null,
+                "expiry_days": null,
+                "approval_date": null,
+                "expiry_date": null
+            }
+        }
+        
+## api.vet.animal.{animal_id}.reading [/api/vet/animal/{animal_id}/reading]
+
+### Get all readings for animal [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "0":  {
+                        "id": 34,
+                        "animal_id": 14,
+                        "temperature": 37.5,
+                        "device_id": null
+                    },
+                    "1":  {
+                        "id": 35,
+                        "animal_id": 14,
+                        "temperature": 37.7,
+                        "device_id": null
+                    },
+                    "2":  {
+                        "id": 36,
+                        "animal_id": 14,
+                        "temperature": 37.6,
+                        "device_id": null
+                    },
+                    "3":  {
+                        "id": 37,
+                        "animal_id": 14,
+                        "temperature": 37.5,
+                        "device_id": null
+                    },
+                    "4":  {
+                        "id": 38,
+                        "animal_id": 14,
+                        "temperature": 37.6,
+                        "device_id": null
+                    },
+                    "5":  {
+                        "id": 39,
+                        "animal_id": 14,
+                        "temperature": 37.8,
+                        "device_id": null
+                    },
+                    "6":  {
+                        "id": 40,
+                        "animal_id": 14,
+                        "temperature": 37.6,
+                        "device_id": null
+                    }
+                }
+            ]
+        }
+        
+## api.vet.animal.{animal_id}.reading [/api/vet/animal/{animal_id}/reading/{id}]
+
+### Get specific reading for animal [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 35,
+                "animal_id": 14,
+                "temperature": 37.7,
+                "reading_id": null
+            }
+        }
+
+## api.vet.animal.{animal_id}.reading [/api/vet/animal/{animal_id}/reading/{id}/symptom]
+
+### Get symptoms for animal reading [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "0":  {
+                        "id": 6,
+                        "reading_id": 40,
+                        "symptom_id": 15,
+                        "updated_at": "2015-02-16 09:18:40",
+                        "created_at": "2015-02-16 09:18:40"
+                    },
+                    "1":  {
+                        "id": 7,
+                        "reading_id": 40,
+                        "symptom_id": 12,
+                        "updated_at": "2015-02-17 09:11:10",
+                        "created_at": "2015-02-17 09:11:10"
+                    },
+                    "2":  {
+                        "id": 8,
+                        "reading_id": 40,
+                        "symptom_id": 3,
+                        "updated_at": "2015-02-18 11:49:36",
+                        "created_at": "2015-02-17 15:24:30"
+                    }
+                }
+            ]
+        }
+        
