@@ -16,6 +16,8 @@ class CreateDevicesTable extends Migration {
 		{
 			$table->integer('id', true, true);
 			$table->string('serial_id')->nullable();
+			$table->integer('user_id')->unsigned()->nullable();
+			$table->integer('vet_id')->unsigned()->nullable();
 			$table->string('device')->nullable();
 			$table->string('name')->nullable();
 			$table->string('version')->nullable();

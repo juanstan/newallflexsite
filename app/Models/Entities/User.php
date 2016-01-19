@@ -83,7 +83,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     public function device()
     {
-        return $this->belongsToMany(Device::class, 'device_user')->withTimestamps();
+        return $this->hasMany(Device::class, 'user_id');
     }
 
 }

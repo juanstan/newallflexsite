@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Models\Repositories\PetConditionRepository;
-use App\Models\Repositories\PetConditionRepositoryInterface;
+use App\Models\Repositories\ConditionRepository;
+use App\Models\Repositories\ConditionRepositoryInterface;
 use App\Models\Repositories\PetReadingRepository;
 use App\Models\Repositories\PetReadingRepositoryInterface;
 use App\Models\Repositories\PetReadingSymptomRepository;
@@ -44,7 +44,7 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(PetConditionRepositoryInterface::class, PetConditionRepository::class);
+        $this->app->bind(ConditionRepositoryInterface::class, ConditionRepository::class);
         $this->app->bind(PetReadingRepositoryInterface::class, PetReadingRepository::class);
         $this->app->bind(PetReadingSymptomRepositoryInterface::class, PetReadingSymptomRepository::class);
         $this->app->bind(PetRepositoryInterface::class, PetRepository::class);

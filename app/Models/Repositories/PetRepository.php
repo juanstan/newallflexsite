@@ -88,11 +88,20 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
         }
     }
 
-    public function assignVet($vet_id)
+
+    /*
+     * Assigning all pets on current user to a vet
+     *
+     * @param int $vet_id The Vet ID to add
+     *
+     * @return void
+     *
+     */
+    public function attachDetachVet($vet_id, $attach='attach')
     {
         if ($this->user) {
             foreach ($this->user->pets()->get() as $pet){
-                $pet->vet()->attach($vet_id);
+                $pet->vet()->$attach($vet_id);
             }
         }
     }
@@ -122,25 +131,62 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
      *
      * Retrieving the vets assigned to pets on current user
      *
-     * @param $pets \Eloquent\Collection Pets on current user
+     * @param $pets mixed (\Eloquent\Collection, array of Pets Entities)  Pets on current user
      *
      * return \Eloquent\Collection Vets
      *
      */
     public function getVetAssignedMyPets($pets){
         $vets = false;
-        foreach($pets as $pet) {
-            if (!$vets){
+
+        foreach ($pets as $pet) {
+            if (!$vets) {
                 $vets = $pet->vet()->get();
             } else {
                 $vets = $vets->merge($pet->vet()->get());
             }
         }
+
         return $vets;
 
     }
 
 
+    /*
+     * Updating attributes for the PET_VET Pivot table
+     *
+     * @param $vet_id Vet ID
+     * @param $pet_id Pet ID
+     *
+     * @return bool true/false
+     *
+     */
+    public function UpdatingAttributePivot($vet_id, $pet_id, $data){
+        return $this->get($pet_id)->vet()->updateExistingPivot($vet_id, $data);
+
+    }
+
+
+
+    /*
+     * Function to assign a pet to all Vet (for the loggedin user)
+     *
+     * @param int $iPetID   The pet ID
+     *
+     * @return  void
+     */
+    public function attachDetachPetToMyVets($iPetID, $attach='attach')
+    {
+        $pets = $this->petsSet();
+        $vets = $this->getVetAssignedMyPets($pets);
+
+        if(!$vets->isEmpty()) {
+            foreach($vets as $vet){
+                $vet->pets()->$attach($iPetID);
+            }
+        }
+
+    }
 
 
 }

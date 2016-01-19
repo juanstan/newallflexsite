@@ -19,8 +19,8 @@ class CreateReadingsTable extends Migration {
 			$table->string('microchip_id')->nullable();
 			$table->double('temperature', 15, 8)->nullable();
 			$table->dateTime('reading_time')->nullable();
-			$table->integer('device_id')->nullable();
-			$table->integer('pet_id')->nullable();
+			$table->integer('device_id')->unsigned()->nullable();
+			$table->integer('pet_id')->unsigned()->nullable();
 			$table->timestamps();
 			$table->softDeletes();
 		});

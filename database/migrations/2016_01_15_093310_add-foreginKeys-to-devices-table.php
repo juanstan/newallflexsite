@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddForeginKeysToDeviceVetTable extends Migration
+class AddForeginKeysToDevicesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,9 +12,9 @@ class AddForeginKeysToDeviceVetTable extends Migration
      */
     public function up()
     {
-        Schema::table('device_vet', function (Blueprint $table) {
+        Schema::table('devices', function (Blueprint $table) {
+            $table->foreign('user_id')->references('id')->on('users')->onUpdate('restrict')->onDelete('cascade');
             $table->foreign('vet_id')->references('id')->on('vets')->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('device_id')->references('id')->on('devices')->onUpdate('restrict')->onDelete('cascade');
         });
     }
 
@@ -25,9 +25,9 @@ class AddForeginKeysToDeviceVetTable extends Migration
      */
     public function down()
     {
-        Schema::table('device_vet', function (Blueprint $table) {
-            $table->dropForeign('device_vet_vet_id_foreign');
-            $table->dropForeign('device_vet_device_id_foreign');
+        Schema::table('devices', function (Blueprint $table) {
+            $table->dropForeign('devices_user_id_foreign');
+            $table->dropForeign('devices_vet_id_foreign');
         });
     }
 }

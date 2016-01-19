@@ -55,13 +55,10 @@ class DeviceRepository extends AbstractRepository implements DeviceRepositoryInt
     {
 
         $device = $this->model->create($input);
+		$device->user()->associate($this->user);
+		$device->save();
 
-        if($device->user->find($this->user) == null)
-        {
-            $device->user()->attach($this->user);
-        }
-
-        return $device;
+		return $device;
     
     }
 

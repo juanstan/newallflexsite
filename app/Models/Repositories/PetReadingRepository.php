@@ -2,6 +2,7 @@
 
 use App\Models\Entities\User;
 use App\Models\Entities\Pet;
+use App\Models\Entities\Device;
 use App\Http\Controllers\Vet;
 use App\Models\Entities\Reading;
 use App\Models\Entities\ReadingVet;
@@ -82,7 +83,7 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
         }
 
         $csv->setOffset(1);
-        $data = $csv->query();
+        $data = $csv->fetch();
         foreach ($data as $lineIndex => $row) {
             $profile = Reading::where('microchip_id', '=', decoded_microchip_id($row[1]))->first();
             $pet = Pet::where(['microchip_number' => decoded_microchip_id($row[1])])->first();
@@ -90,10 +91,9 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
             if (empty($pet)) {
                 $pet = new pet();
                 $pet->microchip_number = decoded_microchip_id($row[1]);
-                //$pet->user_id = $user->id;
-
                 $pet->save();
             }
+
             if (empty($profile)) {
                 $reading = new Reading();
                 $reading->microchip_id = decoded_microchip_id($row[1]);
@@ -120,7 +120,12 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
             $vetRequest = new Request();
             $vetRequest->pet_id = $pet->id;
             $vetRequest->vet_id = $vet->id;
-            $vetRequest->save();
+
+            if ($vetRequest->exists()){
+                $vetRequest->update();
+            } else {
+                $vetRequest->save();
+            }
 
         }
 
@@ -197,14 +202,18 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
             }
 
             if (empty($profile)) {
+
+                $device = Device::findOrFail($reading_device_id);
                 $reading = new Reading();
                 $reading->microchip_id = decoded_microchip_id($row[1]);
                 $reading->temperature = reading_temperature($row[2]);
-                $reading->device_id = $reading_device_id;
                 $reading->pet_id = $pet->id;
                 $reading->average = 1;
                 $reading->reading_time = reading_timestamp($device_current_time_epoch, $row[3]);
+                //Linking to the device table
+                $reading->device()->associate($device);
                 $reading->save();
+
             }
 
         }

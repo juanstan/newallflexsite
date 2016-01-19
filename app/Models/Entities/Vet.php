@@ -69,7 +69,7 @@ class Vet extends Model implements AuthenticatableContract, CanResetPasswordCont
     
     public function device()
     {
-        return $this->belongsToMany(Device::class, 'device_vet')->withTimestamps();
+        return $this->hasMany(Device::class, 'vet_id');
     }
     
 }

@@ -27,7 +27,7 @@ class PetCondition extends Model implements AuthenticatableContract, CanResetPas
 	 *
 	 * @var string
 	 */
-	protected $table = 'pet_conditions';
+	protected $table = 'conditions_pet';
 
 	/**
 	 * The attributes excluded from the model's JSON form.

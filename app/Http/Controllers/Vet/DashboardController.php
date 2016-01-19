@@ -64,30 +64,22 @@ class DashboardController extends Controller {
     }
 
     public function getIndex() {
-        $vet = $this->authVet;
-        $this->petRepository->setUser($vet);
+        $vet = $this->vetRepository->get($this->authVet->id);
         $symptoms = $this->symptomRepository->all();
-        $requests = $this->petRequestRepository->getAllByVetId($vet->id);
-        $pets = $this->petRepository->all();
-        if ($vet->confirmed != null) {
-            return View::make('vet.dashboard')
-                ->with(array(
-                    'pets' => $pets,
-                    'symptoms' => $symptoms,
-                    'requests' => $requests,
-                    'vet' => $vet
-                ));
+        $pets = $vet->pets()->withPivot('approved')->get();
+
+        $data = array(
+            'pets' => $pets,
+            'symptoms' => $symptoms,
+            'vet' => $vet,
+        );
+
+        if ($vet->confirmed !== null) {
+            array_push($data, ['not-verified' => '']);
         }
-        else {
-            return View::make('vet.dashboard')
-                ->with(array(
-                    'not-verified' => '',
-                    'pets' => $pets,
-                    'symptoms' => $symptoms,
-                    'requests' => $requests,
-                    'vet' => $vet
-                ));
-        }
+
+        return View::make('vet.dashboard')->with($data);
+
     }
 
     public function getHelp() {
@@ -121,28 +113,17 @@ class DashboardController extends Controller {
     }
 
     public function getPet($petId) {
-        $this->petRepository->setUser($this->authVet);
-        $vetid = $this->authVet->id;
+        $vet = $this->vetRepository->get($this->authVet->id);
+        $pet = $vet->pets()->find($petId);
         $symptoms = $this->symptomRepository->all();
-        $pet = $this->petRepository->get($petId);
-        if($this->petRequestRepository->getApprovedByVetAndPetId($vetid, $petId))
-        {
-            return View::make('vet.information')
-                ->with(array(
-                    'pet' => $pet,
-                    'symptoms' => $symptoms
-                ));
-        }
-        else
-        {
-            return View::make('vet.dashboard')
-                ->with(array(
-                    'not-verified' => '',
-                    'pet' => $pet,
-                    'symptoms' => $symptoms
-                ));
-        }
 
+        if ($pet) {
+            return View::make('vet.information')->with(array('pet' => $pet,'symptoms' => $symptoms));
+
+        } else {
+            return redirect()->route('vet.dashboard')
+                ->with('error', Lang::get('general.Pet not found'));
+        }
 
     }
 
@@ -259,6 +240,7 @@ class DashboardController extends Controller {
     {
         $input = Input::all();
         $vet = $this->authVet;
+
         $readingValidator = $this->petReadingRepository->getReadingUploadValidator($input);
         if ($readingValidator->fails()) {
             return redirect()->back()
@@ -268,11 +250,19 @@ class DashboardController extends Controller {
 
         if($this->petReadingRepository->readingUploadVet($input, $vet))
         {
-            return redirect()->route('vet.dashboard');
+            return response()->json([
+                'status'=>'success',
+                'message' => \Lang::get('general.Microchip has been added')
+            ]);
         }
 
-        return redirect()->route('vet.dashboard')
-            ->with('error', Lang::get('general.Uploaded file is not valid'));
+
+        return response()->json([
+            'status'=>'success',
+            'message' => \Lang::get('general.There was a problem assing the microchip')
+        ]);
+
+
     }
 
 

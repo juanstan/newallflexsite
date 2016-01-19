@@ -80,7 +80,6 @@ class VetController extends Controller
             }
 
             $image_path = '/uploads/vets/'.$id.'/'.$fileName;
-
             $input = array_merge($input, array('image_path' => $image_path));
 
         }

@@ -25,12 +25,12 @@ class Device extends Model implements AuthenticatableContract, CanResetPasswordC
     
     public function user()
     {
-        return $this->belongsToMany(User::class, 'device_user')->withTimestamps();
+        return $this->belongsTo(User::class, 'user_id');
     }
     
     public function vet()
     {
-        return $this->belongsToMany(Vet::class, 'device_vet')->withTimestamps();
+        return $this->belongsTo(Vet::class, 'vet_id');
     }
     
     public function sensorReading()

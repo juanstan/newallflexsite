@@ -18,7 +18,7 @@ class ConditionRepository extends AbstractRepository implements ConditionReposit
 	{
 		return Validator::make($input,
 				[
-					
+					'condition_id' => ['required','exists:conditions,id']
 				]);
 	}
 
@@ -27,7 +27,7 @@ class ConditionRepository extends AbstractRepository implements ConditionReposit
 	{
 		return Validator::make($input,
 				[
-
+					'condition_id' => ['required']
 				]);
 	}
 

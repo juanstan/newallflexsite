@@ -44,9 +44,6 @@ class PetReadingRegisterController extends Controller
                 ->withInput();
         }
 
-
-
-
         try {
             if ($this->petReadingRepository->readingUpload($input, $user)) {
                 return response()->json([
@@ -75,8 +72,8 @@ class PetReadingRegisterController extends Controller
 
         }
 
-
     }
+
 
     public function getAssign()
     {
@@ -91,14 +88,15 @@ class PetReadingRegisterController extends Controller
                 ));
     }
 
+
     public function postAssign($id)
     {
         $pet = $this->petRepository->get(Input::get('pet_id'));
         $microchip = $this->petRepository->get($id);
 
         if ($pet->update(array('microchip_number' => $microchip->microchip_number))) {
-            foreach($microchip->readings()->get as $reading) {
-                $pet->readings()->attach($reading);
+            foreach($microchip->readings() as $reading) {
+                $reading->pet()->associate($pet)->save();
             }
             $microchip->delete();
         }
@@ -106,8 +104,8 @@ class PetReadingRegisterController extends Controller
         return redirect()->route('user.register.reading.assign')
             ->with('success', Lang::get('general.Pet microchip number assigned'));
 
-
     }
+
 
     public function getFinish()
     {
@@ -118,6 +116,7 @@ class PetReadingRegisterController extends Controller
 //        });
         return redirect()->route('user.dashboard');
     }
+
 
     /*
      * Function to show simply the Reading instructions for a specific controller

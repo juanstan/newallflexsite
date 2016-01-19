@@ -92,7 +92,8 @@ class DashboardController extends Controller
                     'postCreatePet',
                     'getRemovePet',
                     'postReadingUpload',
-                    'postAssign'
+                    'postAssign',
+                    'getVet'
                 )
             )
         );
@@ -348,7 +349,6 @@ class DashboardController extends Controller
         $input = Input::all();
         $user = $this->authUser;
         $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
-
         $this->petRepository->setUser($user);
 
         if($user->weight_units == 1) {
@@ -395,7 +395,7 @@ class DashboardController extends Controller
         $pet = $this->petRepository->create($input);
 
         //We need to assign this new pet to all user vets
-        $this->assignPetToMyVets($pet->id);
+        $this->petRepository->attachDetachPetToMyVets($pet->id);
 
         if ($pet == null) {
             \App::abort(500);
@@ -404,40 +404,6 @@ class DashboardController extends Controller
         return redirect()->route('user.dashboard');
     }
 
-
-    /*
-     * Function to assign a pet to all Vet (for the loggedin user)
-     *
-     * @paran int $iPetID   The pet ID
-     *
-     * @return  void
-     */
-    private function assignPetToMyVets($iPetID)
-    {
-        $user = $this->authUser;
-        $vets=[];
-
-        foreach ($this->petRequestRepository->getAllByUserId($user->id) as $petRequest){
-            if (in_array($petRequest->vet_id,  $vets)){
-                continue;
-
-            } else {
-                $this->petRequestRepository->create(
-                    array(
-                        'vet_id'        =>  $petRequest->vet_id,
-                        'user_id'       =>  $user->id,
-                        'pet_id'        =>  $iPetID,
-                        'created_at'    =>  Carbon::now()
-                    )
-                );
-
-                array_push($vets, $petRequest->vet_id);
-
-            }
-
-        }
-
-    }
 
     public function getRemovePet($petId)
     {
@@ -488,8 +454,6 @@ class DashboardController extends Controller
 
         }
 
-
-
     }
 
     public function getVet()
@@ -502,6 +466,7 @@ class DashboardController extends Controller
             return redirect()->route('user.dashboard')
                 ->with('error', Lang::get('general.You must create a pet before you can perform this function.'));
         }
+
         return View::make('user.vet')->with(
             array(
                 'vets' => $vets
@@ -561,42 +526,26 @@ class DashboardController extends Controller
 
     public function getAddVet($vetId)
     {
-        $userid = $this->authUser->id;
         $this->petRepository->setUser($this->authUser);
-        $pets = $this->petRepository->all();
-        foreach ($pets as $pet) {
-            if ($this->petRequestRepository->getByVetAndPetId($vetId, $pet->id) == null) {
-                $data = array(
-                    'vet_id' => $vetId,
-                    'user_id' => $userid,
-                    'pet_id' => $pet->id,
-                    'approved' => 1
-                );
-                $this->petRequestRepository->create($data);
-            }
-            else {
-                continue;
-            }
+        $this->petRepository->attachDetachVet($vetId);
 
-        }
         return redirect()->route('user.dashboard.vet')
             ->with('success', Lang::get('general.Vet added'));
     }
 
     public function getRemoveVet($vetId)
     {
-        $user = $this->authUser;
-        if ($this->petRequestRepository->removeByVetAndUserId($vetId, $user->id)) {
-            return redirect()->route('user.dashboard.vet')
-                ->with('success', Lang::get('general.Vet removed'));
-        }
+        $this->petRepository->setUser($this->authUser);
+        $this->petRepository->attachDetachVet($vetId, 'detach');
+
         return redirect()->route('user.dashboard.vet')
-            ->with('error', Lang::get('general.There was a problem with your request'));
+            ->with('success', Lang::get('general.Vet removed'));
+
     }
 
     public function getActivatepet($pet_id,$vet_id)
     {
-        if ($this->petRepository->get($pet_id)->vet()->updateExistingPivot($vet_id, array('approved' => 1))){
+        if ($this->petRepository->UpdatingAttributePivot($vet_id, $pet_id, array('approved' => 1))){
             return redirect()->route('user.dashboard.vet')
                 ->with('success', Lang::get('general.Pet activated'));
         }
@@ -606,7 +555,7 @@ class DashboardController extends Controller
 
     public function getDeactivatepet($pet_id,$vet_id)
     {
-        if ($this->petRepository->get($pet_id)->vet()->updateExistingPivot($vet_id, array('approved' => 0))){
+        if ($this->petRepository->UpdatingAttributePivot($vet_id, $pet_id, array('approved' => 0))){
             return redirect()->route('user.dashboard.vet')->with('success', Lang::get('general.Pet deactivated'));
         }
         return redirect()->route('user.dashboard.vet')

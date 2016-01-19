@@ -60,9 +60,8 @@ class VetRegisterController extends Controller
 
     public function getAddVet($vetId)
     {
-        $user = $this->authUser;
-        $this->petRepository->setUser($user);
-        $this->petRepository->assignVet($vetId);
+        $this->petRepository->setUser($this->authUser);
+        $this->petRepository->attachDetachVet($vetId);
 
         return redirect()->route('user.register.vet')
             ->with('success', Lang::get('general.Vet added'));

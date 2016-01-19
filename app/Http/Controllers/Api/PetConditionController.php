@@ -4,8 +4,9 @@ use Auth;
 use Input;
 use URL;
 
-use App\Models\Entities\PetCondition;
-use App\Models\Repositories\PetConditionRepositoryInterface;
+use App\Models\Entities\Pet;
+use App\Models\Entities\Condition;
+use App\Models\Repositories\ConditionRepositoryInterface;
 use App\Models\Repositories\PetRepositoryInterface;
 use App\Http\Controllers\Controller;
 
@@ -13,13 +14,13 @@ class PetConditionController extends Controller
 {
 
     protected $authUser;
-    protected $petConditionRepository;
+    protected $conditionRepository;
     protected $petRepository;
 
-    public function __construct(PetConditionRepositoryInterface $petConditionRepository, PetRepositoryInterface $petRepository)
+    public function __construct(PetRepositoryInterface $petRepository, ConditionRepositoryInterface $conditionRepository)
     {
         $this->authUser = Auth::user()->get();
-        $this->petConditionRepository = $petConditionRepository;
+        $this->conditionRepository = $conditionRepository;
         $this->petRepository = $petRepository;
     }
 
@@ -28,39 +29,32 @@ class PetConditionController extends Controller
         $this->petRepository->setUser($this->authUser);
 
         return response()->json(['error' => false,
-            'result' => $this->petRepository->get($pet_id)->petConditions()->get()]);
+            'result' => $this->petRepository->get($pet_id)->conditions()->get()]);
 
     }
 
     /**
      * Store a newly created resource in storage.
      *
+     *
      * @return Response
      */
     public function store($pet_id) // POST
     {
-
         $this->petRepository->setUser($this->authUser);
         $pet = $this->petRepository->get($pet_id);
-        $this->petConditionRepository->setPet($pet);
-
         $input = Input::all();
-        $input['pet_id'] = $pet_id;
-        $validator = $this->petConditionRepository->getCreateValidator($input);
+        $validator = $this->conditionRepository->getCreateValidator($input);
 
         if ($validator->fails()) {
             return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        $reading = $this->petConditionRepository->create($input);
+        $condition = $pet->conditions()->attach($input['condition_id']);
 
-        if ($reading == null) {
-            \App::abort(500);
-        }
-
-        return response()->json(['error' => false, 'result' => $reading], 201)
-            ->header('Location', URL::route('api.pet.{pet_id}.condition.show', [$reading->id]));
+        return response()->json(['error' => false, 'result' => $condition], 201)
+            ->header('Location', URL::route('api.pet.{pet_id}.condition.show', [$condition->pet_id]));
 
     }
 
@@ -74,9 +68,7 @@ class PetConditionController extends Controller
     public function show($pet_id, $id) // GET
     {
         $this->petRepository->setUser($this->authUser);
-
         $pet = $this->petRepository->get($pet_id);
-
         $this->petConditionRepository->setPet($pet);
 
         return response()->json(['error' => false,
@@ -94,46 +86,42 @@ class PetConditionController extends Controller
     {
 
         $this->petRepository->setUser($this->authUser);
-
         $pet = $this->petRepository->get($pet_id);
-
-        $this->petConditionRepository->setPet($pet);
-
         $input = Input::all();
-        $validator = $this->petConditionRepository->getUpdateValidator($input);
+        $validator = $this->conditionRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
             return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        if ($this->petConditionRepository->update($id, $input) == false) {
-            \App::abort(500);
-        }
+        $pet->conditions()->updateExistingPivot($id, $input);
 
         return response()->json(['error' => false,
-            'result' => $this->petConditionRepository->get($id)]);
+            'result' => $this->conditionRepository->get($input['condition_id'])]);
     }
 
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified condition from pet.
      *
-     * @param  int $id
+     * @param  int $id      Condition ID
+     * @param  int $pet_id  Pet ID
+     *
      * @return Response
      */
     public function destroy($pet_id, $id) // DELETE
     {
         $this->petRepository->setUser($this->authUser);
-
         $pet = $this->petRepository->get($pet_id);
-
-        $this->petConditionRepository->setPet($pet);
-
-        PetCondition::where('condition_id', '=', $id)->delete();
+        $pet->conditions()->detach($id);
 
         return response()->json(['error' => false]);
     }
+
+
+
+
 
 
 }

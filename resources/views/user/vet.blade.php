@@ -1,6 +1,12 @@
 @extends('layouts.user.dashboard')
 
 @section('content')
+    <div class="row col-md-11 float-none col-centered collapse-group" >
+        <div class="collapse" id="file-upload">
+            {!! Form::open(array('files'=> 'true', 'route' => 'user.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) !!}
+            {!! Form::close() !!}
+        </div>
+    </div>
     <div class="col-xs-12 col-centered top-buffer" >
         <?php $vetId = ''; ?>
         <div class="row container-vet-pill">

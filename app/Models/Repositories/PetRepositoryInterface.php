@@ -17,7 +17,13 @@ interface PetRepositoryInterface extends AbstractRepositoryInterface
     */
     
     public function setUser($user);
-    
+    public function petsSet();
+    public function microchipUnassigned();
+    public function UpdatingAttributePivot($vet_id, $pet_id, $data);
+    public function getVetAssignedMyPets($pets);
+    public function attachDetachPetToMyVets($iPetID);
+    public function attachDetachVet($vet_id,$attach);
+
 }
 
 ?>
