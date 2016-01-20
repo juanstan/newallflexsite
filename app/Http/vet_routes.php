@@ -23,6 +23,7 @@ Route::controller('dashboard', 'DashboardController',
         'getSettings'=>'vet.dashboard.settings',
         'postSettings'=>'vet.dashboard.settings',
         'postReadingUpload'=>'vet.dashboard.readingUpload',
+        'postAssign' => 'vet.dashboard.assign',
     ));
 Route::controller('/', 'AuthController',
     array(

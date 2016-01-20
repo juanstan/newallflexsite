@@ -23,12 +23,7 @@ class ReadingVet extends Model implements AuthenticatableContract, CanResetPassw
 	 */
 	protected $table = 'reading_vet';
 
-	/**
-	 * The attributes excluded from the model's JSON form.
-	 *
-	 * @var array
-	 */
-    
+
     public function reading()
     {
         return $this->belongsTo(Reading::class, 'reading_id');
@@ -36,7 +31,7 @@ class ReadingVet extends Model implements AuthenticatableContract, CanResetPassw
 
     public function vet()
     {
-        return $this->belongsTo(Vet::class);
+        return $this->belongsTo(Vet::class, 'vet_id');
     }
 
 }

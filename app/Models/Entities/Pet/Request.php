@@ -16,7 +16,6 @@ class Request extends \Eloquent {
 
     protected $fillable = [
         'vet_id',
-        'user_id',
         'pet_id',
         'approved',
     ];

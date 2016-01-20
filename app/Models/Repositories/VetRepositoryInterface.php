@@ -7,6 +7,8 @@ interface VetRepositoryInterface extends AbstractRepositoryInterface
 
     public function getLoginValidator($input);
 
+    public function getUnassignedPets($vet);
+
 }
 
 ?>

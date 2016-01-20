@@ -67,11 +67,14 @@ class DashboardController extends Controller {
         $vet = $this->vetRepository->get($this->authVet->id);
         $symptoms = $this->symptomRepository->all();
         $pets = $vet->pets()->withPivot('approved')->get();
+        //Getting the microchip set by vets
+        $microchips = $this->vetRepository->getUnassignedPets($this->authVet);
 
         $data = array(
             'pets' => $pets,
             'symptoms' => $symptoms,
             'vet' => $vet,
+            'microchips' => $microchips,
         );
 
         if ($vet->confirmed !== null) {
@@ -140,10 +143,12 @@ class DashboardController extends Controller {
             ->with('error', Lang::get('general.There was a problem with your request'));
     }
 
+
     public function getSettings()
     {
         return View::make('vet.settings');
     }
+
 
     public function postSettings()
     {
@@ -217,7 +222,6 @@ class DashboardController extends Controller {
         }
 
         $address = Input::get('address_1') . ' ' . Input::get('address_2') . ' ' . Input::get('city') . ' ' . Input::get('county') . ' ' . Input::get('zip');
-
         $data_arr = geocode($address);
 
         if($data_arr) {
@@ -236,6 +240,7 @@ class DashboardController extends Controller {
             ->with('success', Lang::get('general.Settings updated'));
     }
 
+
     public function postReadingUpload()
     {
         $input = Input::all();
@@ -248,20 +253,49 @@ class DashboardController extends Controller {
                 ->withInput();
         }
 
-        if($this->petReadingRepository->readingUploadVet($input, $vet))
-        {
+        try {
+            if ($this->petReadingRepository->readingUpload($input, $vet)) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => \Lang::get('general.Microchip has been added')
+                ]);
+            }
+
+            return redirect()->route('vet.dashboard')
+                ->with('error', Lang::get('general.Uploaded file is not valid'));
+
+
+        } catch(\Exception $e) {
+            if ($e->getCode()===111) {
+                return response()->json([
+                    'status'=>'error',
+                    'message' => \Lang::get('general.Microchip has been already registered')
+                ]);
+            }
+
             return response()->json([
-                'status'=>'success',
-                'message' => \Lang::get('general.Microchip has been added')
+                'status'=>'error',
+                'message' => $e->getMessage()
             ]);
+
+
         }
 
+    }
 
-        return response()->json([
-            'status'=>'success',
-            'message' => \Lang::get('general.There was a problem assing the microchip')
-        ]);
 
+    public function postAssign($petId)
+    {
+        $pet = $this->petRepository->get(Input::get('pet-id'));
+        $microchip = $this->petRepository->get($petId);
+
+        if (!$pet->microchip && $this->petRepository->assignMicrochipToPet($pet, $microchip)) {
+            return redirect()->route('vet.dashboard')
+                ->with('success', Lang::get('general.Pet microchip number assigned'));
+        }
+
+        return redirect()->route('vet.dashboard')
+            ->with('error', Lang::get('general.Problem assigning microchip'));
 
     }
 

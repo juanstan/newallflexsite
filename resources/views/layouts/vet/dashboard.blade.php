@@ -28,38 +28,105 @@
             @yield('content')
         </div>
     </body>
-    <!-- Javascript -->
-  @include('layouts/core/javascript')
 
-        <script type="text/javascript">
-          function init_map() {
-              var myOptions = {
-                  zoom: 14,
-                  center: new google.maps.LatLng({!! Auth::vet()->get()->latitude !!}, {!! Auth::vet()->get()->longitude !!}),
-                  mapTypeId: google.maps.MapTypeId.ROADMAP
-              };
-              map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);
-              marker = new google.maps.Marker({
-                  map: map,
-                  position: new google.maps.LatLng({!! Auth::vet()->get()->latitude !!}, {!! Auth::vet()->get()->longitude !!})
-              });
-              google.maps.event.addListener(marker, "click", function () {
-                  infowindow.open(map, marker);
-              });
-              infowindow.open(map, marker);
-          }
-          google.maps.event.addDomListener(window, 'load', init_map);
+<!-- Javascript -->
+@include('layouts/core/javascript')
 
-          var md = new Dropzone(".dropzone", {
+<script type="text/javascript">
 
-          });
-          md.on("complete", function (file) {
-              if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
-                  window.setTimeout(function(){window.location.reload()}, 3000);
+    $( document ).ready(function() {
+        $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
+            var $target = $(this);
+            $target.closest( '.btn-group' )
+                    .find( 'input' ).val( $target.attr( 'data-id' ) );
+            $target.closest( '.btn-group' )
+                    .find( '[data-bind="label"]' ).text( $target.text() )
+                    .end()
+                    .children( '.dropdown-toggle' );
+            $target.closest('form').submit();
+            return false;
+        });
+    });
+
+
+    function init_map() {
+        var myOptions = {
+            zoom: 14,
+            center: new google.maps.LatLng({!! Auth::vet()->get()->latitude !!}, {!! Auth::vet()->get()->longitude !!}),
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById("gmap_canvas"), myOptions);
+        marker = new google.maps.Marker({
+            map: map,
+            position: new google.maps.LatLng({!! Auth::vet()->get()->latitude !!}, {!! Auth::vet()->get()->longitude !!})
+        });
+        google.maps.event.addListener(marker, "click", function () {
+            infowindow.open(map, marker);
+        });
+        infowindow.open(map, marker);
+    }
+    google.maps.event.addDomListener(window, 'load', init_map);
+
+    /* var md = new Dropzone(".dropzone", {
+
+    });
+    md.on("complete", function (file) {
+      if (this.getUploadingFiles().length === 0 && this.getQueuedFiles().length === 0) {
+          window.setTimeout(function(){window.location.reload()}, 3000);
+      }
+
+
+    });*/
+
+    //Disabling the auto detect mecanishim
+    Dropzone.autoDiscover = false;
+
+    if (document.querySelector('.dropzone') !== null) {
+          var md = new Dropzone(".dropzone",
+          {
+              maxFiles: 1,
+              maxThumbnailFilesize: 1,
+              success: function (file, response) {
+                  if (response.status == 'error') { // succeeded
+                      // below is from the source code too
+                      var node, _i, _len, _ref, _results;
+                      var message = response.message // modify it to your error message
+                      file.previewElement.classList.add("dz-error");
+                      _ref = file.previewElement.querySelectorAll("[data-dz-errormessage]");
+                      _results = [];
+                      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                          node = _ref[_i];
+                          _results.push(node.textContent = message);
+                      }
+                      return _results;
+                  }
               }
-
-
           });
-        </script>
+
+          md.on("maxfilesexceeded", function (file) {
+              this.removeAllFiles();
+              this.addFile(file);
+          });
+
+          md.on("complete", function (file) {
+              var self = this;
+              if (
+                      self.getAcceptedFiles().length > 0
+                      && typeof file.xhr !== "undefined"
+                      && JSON.parse(file.xhr.response).status == 'success'
+              ) {
+                  window.location.reload();
+              } else {
+                  $(file.previewElement).on('click', function () {
+                      self.removeAllFiles();
+                      $('button.btn-skip').show();
+                      $('button.btn-next').hide();
+                  })
+              }
+          });
+    }
+
+
+    </script>
     
 </html>

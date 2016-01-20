@@ -27,8 +27,7 @@
         </div>
     </body>
     <!-- Javascript -->
-  @include('layouts/core/javascript')
-  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+@include('layouts/core/javascript')
 <script>
 $( document ).ready(function() {
     $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {

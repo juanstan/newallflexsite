@@ -157,6 +157,7 @@ class DashboardController extends Controller
             ->with('message', Lang::get('general.Verification email sent'));
     }
 
+
     public function postResetAverageTemperature($id)
     {
         $pet = $this->readingRepository->getByPetId($id);
@@ -168,6 +169,7 @@ class DashboardController extends Controller
             ->with('error', Lang::get('general.There was a problem with your request'));
     }
 
+
     public function getSettings()
     {
         $user = $this->authUser;
@@ -176,6 +178,7 @@ class DashboardController extends Controller
                 'user' => $user
             ));
     }
+
 
     public function postSettings()
     {
@@ -236,6 +239,7 @@ class DashboardController extends Controller
 
     }
 
+
     public function postUpdatePet($id)
     {
         $user = $this->authUser;
@@ -276,6 +280,7 @@ class DashboardController extends Controller
             ->with('success', Lang::get('general.Pet updated'));
     }
 
+
     public function postAddConditions($petId)
     {
         $this->petRepository->setUser($this->authUser);
@@ -287,6 +292,7 @@ class DashboardController extends Controller
         }
         return redirect()->route('user.dashboard');
     }
+
 
     public function postAddSymptoms($readingId)
     {
@@ -306,6 +312,7 @@ class DashboardController extends Controller
             ->with('message', Lang::get($message));
     }
 
+
     public function getSymptomRemove($readingId, $symptomId)
     {
         if ($this->readingRepository->removeSymptom($readingId, $symptomId))
@@ -316,6 +323,7 @@ class DashboardController extends Controller
         return redirect()->route('user.dashboard')
             ->with('error', Lang::get('general.There was a problem with your request'));
     }
+
 
     public function postUpdatePetPhoto($id)
     {
@@ -343,6 +351,7 @@ class DashboardController extends Controller
             ->with('success', Lang::get('general.Pet updated'));
 
     }
+
 
     public function postCreatePet()
     {
@@ -489,6 +498,7 @@ class DashboardController extends Controller
         return response()->json($result);
     }
 
+
     public function getVetSearchLocation()
     {
         $location = Input::get('term');
@@ -524,6 +534,7 @@ class DashboardController extends Controller
 
     }
 
+
     public function getAddVet($vetId)
     {
         $this->petRepository->setUser($this->authUser);
@@ -532,6 +543,7 @@ class DashboardController extends Controller
         return redirect()->route('user.dashboard.vet')
             ->with('success', Lang::get('general.Vet added'));
     }
+
 
     public function getRemoveVet($vetId)
     {
@@ -543,6 +555,7 @@ class DashboardController extends Controller
 
     }
 
+
     public function getActivatepet($pet_id,$vet_id)
     {
         if ($this->petRepository->UpdatingAttributePivot($vet_id, $pet_id, array('approved' => 1))){
@@ -553,6 +566,7 @@ class DashboardController extends Controller
             ->with('error', Lang::get('general.There was a problem with your request'));
     }
 
+
     public function getDeactivatepet($pet_id,$vet_id)
     {
         if ($this->petRepository->UpdatingAttributePivot($vet_id, $pet_id, array('approved' => 0))){
@@ -561,6 +575,7 @@ class DashboardController extends Controller
         return redirect()->route('user.dashboard.vet')
             ->with('error', Lang::get('general.There was a problem with your request'));
     }
+
 
     public function postAssign($petId)
     {

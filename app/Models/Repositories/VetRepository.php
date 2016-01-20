@@ -59,6 +59,13 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
             'password_confirmation' 	=> ['min:6'],
 		]);
 	}
+
+
+	public function getUnassignedPets($vet) {
+		return $vet->petsNoAssgined()->get();
+
+	}
+
 }
 
 ?>

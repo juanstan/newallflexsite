@@ -62,7 +62,7 @@ class Vet extends Model implements AuthenticatableContract, CanResetPasswordCont
         return $this->pets()->wherePivot('approved', '=', '1');
     }
 
-    public function sensorReadings()
+    public function readings()
     {
         return $this->belongsToMany(Reading::class, 'reading_vet', 'vet_id');
     }
@@ -70,6 +70,22 @@ class Vet extends Model implements AuthenticatableContract, CanResetPasswordCont
     public function device()
     {
         return $this->hasMany(Device::class, 'vet_id');
+    }
+
+
+    public function petsNoAssgined(){
+        return $this->hasMany(Pet::class, 'vet_id');
+
+    }
+
+    public function scopeSetMicrochip($query){
+        return $query->whereNotNull('microchip_number');
+
+    }
+
+    public function scopeNoSetName($query){
+        return $query->whereNull('name');
+
     }
     
 }
