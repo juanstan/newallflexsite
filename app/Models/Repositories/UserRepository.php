@@ -250,20 +250,18 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 
 	public function delete($id)
 	{
-		Request::where('user_id', '=', $id)->delete();
-		$pets = Pet::where('user_id', '=', $id)->get();
-		foreach ($pets as $pet) {
-			$pet_id = $pet->id;
-			$sensor_readings = SensorReading::where('pet_id', '=', $pet_id)->get();
-			foreach ($sensor_readings as $sensor_reading) {
-				$sensor_reading_id = $sensor_reading->id;
-				SensorReadingSymptom::where('reading_id', '=', $sensor_reading_id)->delete();
-			}
-			SensorReading::where('pet_id', '=', $pet_id)->delete();
+		$user = $this->model->findOrFail($id);
+		$pets = $user->pets();
+		$devices = $user->device();
+
+		foreach ($devices->get() as $device){
+			$device->readings()->delete();
 		}
-		Pet::where('user_id', '=', $id)->delete();
-		$object = $this->get($id);
-		$object->delete();
+
+		$pets->delete();
+		$devices->delete();
+		$user->delete();
+
 	}
 
 }
