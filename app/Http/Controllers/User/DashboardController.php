@@ -285,8 +285,9 @@ class DashboardController extends Controller
     {
         $this->petRepository->setUser($this->authUser);
         $conditions = Input::get('conditions');
+
         if (is_array($conditions)) {
-            $this->petConditionRepository->removeAndUpdateConditions($petId, $conditions);
+            $this->petRepository->synchroniseConditions($petId, $conditions);
             return redirect()->route('user.dashboard')
                 ->with('message', Lang::get('general.Conditions updated'));
         }

@@ -135,16 +135,13 @@ $temperaturePref = $user->units;
                             </div>
                         </div>
                         <div class="col-xs-12" >
-                            <div class="btn-group symptom-list-wrap nav-justified" data-toggle="buttons">
-                                @if( $pet->conditions->count() )
-                                    @foreach ($pet->conditions as $petCondition)
-                                            <?php $conditionItems[] = $petCondition->condition->name; ?>
-                                    @endforeach
-                                @endif
+                            <div class="conditions-wrapper">
+                                <?php $conditionItems= $pet->conditions->lists('name')->toArray();?>
                                 @foreach ($conditions as $condition)
-                                    <div class="col-xs-6 top-buffer small-padding" >
-                                        <label class="btn btn-primary btn-block @if( !empty($conditionItems) && in_array($condition->name, $conditionItems)) active  @endif">
-                                            <input type="checkbox" name="conditions[]" @if( !empty($conditionItems) && in_array($condition->name, $conditionItems)) checked @endif value="{!! $condition->id !!}" autocomplete="off"> {!! $condition->name !!}
+                                    <div class="condition" >
+                                        <input type="checkbox" id="{{$condition->name.$pet->id}}" name="conditions[]" @if( !empty($conditionItems) && in_array($condition->name, $conditionItems)) checked @endif value="{!! $condition->id !!}" autocomplete="off">
+                                        <label for="{{$condition->name.$pet->id}}" class="@if( !empty($conditionItems) && in_array($condition->name, $conditionItems)) active  @endif">
+                                            <span class="choice-text"> {!! $condition->name !!} </span>
                                         </label>
                                     </div>
                                 @endforeach

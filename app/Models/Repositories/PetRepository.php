@@ -189,6 +189,13 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
     }
 
 
+
+    public function synchroniseConditions($petId, $conditions) {
+        $this->get($petId)->conditions()->sync($conditions);
+
+    }
+
+
 }
 
 ?>

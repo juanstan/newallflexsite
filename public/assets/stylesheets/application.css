@@ -5878,6 +5878,30 @@ a {
   .symptoms-wrapper label {
     width: 75%; }
 
+.conditions-wrapper {
+  overflow-y: scroll;
+  height: 29em; }
+  .conditions-wrapper .condition {
+    border-bottom: 1px solid #d4d6d8; }
+  .conditions-wrapper input[type='checkbox'] {
+    /* Hide the input, but have it still be clickable */
+    opacity: 0;
+    float: left;
+    width: 18px; }
+  .conditions-wrapper input[type='checkbox'] + label {
+    margin: 0;
+    clear: none;
+    /* Left padding makes room for image */
+    padding: 5px 0 4px 24px;
+    /* Make look clickable because they are */
+    cursor: pointer;
+    background: url(/images/option-unselected.gif) left center no-repeat; }
+  .conditions-wrapper input[type='checkbox']:checked + label {
+    background-image: url(/images/option-selected.gif);
+    font-weight: bolder; }
+  .conditions-wrapper label {
+    width: 75%; }
+
 .signup-logo {
   margin-top: -120px;
   background-color: #fff;

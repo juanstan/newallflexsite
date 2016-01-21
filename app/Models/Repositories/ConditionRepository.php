@@ -31,6 +31,7 @@ class ConditionRepository extends AbstractRepository implements ConditionReposit
 				]);
 	}
 
+
 }
 
 ?>
