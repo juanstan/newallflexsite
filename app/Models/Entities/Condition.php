@@ -13,7 +13,7 @@ class Condition extends Model {
      */
     public function pets()
     {
-        return $this->belongsToMany(Pet::class, 'condition_pet', 'condition_id')->withTimestamps();
+        return $this->belongsToMany(Pet::class, 'condition_pet', 'condition_id', 'pet_id')->withTimestamps();
     }
 
 }

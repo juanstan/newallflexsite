@@ -66,7 +66,7 @@ class Pet extends Model implements AuthenticatableContract, CanResetPasswordCont
      */
     public function conditions()
     {
-        return $this->belongsToMany(Condition::class, 'condition_pet', 'pet_id')->withTimestamps();
+        return $this->belongsToMany(Condition::class, 'condition_pet', 'pet_id', 'condition_id')->withTimestamps();
     }
 
     /**

@@ -51,10 +51,10 @@ class PetConditionController extends Controller
                 'errors' => $validator->messages()], 400);
         }
 
-        $condition = $pet->conditions()->attach($input['condition_id']);
+        $condition = $this->conditionRepository->get($input['condition_id']);
+        $pet->conditions()->attach($condition);
 
-        return response()->json(['error' => false, 'result' => $condition], 201)
-            ->header('Location', URL::route('api.pet.{pet_id}.condition.show', [$condition->pet_id]));
+        return response()->json(['error' => false, 'result' => $condition], 201);
 
     }
 
