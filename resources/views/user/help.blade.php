@@ -1,6 +1,12 @@
 @extends('layouts.user.dashboard')
 
 @section('content')
+    <div class="row col-md-11 float-none col-centered collapse-group" >
+        <div class="collapse" id="file-upload">
+            {!! Form::open(array('files'=> 'true', 'route' => 'user.dashboard.readingUpload', 'class'=>'dropzone', 'method' => 'post')) !!}
+            {!! Form::close() !!}
+        </div>
+    </div>
     <div class="row col-md-12 col-centered" >
         @foreach($help as $item)
         <div class="col-md-4" >
