@@ -141,16 +141,14 @@ class PetReadingSymptomController extends Controller
     {
 
         $this->petRepository->setUser($this->authUser);
-
         $pet = $this->petRepository->get($pet_id);
-
         $this->petReadingRepository->setPet($pet);
-
         $reading = $this->petReadingRepository->get($reading_id);
+        $reading->symptoms()->detach($id);
 
-        $this->petReadingSymptomRepository->setReading($reading);
+        /*$this->petReadingSymptomRepository->setReading($reading);
+        $this->petReadingSymptomRepository->deleteBySymptomIdForReading($reading_id, $id);*/
 
-        $this->petReadingSymptomRepository->deleteBySymptomIdForReading($reading_id, $id);
         return response()->json(['error' => false]);
     }
 
