@@ -168,10 +168,15 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
     {
         if($pet_id && $newPetId)
         {
-            SensorReading::where('pet_id' , $pet_id)->update(['pet_id' => $newPetId]);
+            Reading::where('pet_id' , $pet_id)->update(['pet_id' => $newPetId]);
         }
     }
 
+
+    public function addSymptom($input) {
+        $this->get($input['reading_id'])->symptoms()->attach($input['symptom_id']);
+
+    }
 
     private function decoded_microchip_id($coded_string)
     {

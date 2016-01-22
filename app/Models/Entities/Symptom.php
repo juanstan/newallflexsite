@@ -16,9 +16,9 @@ class Symptom extends Model implements AuthenticatableContract, CanResetPassword
     ];
 
 
-    public function sensorReading()
+    public function reading()
     {
-        return $this->belongsToMany(SensorReading::class, 'sensor_readings_symptom', 'symptom_id', 'reading_id')
+        return $this->belongsToMany(Reading::class, 'reading_symptom', 'symptom_id', 'reading_id')
                     ->withTimestamps();
 
     }

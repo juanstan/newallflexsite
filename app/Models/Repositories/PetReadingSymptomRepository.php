@@ -1,18 +1,17 @@
 <?php namespace App\Models\Repositories;
 
-use App\Models\Entities\SensorReading;
-use App\Models\Entities\SensorReadingSymptom;
+use App\Models\Entities\Reading;
+use App\Models\Entities\ReadingSymptom;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PetReadingSymptomRepository extends AbstractRepository implements PetReadingSymptomRepositoryInterface
 {
-    //protected $classname = 'App\Models\Entities\SensorReadingSymptom';
     protected $model;
     protected $userRepo;
-    protected $sensorReadings;
+    protected $readings;
 
-    public function __construct(SensorReadingSymptom $model, UserRepositoryInterface $user)
+    public function __construct(ReadingSymptom $model, UserRepositoryInterface $user)
     {
         $this->userRepo = $user;
         $this->model = $model;
@@ -20,9 +19,9 @@ class PetReadingSymptomRepository extends AbstractRepository implements PetReadi
     
     public function all()
     {             
-        if($this->sensorReadings)
+        if($this->readings)
         {
-            return $this->sensorReadings->sensorReadingSymptoms()->get();
+            return $this->readings->readingSymptoms()->get();
         }
 
         return parent::all();
@@ -32,23 +31,16 @@ class PetReadingSymptomRepository extends AbstractRepository implements PetReadi
     {
         if($id)
         {
-            return $this->sensorReadings->sensorReadingSymptoms ? $this->sensorReadings->sensorReadingSymptoms()->findOrFail($id) : parent::get($id);
+            return $this->readings->readingSymptoms ? $this->readings->readingSymptoms()->findOrFail($id) : parent::get($id);
         }
 
     }
     
     public function create($input)
     {
-
-            /**
-            * @var \Entities\Device
-            */
-            $symptom = parent::create($input);
-            
-            $symptom->sensorReading()->associate($this->sensorReadings);
-            
-            $symptom->save();
-                 
+        $symptom = parent::create($input);
+        $symptom->reading()->associate($this->readings);
+        $symptom->save();
 
         return $symptom;
     }
@@ -57,7 +49,7 @@ class PetReadingSymptomRepository extends AbstractRepository implements PetReadi
     {
         return \Validator::make($input,
         [
-            'symptom_id' => ['required','integer','exists:symptoms,id','unique:sensor_reading_symptoms,symptom_id,NULL,id,reading_id,'.$input['reading_id']]
+            'symptom_id' => ['required','integer','exists:symptoms,id','unique:reading_symptom,symptom_id,NULL,id,reading_id,'.$input['reading_id']]
         ]);
     }
 
@@ -72,14 +64,14 @@ class PetReadingSymptomRepository extends AbstractRepository implements PetReadi
     
     public function setReading($reading)
     {
-        $this->sensorReadings = $reading;
+        $this->readings = $reading;
 
         return $this;
     }
 
     public function deleteBySymptomIdForReading($reading, $symptomId)
     {
-        $readingSymptoms = $this->sensorReadings->sensorReadingSymptoms()->where('symptom_id', '=', $symptomId)->get();
+        $readingSymptoms = $this->readings->readingSymptoms()->where('symptom_id', '=', $symptomId)->get();
 
     foreach($readingSymptoms as $readingSymptom)
     {

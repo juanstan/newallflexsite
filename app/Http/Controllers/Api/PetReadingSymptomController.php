@@ -51,34 +51,22 @@ class PetReadingSymptomController extends Controller
     {
 
         $this->petRepository->setUser($this->authUser);
-
         $pet = $this->petRepository->get($pet_id);
-
         $this->petReadingRepository->setPet($pet);
-
         $reading = $this->petReadingRepository->get($reading_id);
-
         $this->petReadingSymptomRepository->setReading($reading);
 
         $input = Input::all();
         $input['reading_id'] = $reading_id;
         $validator = $this->petReadingSymptomRepository->getCreateValidator($input);
 
-
         if ($validator->fails()) {
             return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-
-        $reading = $this->petReadingSymptomRepository->create($input);
-
-        if ($reading == null) {
-            \App::abort(500);
-        }
-
-        return response()->json(['error' => false, 'result' => $reading], 201)
-            ->header('Location', URL::route('api.pet.{pet_id}.reading.{reading_id}.symptom.show', [$reading->id]));
+        $this->petReadingRepository->addSymptom($input);
+        return response()->json(['error' => false, 'result' => $reading]);
 
     }
 

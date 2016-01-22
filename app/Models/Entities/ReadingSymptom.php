@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SensorReadingSymptom extends Model implements AuthenticatableContract, CanResetPasswordContract {
+class ReadingSymptom extends Model implements AuthenticatableContract, CanResetPasswordContract {
 
 	use Authenticatable, CanResetPassword, SoftDeletes;
 
@@ -22,9 +22,9 @@ class SensorReadingSymptom extends Model implements AuthenticatableContract, Can
         'symptom_id',
     ];
     
-    public function sensorReading()
+    public function reading()
     {
-        return $this->belongsTo(SensorReading::class, 'reading_id');
+        return $this->belongsTo(Reading::class, 'reading_id');
     }
     
     public function symptom()
