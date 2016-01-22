@@ -146,9 +146,6 @@ class PetReadingSymptomController extends Controller
         $reading = $this->petReadingRepository->get($reading_id);
         $reading->symptoms()->detach($id);
 
-        /*$this->petReadingSymptomRepository->setReading($reading);
-        $this->petReadingSymptomRepository->deleteBySymptomIdForReading($reading_id, $id);*/
-
         return response()->json(['error' => false]);
     }
 

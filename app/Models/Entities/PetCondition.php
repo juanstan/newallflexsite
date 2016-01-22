@@ -42,7 +42,7 @@ class PetCondition extends Model implements AuthenticatableContract, CanResetPas
 
     public function condition()
     {
-        return $this->belongsTo(Condition::class);
+        return $this->belongsTo(Condition::class, 'condition_id');
     }
 
 }
