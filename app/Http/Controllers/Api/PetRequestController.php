@@ -34,9 +34,9 @@ class PetRequestController extends Controller
 
     public function store() // POST
     {
-        $this->petRequestRepository->setUser($this->authUser);
-
+        $this->petRepository->setUser($this->authUser);
         $input = Input::all();
+        $input['pet_id'] = $input['animal_id'];
         $validator = $this->petRequestRepository->getCreateValidator($input);
 
         if ($validator->fails()) {
@@ -44,14 +44,11 @@ class PetRequestController extends Controller
                 'errors' => $validator->messages()], 400);
         }
 
-        $petRequest = $this->petRequestRepository->create($input);
+        $pet = $this->petRepository->get($input['pet_id']);
+        $pet->vet()->attach($input['vet_id']);
 
-        if ($petRequest == null) {
-            \App::abort(500);
-        }
+        return response()->json(['error' => false, 'result' => $pet]);
 
-        return response()->json(['error' => false, 'result' => $petRequest], 201)
-            ->header('Location', URL::route('api.pet.show', [$petRequest->id]));
     }
 
     public function update($id) // PUT
