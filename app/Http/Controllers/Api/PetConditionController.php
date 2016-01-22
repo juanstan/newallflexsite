@@ -27,9 +27,19 @@ class PetConditionController extends Controller
     public function index($pet_id)
     {
         $this->petRepository->setUser($this->authUser);
-
+        $result = [];
+        foreach ($this->petRepository->get($pet_id)->conditions()->get() as $condition){
+            $result[] = array(
+                'id'            => $condition->id,
+                'pet_id'        => $condition->pivot->pet_id,
+                'condition_id'  => $condition->pivot->condition_id,
+                'name'          => $condition->name,
+                'created_at'    => $condition->pivot->created_at,
+                'updated_at'    => $condition->pivot->updated_at,
+            );
+        }
         return response()->json(['error' => false,
-            'result' => $this->petRepository->get($pet_id)->conditions()->get()]);
+            'result' => $result]);
 
     }
 

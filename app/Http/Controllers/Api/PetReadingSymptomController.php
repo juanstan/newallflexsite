@@ -37,8 +37,20 @@ class PetReadingSymptomController extends Controller
         $reading = $this->petReadingRepository->get($reading_id);
         $this->petReadingSymptomRepository->setReading($reading);
 
+        $result = [];
+
+        foreach ($this->petReadingSymptomRepository->all() as $symptom){
+            $result[] = array(
+                'id'            => $symptom->id,
+                'reading_id'    => $symptom->pivot->reading_id,
+                'symptom_id'    => $symptom->pivot->symptom_id,
+                'name'          => $symptom->name,
+                'created_at'    => $symptom->pivot->created_at,
+                'updated_at'    => $symptom->pivot->updated_at,
+            );
+        }
         return response()->json(['error' => false,
-            'result' => $this->petReadingSymptomRepository->all()]);
+            'result' => $result]);
 
     }
 
