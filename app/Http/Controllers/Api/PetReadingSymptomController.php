@@ -92,14 +92,11 @@ class PetReadingSymptomController extends Controller
     public function show($pet_id, $reading_id, $id) // GET
     {
         $this->petRepository->setUser($this->authUser);
-
         $pet = $this->petRepository->get($pet_id);
-
         $this->petReadingRepository->setPet($pet);
-
         $reading = $this->petReadingRepository->get($reading_id);
-
         $this->petReadingSymptomRepository->setReading($reading);
+
 
         return response()->json(['error' => false,
             'result' => $this->petReadingSymptomRepository->get($id)]);

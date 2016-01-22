@@ -23,7 +23,7 @@ use App\Models\Repositories\BreedRepository;
 use App\Models\Repositories\HelpRepository;
 use App\Models\Repositories\ReadingRepository;
 use App\Models\Repositories\PetConditionRepository;
-use App\Models\Repositories\SensorReadingSymptomRepository;
+use App\Models\Repositories\ReadingSymptomRepository;
 use App\Models\Repositories\PetRequestRepository;
 
 use App\Http\Controllers\Controller;
@@ -42,7 +42,7 @@ class DashboardController extends Controller
     protected $helpRepository;
     protected $readingRepository;
     protected $petConditionRepository;
-    protected $sensorReadingSymptomRepository;
+    protected $readingSymptomRepository;
     protected $petRequestRepository;
 
     public function __construct(
@@ -58,7 +58,7 @@ class DashboardController extends Controller
         HelpRepository $helpRepository,
         ReadingRepository $readingRepository,
         PetConditionRepository $petConditionRepository,
-        SensorReadingSymptomRepository $sensorReadingSymptomRepository,
+        ReadingSymptomRepository $readingSymptomRepository,
         PetRequestRepository $petRequestRepository
     )
 
@@ -76,7 +76,7 @@ class DashboardController extends Controller
         $this->helpRepository = $helpRepository;
         $this->readingRepository = $readingRepository;
         $this->petConditionRepository = $petConditionRepository;
-        $this->sensorReadingSymptomRepository = $sensorReadingSymptomRepository;
+        $this->readingSymptomRepository = $readingSymptomRepository;
         $this->petRequestRepository = $petRequestRepository;
 
         $this->middleware('auth.user',

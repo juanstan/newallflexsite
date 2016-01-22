@@ -2,17 +2,17 @@
 
 use App\Models\Entities\PetCondition;
 use App\Models\Entities\Condition;
-use App\Models\Entities\SensorReadingSymptom;
+use App\Models\Entities\ReadingSymptom;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class SensorReadingSymptomRepository extends AbstractRepository implements SensorReadingSymptomRepositoryInterface
+class ReadingSymptomRepository extends AbstractRepository implements ReadingSymptomRepositoryInterface
 {
     protected $model;
     protected $userRepo;
     protected $pet;
     
-    public function __construct(SensorReadingSymptom $model, UserRepositoryInterface $user)
+    public function __construct(ReadingSymptom $model, UserRepositoryInterface $user)
     {
         $this->model = $model;
         $this->userRep = $user;
@@ -43,7 +43,7 @@ class SensorReadingSymptomRepository extends AbstractRepository implements Senso
 
             $readingSymptom = $this->query()->where(['reading_id' => $readingId, 'symptom_id' => $symptom])->first();
             if (empty($readingSymptom)) {
-                $readingSymptom = new SensorReadingSymptom;
+                $readingSymptom = new ReadingSymptom;
                 $readingSymptom->symptom_id = $symptom;
                 $readingSymptom->reading_id = $readingId;
                 $readingSymptom->save();

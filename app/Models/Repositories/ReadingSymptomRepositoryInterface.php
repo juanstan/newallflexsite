@@ -1,6 +1,6 @@
 <?php namespace App\Models\Repositories;
 
-interface SensorReadingSymptomRepositoryInterface extends AbstractRepositoryInterface
+interface ReadingSymptomRepositoryInterface extends AbstractRepositoryInterface
 {
     /**
     * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
