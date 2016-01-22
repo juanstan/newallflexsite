@@ -45,8 +45,8 @@ class PetReadingSymptomController extends Controller
                 'reading_id'    => $symptom->pivot->reading_id,
                 'symptom_id'    => $symptom->pivot->symptom_id,
                 'name'          => $symptom->name,
-                'created_at'    => $symptom->pivot->created_at,
-                'updated_at'    => $symptom->pivot->updated_at,
+                'created_at'    => $symptom->pivot->created_at->toDateTimeString(),
+                'updated_at'    => $symptom->pivot->updated_at->toDateTimeString()
             );
         }
         return response()->json(['error' => false,

@@ -34,8 +34,8 @@ class PetConditionController extends Controller
                 'pet_id'        => $condition->pivot->pet_id,
                 'condition_id'  => $condition->pivot->condition_id,
                 'name'          => $condition->name,
-                'created_at'    => $condition->pivot->created_at,
-                'updated_at'    => $condition->pivot->updated_at,
+                'created_at'    => $condition->pivot->created_at->toDateTimeString(),
+                'updated_at'    => $condition->pivot->updated_at->toDateTimeString()
             );
         }
         return response()->json(['error' => false,
