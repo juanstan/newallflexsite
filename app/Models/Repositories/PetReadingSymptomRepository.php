@@ -21,7 +21,7 @@ class PetReadingSymptomRepository extends AbstractRepository implements PetReadi
     {             
         if($this->readings)
         {
-            return $this->readings->readingSymptoms()->get();
+            return $this->readings->symptoms()->get();
         }
 
         return parent::all();
@@ -31,7 +31,7 @@ class PetReadingSymptomRepository extends AbstractRepository implements PetReadi
     {
         if($id)
         {
-            return $this->readings->readingSymptoms ? $this->readings->readingSymptoms()->findOrFail($id) : parent::get($id);
+            return $this->readings->readingSymptoms ? $this->readings->symptoms()->findOrFail($id) : parent::get($id);
         }
 
     }
@@ -71,7 +71,7 @@ class PetReadingSymptomRepository extends AbstractRepository implements PetReadi
 
     public function deleteBySymptomIdForReading($reading, $symptomId)
     {
-        $readingSymptoms = $this->readings->readingSymptoms()->where('symptom_id', '=', $symptomId)->get();
+        $readingSymptoms = $this->readings->symptoms()->where('symptom_id', '=', $symptomId)->get();
 
     foreach($readingSymptoms as $readingSymptom)
     {
