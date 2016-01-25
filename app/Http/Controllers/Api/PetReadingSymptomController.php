@@ -149,13 +149,16 @@ class PetReadingSymptomController extends Controller
     public function destroy($pet_id, $reading_id, $id) // DELETE
     {
 
-        $this->petRepository->setUser($this->authUser);
-        $pet = $this->petRepository->get($pet_id);
-        $this->petReadingRepository->setPet($pet);
-        $reading = $this->petReadingRepository->get($reading_id);
-        $reading->symptoms()->detach($id);
+        try {
+            $this->petRepository->setUser($this->authUser);
+            $this->petRepository->softDeleteSymptomForReading($pet_id, $reading_id, $id);
+            return response()->json(['error'=> false]);
 
-        return response()->json(['error' => false]);
+        } catch (\Exception $e) {
+            return response()->json(['error'=> true, 'message'=>$e->getMessage()]);
+
+        }
+
     }
 
 

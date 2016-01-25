@@ -78,7 +78,16 @@ class PetReadingSymptomRepository extends AbstractRepository implements PetReadi
         $readingSymptom->delete();
     }
 }
-   
+
+
+    public function softDeleted($reading_id, $symptom_id){
+        return $this->query()
+            ->where('reading_id', '=', $reading_id)
+            ->where('symptom_id', '=', $symptom_id)
+            ->update(array('deleted_at' => Carbon::now()));
+    }
+
+
 }
 
 ?>

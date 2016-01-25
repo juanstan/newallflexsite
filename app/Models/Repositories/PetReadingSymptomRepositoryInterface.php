@@ -2,20 +2,8 @@
 
 interface PetReadingSymptomRepositoryInterface extends AbstractRepositoryInterface
 {
-    /**
-    * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-    * @return \Entities\User
-    */
+    public function softDeleted($reading_id, $symptom_id);
 
-    /**
-    * @returns Validator
-    */
-
-    /**
-    * @throws \Illuminate\Database\Eloquent\ModelNotFoundException
-    * @return \Entities\User
-    */
-    
 }
 
 ?>

@@ -1,6 +1,7 @@
 <?php namespace App\Models\Repositories;
 
 use App\Models\Entities\Pet;
+use Carbon\Carbon;
 use Validator;
 
 class PetRepository extends AbstractRepository implements PetRepositoryInterface
@@ -194,6 +195,35 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
         $this->get($petId)->conditions()->sync($conditions);
 
     }
+
+
+
+    public function softDeleteConditionForPet($pet_id, $condition_id){
+        if ($this->user) {
+            $pet = $this->user->pets()->findOrFail($pet_id);
+            $pet->conditions()->updateExistingPivot($condition_id, ['deleted_at'=>Carbon::now()]);
+            return true;
+        }
+
+        return false;
+
+    }
+
+
+    public function softDeleteSymptomForReading($pet_id, $reading_id, $symptom_id){
+        if ($this->user) {
+            $pet = $this->user->pets()->findOrFail($pet_id);
+            $reading = $pet->readings()->findOrFail($reading_id);
+            $reading->symptoms()->updateExistingPivot($symptom_id, ['deleted_at'=>Carbon::now()]);
+            return true;
+
+        }
+
+
+    }
+
+
+
 
 
 }

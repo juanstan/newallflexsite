@@ -3,6 +3,7 @@
 use App\Models\Entities\PetCondition;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Carbon\Carbon;
 
 class PetConditionRepository extends AbstractRepository implements PetConditionRepositoryInterface
 {
@@ -55,8 +56,19 @@ class PetConditionRepository extends AbstractRepository implements PetConditionR
                 $petCondition->save();
             }
         }
+    }
+
+
+    public function softDelete($petId, $condition_id)
+    {
+        return $this->query()
+                    ->where('pet_id', '=', $petId)
+                    ->where('condition_id', '=', $condition_id)
+                    ->update(array('deleted_at' => Carbon::now()));
+
 
     }
+
 
    
 }

@@ -17,6 +17,7 @@ interface PetConditionRepositoryInterface extends AbstractRepositoryInterface
     */
 
     public function removeAndUpdateConditions($petId, $conditions);
+    public function softDelete($petId, $condition_id);
     
 }
 

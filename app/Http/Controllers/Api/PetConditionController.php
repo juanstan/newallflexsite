@@ -77,12 +77,15 @@ class PetConditionController extends Controller
      */
     public function show($pet_id, $id) // GET
     {
+
+        // !!!IMPORTANT petConditionRepository does not exit anymore
         $this->petRepository->setUser($this->authUser);
         $pet = $this->petRepository->get($pet_id);
-        $this->petConditionRepository->setPet($pet);
+        //$this->petConditionRepository->setPet($pet);
 
         return response()->json(['error' => false,
-            'result' => $this->petConditionRepository->get($id)]);
+            //'result' => $this->petConditionRepository->get($id)]);
+            'result' => $pet->get($id)]);
     }
 
 
@@ -122,16 +125,17 @@ class PetConditionController extends Controller
      */
     public function destroy($pet_id, $id) // DELETE
     {
-        $this->petRepository->setUser($this->authUser);
-        $pet = $this->petRepository->get($pet_id);
-        $pet->conditions()->detach($id);
+        try {
+            $this->petRepository->setUser($this->authUser);
+            $this->petRepository->softDeleteConditionForPet($pet_id, $id);
+            return response()->json(['error' => false]);
 
-        return response()->json(['error' => false]);
+        } catch (\Exception $e) {
+            return response()->json(['error' => true]);
+
+        }
+
     }
-
-
-
-
 
 
 }
