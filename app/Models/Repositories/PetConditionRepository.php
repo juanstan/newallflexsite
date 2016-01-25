@@ -58,18 +58,6 @@ class PetConditionRepository extends AbstractRepository implements PetConditionR
         }
     }
 
-
-    public function softDelete($petId, $condition_id)
-    {
-        return $this->query()
-                    ->where('pet_id', '=', $petId)
-                    ->where('condition_id', '=', $condition_id)
-                    ->update(array('deleted_at' => Carbon::now()));
-
-
-    }
-
-
    
 }
 

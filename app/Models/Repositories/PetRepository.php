@@ -6,7 +6,6 @@ use Validator;
 
 class PetRepository extends AbstractRepository implements PetRepositoryInterface
 {
-    //protected $classname = 'App\Models\Entities\Pet';
     protected $model;
     protected $user;
     protected $userRepository;
