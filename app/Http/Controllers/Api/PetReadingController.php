@@ -8,6 +8,7 @@ use URL;
 use App\Models\Entities\Pet;
 use App\Models\Repositories\PetReadingRepositoryInterface;
 use App\Models\Repositories\PetRepositoryInterface;
+use App\Models\Repositories\VetRepositoryInterface;
 use App\Http\Controllers\Controller;
 
 class PetReadingController extends Controller
@@ -16,21 +17,21 @@ class PetReadingController extends Controller
     protected $authUser;
     protected $petReadingRepository;
     protected $petRepository;
+    protected $vetRepository;
 
-    public function __construct(PetReadingRepositoryInterface $petReadingRepository, PetRepositoryInterface $petRepository)
+    public function __construct(PetReadingRepositoryInterface $petReadingRepository, PetRepositoryInterface $petRepository, VetRepositoryInterface $vetRepository)
     {
         $this->authUser = Auth::user()->get();
         $this->petReadingRepository = $petReadingRepository;
         $this->petRepository = $petRepository;
+        $this->vetRepository = $vetRepository;
     }
 
     public function index($pet_id)
     {
 
         $this->petRepository->setUser($this->authUser);
-
         $pet = $this->petRepository->get($pet_id);
-
         $this->petReadingRepository->setPet($pet);
 
         return response()->json(['error' => false,
@@ -42,30 +43,20 @@ class PetReadingController extends Controller
     {
 
         $this->petRepository->setUser($this->authUser);
-
         $pet = $this->petRepository->get($pet_id);
-
         $this->petReadingRepository->setPet($pet);
-
-
 
         $input = Input::all();
         $input['pet_id'] = $pet_id;
 
-
         $validator = $this->petReadingRepository->getCreateValidator($input);
-
 
         if ($validator->fails()) {
             return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-
-
         $reading = $this->petReadingRepository->create($input);
-
-
 
         if ($reading == null) {
             \App::abort(500);
@@ -79,9 +70,7 @@ class PetReadingController extends Controller
     public function show($pet_id, $id) // GET
     {
         $this->petRepository->setUser($this->authUser);
-
         $pet = $this->petRepository->get($pet_id);
-
         $this->petReadingRepository->setPet($pet);
 
         return response()->json(['error' => false,
@@ -92,9 +81,7 @@ class PetReadingController extends Controller
     {
 
         $this->petRepository->setUser($this->authUser);
-
         $pet = $this->petRepository->get($pet_id);
-
         $this->petReadingRepository->setPet($pet);
 
         $input = Input::all();
@@ -121,14 +108,30 @@ class PetReadingController extends Controller
         $query = $this->petRepository->get($pet_id);
         $data['microchip_number'] = $query->microchip_number;
         if ($this->petRepository->update($newPetId, $data)) {
-
             // reassign readings
             $this->petReadingRepository->reassignReadings($pet_id, $newPetId);
-
             $this->petRepository->delete($pet_id);
         }
         return response()->json(['error' => false,
             'result' => Lang::get('general.Pet microchip number assigned')]);
+    }
+
+
+    public function destroy($pet_id, $reading_id) {
+
+        try {
+            $user = $this->authUser;
+            $this->vetRepository->softDeleteReading($user, $pet_id, $reading_id);
+
+            return response()->json(['error' => false,
+                'result' => Lang::get('general.Reading Deleted')]);
+
+        }catch (\Exception $e){
+            return response()->json(['error' => true,
+                'result' => Lang::get('general.Reading delete fails: '.$e->getMessage())]);
+
+        }
+
     }
 
 

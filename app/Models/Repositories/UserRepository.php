@@ -10,8 +10,6 @@ use Hash;
 
 class UserRepository extends AbstractRepository implements UserRepositoryInterface
 {
-	//protected $classname = 'App\Models\Entities\User';
-
 	protected $model;
 
 

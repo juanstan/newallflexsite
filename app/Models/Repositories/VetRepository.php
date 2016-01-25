@@ -1,6 +1,7 @@
 <?php namespace App\Models\Repositories;
 
 use App\Models\Entities\Vet;
+use Carbon\Carbon;
 
 class VetRepository extends AbstractRepository implements VetRepositoryInterface
 {
@@ -63,6 +64,18 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 
 	public function getUnassignedPets($vet) {
 		return $vet->petsNoAssgined()->get();
+
+	}
+
+	public function softDeleteReading($vet, $pet_id, $reading_id) {
+		$pet = $vet->pets()->findOrFail($pet_id);
+		$reading = $pet->readings()->findOrFail($reading_id);
+		//Deleting Reading Vet association
+		$reading->vets()->updateExistingPivot($vet->id, ['deleted_at'=>Carbon::now()]);
+		//Deleting Reading
+		$reading->delete();
+
+		return true;
 
 	}
 

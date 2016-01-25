@@ -17,19 +17,9 @@ class SymptomController extends Controller
     {
 
         try {
-            //request: /api/symptoms
-            if (!$pet_id && !$reading_id) {
-                $symptoms = $this->symptomRepository->all();
-
-            } else { //request: /ap/vet/pet/{pet}/reading/{reading}/symptoms
-                $symptoms = $this->symptomRepository
-                    ->getAssignedReadingById(['pet_id' => $pet_id, 'reading_id' => $reading_id])
-                    ->symptoms()->get();
-            }
-
             return response()->json(array(
                 'error' => false,
-                'result' => $symptoms->toArray()),
+                'result' => $this->symptomRepository->all()->toArray()),
                 200
             );
 
@@ -42,9 +32,12 @@ class SymptomController extends Controller
 
         }
 
-
-
     }
+
+
+
+
+
 
     /*public function show($pet_id, $reading_id) // GET
     {

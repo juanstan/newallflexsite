@@ -143,7 +143,10 @@ class PetReadingSymptomController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $id
+     * @param  int $pet_id          PET ID
+     * @param  int $reading_id      READING ID
+     * @param  int $id              SYMPTOM ID
+     *
      * @return Response
      */
     public function destroy($pet_id, $reading_id, $id) // DELETE
@@ -155,7 +158,7 @@ class PetReadingSymptomController extends Controller
             return response()->json(['error'=> false]);
 
         } catch (\Exception $e) {
-            return response()->json(['error'=> true, 'message'=>$e->getMessage()]);
+            return response()->json(['error'=> true]);
 
         }
 
