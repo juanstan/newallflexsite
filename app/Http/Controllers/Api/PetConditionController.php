@@ -28,7 +28,7 @@ class PetConditionController extends Controller
     {
         $this->petRepository->setUser($this->authUser);
         $result = [];
-        foreach ($this->petRepository->get($pet_id)->conditions()->get() as $condition){
+        foreach ($this->petRepository->get($pet_id)->conditions()->all() as $condition){
             $result[] = array(
                 'id'            => $condition->id,
                 'pet_id'        => $condition->pivot->pet_id,
