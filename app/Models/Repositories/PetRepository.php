@@ -218,8 +218,24 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
 
         }
 
+        return false;
 
     }
+
+
+    public function updateSymptomForReading($pet_id, $reading_id, $symptom_id, $data){
+        if ($this->user) {
+            $pet = $this->user->pets()->findOrFail($pet_id);
+            $reading = $pet->readings()->findOrFail($reading_id);
+            $reading->symptoms()->updateExistingPivot($symptom_id, $data);
+            return true;
+
+        }
+
+        return false;
+
+    }
+
 
 
 

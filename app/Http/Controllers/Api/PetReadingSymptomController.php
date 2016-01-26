@@ -106,24 +106,16 @@ class PetReadingSymptomController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int $id
+     * @param  int $pet_id          PET ID
+     * @param  int $reading_id      READING ID
+     * @param  int $id              SYMPTOM ID
+     *
      * @return Response
      */
     public function update($pet_id, $reading_id, $id) // PUT
     {
 
-        $this->petRepository->setUser($this->authUser);
-
-        $pet = $this->petRepository->get($pet_id);
-
-        $this->petReadingRepository->setPet($pet);
-
-        $reading = $this->petReadingRepository->get($reading_id);
-
-        $this->petReadingSymptomRepository->setReading($reading);
-
         $input = Input::all();
-
         $validator = $this->petReadingSymptomRepository->getUpdateValidator($input);
 
         if ($validator->fails()) {
@@ -131,12 +123,22 @@ class PetReadingSymptomController extends Controller
                 'errors' => $validator->messages()], 400);
         }
 
-        if ($this->petReadingSymptomRepository->update($id, $input) == false) {
+        try {
+            $this->petRepository->setUser($this->authUser);
+            $this->petRepository->updateSymptomForReading($pet_id, $reading_id, $id, $input);
+            return response()->json(['error'=> false]);
+
+        } catch (\Exception $e) {
+            return response()->json(['error'=> true]);
+
+        }
+
+        /*if ($this->petReadingSymptomRepository->update($id, $input) == false) {
             \App::abort(500);
         }
 
         return response()->json(['error' => false,
-            'result' => $this->petReadingSymptomRepository->get($id)]);
+            'result' => $this->petReadingSymptomRepository->get($id)]);*/
     }
 
 
