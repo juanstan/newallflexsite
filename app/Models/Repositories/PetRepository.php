@@ -200,7 +200,7 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
     public function deleteConditionForPet($pet_id, $condition_id){
         if ($this->user) {
             $pet = $this->user->pets()->findOrFail($pet_id);
-            $pet->conditions()->detach();
+            $pet->conditions()->detach($condition_id);
             return true;
         }
 
@@ -213,7 +213,7 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
         if ($this->user) {
             $pet = $this->user->pets()->findOrFail($pet_id);
             $reading = $pet->readings()->findOrFail($reading_id);
-            $reading->symptoms()->detach();
+            $reading->symptoms()->detach($symptom_id);
             return true;
 
         }
