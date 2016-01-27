@@ -5,18 +5,18 @@ use App\Models\Entities\Pet;
 use App\Models\Entities\Device;
 use App\Http\Controllers\Vet;
 use App\Models\Entities\Reading;
-use App\Models\Entities\ReadingVet;
-use App\Models\Entities\Pet\Request;
 use League\Csv\Reader;
 
 class PetReadingRepository extends AbstractRepository implements PetReadingRepositoryInterface
 {
     protected $model;
     protected $pet;
+    protected $user;
 
-    public function __construct(Reading $model)
+    public function __construct(Reading $model, UserRepositoryInterface $user)
     {
         $this->model = $model;
+        $this->user = $user;
     }
 
     public function all()
@@ -155,6 +155,26 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
 
     }
 
+    public function setUser($user)
+    {
+        $this->user = is_numeric($user) ? $this->userRepository->get($user) : $user;
+
+        return $this;
+    }
+
+
+    public function deleteReading($pet_id, $reading_id) {
+        if ($this->user) {
+            $pet = $this->user->pets()->findOrFail($pet_id);
+            $reading = $pet->readings()->findOrFail($reading_id);
+            //Deleting Reading
+            $reading->delete();
+        }
+
+        return true;
+
+    }
+
 
     public function updateTimeout($input)
     {
@@ -174,7 +194,7 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
 
 
     public function addSymptom($input) {
-        $this->get($input['reading_id'])->symptoms()->attach($input['symptom_id']);
+        return $this->get($input['reading_id'])->symptoms()->attach($input['symptom_id']);
 
     }
 

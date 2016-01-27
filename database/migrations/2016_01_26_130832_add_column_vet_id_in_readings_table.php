@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddSoftDeleteReadingVetTable extends Migration
+class AddColumnVetIdInReadingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,8 +12,8 @@ class AddSoftDeleteReadingVetTable extends Migration
      */
     public function up()
     {
-        Schema::table('reading_vet', function (Blueprint $table) {
-            $table->softDeletes();
+        Schema::table('readings', function (Blueprint $table) {
+            $table->integer('vet_id')->unsigned()->nullable();
         });
     }
 
@@ -24,8 +24,8 @@ class AddSoftDeleteReadingVetTable extends Migration
      */
     public function down()
     {
-        /*Schema::table('reading_vet', function (Blueprint $table) {
-            $table->dropColumn('deleted_at');
-        });*/
+        Schema::table('readings', function (Blueprint $table) {
+            $table->dropColumn('vet_id');
+        });
     }
 }

@@ -29,10 +29,5 @@ class Photo extends Model implements AuthenticatableContract, CanResetPasswordCo
     {
         return $this->belongsTo(User::class, 'uploading_user_id');
     }
-    
-    public function Pet()
-    {
-        return $this->belongsToMany(Pet::class, 'pet_photos')->withTimestamps();
-    }
 
 }

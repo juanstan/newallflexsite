@@ -13,8 +13,8 @@ class AddForeginKeysToPetVetTable extends Migration
     public function up()
     {
         Schema::table('pet_vet', function (Blueprint $table) {
-            $table->foreign('pet_id')->references('id')->on('pets')->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('vet_id')->references('id')->on('vets')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('pet_id')->references('id')->on('pets')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('vet_id')->references('id')->on('vets')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 

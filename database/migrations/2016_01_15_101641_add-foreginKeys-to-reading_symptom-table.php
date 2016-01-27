@@ -13,8 +13,8 @@ class AddForeginKeysToReadingSymptomTable extends Migration
     public function up()
     {
         Schema::table('reading_symptom', function (Blueprint $table) {
-            $table->foreign('reading_id')->references('id')->on('readings')->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('symptom_id')->references('id')->on('symptoms')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('reading_id')->references('id')->on('readings')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('symptom_id')->references('id')->on('symptoms')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 

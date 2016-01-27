@@ -31,9 +31,9 @@ class Reading extends Model implements AuthenticatableContract, CanResetPassword
         return $this->belongsTo(Pet::class, 'pet_id');
     }
 
-    public function vets()
+    public function vet()
     {
-        return $this->belongsToMany(Vet::class, 'reading_vet', 'reading_id', 'vet_id');
+        return $this->belongsTo(Vet::class, 'vet_id');
     }
     
     public function device()

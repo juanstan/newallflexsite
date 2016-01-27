@@ -5,6 +5,7 @@ use App\Models\Entities\Pet;
 use App\Models\Entities\Pet\Request;
 use App\Models\Entities\SensorReading;
 use App\Models\Entities\SensorReadingSymptom;
+use Carbon\Carbon;
 use Validator;
 use Hash;
 
@@ -24,9 +25,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 		return $this->model->with('tokens')
 			->where('email', '=', $email_address)
 			->firstOrFail();
-		/*return User::with('tokens')
-			->where('email', '=', $email_address)
-			->firstOrFail();*/
+
 	}
 
 	public function getUserDetails($id)
@@ -246,19 +245,10 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 		return Hash::check($password, $userPassword);
 	}
 
+
 	public function delete($id)
 	{
-		$user = $this->model->findOrFail($id);
-		$pets = $user->pets();
-		$devices = $user->device();
-
-		foreach ($devices->get() as $device){
-			$device->readings()->delete();
-		}
-
-		$pets->delete();
-		$devices->delete();
-		$user->delete();
+		$this->model->findOrFail($id)->delete();
 
 	}
 

@@ -13,8 +13,8 @@ class AddForeginKeysToConditionPetTable extends Migration
     public function up()
     {
         Schema::table('condition_pet', function (Blueprint $table) {
-            $table->foreign('pet_id')->references('id')->on('pets')->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('condition_id')->references('id')->on('conditions')->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('pet_id')->references('id')->on('pets')->onUpdate('restrict')->onDelete('restrict');
+            $table->foreign('condition_id')->references('id')->on('conditions')->onUpdate('restrict')->onDelete('restrict');
         });
     }
 

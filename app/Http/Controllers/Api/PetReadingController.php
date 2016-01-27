@@ -120,8 +120,8 @@ class PetReadingController extends Controller
     public function destroy($pet_id, $reading_id) {
 
         try {
-            $user = $this->authUser;
-            $this->vetRepository->softDeleteReading($user, $pet_id, $reading_id);
+            $this->petReadingRepository->setUser($this->authUser);
+            $this->petReadingRepository->deleteReading($pet_id, $reading_id);
 
             return response()->json(['error' => false,
                 'result' => Lang::get('general.Reading Deleted')]);

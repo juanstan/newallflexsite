@@ -68,7 +68,7 @@ class PetReadingSymptomController extends Controller
         $reading = $this->petReadingRepository->get($reading_id);
         $this->petReadingSymptomRepository->setReading($reading);
 
-        $input = Input::all();
+        $input = Input::only('symptom_id');
         $input['reading_id'] = $reading_id;
         $validator = $this->petReadingSymptomRepository->getCreateValidator($input);
 
@@ -78,7 +78,17 @@ class PetReadingSymptomController extends Controller
         }
 
         $this->petReadingRepository->addSymptom($input);
-        return response()->json(['error' => false, 'result' => $reading]);
+        $symptom = $reading->symptoms()->findOrFail($input['symptom_id']);
+
+        return response()->json(
+            [
+                'error' => false,
+                'result' => array(
+                    'symptom_id'=>$symptom->pivot->symptom_id,
+                    'reading_id'=>$symptom->pivot->reading_id
+                )
+            ]
+        );
 
     }
 
@@ -133,12 +143,6 @@ class PetReadingSymptomController extends Controller
 
         }
 
-        /*if ($this->petReadingSymptomRepository->update($id, $input) == false) {
-            \App::abort(500);
-        }
-
-        return response()->json(['error' => false,
-            'result' => $this->petReadingSymptomRepository->get($id)]);*/
     }
 
 

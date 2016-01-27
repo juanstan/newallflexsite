@@ -29,7 +29,7 @@ class CreateReadingVetTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('reading_vet');
+		//Schema::drop('reading_vet');
 	}
 
 }

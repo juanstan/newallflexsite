@@ -2,10 +2,10 @@
 
 use Validator;
 use App\Models\Entities\Pet\Request;
+use Carbon\Carbon;
 
 class PetRequestRepository extends AbstractRepository implements PetRequestRepositoryInterface
 {
-    //protected $classname = 'App\Models\Entities\Pet\Request';
     protected $model;
     protected $user;
 
@@ -96,6 +96,17 @@ class PetRequestRepository extends AbstractRepository implements PetRequestRepos
         return Validator::make($input,
         [
         ]);
+    }
+
+
+    public function updateState($key, $input) {
+
+        return $this->user
+                ->pets()
+                ->findOrFail($key['pet_id'])
+                ->vet()
+                ->updateExistingPivot($key['vet_id'], $input);
+
     }
 
    

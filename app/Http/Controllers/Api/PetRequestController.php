@@ -51,24 +51,22 @@ class PetRequestController extends Controller
 
     }
 
-    public function update($id) // PUT
+    public function update($pet_id, $vet_id) // PUT
     {
         $this->petRequestRepository->setUser($this->authUser);
-
         $input = Input::all();
-        $validator = $this->petRequestRepository->getUpdateValidator($input);
 
+        $validator = $this->petRequestRepository->getUpdateValidator($input);
         if ($validator->fails()) {
             return response()->json(['error' => true,
                 'errors' => $validator->messages()], 400);
         }
 
-        if ($this->petRequestRepository->update($id, $input) == false) {
+        if ($this->petRequestRepository->updateState(['vet_id'=>$vet_id, 'pet_id'=>$pet_id], $input) == false) {
             \App::abort(500);
         }
 
-        return response()->json(['error' => false,
-            'result' => $this->petRequestRepository->get($id)]);
+        return response()->json(['error' => false]);
     }
 
     public function show($id) // GET
