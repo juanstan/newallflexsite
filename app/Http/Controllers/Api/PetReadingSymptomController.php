@@ -160,7 +160,7 @@ class PetReadingSymptomController extends Controller
 
         try {
             $this->petRepository->setUser($this->authUser);
-            $this->petRepository->softDeleteSymptomForReading($pet_id, $reading_id, $id);
+            $this->petRepository->deleteSymptomForReading($pet_id, $reading_id, $id);
             return response()->json(['error'=> false]);
 
         } catch (\Exception $e) {

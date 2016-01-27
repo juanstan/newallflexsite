@@ -197,10 +197,10 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
 
 
 
-    public function softDeleteConditionForPet($pet_id, $condition_id){
+    public function deleteConditionForPet($pet_id, $condition_id){
         if ($this->user) {
             $pet = $this->user->pets()->findOrFail($pet_id);
-            $pet->conditions()->updateExistingPivot($condition_id, ['deleted_at'=>Carbon::now()]);
+            $pet->conditions()->detach();
             return true;
         }
 
@@ -209,11 +209,11 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
     }
 
 
-    public function softDeleteSymptomForReading($pet_id, $reading_id, $symptom_id){
+    public function deleteSymptomForReading($pet_id, $reading_id, $symptom_id){
         if ($this->user) {
             $pet = $this->user->pets()->findOrFail($pet_id);
             $reading = $pet->readings()->findOrFail($reading_id);
-            $reading->symptoms()->updateExistingPivot($symptom_id, ['deleted_at'=>Carbon::now()]);
+            $reading->symptoms()->detach();
             return true;
 
         }

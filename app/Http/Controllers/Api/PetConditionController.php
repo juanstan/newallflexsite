@@ -127,7 +127,7 @@ class PetConditionController extends Controller
     {
         try {
             $this->petRepository->setUser($this->authUser);
-            $this->petRepository->softDeleteConditionForPet($pet_id, $id);
+            $this->petRepository->deleteConditionForPet($pet_id, $id);
             return response()->json(['error' => false]);
 
         } catch (\Exception $e) {
