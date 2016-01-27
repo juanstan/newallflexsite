@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth.apiUser'], function () {
     Route::resource('photo', 'PhotoController', ['only' => ['show', 'update', 'destroy', 'index', 'store']]);
 
     Route::resource('pet/{pet_id}/vet', 'PetRequestController', ['only' => ['index', 'store', 'show', 'destroy', 'update']]);
-    Route::resource('pet/{pet_id}/reading', 'PetReadingController', ['only' => ['index', 'store', 'show', 'destroy']]);
+    Route::resource('pet/{pet_id}/reading', 'PetReadingController', ['only' => ['index', 'store', 'show', 'destroy', 'update']]);
     Route::resource('pet/{pet_id}/condition', 'PetConditionController', ['only' => ['index', 'store', 'show', 'destroy']]);
     Route::resource('pet/{pet_id}/reading/{reading_id}/symptom', 'PetReadingSymptomController', ['only' => ['index', 'store', 'show', 'destroy']]);
 
