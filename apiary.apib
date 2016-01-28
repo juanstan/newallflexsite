@@ -123,9 +123,8 @@ Get the basic information needed to create an account.
         {
             "first_name": "John",
             "last_name": "Doe",
-            "email_address": "j.doe@sureflap.com",
+            "email": "j.doe@sureflap.com",
             "telephone": "01223432654",
-            "image_path": "profile.jpg",
             "password": "changme",
         }
 
@@ -136,7 +135,7 @@ Get the basic information needed to create an account.
             "result": {
                 "first_name": "John",
                 "last_name": "Doe",
-                "email_address": "j.doe@sureflap.co.uk",
+                "email": "j.doe@sureflap.co.uk",
                 "telephone": "01223 432654",
                 "updated_at": "2015-02-17 10:19:44",
                 "created_at": "2015-02-17 10:19:44",
@@ -164,9 +163,8 @@ Get the basic information needed to create an account.
                 "id": 15,
                 "first_name": "John",
                 "last_name": "Doe",
-                "email_address": "j.doe@sureflap.co.uk",
+                "email": "j.doe@sureflap.co.uk",
                 "telephone": "01223 432654",
-                "image_path": null,
                 "created_at": "2015-02-17 10:19:44",
                 "updated_at": "2015-02-17 10:19:44"
             }
@@ -183,7 +181,7 @@ Get the basic information needed to create an account.
     + Body
     
             {
-                "email_address": "j.doe@sureflap.com"
+                "email": "j.doe@sureflap.com"
             }
 
 + Parameters
@@ -197,9 +195,8 @@ Get the basic information needed to create an account.
                 "id": 15,
                 "first_name": "John",
                 "last_name": "Doe",
-                "email_address": "j.doe@sureflap.com",
+                "email": "j.doe@sureflap.com",
                 "telephone": "01223 432654",
-                "image_path": null,
                 "created_at": "2015-02-17 10:19:44",
                 "updated_at": "2015-02-17 11:18:19"
             }
@@ -222,9 +219,9 @@ Get the basic information needed to create an account.
             "error": false
         }
         
-## api.animal [/api/animal]
+## api.pet [/api/pet]
 
-### Get all animals on account [GET]
+### Get all pets on account [GET]
 
 + Request
 
@@ -247,7 +244,6 @@ Get the basic information needed to create an account.
                         "weight": 5,
                         "size": "s",
                         "gender": "Male",
-                        "image_path": "mydog.jpg",
                         "user_id": 16
                     },
                     "1": {
@@ -259,14 +255,13 @@ Get the basic information needed to create an account.
                         "weight": 4.7,
                         "size": "s",
                         "gender": "Female",
-                        "image_path": "mydog2.jpg",
                         "user_id": 16
                     }
                 }
             ]
         }
 
-### Create a animal account [POST]
+### Create a pet account [POST]
 
 Get the basic information needed to create an account.
 
@@ -285,8 +280,7 @@ Get the basic information needed to create an account.
             "date_of_birth": "2012-12-12",
             "weight": 5,
             "size": "s",
-            "gender": "Male",
-            "image_path": "mydog.jpg"
+            "gender": "Male"
         }
 
 + Response 201 (application/json)
@@ -303,23 +297,13 @@ Get the basic information needed to create an account.
                 "gender": "Male",
                 "image_path": "mydog.jpg",
                 "id": 13,
-                "user_id": 16,
-                "user": {
-                    "id": 16,
-                    "first_name": "Peter",
-                    "last_name": "Griffin",
-                    "email_address": "p.griffin@sureflap.co.uk",
-                    "telephone": "012234567890",
-                    "image_path": null,
-                    "created_at": "2015-02-17 14:12:10",
-                    "updated_at": "2015-02-17 14:12:10"
-                }
+                "user_id": 16
             }
         }
 
-## api.animal.{id} [/api/animal/{id}]
+## api.pet.{id} [/api/pet/{id}]
         
-### Update animal on account [PUT]
+### Update pet on account [PUT]
 
 + Request
 
@@ -349,12 +333,11 @@ Get the basic information needed to create an account.
                 "weight": 4.7,
                 "size": "s",
                 "gender": "Female",
-                "image_path": "mydog2.jpg",
                 "user_id": 16
             }
         }
         
-### Delete animal [DELETE]
+### Delete pet [DELETE]
 
 + Request
 
@@ -390,6 +373,8 @@ Get the basic information needed to create an account.
                     "2":  {
                         "id": 3,
                         "serial_id": "1234565",
+                        "user_id": 1,
+                        "vet_id": null,
                         "device": "first edition",
                         "name": null,
                         "version": "1.0",
@@ -401,6 +386,8 @@ Get the basic information needed to create an account.
                     "3":  {
                         "id": 4,
                         "serial_id": "1234565",
+                        "user_id": null,
+                        "vet_id": 1
                         "device": "first edition",
                         "name": null,
                         "version": "1.0",
@@ -428,7 +415,8 @@ Get the basic information needed to create a device.
         {
             "serial_id": "1234565",
             "device": "first edition",
-            "version": "1.0"
+            "version": "1.0",
+            "user_id": 1
         }
 
 + Response 201 (application/json)
@@ -436,19 +424,13 @@ Get the basic information needed to create a device.
         {
             "error": false,
             "result": {
-                "serial_id": "1234565",
-                "device": "first edition",
-                "version": "1.0",
-                "id": 4,
-                "user": 0
+                "id": 4
             }
         }
         
 ## api.device.{id} [/api/device/{id}]
 
 ### Update a device [PUT]
-
-Get the basic information needed to update a device.
 
 + Request
 
@@ -467,21 +449,30 @@ Get the basic information needed to update a device.
         {
             "error": false,
             "result": {
-                "id": 4,
-                "serial_id": "1234565",
-                "device": "first edition",
-                "name": null,
-                "version": "1.0",
-                "field_1": "Data",
-                "field_2": null,
-                "field_3": null,
-                "field_4": null
+                "id": 4
             }
         }
-        
-## api.animal.{animal_id}.condition [/api/animal/{animal_id}/condition]
 
-### Get all known conditions for animal [GET]
+### Delete a device [DELETE]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false
+        }
+
+## api.pet.{pet_id}.condition [/api/pet/{pet_id}/condition]
+
+### Get all known conditions for pet [GET]
 
 + Request
 
@@ -514,7 +505,7 @@ Get the basic information needed to update a device.
             ]
         }
 
-### Add a condition to an animal [POST]
+### Add a condition to an pet [POST]
 
 Get the basic information needed to create an account.
 
@@ -536,55 +527,13 @@ Get the basic information needed to create an account.
             "error": false,
             "result": {
                 "condition_id": 4,
-                "animal_id": 14,
-                "id": 8,
-                "animal": {
-                    "id": 14,
-                    "name": "Milly Mii",
-                    "microchip_number": "1234555555",
-                    "breed": "Chihuahua",
-                    "date_of_birth": "2012-12-13",
-                    "weight": 4.7,
-                    "size": "s",
-                    "gender": "Female",
-                    "image_path": "mydog2.jpg",
-                    "user_id": 16
-                }
+                "pet_id": 14
             }
         }
         
-## api.animal.{animal_id}.condition.{id} [/api/animal/{animal_id}/condition/{id}]
+## api.pet.{pet_id}.condition.{id} [/api/pet/{pet_id}/condition/{id}]
         
-### Update animal condition [PUT]
-
-+ Request
-
-    + Headers
-    
-            X-Authorization: <token>
-            
-    + Body
-    
-            {
-                "condition_id": 4
-            }
-
-+ Parameters
-    + animal_id
-    + id
-    
-+ Response 200 (application/json)
-
-        {
-            "error": false,
-            "result": {
-                "id": 9,
-                "animal_id": 14,
-                "condition_id": 4
-            }
-        }
-        
-### Delete animal condition [DELETE]
+### Delete pet condition [DELETE]
 
 + Request
 
@@ -593,7 +542,7 @@ Get the basic information needed to create an account.
             X-Authorization: <token>
 
 + Parameters
-    + animal_id
+    + pet_id
     + id
     
 + Response 200 (application/json)
@@ -602,9 +551,9 @@ Get the basic information needed to create an account.
             "error": false
         }
         
-## api.animal.{animal_id}.reading [/api/animal/{animal_id}/reading]
+## api.pet.{pet_id}.reading [/api/pet/{pet_id}/reading]
 
-### Get all readings for an animal [GET]
+### Get all readings for a pet [GET]
 
 + Request
 
@@ -620,34 +569,34 @@ Get the basic information needed to create an account.
                 {
                     "0":  {
                         "id": 34,
-                        "animal_id": 14,
+                        "pet_id": 14,
                         "temperature": 37.5
                     },
                     "1":  {
                         "id": 35,
-                        "animal_id": 14,
+                        "pet_id": 14,
                         "temperature": 37.7
                     },
                     "2":  {
                         "id": 40,
-                        "animal_id": 14,
+                        "pet_id": 14,
                         "temperature": 37.6
                     },
                     "3":  {
                         "id": 37,
-                        "animal_id": 14,
+                        "pet_id": 14,
                         "temperature": 37.5
                     },
                     "4":  {
                         "id": 38,
-                        "animal_id": 14,
+                        "pet_id": 14,
                         "temperature": 37.6
                     }
                 }
             ]
         }
 
-### Create new reading for an animal [POST]
+### Create new reading for a pet [POST]
 
 Get the basic information needed to create an account.
 
@@ -668,27 +617,14 @@ Get the basic information needed to create an account.
         {
             "error": false,
             "result": {
-                "temperature": 37.6,
-                "animal_id": 14,
-                "id": 38,
-                "animal": {
-                    "id": 14,
-                    "name": "Milly Mii",
-                    "microchip_number": "1234555555",
-                    "breed": "Chihuahua",
-                    "date_of_birth": "2012-12-13",
-                    "weight": 4.7,
-                    "size": "s",
-                    "gender": "Female",
-                    "image_path": "mydog2.jpg",
-                    "user_id": 16
-                }
+                "pet_id": 14,
+                "id": 38
             }
         }
         
-## api.animal.{animal_id}.reading.{id} [/api/animal/{animal_id}/reading/{id}]
+## api.pet.{pet_id}.reading.{id} [/api/pet/{pet_id}/reading/{id}]
 
-### Get animal reading by id [GET]
+### Get pet reading by id [GET]
 
 + Request
 
@@ -697,7 +633,7 @@ Get the basic information needed to create an account.
             X-Authorization: <token>
 
 + Parameters
-    + animal_id
+    + pet_id
     + id
     
 + Response 200 (application/json)
@@ -706,12 +642,12 @@ Get the basic information needed to create an account.
             "error": false,
             "result": {
                 "id": 40,
-                "animal_id": 14,
+                "pet_id": 14,
                 "temperature": 37.6
             }
         }
         
-### Update animal condition [PUT]
+### Update pet reading [PUT]
 
 A user may not be able to update a reading if it is taken 30seconds + after creation
 
@@ -728,7 +664,7 @@ A user may not be able to update a reading if it is taken 30seconds + after crea
             }
 
 + Parameters
-    + animal_id
+    + pet_id
     + id
     
 + Response 200 (application/json)
@@ -737,12 +673,37 @@ A user may not be able to update a reading if it is taken 30seconds + after crea
             "error": false,
             "result": {
                 "id": 40,
-                "animal_id": 14,
+                "pet_id": 14,
                 "temperature": 37.6
             }
         }
         
-## api.animal.{animal_id}.reading.{reading_id}.symptom [/api/animal/{animal_id}/reading/{reading_id}/symptom]
+        
+## api.pet.{pet_id}.reading.assign [/api/pet/{pet_id}/reading/assign]
+### Assign a microchip to a pet [POST]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+            
+    + Body
+    
+            {
+                "pet_id": 1
+            }
+            
++ Response 201 (application/json)
+
+        {
+          "error": false,
+          "result": "Pet microchip number assigned"
+        }
+
+
+
+## api.pet.{pet_id}.reading.{reading_id}.symptom [/api/pet/{pet_id}/reading/{reading_id}/symptom]
 
 ### Get all symptoms of a reading [GET]
 
@@ -790,18 +751,10 @@ A user may not be able to update a reading if it is taken 30seconds + after crea
             "result": {
                 "symptom_id": "5",
                 "reading_id": 40,
-                "updated_at": "2015-02-17 15:24:30",
-                "created_at": "2015-02-17 15:24:30",
-                "id": 8,
-                "reading": {
-                    "id": 40,
-                    "animal_id": 14,
-                    "temperature": 37.6
-                }
             }
         }
         
-## api.animal.{animal_id}.reading.{reading_id}.symptom.{id} [/api/animal/{animal_id}/reading/{reading_id}/symptom/{id}]
+## api.pet.{pet_id}.reading.{reading_id}.symptom.{id} [/api/pet/{pet_id}/reading/{reading_id}/symptom/{id}]
 
 ### Get reading symptom by id [GET]
 
@@ -812,7 +765,7 @@ A user may not be able to update a reading if it is taken 30seconds + after crea
             X-Authorization: <token>
 
 + Parameters
-    + animal_id
+    + pet_id
     + reading_id
     + id
     
@@ -821,7 +774,6 @@ A user may not be able to update a reading if it is taken 30seconds + after crea
         {
             "error": false,
             "result": {
-                "id": 8,
                 "reading_id": 40,
                 "symptom_id": 5,
                 "updated_at": "2015-02-17 15:24:30",
@@ -829,48 +781,18 @@ A user may not be able to update a reading if it is taken 30seconds + after crea
             }
         }
         
-### Update reading symptom [PUT]
+
+### Delete reading symptom [DELETE]
 
 + Request
 
     + Headers
     
             X-Authorization: <token>
-            
-    + Body
-    
-            {
-                "symptom_id": 4
-            }
 
 + Parameters
-    + animal_id
+    + pet_id
     + reading_id
-    + id
-    
-+ Response 200 (application/json)
-
-        {
-            "error": false,
-            "result": {
-                "id": 8,
-                "reading_id": 40,
-                "symptom_id": 3,
-                "updated_at": "2015-02-18 11:49:36",
-                "created_at": "2015-02-17 15:24:30"
-            }
-        }
-        
-### Delete animal condition [DELETE]
-
-+ Request
-
-    + Headers
-    
-            X-Authorization: <token>
-
-+ Parameters
-    + animal_id
     + id
     
 + Response 200 (application/json)
@@ -878,7 +800,412 @@ A user may not be able to update a reading if it is taken 30seconds + after crea
         {
             "error": false
         }
+       
+## api.pet.{pet_id}.vet [/api/pet/{pet_id}/vet]
+### Get vets for a specific pet [GET]
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + pet_id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                "vet_id": 1,
+                "pet_id": 1,
+                "approved": 0
+                }
+            ] 
+        }
+       
+### Assign a vet to a pet [POST]
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + pet_id
+    
++ Request (application/json)
+            
+        {
+            "vet_id":   1,
+            "approved": 1
+        }
+
++ Response 201 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "vet_id": 2,
+                "pet_id": "4"
+            }
+        }
+       
+## api.pet.{pet_id}.vet.{vet_id} [/api/pet/{pet_id}/vet/{vet_id}]
+### Dissociate a vet from a pet [DELETE]
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + pet_id
+    + vet_id
+    
++ Response 200 (application/json)
+
+        {
+            "error": false
+        }
         
+        
+## api.vet.search.all [/api/vet/search/all]
+
+### Search for all vets [GET]
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                  "id": 1,
+                  "company_name": "066 Veterinary Centre Ltd",
+                  "contact_name": "Vet McVetison",
+                  "email": "mcvetison@iownallthevets.com",
+                  "fax": "012345678910",
+                  "telephone": "01424 839010",
+                  "address_1": "100 Dummy Street",
+                  "address_2": "Fake lane",
+                  "city": "Somerset",
+                  "county": "Vetishire",
+                  "zip": "CB500TV",
+                  "units": null,
+                  "latitude": "51.2079451",
+                  "longitude": "-2.6506662",
+                  "photo_id": null,
+                  "created_at": "2015-05-27 13:52:13",
+                  "updated_at": "2015-05-28 10:12:27",
+                  "confirmed": null,
+                  "remember_token": null
+                },
+                {
+                  "id": 2,
+                  "company_name": "4 Paws Vets",
+                  "contact_name": "Vet McVetison",
+                  "email": "mcvetison@iownallthevets.com",
+                  "fax": "012345678910",
+                  "telephone": "0208 540 7275",
+                  "address_1": "100 Dummy Street",
+                  "address_2": "Fake lane",
+                  "city": "London",
+                  "county": "Vetishire",
+                  "zip": "CB500TV",
+                  "units": null,
+                  "latitude": "51.5073509",
+                  "longitude": "-0.1277583",
+                  "photo_id": null,
+                  "created_at": "2015-05-27 13:52:13",
+                  "updated_at": "2015-05-28 10:12:27",
+                  "confirmed": null,
+                  "remember_token": null
+                },
+                {
+                  "id": 3,
+                  "company_name": "608 Veterinary Group",
+                  "contact_name": "Vet McVetison",
+                  "email": "mcvetison@iownallthevets.com",
+                  "fax": "012345678910",
+                  "telephone": "0121 7053044",
+                  "address_1": "100 Dummy Street",
+                  "address_2": "Fake lane",
+                  "city": "West Midlands",
+                  "county": "Vetishire",
+                  "zip": "CB500TV",
+                  "units": null,
+                  "latitude": "52.3836607",
+                  "longitude": "-1.7561314",
+                  "photo_id": null,
+                  "created_at": "2015-05-27 13:52:13",
+                  "updated_at": "2015-05-28 10:12:27",
+                  "confirmed": null,
+                  "remember_token": null
+                }
+            ]
+        }
+
+## api.vet.search.name [/api/vet/search/name]
+
+### Search for vets by name [POST]
+
++ Request (application/json)
+            
+        {
+            "term": "acti"
+        }
+
+
++ Response 200 (application/json)
+
+        {
+          "error": false,
+          "result": [
+                {
+                  "id": 54,
+                  "company_name": "Archway Vet Practice (S.Cumbria) Ltd",
+                  "contact_name": "Vet McVetison",
+                  "email": "mcvetison@iownallthevets.com",
+                  "fax": "012345678910",
+                  "telephone": "01539 532669",
+                  "address_1": "100 Dummy Street",
+                  "address_2": "Fake lane",
+                  "city": "Cumbria",
+                  "county": "Vetishire",
+                  "zip": "CB500TV",
+                  "units": null,
+                  "latitude": "54.5772323",
+                  "longitude": "-2.7974835",
+                  "photo_id": null,
+                  "created_at": "2015-05-27 13:52:13",
+                  "updated_at": "2015-05-28 10:12:27",
+                  "confirmed": null,
+                  "remember_token": null
+                },
+                {
+                  "id": 55,
+                  "company_name": "Archway Vet Practice Ltd",
+                  "contact_name": "Vet McVetison",
+                  "email": "mcvetison@iownallthevets.com",
+                  "fax": "012345678910",
+                  "telephone": "01730 262101",
+                  "address_1": "100 Dummy Street",
+                  "address_2": "Fake lane",
+                  "city": "Hampshire",
+                  "county": "Vetishire",
+                  "zip": "CB500TV",
+                  "units": null,
+                  "latitude": "51.0895203",
+                  "longitude": "-1.216844",
+                  "photo_id": null,
+                  "created_at": "2015-05-27 13:52:13",
+                  "updated_at": "2015-05-28 10:12:27",
+                  "confirmed": null,
+                  "remember_token": null
+                },
+            ]
+        }
+        
+## api.vet.search.location [/api/vet/search/location]
+
+### Search for vets by location [POST]
+
++ Request (application/json)
+            
+        {
+            "location": "leicester"
+            "distance" : "5"
+        }
+
+
++ Response 200 (application/json)
+
+        {
+          "error": false,
+          "result": [
+            {
+              "id": 136,
+              "company_name": "Best Friends Group - Leicester",
+              "contact_name": "Vet McVetison",
+              "email": "mcvetison@iownallthevets.com",
+              "fax": "012345678910",
+              "telephone": "0116 2517677",
+              "address_1": "100 Dummy Street",
+              "address_2": "Fake lane",
+              "city": "Leicestershire",
+              "county": "Vetishire",
+              "zip": "CB500TV",
+              "units": null,
+              "latitude": "52.6368778",
+              "longitude": "-1.1397592",
+              "photo_id": null,
+              "created_at": "2015-05-27 13:52:13",
+              "updated_at": "2015-05-28 10:12:27",
+              "confirmed": null,
+              "remember_token": null,
+              "distance": 0
+            }
+          ]
+        }
+        
+
+## api.user.photo [/api/user/photo]
+
+### Send User Photo Info [POST]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Request (multipart/form-data)
+        
+        "image_path": img 
+        "title" : "testing"
+    
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 2,
+                "first_name": "John",
+                "last_name": "Doe",
+                "email": "j.doe@sureflap.com",
+                "provider": null,
+                "provider_id": null,
+                "photo_id": 2,
+                "telephone": "01223432654",
+                "units": null,
+                "weight_units": null,
+                "created_at": "2016-01-27 08:17:17",
+                "updated_at": "2016-01-28 13:48:13",
+                "remember_token": null,
+                "confirmed": null
+            }
+        }
+
+## api.pet.{pet_id}.photo [/api/pet/{pet_id}/photo]
+
+### Send Pet Photo Info [POST]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + pet_id
+
++ Request (multipart/form-data)
+        
+        "image_path": img 
+        "title" : "testing"
+    
++ Response 200 (application/json)
+
+        {
+          "error": false,
+          "result": {
+            "id": 4,
+            "name": "Milly Mii",
+            "microchip_number": "5746352413",
+            "breed_id": null,
+            "breed_wildcard": null,
+            "photo_id": 4,
+            "date_of_birth": "2012-12-12",
+            "weight": "5",
+            "gender": 0,
+            "vet_id": null,
+            "user_id": 2,
+            "created_at": "2016-01-27 10:16:44",
+            "updated_at": "2016-01-28 14:10:00"
+          }
+        }
+
+
+## api.photo.{photo_id} [/api/photo/{photo_id}]
+
+### Get a Photo Info [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + photo_id
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "id": 4,
+                "title": "2",
+                "location": "uploads/users/2/GWLbmjyl6OzxoAQ2wu2xl8ubwRCrjGeMoqkS8ZWkDiDz7HeNMIwH9V3CcWmclYtmLo1TZI7BgNmSjIcUwJw.png",
+                "uploading_user_id": 2,
+                "uploading_vet_id": null,
+                "created_at": "2016-01-28 14:10:00",
+                "updated_at": "2016-01-28 14:10:00"
+            }
+        }
+
+
+## api.auth.{provider}.login [/api/auth/{provider}/login]
+
+### Login from external providers [GET]
+
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + provider
+    
++ Request (application/json)
+            
+        {
+            "email":"juanstan@gmail.com",
+            "id":1679215355651823,
+            "first_name": "Juan",
+            "last_name": "Piqueras Acevedo",
+            "provider":"facebook"
+        
+        }
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "token": {
+                "token": "$2y$10$14sN72fbyR9Fdz4.hwIBh.yO31DbBkVZyY18eZtmcLUWRU9E.7CUS",
+                "expires_at": "2016-02-04 15:32:45",
+                "created_at": "2016-01-28 15:32:46"
+                },
+                "user": {
+                    "first_name": "Juan",
+                    "last_name": "Piqueras Acevedo",
+                    "email": "juanstan@gmail.com",
+                    "provider": "facebook",
+                    "provider_id": 1679215355651800,
+                    "units": 0,
+                    "weight_units": 0,
+                    "updated_at": "2016-01-28 15:31:57",
+                    "created_at": "2016-01-28 15:31:57",
+                    "id": 4
+                }
+            }
+        }
+
+
 # Group Vet
 
 ## api.vet [/api/vet]
@@ -1365,3 +1692,83 @@ You can use this method to authenticate a user with a valid email and password. 
             ]
         }
         
+
+# Group Other Items
+
+## api.breeds [/api/breeds]
+
+### Get all breeds [GET]
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "id": 1,
+                    "name": "Affenpinscher",
+                    "size": "S"
+                },
+                {
+                    "id": 2,
+                    "name": "Afghan Hound",
+                    "size": "L"
+                }
+            ]
+        }
+
+## api.symptoms [/api/symptoms]
+
+### Get all symptoms [GET]
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                    "id": 1,
+                    "name": "All looks normal"
+                },
+                {
+                    "id": 2,
+                    "name": "Itching/Scratching"
+                },
+                {
+                    "id": 3,
+                    "name": "Hair Loss"
+                },
+                {
+                    "id": 4,
+                    "name": "Diarrhea"
+                }
+            ]
+        }
+
+## api.conditions [/api/conditions]
+
+### Get all conditions [GET]
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": [
+                {
+                "id": 1,
+                "name": "Allergic Dermatitis or other Skin Condition"
+                },
+                {
+                "id": 2,
+                "name": "Arthritis and Joint Pain"
+                },
+                {
+                "id": 3,
+                "name": "Behavioral Changes & Alertness Changes"
+                },
+                {
+                "id": 4,
+                "name": "Cancer"
+                }
+            ]
+        }
