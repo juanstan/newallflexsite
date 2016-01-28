@@ -33,7 +33,7 @@ Route::group(['middleware' => 'auth.apiUser'], function () {
     Route::resource('pet/{pet_id}/condition', 'PetConditionController', ['only' => ['index', 'store', 'show', 'destroy']]);
     Route::resource('pet/{pet_id}/reading/{reading_id}/symptom', 'PetReadingSymptomController', ['only' => ['index', 'store', 'show', 'destroy']]);
 
-    //Route::post('pet/{pet_id}/reading/assign', ['as' => 'api.pet.{pet_id}.reading.assign', 'uses' => 'PetReadingController@postAssign']); //???We really need it
+    Route::post('pet/{pet_id}/reading/assign', ['as' => 'api.pet.{pet_id}.reading.assign', 'uses' => 'PetReadingController@postAssign']);
     Route::post('pet/{pet_id}/photo', ['as' => 'api.pet.{pet_id}.photo', 'uses' => 'PetController@postPhoto']);
     Route::post('user/photo', ['as' => 'api.user.photo', 'uses' => 'UserController@postPhoto']);
 
