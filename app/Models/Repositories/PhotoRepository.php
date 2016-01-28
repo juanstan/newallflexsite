@@ -10,7 +10,6 @@ use Image;
 class PhotoRepository extends AbstractRepository implements PhotoRepositoryInterface
 {
 
-    //protected $classname = 'App\Models\Entities\Photo';
     protected $model;
     protected $userRepo;
 

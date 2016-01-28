@@ -5,7 +5,6 @@ use App\Models\Entities\Breed;
 
 class BreedRepository extends AbstractRepository implements BreedRepositoryInterface
 {
-	//protected $classname = 'App\Models\Entities\Breed';
 
 	protected $model;
 

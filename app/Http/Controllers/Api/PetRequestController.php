@@ -3,6 +3,7 @@
 use Auth;
 use Input;
 use URL;
+use Carbon\Carbon;
 
 use App\Models\Entities\User;
 use App\Models\Entities\Pet;
@@ -32,11 +33,10 @@ class PetRequestController extends Controller
             'result' => $this->petRequestRepository->all()]);
     }
 
-    public function store() // POST
+    public function store($pet_id) // POST
     {
         $this->petRepository->setUser($this->authUser);
-        $input = Input::all();
-        $input['pet_id'] = $input['animal_id'];
+        $input = Input::only('vet_id', 'approved');
         $validator = $this->petRequestRepository->getCreateValidator($input);
 
         if ($validator->fails()) {
@@ -44,10 +44,10 @@ class PetRequestController extends Controller
                 'errors' => $validator->messages()], 400);
         }
 
-        $pet = $this->petRepository->get($input['pet_id']);
-        $pet->vet()->attach($input['vet_id']);
+        $pet = $this->petRepository->get($pet_id);
+        $pet->vet()->attach($input['vet_id'], $input);
 
-        return response()->json(['error' => false, 'result' => $pet]);
+        return response()->json(['error' => false, 'result' => ['vet_id'=>$input['vet_id'], 'pet_id'=>$pet_id]]);
 
     }
 
@@ -77,12 +77,12 @@ class PetRequestController extends Controller
             'result' => $this->petRequestRepository->get($id)]);
     }
 
-    public function destroy($id) // DELETE
+    public function destroy($pet_id, $vet_id) // DELETE
     {
         $this->petRequestRepository->setUser($this->authUser);
+        $this->petRequestRepository->updateState(['pet_id'=>$pet_id, 'vet_id'=>$vet_id], ['deleted_at'=>Carbon::now()]);
 
-        $this->petRequestRepository->delete($id);
-        return response()->json(['error' => false, 'result' => 'Request #' . $id . ' deleted']);
+        return response()->json(['error' => false]);
     }
 
 

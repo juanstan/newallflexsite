@@ -83,9 +83,7 @@ class UserController extends Controller
 
         if($validator->fails())
         {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json(['error' => true, 'result' => 'Not all fields passed']);
         }
 
         $user = $this->authUser;
@@ -102,12 +100,13 @@ class UserController extends Controller
         $request['photo_id'] = $photo->id;
 
         if ($this->userRepository->update($user->id, $request) == false) {
-        \App::abort(500);
+            \App::abort(500);
         }
 
         return response()->json(['error' => false,
             'result' => $this->userRepository->get($user->id)]);
     }
+
 
     public function destroy() // DELETE
     {

@@ -75,7 +75,7 @@ class VetSearchController extends Controller
         $term = Input::get('term');
         $result = [];
         foreach($vets as $vet) {
-            if(strpos($vet,$term) !== false) {
+            if(strpos($vet->company_name, $term) !== false) {
                 $result[] = $vet;
             }
         }

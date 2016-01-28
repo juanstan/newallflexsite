@@ -85,7 +85,6 @@ class PetRequestRepository extends AbstractRepository implements PetRequestRepos
     {
         return Validator::make($input,
         [
-            'pet_id' 		=> ['required'],
             'vet_id'        => ['required'],
             'approved'     	=> ['required']
         ]);
