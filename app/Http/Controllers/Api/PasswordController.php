@@ -16,10 +16,10 @@ class PasswordController extends Controller {
             'email' => 'required|email|exists:users',
         );
 
-        $validator = Validator::make (Input::all(), $rules);
+        $validator = Validator::make(Input::all(), $rules);
 
         if ($validator -> passes()){
-            Password::user()->remind(Input::only('email'), function ($message) {
+            Password::user()->sendResetLink(Input::only('email'), function ($message) {
                 $message->subject('Password reminder');
             });
 

@@ -54,7 +54,7 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'j.acevedo@sureflap.co.uk', 'name' => 'Juan Piqueras Acevedo'],
 
     /*
     |--------------------------------------------------------------------------
