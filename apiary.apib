@@ -235,28 +235,25 @@ Get the basic information needed to create an account.
             "error": false,
             "result": [
                 {
-                    "0": {
-                        "id": 13,
-                        "name": "Jerry",
-                        "microchip_number": "5746352413",
-                        "breed": "Chihuahua",
-                        "date_of_birth": "2012-12-12",
-                        "weight": 5,
-                        "size": "s",
-                        "gender": "Male",
-                        "user_id": 16
-                    },
-                    "1": {
-                        "id": 14,
-                        "name": "Milly",
-                        "microchip_number": "1234555555",
-                        "breed": "Chihuahua",
-                        "date_of_birth": "2012-12-13",
-                        "weight": 4.7,
-                        "size": "s",
-                        "gender": "Female",
-                        "user_id": 16
-                    }
+                    "id": 13,
+                    "name": "Jerry",
+                    "microchip_number": "5746352413",
+                    "breed": "Chihuahua",
+                    "date_of_birth": "2012-12-12",
+                    "weight": 5,
+                    "size": "s",
+                    "gender": "Male",
+                    "user_id": 16
+                },
+                    "id": 14,
+                    "name": "Milly",
+                    "microchip_number": "1234555555",
+                    "breed": "Chihuahua",
+                    "date_of_birth": "2012-12-13",
+                    "weight": 4.7,
+                    "size": "s",
+                    "gender": "Female",
+                    "user_id": 16
                 }
             ]
         }
@@ -370,32 +367,29 @@ Get the basic information needed to create an account.
             "error": false,
             "result": [
                 {
-                    "2":  {
-                        "id": 3,
-                        "serial_id": "1234565",
-                        "user_id": 1,
-                        "vet_id": null,
-                        "device": "first edition",
-                        "name": null,
-                        "version": "1.0",
-                        "field_1": null,
-                        "field_2": null,
-                        "field_3": null,
-                        "field_4": null
-                    },
-                    "3":  {
-                        "id": 4,
-                        "serial_id": "1234565",
-                        "user_id": null,
-                        "vet_id": 1
-                        "device": "first edition",
-                        "name": null,
-                        "version": "1.0",
-                        "field_1": "Data",
-                        "field_2": null,
-                        "field_3": null,
-                        "field_4": null
-                    }
+                    "id": 3,
+                    "serial_id": "1234565",
+                    "user_id": 1,
+                    "vet_id": null,
+                    "device": "first edition",
+                    "name": null,
+                    "version": "1.0",
+                    "field_1": null,
+                    "field_2": null,
+                    "field_3": null,
+                    "field_4": null
+                },
+                    "id": 4,
+                    "serial_id": "1234565",
+                    "user_id": null,
+                    "vet_id": 1
+                    "device": "first edition",
+                    "name": null,
+                    "version": "1.0",
+                    "field_1": "Data",
+                    "field_2": null,
+                    "field_3": null,
+                    "field_4": null
                 }
             ]
         }
@@ -1203,6 +1197,22 @@ A user may not be able to update a reading if it is taken 30seconds + after crea
                     "id": 4
                 }
             }
+        }
+
+## api.password.reset [/api/password/reset]
+### request to reset the password [GET]
+
++ Request (application/json)
+            
+        {
+            "email":"juanstan@gmail.com"
+        }
+
++ Response 200 (application/json)
+
+        {
+          "error": false,
+          "result": "Your request to reset your password has been accepted, we have sent further details to your email address"
         }
 
 
