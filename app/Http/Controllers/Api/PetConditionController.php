@@ -64,7 +64,7 @@ class PetConditionController extends Controller
         $condition = $this->conditionRepository->get($input['condition_id']);
         $pet->conditions()->attach($condition);
 
-        return response()->json(['error' => false, 'result' => $condition], 201);
+        return response()->json(['error' => false, 'result' => ['condition_id'=>$condition->id, 'pet_id'=>$pet_id]], 201);
 
     }
 

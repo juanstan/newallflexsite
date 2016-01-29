@@ -109,7 +109,7 @@ class PetReadingSymptomController extends Controller
 
 
         return response()->json(['error' => false,
-            'result' => $this->petReadingSymptomRepository->get($id)]);
+            'result' => $this->petReadingSymptomRepository->get($id)->pivot]);
     }
 
 

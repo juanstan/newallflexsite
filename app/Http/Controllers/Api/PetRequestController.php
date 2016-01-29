@@ -25,12 +25,12 @@ class PetRequestController extends Controller
         $this->petRequestRepository = $petRequestRepository;
     }
 
-    public function index()
+    public function index($pet_id)
     {
         $this->petRequestRepository->setUser($this->authUser);
 
         return response()->json(['error' => false,
-            'result' => $this->petRequestRepository->all()]);
+            'result' => $this->petRequestRepository->getAllVetsByPet($pet_id)]);
     }
 
     public function store($pet_id) // POST
@@ -47,7 +47,7 @@ class PetRequestController extends Controller
         $pet = $this->petRepository->get($pet_id);
         $pet->vet()->attach($input['vet_id'], $input);
 
-        return response()->json(['error' => false, 'result' => ['vet_id'=>$input['vet_id'], 'pet_id'=>$pet_id]]);
+        return response()->json(['error' => false, 'result' => ['vet_id'=>$input['vet_id'], 'pet_id'=>$pet->id]]);
 
     }
 
