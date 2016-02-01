@@ -65,7 +65,7 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
 
         foreach ($data as $lineIndex => $row) {
             $decodedMicrochipID = $this->decoded_microchip_id($row[1]);
-            $profile = Reading::where('microchip_id', '=', $decodedMicrochipID)->first();
+            $profile = $this->model->where('microchip_id', '=', $decodedMicrochipID)->first();
             $petOwner = $user->$sMethodPet()->checkMicrochip($decodedMicrochipID)->first();
             $pet = Pet::checkMicrochip($decodedMicrochipID)->first();
 
@@ -81,13 +81,19 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
                 $pet->$sTypeID = $user->id;
                 $pet->save();
 
-            }elseif($petOwner) {
+            } elseif($petOwner) {
                 $pet = $petOwner;
 
             }
 
             if (empty($profile)) {
-                $device = Device::findOrFail($reading_device_id);
+                if (!$device = Device::find($reading_device_id)){
+                    $device = new Device();
+                    $device->id = $reading_device_id;
+                    //$device->serial_id = ???;
+                    $device->$sTypeID = $user->id;
+                    $device->save();
+                }
                 $reading = new Reading();
                 $reading->microchip_id = $decodedMicrochipID;
                 $reading->temperature = $this->reading_temperature($row[2]);
