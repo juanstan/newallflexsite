@@ -5,7 +5,7 @@
         <div class="col-md-6 col-centered float-none" >
             <div class="jumbotron text-center" >
                 {!! HTML::image('images/suresenselogo.png', 'a Logo', array('class' => 'signup-logo')) !!}
-                <h2>{!! Lang::get('general.Sign in to Pet Connect') !!}</h2>
+                <h2>{!! Lang::get('general.Sign in to SureSense') !!}</h2>
 
                 <ul class="nav desktop mobile nav-pills top-buffer">
                     <li class="active">{!! HTML::linkRoute('user', Lang::get('general.Pet owner')) !!}</li>
