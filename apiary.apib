@@ -865,6 +865,34 @@ A user may not be able to update a reading if it is taken 30seconds + after crea
         }
         
         
+### Approving/Disapproving a pet from a vet [PUT]
++ Request
+
+    + Headers
+    
+            X-Authorization: <token>
+
++ Parameters
+    + pet_id
+    + vet_id
+    
++ Request (application/json)
+            
+        {
+            "approved": 1
+        }
+
++ Response 200 (application/json)
+
+        {
+            "error": false,
+            "result": {
+                "pet_id": "3",
+                "vet_id": "4"
+            }
+        }
+        
+        
 ## api.vet.search.all [/api/vet/search/all]
 
 ### Search for all vets [GET]
