@@ -44,7 +44,7 @@ class PetRequestRepository extends AbstractRepository implements PetRequestRepos
 
     public function getAllVetsByPet($petId)
     {
-        return $this->query()->where('pet_id', '=', $petId)->get();
+        return $this->query()->where('pet_id', '=', $petId)->whereNull('deleted_at') ->get();
     }
 
     public function getVetsByPets($pets)
