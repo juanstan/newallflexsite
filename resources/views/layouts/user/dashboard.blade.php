@@ -28,6 +28,7 @@
     </body>
     <!-- Javascript -->
 @include('layouts/core/javascript')
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
 <script>
 $( document ).ready(function() {
     $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
@@ -41,21 +42,29 @@ $( document ).ready(function() {
         $target.closest('form').submit();
         return false;
     });
-});
 
-$('.breed-list').autocomplete({
-    source: '/user/register/pet/breeds',
-    minLength:1,
-});
 
-$( "#createBreedList" ).autocomplete({
-    source: '/user/register/pet/breeds',
-    minLength:1,
-});
+    $(document.body).on('click', '.symptom-pill-add a', function(e){
+        e.preventDefault();
+    });
 
-$( "#vet-search" ).autocomplete({
-    source: '/user/dashboard/vet',
-    minLength:1,
+
+    $('.breed-list').autocomplete({
+        source: '/user/register/pet/breeds',
+        minLength:1,
+    });
+
+    $( "#createBreedList" ).autocomplete({
+        source: '/user/register/pet/breeds',
+        minLength:1,
+    });
+
+    $( "#vet-search" ).autocomplete({
+        source: '/user/dashboard/vet',
+        minLength:1,
+    });
+
+
 });
 
 $(function(){ // this will be called when the DOM is ready
