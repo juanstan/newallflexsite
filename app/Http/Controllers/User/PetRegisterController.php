@@ -33,7 +33,7 @@ class PetRegisterController extends Controller
     public function getIndex()
     {
         $this->petRepository->setUser($this->authUser);
-        $pets = $this->petRepository->all();
+        $pets = $this->petRepository->petsSet();
         return View::make('usersignup.petList')
             ->with(array(
                 'pets' => $pets
@@ -60,25 +60,68 @@ class PetRegisterController extends Controller
         $user = $this->authUser;
         $breeds = $this->breedRepository->all();
         $breed = $breeds->lists('name', 'id');
-        return View::make('usersignup.petCreate')
-            ->with(
-                array(
-                    'breed' => $breed,
-                    'user' => $user
-                ));
+        return View::make('usersignup.petCreate')->with(array('breed' => $breed,'user' => $user, 'pet'=>new Pet));
     }
+
+
+    public function getEdit($pet_id) {
+        $user = $this->authUser;
+        $this->petRepository->setUser($user);
+        $pet = $this->petRepository->get($pet_id);
+
+        $breeds = $this->breedRepository->all();
+        $breed = $breeds->lists('name', 'id');
+        return View::make('usersignup.petEdit')->with(array('breed' => $breed,'user' => $user, 'pet'=>$pet));
+
+    }
+
 
     public function postCreate()
     {
+        $input = $this->settingValuesForPet();
+        $pet = $this->petRepository->create($input);
+
+        if ($pet == null) {
+            \App::abort(500);
+        }
+
+        return redirect()->route('user.register.pet');
+
+    }
+
+
+
+    public function postEdit($pet_id)
+    {
+        $input = $this->settingValuesForPet();
+        $pet = $this->petRepository->update($pet_id, $input);
+
+        if ($pet == null) {
+            \App::abort(500);
+        }
+
+        return redirect()->route('user.register.pet');
+
+    }
+
+
+    /*
+     * Setting the params when creating or updating a pet
+     *
+     * @param $input array Values comming from the form
+     * @param $user User user details
+     *
+     * @return array new input values
+     *
+     */
+    private function settingValuesForPet() {
+
         $input = Input::all();
         $user = $this->authUser;
+
         $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
-
         $this->petRepository->setUser($user);
-
-        if($user->weight_units == 1) {
-            $input['weight'] = $input['weight'] * 0.453592;
-        }
+        $input['weight'] = ($user->weight_units == 1) ? $input['weight'] * 0.453592 : $input['weight'];
 
         if($breed == NULL)
         {
@@ -99,8 +142,7 @@ class PetRegisterController extends Controller
         }
 
         if (Input::hasFile('image_path')) {
-
-            $imageValidator = $this->photoRepository->getCreateValidator($input);
+            $imageValidator = $this->petRepository->getCreateValidator($input);
             if($imageValidator->fails())
             {
                 return redirect()->back()
@@ -117,15 +159,10 @@ class PetRegisterController extends Controller
 
         }
 
-        $pet = $this->petRepository->create($input);
-
-        if ($pet == null) {
-            \App::abort(500);
-        }
-
-        return redirect()->route('user.register.pet');
+        return $input;
 
     }
+
 
 
 }

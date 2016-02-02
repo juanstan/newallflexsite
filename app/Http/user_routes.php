@@ -8,6 +8,7 @@ Route::controller('register/pet', 'PetRegisterController',
         'getIndex'=>'user.register.pet',
         'getCreate'=>'user.register.pet.create',
         'postCreate'=>'user.register.pet.create',
+        'getEdit'=>'user.register.pet.{pet_id}.edit',
     ));
 Route::controller('register/vet', 'VetRegisterController',
     array(

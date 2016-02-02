@@ -6434,4 +6434,9 @@ input[type="radio"] {
     display: block;
     margin-bottom: 1.25em; }
 
+.btn-edit-list-pets {
+  position: absolute;
+  right: 0;
+  top: 2em; }
+
 /*# sourceMappingURL=application.css.map */

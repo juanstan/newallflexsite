@@ -12,9 +12,12 @@
                             <div class="col-xs-4 top-buffer" >
                                 {!! HTML::image(isset($pet->photo_id) ? $pet->photo->location : '/images/pet-image.png', $pet->name, array('class' => 'img-responsive img-circle', 'width' => '100%')) !!}
                             </div>
-                            <div class="col-xs-8 top-buffer" >
+                            <div class="col-xs-6 top-buffer" >
                                 <h3 class="bottom-none text-left">{!! $pet->name !!}</h3>
                                 <h4 class="top-none text-left">{!! ($pet->breed) ? $pet->breed->name : $pet->breed_wildcard !!}</h4>
+                            </div>
+                            <div class="col-xs-2 top-buffer" >
+                                <a href="{!! URL::route('user.register.pet.{pet_id}.edit', ['pet_id'=>$pet->id]) !!}" class="btn-sm btn-default btn-edit-list-pets">Edit</a>
                             </div>
                         </div>
                     @empty
