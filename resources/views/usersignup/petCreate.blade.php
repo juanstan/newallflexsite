@@ -44,7 +44,13 @@
                     <div class="col-sm-4">
                         <div class="input-group">
                             {!! Form::text('weight', '', array('class' => 'form-control text-left')) !!}
-                            <div class="input-group-addon">{!! $user->weight_units !!}</div>
+                            <div class="input-group-addon">
+                                @if ($user->weight_units)
+                                    lbs
+                                @else
+                                    kg
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
