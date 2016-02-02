@@ -51,17 +51,17 @@ $( document ).ready(function() {
 
     $('.breed-list').autocomplete({
         source: '/user/register/pet/breeds',
-        minLength:1,
+        minLength:3
     });
 
     $( "#createBreedList" ).autocomplete({
         source: '/user/register/pet/breeds',
-        minLength:1,
+        minLength:3
     });
 
     $( "#vet-search" ).autocomplete({
         source: '/user/dashboard/vet',
-        minLength:1,
+        minLength:3
     });
 
 
@@ -69,6 +69,7 @@ $( document ).ready(function() {
 
 $(function(){ // this will be called when the DOM is ready
     $('#vetsearch').keyup(function() {
+        debugger;
         $('.vetname').show();
         var val = $(this).val().toLowerCase();
         $('.vetname').hide();

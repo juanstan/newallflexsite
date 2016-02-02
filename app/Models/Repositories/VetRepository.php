@@ -2,6 +2,7 @@
 
 use App\Models\Entities\Vet;
 use Carbon\Carbon;
+use DB;
 
 class VetRepository extends AbstractRepository implements VetRepositoryInterface
 {
@@ -64,6 +65,21 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 
 	public function getUnassignedPets($vet) {
 		return $vet->petsNoAssgined()->get();
+
+	}
+
+
+	public function getVetsCloserTo($location, $closest=10) {
+		return DB::table('vets')->select(
+			DB::raw("company_name,
+			( 3959 * acos( cos( radians(latitude) ) * cos( radians( ? ) )
+			* cos( radians( ? ) - radians(longitude)) + sin( radians(latitude) )
+			* sin( radians( ? ) ) )) AS distance"
+			)
+		)
+		->orderBy("distance")
+		->take($closest)
+		->addBinding([(float)$location['lat'], (float)$location['lng'], (float)$location['lat']])->get();
 
 	}
 

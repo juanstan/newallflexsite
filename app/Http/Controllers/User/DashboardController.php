@@ -472,11 +472,6 @@ class DashboardController extends Controller
         $pets = $this->petRepository->petsSet();
         $vets = $this->petRepository->getVetAssignedMyPets($pets);
 
-        if($vets->isEmpty()) {
-            return redirect()->route('user.dashboard')
-                ->with('error', Lang::get('general.You must create a pet before you can perform this function.'));
-        }
-
         return View::make('user.vet')->with(
             array(
                 'vets' => $vets
@@ -502,31 +497,8 @@ class DashboardController extends Controller
 
     public function getVetSearchLocation()
     {
-        $location = Input::get('term');
-        $distance_set = '10';
-        $data_arr = geocode($location);
-
-        $coordA   = \Geotools::coordinate([$data_arr[0], $data_arr[1]]);
-        $vets = $this->vetRepository->all();
-        foreach($vets as $vet)
-        {
-            if($vet->latitude != null && $vet->longitude != null)
-            {
-                $coordB   = \Geotools::coordinate([$vet->latitude, $vet->longitude]);
-                $distance = \Geotools::distance()->setFrom($coordA)->setTo($coordB);
-                if($distance->in('km')->haversine() < $distance_set) {
-                    $vet['distance'] = $distance->in('km')->haversine();
-                    $result[] = $vet;
-                }
-                else {
-                    continue;
-                }
-            }
-            else {
-                continue;
-            }
-        }
-
+        $location = Input::only('lat', 'lng');
+        $result = $this->vetRepository->getVetsCloserTo($location);
         if(empty($result)){
             return response()->json(['error' => true, 'message' => 'There are no vets in this area']);
         }

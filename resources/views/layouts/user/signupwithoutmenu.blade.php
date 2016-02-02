@@ -61,7 +61,7 @@
 
       $( "#breedList" ).autocomplete({
           source: '/user/register/pet/breeds',
-          minLength:1,
+          minLength:3
       });
 
       $(function() {

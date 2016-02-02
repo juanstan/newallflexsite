@@ -6439,4 +6439,10 @@ input[type="radio"] {
   right: 0;
   top: 2em; }
 
+#results {
+  min-height: 12em; }
+
+.loading {
+  background: url("/images/loading.gif") center no-repeat; }
+
 /*# sourceMappingURL=application.css.map */
