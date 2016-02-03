@@ -550,15 +550,26 @@ class DashboardController extends Controller
     }
 
 
-    public function postAssign($petId)
+    public function postAssign($pet_id)
     {
-        $pet = $this->petRepository->get(Input::get('pet-id'));
-        $microchip = $this->petRepository->get($petId);
 
-        if ($this->petRepository->assignMicrochipToPet($pet, $microchip)) {
+        $newPetId = Input::get('pet-id');
+        $this->petRepository->setUser($this->authUser);
+        $data['microchip_number'] = $this->petRepository->get($pet_id)->microchip_number;
+
+        //If current user is the owner of the microchip and the pet then update
+        if ($this->petRepository->checkOwner($pet_id)
+            && $this->petRepository->checkOwner($newPetId)
+            && $this->petRepository->update($newPetId, $data)
+        ) {
+            // reassign readings
+            $this->petReadingRepository->reassignReadings($pet_id, $newPetId);
+            $this->petRepository->delete($pet_id);
+
             return redirect()->route('user.dashboard')
                 ->with('success', Lang::get('general.Pet microchip number assigned'));
         }
+
 
         return redirect()->route('user.dashboard')
             ->with('error', Lang::get('general.Problem assigning microchip'));
