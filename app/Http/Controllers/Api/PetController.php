@@ -95,14 +95,10 @@ class PetController extends Controller
                 $input['breed_wildcard'] = $input['breed_id'];
             }
         }
-        if($user->weight_units == 1) {
+        if($user->weight_units == 1 && isset($input['weight'])) {
             $input['weight'] = round($input['weight'] * 0.453592, 1);
         }
-        $validator = $this->petRepository->getUpdateValidator($input);
-        if ($validator->fails()) {
-            return redirect()->route('user.dashboard')->withInput()
-                ->withErrors($validator);
-        }
+
         if ($this->petRepository->update($id, $input) == false) {
             \App::abort(500);
         }
@@ -130,9 +126,8 @@ class PetController extends Controller
 
         if($validator->fails())
         {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json(['error' => true,
+                'result' => 'img is requiered and title can not be longer than 200 characters']);
         }
 
         $user = $this->authUser;
