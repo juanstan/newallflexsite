@@ -35,7 +35,6 @@ class PetController extends Controller
     public function index()
     {
         $this->petRepository->setUser($this->authUser);
-
         return response()->json(['error' => false,
             'result' => $this->petRepository->all()]);
     }
@@ -47,8 +46,9 @@ class PetController extends Controller
 
         $this->petRepository->setUser($user);
 
-        if($user->weight_units == 1) {
-            $input['weight'] = isset($input['weight']) ? $input['weight'] * 0.453592 : null;
+        if($user->weight_units == 1 && isset($input['weight'])) {
+            $input['weight'] = $input['weight'] * 0.453592;
+
         }
 
         if(isset($input['breed_id']))
@@ -63,16 +63,6 @@ class PetController extends Controller
                 $input['breed_id'] = $breed->id;
             }
         }
-
-
-        /*$validator = $this->petRepository->getCreateValidator($input);
-
-        if($validator->fails())
-        {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
-        }*/
 
         $pet = $this->petRepository->create($input);
 
