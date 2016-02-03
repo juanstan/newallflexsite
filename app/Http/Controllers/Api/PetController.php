@@ -48,7 +48,7 @@ class PetController extends Controller
         $this->petRepository->setUser($user);
 
         if($user->weight_units == 1) {
-            $input['weight'] = $input['weight'] * 0.453592;
+            $input['weight'] = isset($input['weight']) ? $input['weight'] * 0.453592 : '';
         }
 
         if(isset($input['breed_id']))
