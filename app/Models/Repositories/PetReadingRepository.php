@@ -189,13 +189,19 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
 
     }
 
-
+    /*
+    * Reassigning the readings from the microchip to the new assigned Pet.
+    *
+    * @param int  $pet_id      Pet ID
+    * @param int  $newPetId    New Pet ID
+    *
+    * @return void
+    *
+    */
     public function reassignReadings($pet_id, $newPetId)
     {
-        if($pet_id && $newPetId)
-        {
-            Reading::where('pet_id' , $pet_id)->update(['pet_id' => $newPetId]);
-        }
+        Reading::where('pet_id' , $pet_id)->update(['pet_id' => $newPetId]);
+
     }
 
 

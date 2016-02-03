@@ -238,6 +238,16 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
 
 
 
+    public function checkOwner($pet_id) {
+        if ($this->user && $this->user->pets()->findOrFail($pet_id)) {
+            return true;
+
+        }
+
+        return false;
+
+    }
+
 
 
 

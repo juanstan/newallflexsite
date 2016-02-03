@@ -105,15 +105,23 @@ class PetReadingController extends Controller
     public function postAssign($pet_id)
     {
         $newPetId = Input::get('pet_id');
-        $query = $this->petRepository->get($pet_id);
-        $data['microchip_number'] = $query->microchip_number;
-        if ($this->petRepository->update($newPetId, $data)) {
+        $this->petRepository->setUser($this->authUser);
+        $data['microchip_number'] = $this->petRepository->get($pet_id)->microchip_number;
+
+        //If current user is the owner of the microchip and the pet then update
+        if ($this->petRepository->checkOwner($pet_id)
+            && $this->petRepository->checkOwner($newPetId)
+            && $this->petRepository->update($newPetId, $data)
+        ) {
             // reassign readings
             $this->petReadingRepository->reassignReadings($pet_id, $newPetId);
             $this->petRepository->delete($pet_id);
+            return response()->json(['error' => false, 'result' => Lang::get('general.Pet microchip number assigned')]);
+
         }
-        return response()->json(['error' => false,
-            'result' => Lang::get('general.Pet microchip number assigned')]);
+
+        return response()->json(['error' => true, 'result' => Lang::get('general.Problem assigning the microchip')]);
+
     }
 
 
