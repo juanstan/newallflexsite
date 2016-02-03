@@ -62,8 +62,7 @@ class PetReadingController extends Controller
             \App::abort(500);
         }
 
-        return response()->json(['error' => false, 'result' => $reading], 201)
-            ->header('Location', URL::route('api.pet.{pet_id}.reading.show', [$reading->id]));
+        return response()->json(['error' => false, 'result' => $reading], 201);
 
     }
 
