@@ -65,14 +65,14 @@ class PetController extends Controller
         }
 
 
-        $validator = $this->petRepository->getCreateValidator($input);
+        /*$validator = $this->petRepository->getCreateValidator($input);
 
         if($validator->fails())
         {
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput();
-        }
+        }*/
 
         $pet = $this->petRepository->create($input);
 
@@ -80,8 +80,7 @@ class PetController extends Controller
             \App::abort(500);
         }
 
-        return response()->json(['error' => false, 'result' => $pet], 201)
-            ->header('Location', URL::route('api.pet.show', [$pet->id]));
+        return response()->json(['error' => false, 'result' => $pet], 201);
     }
 
     public function show($id) // GET
