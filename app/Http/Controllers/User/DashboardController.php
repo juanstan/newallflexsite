@@ -4,7 +4,7 @@ use View;
 use Input;
 use Lang;
 use Auth;
-
+//use Event;
 use Carbon\Carbon;
 
 use App\Models\Entities\Pet;
@@ -25,7 +25,7 @@ use App\Models\Repositories\ReadingRepository;
 use App\Models\Repositories\PetConditionRepository;
 use App\Models\Repositories\ReadingSymptomRepository;
 use App\Models\Repositories\PetRequestRepository;
-
+//use App\Events\ANewVetWasAdded;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -144,6 +144,10 @@ class DashboardController extends Controller
 
     public function postInvite()
     {
+
+        $email = Input::get('email');
+        //Event::fire(new ANewVetWasAdded($this->authUser, $email));
+
         \Mail::send('emails.vet-verify',
             array(
                 'confirmation_code' => $this->authUser->confirmation_code
@@ -486,12 +490,20 @@ class DashboardController extends Controller
         $term = Input::get('term');
         $vets = $this->vetRepository->all();
         $result = [];
+
         foreach($vets as $vet) {
             if(strpos($vet->company_name, $term) !== false) {
-                $result[] = ['id' => $vet->id, 'company_name' => $vet->company_name, 'city' => $vet->city, 'image_path' => $vet->image_path];
+                $result[] = $vet;
             }
         }
-        return response()->json($result);
+
+        $view = [
+            'view' => View::make('ajax.user.add-vet-search')
+                ->with('vets', $result)
+                ->render()
+        ];
+
+        return response()->json($view);
     }
 
 
@@ -499,11 +511,18 @@ class DashboardController extends Controller
     {
         $location = Input::only('lat', 'lng');
         $result = $this->vetRepository->getVetsCloserTo($location);
+
         if(empty($result)){
             return response()->json(['error' => true, 'message' => 'There are no vets in this area']);
         }
 
-        return response()->json($result);
+        $view = [
+            'view' => View::make('ajax.user.add-vet-search')
+                ->with('vets', $result)
+                ->render()
+        ];
+
+        return response()->json($view);
 
     }
 

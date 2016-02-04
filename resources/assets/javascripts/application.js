@@ -1,6 +1,7 @@
 $("#registerVetName, #searchVetName").keyup(function(e){
     var q = $(this).val().replace(/\s+/g, '');
     if(q.length < 3) return;
+    $("#results").empty();
     $("#results").addClass('loading');
 
     $.getJSON("/user/dashboard/vet-search",
@@ -8,17 +9,7 @@ $("#registerVetName, #searchVetName").keyup(function(e){
             term: q,
         },
         function(data) {
-            $("#results").empty();
-            $("#results").removeClass('loading');
-            if (data.length) {
-                $("#results").append("<p>Results for <b>" + q + "</b></p>");
-                $.each(data, function (i, item) {
-                    $("#results").append("<div class='row vetname small-top-buffer' data-text='" + item.company_name + "' ><div class='col-xs-3 small-padding' ><img src='/images/vet-image.png' class='img-responsive img-circle' width='100%' /></div><div class='col-xs-6' ><h4 class='top-none bottom-none'>" + item.company_name + "</h4><small class='top-none'>" + item.city + "</small></div><div class='col-xs-3 small-padding' ><a href='/user/register/vet/add-vet/" + item.id + "' ><button class='btn-block btn btn-default btn-md' >Add</button></a></div></div>");
-                });
-            }
-            else {
-                $("#results").append("<p>No results found for <b>" + q + "</b></p>");
-            }
+            respond(data, q);
         }
     );
 
@@ -28,10 +19,12 @@ $("#registerVetName, #searchVetName").keyup(function(e){
 $("#registerVetLocation, #searchVetLocation").keyup(function(e){
     var location = $(this).val().replace(/\s+/g, '');
     if(location.length < 3) return;
+    $("#results").empty();
     $("#results").addClass('loading');
 
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({ 'address': location }, function(results, status) {
+
         if (status == google.maps.GeocoderStatus.OK) {
             $.getJSON("/user/dashboard/vet-search-location",
                 {
@@ -40,23 +33,26 @@ $("#registerVetLocation, #searchVetLocation").keyup(function(e){
 
                 },
                 function(data) {
-                    $("#results").empty();
-                    $("#results").removeClass('loading');
-                    if (data.length) {
-                        $("#results").append("<p>Results for <b>" + location + "</b></p>");
-                        $.each(data, function (i, item) {
-                            $("#results").append("<div class='row vetname small-top-buffer' data-text='" + item.company_name + "' ><div class='col-xs-3 small-padding' ><img src='/images/vet-image.png' class='img-responsive img-circle' width='100%' /></div><div class='col-xs-6' ><h4 class='top-none bottom-none'>" + item.company_name + "</h4><small class='top-none'>" + item.city + "</small></div><div class='col-xs-3 small-padding' ><a href='/user/dashboard/add-vet/" + item.id + "' ><button class='btn-block btn btn-default btn-md' >Add</button></a></div></div>");
-                        });
-                    }
-                    else {
-                        $("#results").append("<p>No results found for <b>" + location + "</b></p>");
-                    }
+                    respond(data, location);
                 }
             );
         }
     });
-
 });
+
+
+
+function respond(data, key) {
+    $("#results").empty();
+    $("#results").removeClass('loading');
+    if (data['view'] !== undefined ) {
+        $("#results").append("<p>Results for <b>" + key + "</b></p>");
+        $("#results").append(data.view);
+    }
+    else {
+        $("#results").append("<p>No results found for <b>" + key + "</b></p>");
+    }
+}
 
 
 $(function () {

@@ -72,7 +72,7 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 	public function getVetsCloserTo($location, $distance=10) {
 
 		return DB::table('vets')->select(
-			DB::raw("company_name,
+			DB::raw("*,
 			( 3959 * acos( cos( radians(latitude) ) * cos( radians( ? ) )
 			* cos( radians( ? ) - radians(longitude)) + sin( radians(latitude) )
 			* sin( radians( ? ) ) )) AS distance"
