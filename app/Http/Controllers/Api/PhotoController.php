@@ -26,9 +26,8 @@ class PhotoController extends Controller
 
         if($validator->fails())
         {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json(['error' => true,
+                'result' => 'img is requiered and title can not be longer than 200 characters']);
         }
 
         $user = $this->authUser;

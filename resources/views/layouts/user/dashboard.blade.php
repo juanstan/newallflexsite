@@ -44,7 +44,7 @@ $( document ).ready(function() {
     });
 
 
-    $(document.body).on('click', '.symptom-pill-add a', function(e){
+    $(document.body).on('click', '.symptom-pill-add a, a.allconditions', function(e){
         e.preventDefault();
     });
 

@@ -1,7 +1,6 @@
-$("#registerVetName").keyup(function(e){
-    var q = $("#registerVetName").val().replace(/\s+/g, '');
+$("#registerVetName, #searchVetName").keyup(function(e){
+    var q = $(this).val().replace(/\s+/g, '');
     if(q.length < 3) return;
-    $("#results").empty();
     $("#results").addClass('loading');
 
     $.getJSON("/user/dashboard/vet-search",
@@ -9,6 +8,7 @@ $("#registerVetName").keyup(function(e){
             term: q,
         },
         function(data) {
+            $("#results").empty();
             $("#results").removeClass('loading');
             if (data.length) {
                 $("#results").append("<p>Results for <b>" + q + "</b></p>");
@@ -25,8 +25,8 @@ $("#registerVetName").keyup(function(e){
 });
 
 
-$("#searchVetLocation").keyup(function(e){
-    var location = $("#searchVetLocation").val().replace(/\s+/g, '');
+$("#registerVetLocation, #searchVetLocation").keyup(function(e){
+    var location = $(this).val().replace(/\s+/g, '');
     if(location.length < 3) return;
     $("#results").addClass('loading');
 

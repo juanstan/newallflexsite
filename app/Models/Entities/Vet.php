@@ -87,5 +87,4 @@ class Vet extends Model implements AuthenticatableContract, CanResetPasswordCont
         return $query->whereNull('name');
 
     }
-    
 }

@@ -419,7 +419,7 @@ $temperaturePref = $user->units;
                             <div class="form-group">
                                     {!! Form::label('Known conditions', Lang::get('general.Known conditions'), array('class' => 'col-sm-7 control-label')) !!}
                                 <div class="col-xs-5">
-                                    <a href="#" data-toggle="collapse" data-target="#condition-list{!! $pet->id !!}" >
+                                    <a href="#" class="allconditions" data-toggle="collapse" data-target="#condition-list{!! $pet->id !!}" >
                                         {!! Form::button(Lang::get('general.Manage <i class="fa fa-angle-right small-left-buffer"></i>'), array('class' => 'btn btn-file btn-block btn-md')) !!}
                                     </a>
                                 </div>

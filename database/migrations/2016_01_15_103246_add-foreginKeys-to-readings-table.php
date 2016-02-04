@@ -13,7 +13,6 @@ class AddForeginKeysToReadingsTable extends Migration
     public function up()
     {
         Schema::table('readings', function (Blueprint $table) {
-            $table->foreign('device_id')->references('id')->on('devices')->onUpdate('restrict')->onDelete('restrict');
             $table->foreign('pet_id')->references('id')->on('pets')->onUpdate('restrict')->onDelete('restrict');
         });
     }
@@ -27,7 +26,6 @@ class AddForeginKeysToReadingsTable extends Migration
     {
         Schema::table('readings', function (Blueprint $table) {
             $table->dropForeign('readings_pet_id_foreign');
-            $table->dropForeign('readings_device_id_foreign');
         });
     }
 }

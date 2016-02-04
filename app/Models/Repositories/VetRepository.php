@@ -69,7 +69,8 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 	}
 
 
-	public function getVetsCloserTo($location, $closest=10) {
+	public function getVetsCloserTo($location, $distance=10) {
+
 		return DB::table('vets')->select(
 			DB::raw("company_name,
 			( 3959 * acos( cos( radians(latitude) ) * cos( radians( ? ) )
@@ -78,8 +79,15 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 			)
 		)
 		->orderBy("distance")
-		->take($closest)
-		->addBinding([(float)$location['lat'], (float)$location['lng'], (float)$location['lat']])->get();
+		->having("distance", "<", (int)$distance)
+		->take(20)
+		->addBinding(
+			[
+				(float)$location['lat'],
+				(float)$location['lng'],
+				(float)$location['lat']
+			]
+		)->get();
 
 	}
 
