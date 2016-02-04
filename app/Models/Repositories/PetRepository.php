@@ -40,7 +40,7 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
         [
             'name' 			=> ['sometimes','required'],
             'date_of_birth' => ['sometimes','required','date'],
-            'weight'     	=> ['sometimes','required'],
+            'weight'     	=> ['sometimes'],
             'gender'		=> ['sometimes','required']
         ]);
     }

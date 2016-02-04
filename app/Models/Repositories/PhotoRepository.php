@@ -276,7 +276,7 @@ class PhotoRepository extends AbstractRepository implements PhotoRepositoryInter
 		return Validator::make($input,
 		[
 			'title' => ['max:255'],
-            'image_path' => ['required', 'image']
+            'image_path' => ['required', 'image', 'mimes:jpeg,png']
 		]);
 	}
 

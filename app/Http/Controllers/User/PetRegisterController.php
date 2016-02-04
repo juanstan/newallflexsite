@@ -6,6 +6,8 @@ use Input;
 use Redirect;
 use Image;
 use File;
+use Request;
+use Illuminate\Validation\Validator;
 
 use App\Models\Entities\Pet;
 use App\Models\Repositories\PetRepository;
@@ -78,8 +80,15 @@ class PetRegisterController extends Controller
 
     public function postCreate()
     {
-        $input = $this->settingValuesForPet();
-        $pet = $this->petRepository->create($input);
+        $result = $this->settingValuesForPet();
+
+        if (($result instanceof Validator)) {
+            return redirect()->to(Request::path())
+                ->withErrors($result)
+                ->withInput();
+        }
+
+        $pet = $this->petRepository->create($result);
 
         if ($pet == null) {
             \App::abort(500);
@@ -93,8 +102,15 @@ class PetRegisterController extends Controller
 
     public function postEdit($pet_id)
     {
-        $input = $this->settingValuesForPet();
-        $pet = $this->petRepository->update($pet_id, $input);
+        $result = $this->settingValuesForPet();
+        if (($result instanceof Validator)) {
+            return redirect()->to(Request::path())
+                ->withErrors($result)
+                ->withInput();
+        }
+
+
+        $pet = $this->petRepository->update($pet_id, $result);
 
         if ($pet == null) {
             \App::abort(500);
@@ -121,7 +137,11 @@ class PetRegisterController extends Controller
 
         $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
         $this->petRepository->setUser($user);
-        $input['weight'] = ($user->weight_units == 1) ? $input['weight'] * 0.453592 : $input['weight'];
+
+        if (($user->weight_units == 1 && $input['weight'])) {
+            $input['weight'] = $input['weight'] * 0.453592;
+
+        }
 
         if($breed == NULL)
         {
@@ -136,18 +156,16 @@ class PetRegisterController extends Controller
 
         if($validator->fails())
         {
-            return redirect()->back()
-                ->withErrors($validator)
-                ->withInput();
+            return $validator;
         }
 
         if (Input::hasFile('image_path')) {
-            $imageValidator = $this->petRepository->getCreateValidator($input);
+            $imageValidator = $this->photoRepository->getCreateValidator($input);
             if($imageValidator->fails())
             {
-                return redirect()->back()
-                    ->withErrors($imageValidator)
-                    ->withInput();
+
+                return $imageValidator;
+
             }
             $photo = array(
                 'title' => $user->id,
