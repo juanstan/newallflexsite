@@ -135,7 +135,7 @@ return array (
   'Reset password' => 'Reset password',
   'Retype password' => 'Retype password',
   'Save changes' => 'Save changes',
-  'Scan your pets to see their Microchip numbers on the device to match up above' => 'Scan your pets to see their Microchip numbers on the device to match up above',
+  'Scan your pets to see their Microchip numbers on the device to match with the number above' => 'Scan your pets to see their Microchip numbers on the device to match with the number above',
   'Scan your pets with the [device name] then follow one of the below methods' => 'Scan your pets with the [device name] then follow one of the below methods',
   'Scan your pets with the SureSense reader then follow one of the below methods' => 'Scan your pets with the SureSense reader then follow one of the below methods',
   'Search' => 'Search',
