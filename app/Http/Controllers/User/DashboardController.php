@@ -106,7 +106,7 @@ class DashboardController extends Controller
         $this->petRepository->setUser($user);
         $symptoms = $this->symptomRepository->all();
         $conditions = $this->conditionRepository->all();
-        $petNoMicrochips = $this->petRepository->petsSet();
+        $petNoMicrochips = $this->petRepository->petsSetNoMicrochip();
         $pets = $this->petRepository->all();
 
         if($pets->isEmpty())

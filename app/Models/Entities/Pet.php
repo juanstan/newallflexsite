@@ -99,6 +99,11 @@ class Pet extends Model implements AuthenticatableContract, CanResetPasswordCont
     }
 
 
+    public function scopeNoSetMicrochip($query){
+        return $query->whereNull('microchip_number');
+
+    }
+
 
     public function scopeCheckMicrochip($query, $microchip_number){
         return $query->where('microchip_number', '=', $microchip_number);
