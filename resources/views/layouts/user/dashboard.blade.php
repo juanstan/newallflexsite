@@ -33,8 +33,12 @@
 $( document ).ready(function() {
     $( document.body ).on( 'click', '.dropdown-menu li', function( event ) {
         var $target = $(this);
+
+        console.log($target, $target.attr( 'data-id' ));
+
         $target.closest( '.btn-group' )
-                .find( 'input' ).val( $target.attr( 'data-id' ) );
+                .find( 'input[name="pet-id"]' ).val( $target.attr( 'data-id' ) );
+
         $target.closest( '.btn-group' )
                 .find( '[data-bind="label"]' ).text( $target.text() )
                 .end()

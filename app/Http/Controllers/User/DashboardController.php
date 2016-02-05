@@ -106,8 +106,8 @@ class DashboardController extends Controller
         $this->petRepository->setUser($user);
         $symptoms = $this->symptomRepository->all();
         $conditions = $this->conditionRepository->all();
-        $pets = $this->petRepository->petsSet();
-        $microchips = $this->petRepository->microchipUnassigned();
+        $petNoMicrochips = $this->petRepository->petsSet();
+        $pets = $this->petRepository->all();
 
         if($pets->isEmpty())
         {
@@ -116,7 +116,7 @@ class DashboardController extends Controller
         }
 
         $breed = $this->breedRepository->all()->lists('name', 'id');
-        $data = array('pets','microchips','conditions','symptoms','breed','user');
+        $data = array('pets','conditions','symptoms','breed','user','petNoMicrochips');
 
         if ($this->authUser->confirmed != null) {
             array_push($data, ['not-verified' => '']);
@@ -250,6 +250,7 @@ class DashboardController extends Controller
         $input = Input::all();
         $this->petRepository->setUser($user);
         $breed = $this->breedRepository->getBreedIdByName($input['breed_id']);
+
         if($breed)
         {
             $input['breed_id'] = $breed->id;
@@ -258,9 +259,11 @@ class DashboardController extends Controller
         {
             $input['breed_wildcard'] = $input['breed_id'];
         }
-        if($user->weight_units == 1) {
+
+        if($user->weight_units == 1 && isset($input['weight'])) {
             $input['weight'] = round($input['weight'] * 0.453592, 1);
         }
+
         $validator = $this->petRepository->getUpdateValidator($input);
         if ($validator->fails()) {
             return redirect()->route('user.dashboard')->withInput()

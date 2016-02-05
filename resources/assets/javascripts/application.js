@@ -180,3 +180,10 @@ var options = {
 });
 
 $( document ).ready(function() {});
+
+
+//Little hack to active the edit tab on the top of each pet card
+$('a.create-pet-tab').click(function(){
+    var pet = $(this).attr('href').split('#edit')[1];
+    $("a[href='#edit"+pet+"']").parent('li').addClass('active').siblings().removeClass('active');
+});

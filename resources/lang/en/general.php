@@ -256,4 +256,7 @@ return array (
   'county' => 'county',
   'please verify' => 'please verify',
   'uploaded file is not valid' => 'uploaded file is not valid',
+  'Assign to a pet'=>'Assign to a pet',
+  'Create a pet profile fir this microchip number'=>'Create a pet profile fir this microchip number',
+    'Create Profile' => 'Create Profile'
 );

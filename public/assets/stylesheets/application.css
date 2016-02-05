@@ -5644,6 +5644,9 @@ button.close {
 body {
   font-family: "HelveticaNeueLT-Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; }
 
+.nopadding {
+  padding: 0; }
+
 .npaddingleft {
   padding-left: 0; }
 
@@ -6008,6 +6011,9 @@ label {
   .jumbotron.dashboard .assigned-title-wrapper h4 {
     color: #7596a1; }
 
+.jumbotron.dashboard.select-pet-microchip {
+  overflow: visible; }
+
 .ellipsis {
   overflow: hidden;
   text-overflow-multiline: ellipsis; }
@@ -6042,7 +6048,13 @@ label {
   background-color: #fff;
   border-radius: 4px 4px 4px 4px !important;
   height: 3.2em; }
-  .dropdown-toggle:hover, .dropdown-toggle:focus {
+
+.dropdown-toggle.pet-tab {
+  padding: 0 19px !important;
+  height: 2.3em;
+  font-size: 1.4em;
+  color: #aaa; }
+  .dropdown-toggle.pet-tab:hover, .dropdown-toggle.pet-tab:focus {
     color: #71787f;
     background-color: #fff !important; }
 
@@ -6280,6 +6292,9 @@ tspan {
   overflow-x: hidden;
   position: relative; }
 
+.latest-list-wrap.select-pet-microchip {
+  overflow: visible; }
+
 .how-to-tabs li {
   display: block !important;
   text-align: left; }
@@ -6444,5 +6459,22 @@ input[type="radio"] {
 
 .loading {
   background: url("/images/loading.gif") center no-repeat; }
+
+.create-pet-tab button {
+  height: 2.3em;
+  font-size: 1.4em;
+  width: 93%; }
+
+.center-create-pet-tab .create-pet-tab button {
+  width: 50%;
+  margin: 0 auto; }
+
+.assign-pet-title {
+  margin-top: 1.75em;
+  margin-bottom: 1em;
+  color: #999;
+  font-size: 1.1em; }
+  .assign-pet-title h4 {
+    font-size: 1.25em; }
 
 /*# sourceMappingURL=application.css.map */

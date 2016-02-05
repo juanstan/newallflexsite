@@ -28,6 +28,9 @@
 body
   font-family: $font-stack
 
+.nopadding
+  padding: 0
+
 .npaddingleft
   padding-left: 0
 
@@ -447,6 +450,9 @@ label
     h4
       color: #7596a1
 
+.jumbotron.dashboard.select-pet-microchip
+  overflow: visible
+
 .ellipsis
   overflow: hidden
   text-overflow-multiline: ellipsis
@@ -482,6 +488,13 @@ label
   background-color: #fff
   border-radius: 4px 4px 4px 4px !important
   height: 3.2em
+
+.dropdown-toggle.pet-tab
+  padding: 0 19px !important
+  height: 2.3em
+  font-size: 1.4em
+  color: #aaa
+
 
   &:hover, &:focus
     color: $secondary-color
@@ -737,6 +750,9 @@ tspan
   overflow-x: hidden
   position: relative
 
+.latest-list-wrap.select-pet-microchip
+  overflow: visible
+
 .how-to-tabs
 
   li
@@ -925,3 +941,23 @@ input[type="radio"]
   min-height: 12em
 .loading
   background: url("/images/loading.gif") center no-repeat
+
+.create-pet-tab
+  button
+    height: 2.3em
+    font-size: 1.4em
+    width: 93%
+
+.center-create-pet-tab
+  .create-pet-tab
+    button
+      width: 50%
+      margin: 0 auto
+
+.assign-pet-title
+  margin-top: 1.75em
+  margin-bottom: 1em
+  color: #999
+  font-size: 1.1em
+  h4
+    font-size: 1.25em

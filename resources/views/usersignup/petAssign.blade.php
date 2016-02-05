@@ -79,7 +79,7 @@
                             {!! HTML::image('images/scan-icon.png', 'a Logo', array('class' => '')) !!}
                         </div>
                         <div class="col-sm-10 text-left" >
-                            <p>{!! Lang::get('general.Scan your pets to see their Microchip numbers on the device to match up above') !!}</p>
+                            <p>{!! Lang::get('general.Scan your pets to see their Microchip numbers on the device to match with the number above') !!}</p>
                         </div>
                     </div>
                     <a href="{!! URL::route('user.register.reading.finish') !!}" >
