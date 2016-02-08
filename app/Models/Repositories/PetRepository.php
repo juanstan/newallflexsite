@@ -107,13 +107,23 @@ class PetRepository extends AbstractRepository implements PetRepositoryInterface
      * @return void
      *
      */
-    public function attachDetachVet($vet_id, $attach='attach')
+    public function attachDetachVet($vet_id, $action='attach')
     {
-        if ($this->user) {
-            foreach ($this->user->pets()->get() as $pet){
-                $pet->vet()->$attach($vet_id);
+
+        try {
+            if ($this->user) {
+                foreach ($this->user->pets()->get() as $pet) {
+                    $pet->vet()->$action($vet_id);
+                }
             }
+
+        } catch (Exception $e) {
+            return false;
+
         }
+
+        return true;
+
     }
 
 
