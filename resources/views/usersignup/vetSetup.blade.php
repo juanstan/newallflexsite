@@ -7,11 +7,11 @@
         </div>
         <div class="col-md-12 col-centered float-none" >
             <div class="form-horizontal top-buffer">
-                <div class="row col-centered float-none top-buffer vcenterwrap" >
-                    <div class="col-md-5 desktop vcenter right-none left-none" >
-                        {!! HTML::image('images/vet-image-with-dog.png', 'Springer', array('class' => '', 'width' => '100%')) !!}
+                <div class="row float-none top-buffer" >
+                    <div class="col-md-5 desktop right-none left-none" >
+                        {!! HTML::image('images/vetimageWeb.png', 'Springer', array('class' => '', 'width' => '68%')) !!}
                     </div>
-                    <div class="col-md-7 vcenter" >
+                    <div class="col-md-7" >
                         <div class="row">
                             <div class="col-md-12 list-vets">
                                 <ul class="nav nav-pills nav-stacked">

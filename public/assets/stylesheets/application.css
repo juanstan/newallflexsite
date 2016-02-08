@@ -6007,7 +6007,9 @@ label {
   overflow: hidden;
   padding: 10px;
   position: relative;
-  min-height: 500px; }
+  height: 456px;
+  width: 310px;
+  margin: 80px auto; }
   .jumbotron.dashboard .assigned-title-wrapper h4 {
     color: #7596a1; }
 
@@ -6086,7 +6088,8 @@ label {
 .jumbotron.add-new-pet {
   background-color: transparent;
   border: 2px solid #c0c0c0;
-  min-height: 500px;
+  height: 456px;
+  width: 310px;
   background-color: transparent;
   padding: 0; }
   .jumbotron.add-new-pet .col-md-12 {
@@ -6161,23 +6164,20 @@ label {
 .score-text {
   color: #40c8c6;
   font-family: "HelveticaNeueLT-Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  line-height: 1em;
-  font-size: 6.5em;
-  letter-spacing: -0.1em;
-  margin-top: 0.4em; }
+  margin-top: 35px; }
   .score-text .degree-wrapper {
     display: block;
     text-align: center; }
   .score-text p {
     letter-spacing: normal;
-    margin-top: -2.5em;
+    margin-top: -10px;
     width: 100%; }
   .score-text .temp {
     letter-spacing: -0.03em;
     font-weight: lighter;
-    font-size: 86px; }
+    font-size: 65px; }
   .score-text span.tempsymbol {
-    font-size: 0.6em;
+    font-size: 56px;
     vertical-align: top;
     margin-left: -0.12em;
     top: 13%;

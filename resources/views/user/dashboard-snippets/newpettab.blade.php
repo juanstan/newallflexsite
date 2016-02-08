@@ -1,4 +1,4 @@
-<div class="col-md-4 col-sm-6 col-xs-12" >
+<div class="col-xs-12 col-sm-6 col-md-4" >
     <div class="tab-content ">
         <div  class="tab-pane active fade in" id="newPet">
             <div class="jumbotron dashboard add-new-pet large-top-buffer" >

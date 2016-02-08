@@ -15,13 +15,7 @@ $temperaturePref = $user->units;
 <div class="row col-md-12 col-centered float-none top-buffer" >
     <div class="row">
     @foreach ($pets as $k=>$pet)
-        <!--Grouping Pets in different rows -->
-        @if (!fmod($k,3))
-            </div><div class="row">
-        @endif
-
         <div class="col-xs-12 col-sm-6 col-md-4" >
-
             <div class="top-buffer mobile" ></div>
             @include('user.dashboard-snippets.headerpetdetailstab')
 

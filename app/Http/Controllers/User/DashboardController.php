@@ -533,10 +533,14 @@ class DashboardController extends Controller
     public function getAddVet($vetId)
     {
         $this->petRepository->setUser($this->authUser);
-        $this->petRepository->attachDetachVet($vetId);
+        if ($this->petRepository->attachDetachVet($vetId)) {
+            return redirect()->route('user.register.reading')
+                ->with('success', Lang::get('general.Vet added'));
 
-        return redirect()->route('user.dashboard.vet')
-            ->with('success', Lang::get('general.Vet added'));
+        }
+
+        return redirect()->route('user.register.vet')
+            ->with('false', Lang::get('general.Problem adding the vet'));
     }
 
 

@@ -7,7 +7,7 @@
     <div class="row desktop" >
         <div class="col-md-11 col-centered float-none top-buffer" >
             <h3>{!! Lang::get('general.Finally upload readings from the SureSense reader') !!}</h3>
-            <h4>{!! Lang::get('general.Scan your pets with the SureSense reader then follow one of the below methods') !!}</h4>
+            <h4>{!! Lang::get('general.Scan your pets with the Microchip Temperature Reader then follow one of the below methods') !!}</h4>
         </div>
     </div>
     <div class="row" >
