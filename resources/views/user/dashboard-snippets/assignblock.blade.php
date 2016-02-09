@@ -1,5 +1,5 @@
 <div class="row text-center" >
-    <div class="col-xs-11 col-centered float-none nopadding" >
+    <div class="col-xs-12 col-centered float-none nopadding" >
         @if ($pet->name)
             <h3>{!! Lang::get('general.Symptoms' ) !!}</h3>
             @if( $pet->readings->count() )

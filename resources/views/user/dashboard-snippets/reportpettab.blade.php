@@ -14,7 +14,7 @@
                         @if(!empty($allReadingTemps))
                             <div class="circle small-top-buffer circle-small-border" style="border-color: white;">
                                 <div class="circle-inner">
-                                    <div class="small-score-text margintop0-25" style="color: white;">
+                                    <div class="small-temperature-figure" style="color: white;">
                                         {!! getTemperatureColor($readingAverage, $temperaturePref)['temp'] !!}<span>&#176;</span>
                                     </div>
                                 </div>
