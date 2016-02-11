@@ -187,3 +187,21 @@ $('a.create-pet-tab').click(function(){
     var pet = $(this).attr('href').split('#edit')[1];
     $("a[href='#edit"+pet+"']").parent('li').addClass('active').siblings().removeClass('active');
 });
+
+$('a.user-delete').click(function(e){
+    e.preventDefault();
+
+    $("#userDelete").dialog({
+        resizable: false,
+        height:210,
+        modal: true,
+        buttons: {
+            "Continue": function() {
+                window.location="/user/delete";
+            },
+            Cancel: function() {
+                $( this ).dialog( "close" );
+            }
+        }
+    });
+});

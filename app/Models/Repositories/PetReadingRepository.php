@@ -57,14 +57,15 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
         $csv = Reader::createFromFileObject(new \SplFileObject($destinationPath . '/' . $fileName));
 
         $topRow = $csv->fetchOne(0);
-        $reading_device_id = $topRow[0];
         $device_current_time_epoch = $topRow[4];
 
         $csv->setOffset(1);
         $data = $csv->fetch();
 
         foreach ($data as $lineIndex => $row) {
-            $decodedMicrochipID = $this->decoded_microchip_id($row[1]);
+            $decodedInfo = $this->decoded_microchip_id($row[1]);
+            $decodedMicrochipID = $decodedInfo['manufacturer'].'.'.$decodedInfo['device_id'];
+
             $profile = $this->model->where('microchip_id', '=', $decodedMicrochipID)->first();
             $petOwner = $user->$sMethodPet()->checkMicrochip($decodedMicrochipID)->first();
             $pet = Pet::checkMicrochip($decodedMicrochipID)->first();
@@ -87,9 +88,9 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
             }
 
             if (empty($profile)) {
-                if (!$device = Device::find($reading_device_id)){
+                if (!$device = Device::find($decodedInfo['device_id'])){
                     $device = new Device();
-                    $device->id = $reading_device_id;
+                    $device->id = $decodedInfo['device_id'];
                     //$device->serial_id = ???;
                     $device->$sTypeID = $user->id;
                     $device->save();
@@ -221,7 +222,10 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
         $manufacturer = bindec($manufacturer);
         $device_id = bindec($device_id);
         // Put pieces back
-        return $manufacturer . '.' . $device_id;
+        return [
+            'manufacturer'  =>  $manufacturer,
+            'device_id'    =>   $device_id
+        ];
 
     }
 

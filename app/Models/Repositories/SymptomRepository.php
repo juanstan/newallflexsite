@@ -2,6 +2,7 @@
 
 use Auth;
 use Validator;
+use Cache;
 use App\Models\Entities\Symptom;
 
 class SymptomRepository extends AbstractRepository implements SymptomRepositoryInterface
@@ -11,6 +12,7 @@ class SymptomRepository extends AbstractRepository implements SymptomRepositoryI
 	protected $readingRepository;
 	protected $user;
 
+
 	public function __construct(Symptom $model, PetRepositoryInterface $pet, ReadingRepositoryInterface $reading)
 	{
 		$this->model = $model;
@@ -18,6 +20,17 @@ class SymptomRepository extends AbstractRepository implements SymptomRepositoryI
 		$this->readingRepository = $reading;
 		$this->user = Auth::user()->get();;
 	}
+
+
+	public function all()
+	{
+		return Cache::remember('symptoms', 10, function()
+		{
+			return $this->model->all();
+		});
+
+	}
+
 
 	public function getCreateValidator($input)
 	{

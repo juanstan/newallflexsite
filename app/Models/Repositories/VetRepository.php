@@ -3,6 +3,7 @@
 use App\Models\Entities\Vet;
 use Carbon\Carbon;
 use DB;
+use Cache;
 
 class VetRepository extends AbstractRepository implements VetRepositoryInterface
 {
@@ -13,6 +14,18 @@ class VetRepository extends AbstractRepository implements VetRepositoryInterface
 	{
 		$this->model = $model;
 	}
+
+
+	public function all()
+	{
+		return Cache::remember('vets', 10, function()
+		{
+			return $this->model->all();
+		});
+
+	}
+
+
 
 	public function getByEmailForLogin($email)
 	{

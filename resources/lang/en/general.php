@@ -260,5 +260,6 @@ return array (
   'uploaded file is not valid' => 'uploaded file is not valid',
   'Assign to a pet'=>'Assign to a pet',
   'Create a pet profile fir this microchip number'=>'Create a pet profile fir this microchip number',
-    'Create Profile' => 'Create Profile'
+  'Create Profile' => 'Create Profile',
+  'You are about to remove all your personal and pets information. Do you want to continue?' => 'You are about to remove all your personal and pets information. Do you want to continue?'
 );

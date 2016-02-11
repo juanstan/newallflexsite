@@ -6009,7 +6009,7 @@ label {
   position: relative;
   height: 456px;
   width: 310px;
-  margin: 80px auto; }
+  margin: 0 auto; }
   .jumbotron.dashboard .assigned-title-wrapper h4 {
     color: #7596a1; }
 
@@ -6091,7 +6091,8 @@ label {
   height: 456px;
   width: 310px;
   background-color: transparent;
-  padding: 0; }
+  padding: 0;
+  margin-top: 80px; }
   .jumbotron.add-new-pet .col-md-12 {
     margin-top: 40%; }
   .jumbotron.add-new-pet a {
@@ -6408,7 +6409,7 @@ input[type="radio"] {
 .container-vet-pill {
   overflow: hidden; }
   .container-vet-pill .vet-content {
-    height: 507px;
+    height: 295px;
     overflow-x: hidden;
     overflow-y: auto; }
 
@@ -6455,10 +6456,15 @@ input[type="radio"] {
   top: 2em; }
 
 #results {
-  min-height: 12em; }
+  height: 180px;
+  overflow-x: hidden;
+  overflow-y: auto; }
 
 .loading {
   background: url("/images/loading.gif") center no-repeat; }
+
+.results-vets {
+  margin: 10px !important; }
 
 .create-pet-tab button {
   height: 2.3em;

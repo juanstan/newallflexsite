@@ -91,11 +91,9 @@
             </div>
             <div class="form-group top-buffer">
                 <div class="col-sm-12">
-                    <a href="{!! URL::route('user.delete') !!}" >
-                        {!! Form::button(Lang::get('general.Delete account'), array('class' => 'btn btn-file btn-lg pull-left border-none')) !!}
-                    </a>
+                    <a href="#" class="btn btn-file btn-lg pull-left border-none user-delete">{!! Lang::get('general.Delete account') !!}</a>
                     {!! Form::submit(Lang::get('general.Save changes'), array('class' => 'btn btn-default btn-lg pull-right')) !!}
-                    {!! Form::close() !!}
+                {!! Form::close() !!}
                 </div>
             </div>
         </div>
@@ -125,5 +123,9 @@
         </div>
         <div class="clearfix"></div>
     </div>
+</div>
+
+<div id="userDelete">
+    {!! Lang::get('general.You are about to remove all your personal and pets information. Do you want to continue?') !!}
 </div>
 @stop

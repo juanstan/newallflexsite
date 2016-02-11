@@ -1,5 +1,5 @@
 @foreach($vets as $vet)
-    <div class='row vetname small-top-buffer' data-text='" + item.company_name + "' >
+    <div class='row vetname results-vets small-top-buffer' data-text='" + item.company_name + "' >
         <div class='col-xs-3 small-padding' >
             <img src='/images/vet-image.png' class='img-responsive img-circle' width='100%' />
         </div>
