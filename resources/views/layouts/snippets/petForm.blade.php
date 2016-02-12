@@ -26,7 +26,7 @@
             <div class="form-group">
                     {!! Form::label('breed_id', Lang::get('general.Breed'), array('class' => 'col-sm-4 control-label')) !!}
                 <div class="col-sm-8">
-                    {!! Form::input('name', 'breed_id', $pet->breed_wildcard, array('class' => 'form-control text-left', 'id' => 'breedList'))!!}
+                    {!! Form::input('text', 'breed_id', $pet->breed_wildcard, array('class' => 'form-control text-left', 'id' => 'breedList'))!!}
                 </div>
             </div>
             <div class="form-group">

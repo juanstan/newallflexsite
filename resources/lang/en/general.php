@@ -261,5 +261,6 @@ return array (
   'Assign to a pet'=>'Assign to a pet',
   'Create a pet profile fir this microchip number'=>'Create a pet profile fir this microchip number',
   'Create Profile' => 'Create Profile',
-  'You are about to remove all your personal and pets information. Do you want to continue?' => 'You are about to remove all your personal and pets information. Do you want to continue?'
+  'You are about to remove all your personal and pets information. Do you want to continue?' => 'You are about to remove all your personal and pets information. Do you want to continue?',
+  'Your account has been created although no pets have been assigned'=>'Your account has been created although no pets have been assigned'
 );

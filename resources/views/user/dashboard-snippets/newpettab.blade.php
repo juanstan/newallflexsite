@@ -44,7 +44,7 @@
                     <div class="form-group">
                         {!! Form::label('breed', Lang::get('general.Breed'), array('class' => 'col-sm-3 control-label')) !!}
                         <div class="col-xs-9">
-                            {!! Form::text('breed_id', '', array('class' => 'form-control text-left breed-list')) !!}
+                            {!! Form::text('breed_id', '', array('class' => 'form-control text-left breed-list', 'autocomplete'=>'on')) !!}
                         </div>
                     </div>
                     <div class="col-xs-12 small-padding" >

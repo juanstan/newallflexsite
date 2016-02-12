@@ -112,7 +112,7 @@ class DashboardController extends Controller
         if($pets->isEmpty())
         {
             return redirect()->route('user.register.pet')
-                ->with('error', \Lang::get('general.Your account has been created although no a pet has been assigned'));
+                ->with('error', \Lang::get('general.Your account has been created although no pets have been assigned'));
         }
 
         $breed = $this->breedRepository->all()->lists('name', 'id');
