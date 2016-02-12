@@ -4,13 +4,11 @@
     <meta charset="utf-8">
 </head>
 <body>
-<h2>Verify Your Email Address</h2>
+<h2>Register with SureSense!!</h2>
 
 <div>
-    Thanks for creating an account with the verification demo app.
-    Please follow the link below to verify your email address
-    {!! URL::to('vet/verify/' . $confirmation_code) !!}.<br/>
-
+    Some of your client has shown interest to register your clinic in our system. Please contact us and we will give you all details
+    <?=Request::root() ?>
 </div>
 
 </body>

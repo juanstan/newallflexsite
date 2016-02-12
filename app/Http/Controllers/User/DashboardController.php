@@ -158,7 +158,7 @@ class DashboardController extends Controller
             }
         );
         return redirect()->route('user.dashboard')
-            ->with('message', Lang::get('general.Verification email sent'));
+            ->with('success', Lang::get('general.Verification email sent'));
     }
 
 

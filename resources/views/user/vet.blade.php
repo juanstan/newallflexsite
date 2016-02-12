@@ -10,6 +10,7 @@
     <div class="col-xs-12 col-centered top-buffer" >
         <?php $vetId = ''; ?>
         <div class="row container-vet-pill">
+        @if (!empty($vets))
         @foreach ($vets as $vet)
             <div class="col-xs-12 col-sm-6 col-md-4" >
                 <div class="jumbotron dashboard no-overflow text-center" >
@@ -75,6 +76,7 @@
                 </div>
             </div>
         @endforeach
+        @endif
         <div class="col-xs-12 col-sm-6 col-md-4" >
             <div class="tab-content ">
                 <div  class="tab-pane  fade in" id="newPet">
