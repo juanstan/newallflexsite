@@ -1,9 +1,13 @@
 <?php namespace App\Http\Controllers\User;
 
-use Illuminate\Auth\UserInterface;
+use Validator;
+use Password;
+use Lang;
+use Input;
+/*use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use \Illuminate\Database\Eloquent\ModelNotFoundException;
-
+*/
 class PasswordController extends \App\Http\Controllers\Controller {
 
     public function getRequest()
@@ -18,12 +22,13 @@ class PasswordController extends \App\Http\Controllers\Controller {
             'email' => 'required|email|exists:users',
         );
 
-        $validator = \Validator::make (\Input::all(), $rules);
+        $validator = Validator::make(Input::all(), $rules);
 
         if ($validator -> passes()){
-            \Password::user()->remind(\Input::only('email'), function($message) {
+            Password::user()->sendResetLink(Input::only('email'), function ($message) {
                 $message->subject('Password reminder');
             });
+
             return \Redirect::route('user')
                 ->with('success', \Lang::get('general.Your request to reset your password has been accepted, we have sent further details to your email address'));
         }
@@ -31,6 +36,7 @@ class PasswordController extends \App\Http\Controllers\Controller {
             return \Redirect::route('user.password.request')
                 ->with('error', \Lang::get('general.This email does not exist'));
         }
+
 
     }
 
