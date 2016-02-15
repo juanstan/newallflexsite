@@ -5,6 +5,7 @@ use View;
 use Input;
 use Session;
 use Lang;
+use Event;
 
 use App\Models\Entities\Pet;
 use App\Models\Entities\User;
@@ -13,6 +14,7 @@ use App\Models\Repositories\PetReadingRepositoryInterface;
 use App\Models\Repositories\PetReadingSymptomRepositoryInterface;
 use App\Models\Repositories\UserRepositoryInterface;
 use App\Http\Controllers\Controller;
+use App\Events\ANewUserWasAdded;
 
 class AuthController extends Controller
 {
@@ -58,6 +60,7 @@ class AuthController extends Controller
         $input['units'] = 0;
         $input['weight_units'] = 0;
         $validator = $this->userRepository->getCreateValidator($input);
+
         if ($validator->fails()) {
             return redirect()->route('user.register')
                 ->withErrors($validator)
@@ -68,8 +71,12 @@ class AuthController extends Controller
         if ($user == null) {
             \App::abort(500);
         }
-        Auth::user()->login($user);
-        return redirect()->route('user.register.about');
+
+        Event::fire(new ANewUserWasAdded($user, $user->email));
+        return redirect()->route('user')->with('success', 'Thanks for signing up! Please check your email.');
+
+
+
     }
 
     public function getResendConfirmation()
@@ -96,13 +103,19 @@ class AuthController extends Controller
         }
         $user->confirmed = 1;
         $user->confirmation_code = null;
-        $user->save();
-        if (Auth::user()->check()) {
-            return redirect()->route('user.dashboard')
+
+        if ($user->save()) {
+            return redirect()->route('user')
                 ->with('success', Lang::get('general.You have successfully verified your account.'));
+
+        } else {
+            return redirect()->route('user')
+                ->with('success', Lang::get('general.There was a problem with your verification.'));
+
         }
-        return redirect()->route('user');
+
     }
+
 
     public function postLogin()
     {
@@ -110,26 +123,25 @@ class AuthController extends Controller
         $input = Input::all();
         $validator = $this->userRepository->getLoginValidator($input);
         if ($validator->fails()) {
-            return redirect()->route('user')
-                ->withErrors($validator)
-                ->withInput(Input::except('password'));
+            return redirect()->route('user')->withErrors($validator)->withInput(Input::except('password'));
+
         } else {
 
             $userData = array(
                 'email' => $input['email'],
-                'password' => $input['password']
+                'password' => $input['password'],
+                'confirmed' => 1
             );
 
             if (Auth::user()->attempt($userData)) {
-
                 return redirect()->route('user.dashboard')
                     ->with('success', Lang::get('general.You have logged in successfully'));
-            }
-            else
-            {
+
+            } else {
                 return redirect()->route('user')
                     ->with('error', Lang::get('general.The password used is incorrect.'))
                     ->withInput(Input::except('password'));
+
             }
         }
     }

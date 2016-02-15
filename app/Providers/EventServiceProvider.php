@@ -20,6 +20,12 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SomeEvent' => [
             'App\Listeners\EventListener',
         ],
+        'App\Events\ANewVetWasAdded' => [
+            'App\Listeners\EmailToConfirmVet',
+        ],
+        'App\Events\ANewUserWasAdded' => [
+            'App\Listeners\EmailToConfirmUser',
+        ]
     ];
 
     /**
