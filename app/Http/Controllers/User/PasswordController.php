@@ -25,6 +25,7 @@ class PasswordController extends \App\Http\Controllers\Controller {
         $validator = Validator::make(Input::all(), $rules);
 
         if ($validator -> passes()){
+
             Password::user()->sendResetLink(Input::only('email'), function ($message) {
                 $message->subject('Password reminder');
             });
@@ -58,12 +59,9 @@ class PasswordController extends \App\Http\Controllers\Controller {
             'token' => \Input::get('token')
         );
 
-
         $response = \Password::user()->reset($credentials, function ($user, $password) {
-
             $user->password = $password;
             $user->save();
-
         });
 
         switch ($response)

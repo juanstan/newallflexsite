@@ -24,9 +24,10 @@ return [
     ],
 
     'ses' => [
+        'region' => 'eu-west-1',
         'key'    => 'AKIAIRSHBQ2SRHGQHEZA',
         'secret' => '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',
-        'region' => 'us-east-1',
+        //'scheme' => 'http'
     ],
 
     'stripe' => [
