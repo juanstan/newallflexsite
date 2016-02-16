@@ -5765,7 +5765,7 @@ h1, p {
   font-weight: 100; }
 
 .jumbotron p {
-  font-size: 14px;
+  font-size: 13px;
   color: #71787f; }
 .jumbotron li {
   font-size: 20px;
@@ -5773,6 +5773,15 @@ h1, p {
 
 h4, small, .h4 a {
   color: #c0c0c0; }
+
+small, .small {
+  font-size: 70%; }
+
+h4 {
+  margin-top: 4px;
+  font-size: 15px;
+  padding-top: 5px;
+  font-weight: bold; }
 
 a {
   color: #40c8c6; }
@@ -5842,7 +5851,8 @@ a {
   margin-top: -5%; }
 
 .nav-pills.text-left {
-  text-align: left; }
+  text-align: left;
+  margin-bottom: 10px; }
 
 .nav-pills {
   text-align: center; }
@@ -5999,6 +6009,9 @@ label {
 
 .navbar-default .navbar-nav > li > a {
   font-size: 18px; }
+.navbar-default .navbar-nav > li > a:hover {
+  color: #40c8c6;
+  cursor: pointer; }
 
 .navbar-right {
   margin-right: 0px; }
@@ -6057,7 +6070,7 @@ label {
 .dropdown-toggle.pet-tab {
   padding: 0 12px !important;
   height: 2.3em;
-  font-size: 1.4em;
+  font-size: 1.2em;
   color: #aaa; }
   .dropdown-toggle.pet-tab:hover, .dropdown-toggle.pet-tab:focus {
     color: #71787f;
@@ -6111,7 +6124,8 @@ label {
 
 .nav.symptom-pills > li.active > a {
   border: 1px solid #c0c0c0;
-  background-color: transparent !important; }
+  background-color: transparent !important;
+  margin-right: 2px; }
 
 .circle {
   margin-left: auto;
@@ -6193,22 +6207,25 @@ label {
   color: #fff;
   height: 1em;
   line-height: 1em;
-  font-size: 1.4em;
+  font-size: 1.1em;
   letter-spacing: -0.04em;
   text-align: center;
-  margin-top: 5px; }
+  margin-top: 12px; }
   .small-score-text p {
     letter-spacing: normal;
     margin-top: -18%;
     color: #fff;
-    margin-bottom: 0px; }
+    margin-bottom: 0px;
+    font-size: 11px; }
   .small-score-text span {
-    font-size: 0.6em;
+    font-size: 1em;
     vertical-align: top;
     margin-left: 0.1em; }
 
 .prev-reading {
-  font-size: 14px !important; }
+  font-size: 16px !important;
+  font-weight: bold;
+  margin-top: 10px; }
 
 .noreadingyet {
   background: url("/images/noreadings.png") no-repeat;
@@ -6377,11 +6394,12 @@ input[type="radio"] {
   display: none; }
 
 .radio-pill-buttons {
-  float: left;
-  margin-right: 20px; }
+  float: right;
+  margin-right: 0px; }
   .radio-pill-buttons input:checked + span {
     background-color: #40c8c6;
-    color: #fff; }
+    color: #fff;
+    padding-top: 8px; }
   .radio-pill-buttons label span {
     color: #71787f;
     text-align: center;
@@ -6472,8 +6490,10 @@ input[type="radio"] {
 
 .create-pet-tab button {
   height: 2.3em;
-  font-size: 1.4em;
-  width: 93%; }
+  font-size: 1.2em;
+  width: 93%;
+  padding-top: 8px;
+  margin-left: -7px; }
 
 .center-create-pet-tab .create-pet-tab button {
   width: 50%;
@@ -6496,5 +6516,9 @@ input[type="radio"] {
 
 #userDelete {
   display: none; }
+
+.dropzone.dz-clickable .dz-message {
+  padding-top: 1px;
+  padding-bottom: 2px; }
 
 /*# sourceMappingURL=application.css.map */
