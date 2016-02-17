@@ -10,6 +10,7 @@ return array (
   '&#39;s temperature is usually around' => '&#39;s temperature is usually around',
   '&#39;s average temperature is' => '&#39;s average temperature is',
   'Instructions on how to reset your password has been sent to your email address' => 'Instructions on how to reset your password has been sent to your email address',
+  'You have successfully verified your account, please sign in below' => 'You have successfully verified your account, please sign in below',
   '+ Add' => '+ Add',
   '+ Add a pet' => '+ Add a pet',
   '+ Add another pet' => '+ Add another pet',

@@ -106,7 +106,7 @@ class AuthController extends Controller
 
         if ($user->save()) {
             return redirect()->route('user')
-                ->with('success', Lang::get('general.You have successfully verified your account.'));
+                ->with('verified', Lang::get('general.You have successfully verified your account, please sign in below'));
 
         } else {
             return redirect()->route('user')
