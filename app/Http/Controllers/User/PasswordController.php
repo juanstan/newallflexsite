@@ -31,7 +31,7 @@ class PasswordController extends \App\Http\Controllers\Controller {
             });
 
             return \Redirect::route('user')
-                ->with('success', \Lang::get('general.Your request to reset your password has been accepted, we have sent further details to your email address'));
+                ->with('reminder', \Lang::get('general.Instructions on how to reset your password has been sent to your email address'));
         }
         else{
             return \Redirect::route('user.password.request')

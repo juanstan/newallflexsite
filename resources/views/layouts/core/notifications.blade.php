@@ -64,3 +64,17 @@
         @endif
     </div>
 @endif
+
+@if ($message = Session::get('reminder'))
+    <div class="alert alert-success alert-block">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <h4>Password Reset</h4>
+        @if(is_array($message))
+            @foreach ($message as $m)
+                {!! $m !!}
+            @endforeach
+        @else
+            {!! $message !!}
+        @endif
+    </div>
+@endif

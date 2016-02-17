@@ -146,15 +146,13 @@ class DashboardController extends Controller
     {
 
         $email = Input::get('email');
-        //Event::fire(new ANewVetWasAdded($this->authUser, $email));
 
         \Mail::send('emails.vet-verify',
             array(
                 'confirmation_code' => $this->authUser->confirmation_code
             ),
             function ($message) {
-                $message->from('j.acevedo@sureflap.co.uk','SureFlap')->to(Input::get('email'))
-                    ->subject($this->authUser->name, 'has invited you to use All Flex');
+                $message->to(Input::get('email'))->subject($this->authUser->name, 'has invited you to use All Flex');
             }
         );
         return redirect()->route('user.dashboard')

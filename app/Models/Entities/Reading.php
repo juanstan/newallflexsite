@@ -11,7 +11,7 @@ class Reading extends Model implements AuthenticatableContract, CanResetPassword
 
 	use Authenticatable, CanResetPassword, SoftDeletes;
 
-    protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at', 'reading_time'];
 
     protected $hidden = [
         'deleted_at'
