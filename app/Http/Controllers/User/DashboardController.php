@@ -109,10 +109,9 @@ class DashboardController extends Controller
         $petNoMicrochips = $this->petRepository->petsSetNoMicrochip();
         $pets = $this->petRepository->all();
 
-        if($pets->isEmpty())
+        if(!$user->firstname && $pets->isEmpty())
         {
-            return redirect()->route('user.register.pet')
-                ->with('error', \Lang::get('general.Your account has been created although no pets have been assigned'));
+            return redirect()->route('user.register.about');
         }
 
         $breed = $this->breedRepository->all()->lists('name', 'id');

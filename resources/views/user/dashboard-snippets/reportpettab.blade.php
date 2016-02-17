@@ -66,7 +66,7 @@
                         @endif
                             <!-- Adding more symptoms -->
                         @if ($reading->reading_time->diffInHours(Carbon\Carbon::now('Europe/London')) < 24)
-                                <a href="#" data-toggle="collapse" data-target="#symptom-list{!! $pet->id !!}" >{!! Lang::get('general.Add symptoms') !!}</a>
+                                <a href="#" class="add-symptom-history" data-toggle="collapse" data-target="#symptom-list{!! $pet->id !!}" >{!! Lang::get('general.Add symptoms') !!}</a>
                         @endif
                     </div>
 

@@ -6526,8 +6526,9 @@ input[type="radio"] {
   max-height: 300px; }
   .history-info .date-history {
     background-color: #f0f0f0;
-    color: #8b9fab;
     padding: 4px 0; }
+    .history-info .date-history h4 {
+      color: #92a5b0; }
   .history-info .history-score-text {
     font-size: 21px;
     color: #40C8C6;
@@ -6548,7 +6549,10 @@ input[type="radio"] {
     .history-info .history .symptoms-history {
       font-size: 13px;
       color: #8f8f8f; }
+    .history-info .history a.add-symptom-history {
+      display: block;
+      padding-top: 5px; }
     .history-info .history a {
-      display: block; }
+      line-height: 1; }
 
 /*# sourceMappingURL=application.css.map */
