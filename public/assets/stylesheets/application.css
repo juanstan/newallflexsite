@@ -6521,4 +6521,34 @@ input[type="radio"] {
   padding-top: 1px;
   padding-bottom: 2px; }
 
+.history-info {
+  overflow-y: scroll;
+  max-height: 300px; }
+  .history-info .date-history {
+    background-color: #f0f0f0;
+    color: #8b9fab;
+    padding: 4px 0; }
+  .history-info .history-score-text {
+    font-size: 21px;
+    color: #40C8C6;
+    padding-top: 12px; }
+  .history-info .history {
+    display: table;
+    border-bottom: 2px solid #ccc;
+    padding: 13px 0;
+    width: 110%; }
+    .history-info .history .degree-history, .history-info .history .symptoms-history, .history-info .history .time-history {
+      float: none;
+      display: table-cell;
+      vertical-align: middle; }
+    .history-info .history .time-history {
+      font-size: 10px;
+      color: #999;
+      font-weight: bolder; }
+    .history-info .history .symptoms-history {
+      font-size: 13px;
+      color: #8f8f8f; }
+    .history-info .history a {
+      display: block; }
+
 /*# sourceMappingURL=application.css.map */

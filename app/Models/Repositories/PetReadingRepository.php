@@ -5,6 +5,7 @@ use App\Models\Entities\Pet;
 use App\Models\Entities\Device;
 use App\Http\Controllers\Vet;
 use App\Models\Entities\Reading;
+use Faker\Provider\zh_TW\DateTime;
 use League\Csv\Reader;
 
 class PetReadingRepository extends AbstractRepository implements PetReadingRepositoryInterface
@@ -65,8 +66,13 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
         foreach ($data as $lineIndex => $row) {
             $decodedInfo = $this->decoded_microchip_id($row[1]);
             $decodedMicrochipID = $decodedInfo['manufacturer'].'.'.$decodedInfo['device_id'];
+            $read_time = new \DateTime("@$row[3]");
 
-            $profile = $this->model->where('microchip_id', '=', $decodedMicrochipID)->first();
+            $profile = $this->model
+                            ->where('microchip_id', '=', $decodedMicrochipID)
+                            ->where('reading_time', '=', $read_time)
+                            ->first();
+
             $petOwner = $user->$sMethodPet()->checkMicrochip($decodedMicrochipID)->first();
             $pet = Pet::checkMicrochip($decodedMicrochipID)->first();
 
@@ -95,12 +101,14 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
                     $device->$sTypeID = $user->id;
                     $device->save();
                 }
+
+
                 $reading = new Reading();
                 $reading->microchip_id = $decodedMicrochipID;
                 $reading->temperature = $this->reading_temperature($row[2]);
                 $reading->pet_id = $pet->id;
                 $reading->average = 1;
-                $reading->reading_time = $this->reading_timestamp($device_current_time_epoch, $row[3]);
+                $reading->reading_time = $read_time;//$this->reading_timestamp($device_current_time_epoch, $row[3]);
                 //Linking to the device table
                 $reading->device()->associate($device);
                 $reading->save();
@@ -229,6 +237,12 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
 
     }
 
+
+    /*
+     *  Difference between two timestamps ???
+     *
+     *
+     */
     private function reading_timestamp($device_current_time_epoch, $epoch)
     {
         $epoch = $device_current_time_epoch - $epoch;

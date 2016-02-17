@@ -66,6 +66,7 @@ $( document ).ready(function() {
         minLength:3
     });
 
+    $(".date-history").prev('.history').css('border','0');
 
 });
 

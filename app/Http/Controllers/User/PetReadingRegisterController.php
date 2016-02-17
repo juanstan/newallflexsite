@@ -95,7 +95,7 @@ class PetReadingRegisterController extends Controller
         $microchip = $this->petRepository->get($id);
 
         if ($pet->update(array('microchip_number' => $microchip->microchip_number))) {
-            foreach($microchip->readings() as $reading) {
+            foreach($microchip->readings()->get() as $reading) {
                 $reading->pet()->associate($pet)->save();
             }
             $microchip->delete();

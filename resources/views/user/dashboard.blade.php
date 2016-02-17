@@ -35,7 +35,7 @@ $temperaturePref = $user->units;
                     <div class="col-xs-12" >
                         <ul class="nav mobile-nav nav-pills text-left">
                             <li class="active"><a href="#latest{!! $pet->id !!}" data-toggle="pill" data-target="#pet-name{!! $pet->id !!}, #latest{!! $pet->id !!}, #pet-photo-hide{!! $pet->id !!}" >{!! Lang::get('general.Latest') !!}</a></li>
-                            <li class="report-toggle" ><a href="#reports{!! $pet->id !!}" data-toggle="pill" data-target="#pet-name{!! $pet->id !!}, #reports{!! $pet->id !!}, #image_path-hide{!! $pet->id !!}">{!! Lang::get('general.Reports') !!}</a></li>
+                            <li class="report-toggle" ><a href="#reports{!! $pet->id !!}" data-toggle="pill" data-target="#pet-name{!! $pet->id !!}, #reports{!! $pet->id !!}, #image_path-hide{!! $pet->id !!}">{!! Lang::get('general.History') !!}</a></li>
                             <li class="pull-right" ><a href="#edit{!! $pet->id !!}" data-toggle="pill" data-target="#pet-photo{!! $pet->id !!}, #edit{!! $pet->id !!}"  >{!! ($pet->name == NULL ? Lang::get('general.<i class="fa fa-cog"></i> Edit') : Lang::get('general.<i class="fa fa-cog"></i> Edit') ); !!}</a></li>
                         </ul>
                     </div>
