@@ -12,7 +12,7 @@
             </tr>
             <tr>
                 <td>
-                    {!! HTML::image('/images/transparent.png', '', array('width'=>1, 'height'=>'50px', 'style'=>'border:0;border-style: none;')) !!}
+                    {!! HTML::image('/images/transparent.png', '', array('width'=>1, 'height'=>'30px', 'style'=>'border:0;border-style: none;')) !!}
                 </td>
             </tr>
             <tr>
@@ -90,7 +90,7 @@
             </tr>
             <tr>
                 <td>
-                    <hr style="background-color:#cbd5d9;" />
+                    <div style="width:100%;max-height:0;border:1px solid #cbd5d9">&nbsp;</div>
                 </td>
             </tr>
             <tr>
