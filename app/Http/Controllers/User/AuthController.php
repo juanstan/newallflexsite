@@ -72,7 +72,7 @@ class AuthController extends Controller
             \App::abort(500);
         }
 
-        Event::fire(new ANewUserWasAdded($user, $user->email));
+        Event::fire(new ANewUserWasAdded($user));
         return redirect()->route('user')->with('success', 'Thanks for signing up! Please check your email.');
 
 

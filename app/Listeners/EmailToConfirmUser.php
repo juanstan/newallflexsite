@@ -34,7 +34,7 @@ class EmailToConfirmUser
                 'confirmation_code' => $event->user->confirmation_code
             ),
             function ($message) use ($event) {
-                $message->to($event->email)->subject($event->user->firstname, 'validate your account in All Flex');
+                $message->to($event->user->email)->subject('Validate your account in All Flex');
             }
         );
 

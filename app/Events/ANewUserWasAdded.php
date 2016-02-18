@@ -11,7 +11,6 @@ class ANewUserWasAdded extends Event
 {
     use SerializesModels;
 
-    public $email;
     public $user;
 
 
@@ -20,10 +19,9 @@ class ANewUserWasAdded extends Event
      *
      * @return void
      */
-    public function __construct(User $user, $email)
+    public function __construct(User $user)
     {
 
-        $this->email = $email;
         $this->user = $user;
 
 
