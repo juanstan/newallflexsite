@@ -90,7 +90,7 @@
             </tr>
             <tr>
                 <td>
-                    <div style="width:100%;max-height:0;border:1px solid #cbd5d9">&nbsp;</div>
+                    <div style="width:100%;max-height:0;height:0;border-top:1px solid #cbd5d9">&nbsp;</div>
                 </td>
             </tr>
             <tr>
