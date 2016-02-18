@@ -7,7 +7,7 @@
         <table cellpadding="0" cellspacing="0" border="0" style="border-collapse: collapse;">
             <tr>
                 <td>
-                    {!! HTML::image('/images/surenselogo.png', 'SureSense') !!}
+                    {!! HTML::image('/images/SureSense-logo2.png', 'SureSense') !!}
                 </td>
             </tr>
             <tr>
