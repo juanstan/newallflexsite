@@ -41,7 +41,7 @@
                                     <center style="color:#ffffff;font-family:Helvetica, Arial,sans-serif;font-size:16px;">Confirm account</center>
                                 </v:roundrect>
                                 <![endif]-->
-                                <a href={!! URL::to('user/verify/' . $confirmation_code) !!}" style="background-color:#3fc6c4;border:1px solid #3fc6c4;border-radius:5px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:16px;line-height:44px;text-align:center;text-decoration:none;width:150px;-webkit-text-size-adjust:none;mso-hide:all;">Confirm account</a>
+                                <a href="{!! URL::to('user/verify/' . $confirmation_code) !!}" style="background-color:#3fc6c4;border:1px solid #3fc6c4;border-radius:5px;color:#ffffff;display:inline-block;font-family:sans-serif;font-size:16px;line-height:44px;text-align:center;text-decoration:none;width:150px;-webkit-text-size-adjust:none;mso-hide:all;">Confirm account</a>
                             </td>
                         </tr>
                         <tr>
