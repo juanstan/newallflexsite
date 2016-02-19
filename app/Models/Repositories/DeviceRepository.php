@@ -1,5 +1,6 @@
 <?php namespace App\Models\Repositories;
 
+use DB;
 use App\Models\Entities\Device;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -8,11 +9,12 @@ class DeviceRepository extends AbstractRepository implements DeviceRepositoryInt
 
 	protected $model;
 	protected $user;
+	protected $userRepository;
 
-	public function __construct(Device $model, UserRepositoryInterface $user)
+	public function __construct(Device $model, UserRepositoryInterface $userRepository)
 	{
 		$this->model = $model;
-		$this->user = $user;
+		$this->userRepository = $userRepository;
 	}
 
 	public function getCreateValidator($input)
@@ -46,9 +48,9 @@ class DeviceRepository extends AbstractRepository implements DeviceRepositoryInt
     
     public function setUser($user)
     {
-        $this->user = is_numeric($user) ? $this->user->get($user) : $user;
+		$this->user = is_numeric($user) ? $this->userRepository->get($user) : $user;
+		return $this;
 
-        return $this;
     }
     
     public function create($input)
@@ -67,6 +69,15 @@ class DeviceRepository extends AbstractRepository implements DeviceRepositoryInt
 		if($this->user)
 		{
 			return $this->user->device()->findOrFail($device_id)->delete();
+		}
+
+	}
+
+
+	public function findBySerialNumber($serial_number)
+	{
+		if ($this->user) {
+			return $this->user->device()->findSerial($serial_number)->get();
 		}
 
 	}

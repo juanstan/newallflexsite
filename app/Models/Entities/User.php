@@ -54,13 +54,6 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         return $this->hasMany(Token::class);
     }
 
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\hasMany
-     */
-    /*public function requests()
-    {
-        return $this->hasMany(Request::class);
-    }*/
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\hasMany
@@ -79,7 +72,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     }
 
     /**
-     * @return \Illuminate\Database\Eloquent\Relations\belongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\hasMany
      */
     public function device()
     {

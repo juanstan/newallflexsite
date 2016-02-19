@@ -45,4 +45,11 @@ class Device extends Model implements AuthenticatableContract, CanResetPasswordC
         return $this->hasMany(Reading::class, 'device_id');
     }
 
+
+    public function scopeFindSerial($query, $serial_number) {
+        return $query->where('serial_id', '=', $serial_number);
+
+
+    }
+
 }

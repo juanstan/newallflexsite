@@ -251,6 +251,7 @@ class UserRepository extends AbstractRepository implements UserRepositoryInterfa
 		$this->model->findOrFail($id)->delete();
 
 	}
+	}
 
 }
 

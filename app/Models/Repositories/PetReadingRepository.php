@@ -13,11 +13,14 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
     protected $model;
     protected $pet;
     protected $user;
+    protected $device;
 
-    public function __construct(Reading $model, UserRepositoryInterface $user)
+
+    public function __construct(Reading $model, UserRepositoryInterface $user, DeviceRepositoryInterface $device)
     {
         $this->model = $model;
         $this->user = $user;
+        $this->device = $device;
     }
 
     public function all()
@@ -66,11 +69,10 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
         foreach ($data as $lineIndex => $row) {
             $decodedInfo = $this->decoded_microchip_id($row[1]);
             $decodedMicrochipID = $decodedInfo['manufacturer'].'.'.$decodedInfo['device_id'];
-            $read_time = new \DateTime("@$row[3]");
 
             $profile = $this->model
                             ->where('microchip_id', '=', $decodedMicrochipID)
-                            ->where('reading_time', '=', $read_time)
+                            ->where('reading_time', '=', new \DateTime("@$row[3]"))
                             ->first();
 
             $petOwner = $user->$sMethodPet()->checkMicrochip($decodedMicrochipID)->first();
@@ -94,21 +96,21 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
             }
 
             if (empty($profile)) {
-                if (!$device = Device::find($decodedInfo['device_id'])){
+                $device = $this->device->setUser($user->id)->findBySerialNumber($decodedInfo['device_id'])->first();
+                if (empty($device)){
                     $device = new Device();
-                    $device->id = $decodedInfo['device_id'];
-                    //$device->serial_id = ???;
+                    $device->serial_id = $decodedInfo['device_id'];
                     $device->$sTypeID = $user->id;
                     $device->save();
-                }
 
+                }
 
                 $reading = new Reading();
                 $reading->microchip_id = $decodedMicrochipID;
                 $reading->temperature = $this->reading_temperature($row[2]);
                 $reading->pet_id = $pet->id;
                 $reading->average = 1;
-                $reading->reading_time = $read_time;//$this->reading_timestamp($device_current_time_epoch, $row[3]);
+                $reading->reading_time = $this->reading_timestamp($device_current_time_epoch, $row[3]);
                 //Linking to the device table
                 $reading->device()->associate($device);
                 $reading->save();
@@ -237,15 +239,9 @@ class PetReadingRepository extends AbstractRepository implements PetReadingRepos
 
     }
 
-
-    /*
-     *  Difference between two timestamps ???
-     *
-     *
-     */
     private function reading_timestamp($device_current_time_epoch, $epoch)
     {
-        $epoch = $device_current_time_epoch - $epoch;
+        $epoch =  time()  - ($device_current_time_epoch + $epoch);
         return new \DateTime("@$epoch");
 
     }
