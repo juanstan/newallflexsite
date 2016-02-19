@@ -5927,7 +5927,8 @@ a {
 .btn-default {
   background-color: #40c8c6;
   border-color: #40c8c6;
-  color: #fff; }
+  color: #fff;
+  padding-top: 13px; }
   .btn-default:hover {
     background-color: #68d3d2;
     border-color: #68d3d2;
@@ -6475,7 +6476,11 @@ input[type="radio"] {
 .btn-edit-list-pets {
   position: absolute;
   right: 0;
-  top: 2em; }
+  top: 0.4em;
+  font-size: 19px;
+  padding-right: 13px;
+  padding-left: 13px;
+  padding-top: 10px; }
 
 #results {
   height: 180px;
