@@ -24,7 +24,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'devices',
         'access',
         'tokens',
-        'confirmation_code',
+        'confirmation_code'
     ];
 
     protected $fillable = [
@@ -38,7 +38,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'units',
         'weight_units',
         'password',
-        'confirmation_code'
+        'confirmation_code',
+        'iosinfo',
+        'phone'
     ];
     
     public function setPasswordAttribute($value)
