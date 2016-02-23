@@ -13,7 +13,7 @@ class AddUniqueSerialNumberOnDeviceTable extends Migration
     public function up()
     {
         Schema::table('devices', function (Blueprint $table) {
-            $table->unique(array('serial_id'));
+            $table->unique(array('serial_id', 'user_id'));
         });
     }
 
@@ -25,7 +25,7 @@ class AddUniqueSerialNumberOnDeviceTable extends Migration
     public function down()
     {
         Schema::table('devices', function (Blueprint $table) {
-            $table->dropUnique('devices_serial_id_unique');
+            $table->dropUnique('devices_serial_id_user_id_unique');
         });
     }
 }
