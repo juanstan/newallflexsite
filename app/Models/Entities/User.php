@@ -39,7 +39,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'weight_units',
         'password',
         'confirmation_code',
-        'iosinfo',
+        'osinfo',
         'phone'
     ];
     
