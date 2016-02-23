@@ -14,7 +14,7 @@ class AddPhoneIosinfoFieldsIntoUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->string('phone')->nullable();
-            $table->string('iosinfo')->nullable();
+            $table->string('osinfo')->nullable();
         });
     }
 
@@ -27,7 +27,7 @@ class AddPhoneIosinfoFieldsIntoUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('phone');
-            $table->dropColumn('iosinfo');
+            $table->dropColumn('osinfo');
         });
     }
 }
